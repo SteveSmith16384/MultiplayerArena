@@ -14,12 +14,15 @@ import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.input.KeyInput;
+import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.Light;
 import com.jme3.light.LightList;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Spatial;
 import com.jme3.system.AppSettings;
@@ -27,6 +30,7 @@ import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.entities.Entity;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.Player;
+import com.scs.overwatch.map.IMapInterface;
 import com.scs.overwatch.map.MapLoader;
 
 public class Overwatch extends SimpleApplication implements ActionListener, PhysicsCollisionListener {
@@ -38,6 +42,7 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 
 	public List<Entity> entities = new ArrayList<Entity>();
 	private Player[] players = new Player[4];
+	private IMapInterface map;
 
 	public static void main(String[] args) {
 		try {
@@ -101,7 +106,8 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 		setUpKeys();
 		setUpLight();
 
-		new MapLoader(this);
+		MapLoader maploader = new MapLoader(this);
+		map = maploader.loadMap();
 
 		bulletAppState.getPhysicsSpace().addCollisionListener(this);
 
@@ -127,8 +133,10 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 		rootNode.attachChild(player.getMainNode());
 		this.entities.add(player);
 
-		// todo - start pos - 
-		//players[0].playerControl.warp(new Vector3f(x, 2f, z));
+		player.playerControl.warp(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2));
+		
+		// Look towards centre
+		player.getMainNode().lookAt(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2), Vector3f.UNIT_Y);
 
 		// Reframe all the cameras based on number of players
 		switch (id) { // left/right/bottom/top from bottom-left!
@@ -203,6 +211,8 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 		inputManager.addListener(this, "Down");
 		inputManager.addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
 		inputManager.addListener(this, "Jump");
+		inputManager.addMapping("shoot", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+		inputManager.addListener(this, "shoot");
 	}
 
 
@@ -221,6 +231,11 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 			if (isPressed) { 
 				players[0].playerControl.jump(); 
 			}
+		} else if (binding.equals("shoot")) {
+			if (isPressed) { 
+				players[0].shoot();
+			}
+
 		} else if (binding.equals(Settings.KEY_RECORD)) {
 			if (isPressed) {
 				if (video_recorder == null) {

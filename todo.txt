@@ -1,4 +1,6 @@
 URGENT
+Shooting
+Player start pos
 Only one keyboard player
 Restart on escape
 Choose a name

@@ -1,8 +1,7 @@
 package com.scs.overwatch.map;
 
+import java.awt.Point;
 import java.util.Random;
-
-import com.scs.overwatch.Settings;
 
 public class RandomMap implements IMapInterface {
 	
@@ -32,9 +31,9 @@ public class RandomMap implements IMapInterface {
 	
 	@Override
 	public int getCodeForSquare(int x, int z) {
-		if (x == PLAYER_X && z == PLAYER_Z) {
+		/*if (x == PLAYER_X && z == PLAYER_Z) {
 			return Settings.MAP_PLAYER;
-		}
+		}*/
 
 		if (x == MONSTER_X && z == MONSTER_Z) {
 			//return Settings.MAP_MONSTER;
@@ -46,5 +45,12 @@ public class RandomMap implements IMapInterface {
 		}
 		return num;
 	}
+
+
+	@Override
+	public Point getPlayerStartPos(int id) {
+		return new Point(PLAYER_X, PLAYER_Z);
+	}
+
 
 }

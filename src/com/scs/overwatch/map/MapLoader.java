@@ -1,6 +1,5 @@
 package com.scs.overwatch.map;
 
-import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
@@ -24,6 +23,12 @@ public class MapLoader {
 		main = _main;
 		this.rootNode = main.getRootNode();
 		
+		//loadMap();
+
+	}
+
+
+	public IMapInterface loadMap() {
 		IMapInterface map;
 		try {
 			map = new CSVMap("bin/maps/map1.csv");//"./maps/map1.csv");
@@ -41,12 +46,7 @@ public class MapLoader {
 				}
 			}
 		}
-		loadMap(map);
 
-	}
-
-
-	private void loadMap(IMapInterface map) {
 		// Floor first
 		for (int z=0 ; z<map.getDepth() ; z+= Settings.FLOOR_SECTION_SIZE) {
 			for (int x=0 ; x<map.getWidth() ; x+= Settings.FLOOR_SECTION_SIZE) {
@@ -63,8 +63,9 @@ public class MapLoader {
 				case Settings.MAP_NOTHING:
 					break;
 
-				case Settings.MAP_PLAYER:
+				case 2: //Settings.MAP_PLAYER:
 					//players[0].playerControl.warp(new Vector3f(x, 2f, z));
+					// Do nothing
 					break;
 
 				case Settings.MAP_MONSTER_GHOST:
@@ -133,6 +134,8 @@ public class MapLoader {
 				}
 			}
 		}
+		
+		return map;
 
 	}
 

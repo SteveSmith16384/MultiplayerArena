@@ -28,7 +28,7 @@ public class Settings {
 	// Map codes
 	public static final int MAP_NOTHING = 0;
 	public static final int MAP_TREE = 1;
-	public static final int MAP_PLAYER = 2;
+	//public static final int MAP_PLAYER = 2;
 	public static final int MAP_MONSTER_GHOST = 3; // 2D ghost, moves when not looked at.
 	public static final int MAP_FENCE_LR = 4;
 	public static final int MAP_FENCE_FB = 5;

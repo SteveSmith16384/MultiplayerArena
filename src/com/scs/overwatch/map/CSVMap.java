@@ -1,5 +1,6 @@
 package com.scs.overwatch.map;
 
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -54,5 +55,12 @@ public class CSVMap implements IMapInterface {
 		String parts[] = line.split("\t");
 		return Integer.parseInt(parts[x]);
 	}
+
+
+	@Override
+	public Point getPlayerStartPos(int id) {
+		return new Point(2, 2); // todo
+	}
+
 
 }

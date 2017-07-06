@@ -160,7 +160,7 @@ public class MyHelloPhysics extends SimpleApplication {
 	}
 
 	/** This method creates one individual physical cannon ball.
-	 * By defaul, the ball is accelerated and flies
+	 * By defaulT, the ball is accelerated and flies
 	 * from the camera position in the camera direction.*/
 	public void makeCannonBall() {
 		/** Create a cannon ball geometry and attach to scene graph. */
@@ -169,7 +169,7 @@ public class MyHelloPhysics extends SimpleApplication {
 		rootNode.attachChild(ball_geo);
 		/** Position the cannon ball  */
 		ball_geo.setLocalTranslation(cam.getLocation());
-		/** Make the ball physcial with a mass > 0.0f */
+		/** Make the ball physical with a mass > 0.0f */
 		ball_phy = new RigidBodyControl(1f);
 		/** Add physical ball to physics space. */
 		ball_geo.addControl(ball_phy);

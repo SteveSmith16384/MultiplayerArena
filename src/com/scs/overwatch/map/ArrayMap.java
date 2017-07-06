@@ -1,9 +1,10 @@
 package com.scs.overwatch.map;
 
+import java.awt.Point;
+
 public class ArrayMap implements IMapInterface {
 
-	int[][] data = new int[][]{ // data[9][0] == 1
-		// Player starts looking upwards
+	int[][] data = new int[][]{
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},  
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  
 		{0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  
@@ -47,6 +48,12 @@ public class ArrayMap implements IMapInterface {
 	@Override
 	public int getCodeForSquare(int x,  int z) {
 		return data[z][x];
+	}
+
+
+	@Override
+	public Point getPlayerStartPos(int id) {
+		return new Point(1, 1);
 	}
 
 

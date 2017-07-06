@@ -1,6 +1,7 @@
 package com.scs.overwatch.entities;
 
 import com.jme3.bullet.control.BetterCharacterControl;
+import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.font.BitmapFont;
 import com.jme3.light.SpotLight;
 import com.jme3.material.Material;
@@ -10,8 +11,9 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.Camera.FrustumIntersect;
 import com.jme3.scene.Geometry;
-import com.jme3.scene.Spatial.CullHint;
 import com.jme3.scene.shape.Box;
+import com.jme3.scene.shape.Sphere;
+import com.jme3.scene.shape.Sphere.TextureMode;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.hud.HUD;
@@ -80,11 +82,10 @@ public class Player extends PhysicalEntity {
 
 	@Override
 	public void process(float tpf) {
-		//if (!game.isGameOver()) {
 		/*
 		 * The direction of character is determined by the camera angle
 		 * the Y direction is set to zero to keep our character from
-		 * lifting of terrain. For free flying games simply ad speed 
+		 * lifting of terrain. For free flying games simply add speed 
 		 * to Y axis
 		 */
 		camDir.set(cam.getDirection()).multLocal(Settings.moveSpeed, 0.0f, Settings.moveSpeed);
@@ -117,6 +118,25 @@ public class Player extends PhysicalEntity {
 			this.spotlight.setDirection(cam.getDirection());
 		}
 
+	}
+
+
+	public void shoot() {
+		Sphere sphere = new Sphere(32, 32, 0.4f, true, false); // todo - create bullet entity
+		sphere.setTextureMode(TextureMode.Projected);
+		/** Create a cannon ball geometry and attach to scene graph. */
+		Geometry ball_geo = new Geometry("cannon ball", sphere);
+		//ball_geo.setMaterial(stone_mat);
+		game.getRootNode().attachChild(ball_geo);
+		/** Position the cannon ball  */
+		ball_geo.setLocalTranslation(cam.getLocation());
+		/** Make the ball physical with a mass > 0.0f */
+		RigidBodyControl ball_phy = new RigidBodyControl(1f);
+		/** Add physical ball to physics space. */
+		ball_geo.addControl(ball_phy);
+		game.bulletAppState.getPhysicsSpace().add(ball_phy);
+		/** Accelerate the physical ball to shoot it. */
+		ball_phy.setLinearVelocity(cam.getDirection().mult(25));
 	}
 
 
