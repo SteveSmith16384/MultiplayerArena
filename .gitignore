@@ -1,0 +1,9 @@
+/bin/
+
+OpenAL64.dll
+bulletjme64.dll
+lwjgl64.dll
+OpenAL32.dll
+bulletjme.dll
+lwjgl.dll
+.svn
