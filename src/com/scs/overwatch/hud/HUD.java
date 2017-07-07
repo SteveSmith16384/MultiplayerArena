@@ -27,8 +27,10 @@ public class HUD extends Node implements IProcessable {
 	private ColorRGBA dam_box_col = new ColorRGBA(1, 0, 0, 0.0f);
 	private boolean process_damage_box;
 
-	public HUD(Overwatch _module, AssetManager assetManager, int w, int h, BitmapFont font_small) {
+	public HUD(Overwatch _module, AssetManager assetManager, int x, int z, int w, int h, BitmapFont font_small) {
 		super("HUD");
+		
+		super.setLocalTranslation(x, 0, z);
 
 		module = _module;
 		screen_width = w;

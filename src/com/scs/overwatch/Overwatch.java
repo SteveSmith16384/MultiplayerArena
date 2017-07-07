@@ -9,7 +9,6 @@ import java.util.Random;
 import java.util.prefs.BackingStoreException;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.app.state.VideoRecorderAppState;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
@@ -39,7 +38,10 @@ import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.entities.Entity;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
+import com.scs.overwatch.input.IInputDevice;
 import com.scs.overwatch.input.JoystickCamController;
+import com.scs.overwatch.input.JoystickController;
+import com.scs.overwatch.input.KeyboardController;
 import com.scs.overwatch.map.IMapInterface;
 import com.scs.overwatch.map.MapLoader;
 
@@ -52,7 +54,9 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 	public List<Entity> entities = new ArrayList<Entity>();
 	private Map<Integer, PlayersAvatar> players = new HashMap<>(); // input id-> player
 	private IMapInterface map;
-
+	private KeyboardController keyboard;
+	private JoystickController joystick;
+	
 	public static void main(String[] args) {
 		try {
 			AppSettings settings = new AppSettings(true);
@@ -108,10 +112,12 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 		MapLoader maploader = new MapLoader(this);
 		map = maploader.loadMap();
 
-		this.addPlayer(0); // Keyboard
+		this.keyboard = new KeyboardController();
+		this.addPlayer(0, keyboard); // Keyboard
 		Joystick[] joysticks = inputManager.getJoysticks();
 		if (joysticks.length > 0) {
-			Camera c = this.addPlayer(1);
+			joystick = new JoystickController(joysticks[0]);
+			Camera c = this.addPlayer(1, joystick);
 			JoystickCamController joycam = new JoystickCamController(c, joysticks[0]);
 			joycam.registerWithInput(inputManager);
 		}
@@ -119,11 +125,12 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 		bulletAppState.getPhysicsSpace().addCollisionListener(this);
 
 		//stateManager.getState(StatsAppState.class).toggleStats(); // Turn off stats
+		
 
 	}
 
 
-	private Camera addPlayer(int id) {
+	private Camera addPlayer(int id, IInputDevice input) {
 		Camera c = null;
 		if (id == 0) {
 			c = cam;
@@ -131,7 +138,7 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 			c = cam.clone();
 		}
 		c.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
-		PlayersAvatar player = new PlayersAvatar(this, id, c);
+		PlayersAvatar player = new PlayersAvatar(this, id, c, input);
 		//this.players[id] = player;
 		rootNode.attachChild(player.getMainNode());
 		this.entities.add(player);
@@ -229,7 +236,9 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 
 	/** These are our custom actions triggered by key presses.
 	 * We do not walk yet, we just keep track of the direction the user pressed. */
+	@Override
 	public void onAction(String binding, boolean isPressed, float tpf) {
+		this.keyboard.onAction(binding, isPressed, tpf);
 		/*if (binding.equals("Left")) {
 			players[0].left = isPressed;
 		} else if (binding.equals("Right")) {
@@ -247,18 +256,6 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 				players[0].shoot();
 			}
 
-		} else if (binding.equals(Settings.KEY_RECORD)) {
-			if (isPressed) {
-				if (video_recorder == null) {
-					//log("RECORDING VIDEO");
-					video_recorder = new VideoRecorderAppState();
-					stateManager.attach(video_recorder);
-				} else {
-					//log("STOPPED RECORDING");
-					stateManager.detach(video_recorder);
-					video_recorder = null;
-				}
-			}
 		}*/
 
 	}
@@ -292,14 +289,16 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 
 
 	// Raw Input Listener
+	@Override
 	public void onJoyAxisEvent(JoyAxisEvent evt) {
 		Joystick stick = evt.getAxis().getJoystick();
-		//todo gamepad.setAxisValue( evt.getAxis(), evt.getValue() ); 
+		joystick.setAxisValue( evt.getAxis(), evt.getValue() ); 
 	}
 
+	@Override
 	public void onJoyButtonEvent(JoyButtonEvent evt) {
 		Joystick stick = evt.getButton().getJoystick();
-		//todo gamepad.setButtonValue( evt.getButton(), evt.isPressed() ); 
+		joystick.setButtonValue( evt.getButton(), evt.isPressed() ); 
 	}
 
 	public void beginInput() {}

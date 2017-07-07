@@ -3,10 +3,8 @@ package com.scs.overwatch.entities;
 import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.font.BitmapFont;
-import com.jme3.light.SpotLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.Camera.FrustumIntersect;
@@ -17,15 +15,17 @@ import com.jme3.scene.shape.Sphere.TextureMode;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.hud.HUD;
+import com.scs.overwatch.input.IInputDevice;
 
 public class PlayersAvatar extends PhysicalEntity {
 
 	private HUD hud;
 
-	private SpotLight spotlight;
+	//private SpotLight spotlight;
 	private Vector3f walkDirection = new Vector3f();
 	public boolean left = false, right = false, up = false, down = false;
-
+	private IInputDevice input; // todo - use this
+	
 	//Temporary vectors used on each frame.
 	private Camera cam;
 	private Vector3f camDir = new Vector3f();
@@ -36,12 +36,12 @@ public class PlayersAvatar extends PhysicalEntity {
 
 	public final int id;
 
-	public PlayersAvatar(Overwatch _game, int _id, Camera _cam) {
+	public PlayersAvatar(Overwatch _game, int _id, Camera _cam, IInputDevice _input) {
 		super(_game, "Player");
 
 		id = _id;
-
 		cam = _cam;
+		input = _input;
 
 		/** Create a box to use as our player model */
 		Box box1 = new Box(Settings.PLAYER_RAD, Settings.PLAYER_HEIGHT, Settings.PLAYER_RAD);
@@ -66,16 +66,16 @@ public class PlayersAvatar extends PhysicalEntity {
 		this.getMainNode().setUserData(Settings.ENTITY, this);
 
 		BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
-		hud = new HUD(game, game.getAssetManager(), cam.getWidth(), cam.getHeight(), guiFont_small);
+		hud = new HUD(game, game.getAssetManager(), 0, 0, cam.getWidth(), cam.getHeight(), guiFont_small);
 		game.getGuiNode().attachChild(hud);
 		//this.entities.add(hud);
 
-		this.spotlight = new SpotLight();
+		/*this.spotlight = new SpotLight();
 		spotlight.setColor(ColorRGBA.White.mult(3f));
 		spotlight.setSpotRange(10f);
 		spotlight.setSpotInnerAngle(FastMath.QUARTER_PI / 8);
 		spotlight.setSpotOuterAngle(FastMath.QUARTER_PI / 2);
-		game.getRootNode().addLight(spotlight);
+		game.getRootNode().addLight(spotlight);*/
 	}
 
 
@@ -111,10 +111,10 @@ public class PlayersAvatar extends PhysicalEntity {
 		Vector3f vec = getMainNode().getWorldTranslation();
 		cam.setLocation(new Vector3f(vec.x, vec.y + Settings.PLAYER_HEIGHT, vec.z));
 
-		if (spotlight != null) {
+		/*if (spotlight != null) {
 			this.spotlight.setPosition(cam.getLocation());
 			this.spotlight.setDirection(cam.getDirection());
-		}
+		}*/
 
 	}
 

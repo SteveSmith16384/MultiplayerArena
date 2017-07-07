@@ -8,15 +8,19 @@ Shooting
 Player start pos
 Only one keyboard player
 If two-player, use top and bottom of screen
+Position player's hud in the right place
 
 
 NOTES
 We move the player and set the camera location based on player's node
 
+
 LATER
 Headshots - have small box at top
 Physics crates
 Random map generation
+AI comrades
+
 
 GRAPHICS
 Cholo remake
