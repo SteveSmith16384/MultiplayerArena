@@ -1,27 +1,42 @@
 URGENT
+Try using PS4 gamepad with simple FPS and Overwatchclone
+How to move the direction of the camera with the gamepad?
+
+Choose a name
+PS4 controls
 Shooting
 Player start pos
 Only one keyboard player
-Restart on escape
-Choose a name
-PS4 controls
 If two-player, use top and bottom of screen
 
 
+NOTES
+We move the player and set the camera location based on player's node
+
 LATER
 Headshots - have small box at top
-
+Physics crates
+Random map generation
 
 GRAPHICS
 Cholo remake
 
 
 INSPIRATION
-That "box" game
+What The Box?
 Cholo remake
 Overwatch
 Goldeneye N64
 Quazatron
+
+
+STATS
+Move Speed
+Jump height
+
+
+WEAPONS
+Beam laser
 
 
 ABILITIES
@@ -30,3 +45,5 @@ Fly
 Jump high
 Freeze enemy
 Heal
+Drop mines
+Teleport forwards

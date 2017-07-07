@@ -31,7 +31,7 @@ public class SimpleFirstPerson extends SimpleApplication implements ActionListen
 	private BetterCharacterControl player;
 	private Vector3f walkDirection = new Vector3f();
 	private boolean left = false, right = false, up = false, down = false;
-	private Geometry PlayerModel;
+	private Geometry playerModel;
 	//Temporary vectors used on each frame.
 	//They here to avoid instanciating new vectors on each frame
 	private Vector3f camDir = new Vector3f();
@@ -54,14 +54,14 @@ public class SimpleFirstPerson extends SimpleApplication implements ActionListen
 
 		/** Create a box to use as our player model */
 		Box box1 = new Box(1,1,1);
-		PlayerModel = new Geometry("Box", box1);
+		playerModel = new Geometry("Box", box1);
 		Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");  // create a simple material
 		mat.setColor("Color", ColorRGBA.Blue);   // set color of material to blue
-		PlayerModel.setMaterial(mat);    
-		PlayerModel.setLocalTranslation(new Vector3f(0,6,0));
-		PlayerModel.setLocalTranslation(new Vector3f(0,6,0));
-		PlayerModel.setCullHint(CullHint.Always);
-		rootNode.attachChild(PlayerModel);
+		playerModel.setMaterial(mat);    
+		playerModel.setLocalTranslation(new Vector3f(0,6,0));
+		playerModel.setLocalTranslation(new Vector3f(0,6,0));
+		playerModel.setCullHint(CullHint.Always);
+		rootNode.attachChild(playerModel);
 
 		cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, 1000f);
 		cam.setLocation(new Vector3f(0,6,0));
@@ -99,7 +99,7 @@ public class SimpleFirstPerson extends SimpleApplication implements ActionListen
 		 * Add player control to the box. The box will act as our player model
 		 * while the camera follows it
 		 */
-		PlayerModel.addControl(player);
+		playerModel.addControl(player);
 
 	}
 
@@ -231,6 +231,6 @@ public class SimpleFirstPerson extends SimpleApplication implements ActionListen
 		 * By default the location of the box is on the bottom of the terrain
 		 * we make a slight offset to adjust for head height.
 		 */
-		cam.setLocation(new Vector3f(PlayerModel.getLocalTranslation().x,PlayerModel.getLocalTranslation().y + headHeight,PlayerModel.getLocalTranslation().z));
+		cam.setLocation(new Vector3f(playerModel.getLocalTranslation().x,playerModel.getLocalTranslation().y + headHeight,playerModel.getLocalTranslation().z));
 	}
 }

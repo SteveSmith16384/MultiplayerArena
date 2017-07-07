@@ -18,7 +18,7 @@ import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.hud.HUD;
 
-public class Player extends PhysicalEntity {
+public class PlayersAvatar extends PhysicalEntity {
 
 	private HUD hud;
 
@@ -34,10 +34,9 @@ public class Player extends PhysicalEntity {
 	private Geometry playerGeometry;
 	public BetterCharacterControl playerControl;
 
-	private boolean walking = false;
 	public final int id;
 
-	public Player(Overwatch _game, int _id, Camera _cam) {
+	public PlayersAvatar(Overwatch _game, int _id, Camera _cam) {
 		super(_game, "Player");
 
 		id = _id;
@@ -91,7 +90,6 @@ public class Player extends PhysicalEntity {
 		camDir.set(cam.getDirection()).multLocal(Settings.moveSpeed, 0.0f, Settings.moveSpeed);
 		camLeft.set(cam.getLeft()).multLocal(Settings.strafeSpeed);
 		walkDirection.set(0, 0, 0);
-		walking = up || down || left || right;
 		if (left) {
 			walkDirection.addLocal(camLeft);
 		}
