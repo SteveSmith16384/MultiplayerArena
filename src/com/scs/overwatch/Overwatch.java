@@ -32,6 +32,7 @@ import com.jme3.light.LightList;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
+import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
 import com.jme3.system.AppSettings;
 import com.scs.overwatch.components.IProcessable;
@@ -65,6 +66,7 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 			} catch (BackingStoreException e) {
 				e.printStackTrace();
 			}
+	        settings.setUseJoysticks(true);
 			settings.setTitle(Settings.NAME + " (v" + Settings.VERSION + ")");
 			if (Settings.SHOW_LOGO) {
 				//settings.setSettingsDialogImage("/game_logo.png");
@@ -104,7 +106,7 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 		stateManager.attach(bulletAppState);
 		//bulletAppState.getPhysicsSpace().enableDebug(assetManager);
 
-		viewPort.setBackgroundColor(new ColorRGBA(0.1f, 0.1f, 0.1f, 1f));
+		viewPort.setBackgroundColor(new ColorRGBA(0.0f, 1f, 0.1f, 1f));
 
 		setUpKeys();
 		setUpLight();
@@ -126,7 +128,6 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 
 		//stateManager.getState(StatsAppState.class).toggleStats(); // Turn off stats
 		
-
 	}
 
 
@@ -167,6 +168,11 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 			c.setViewPort(0.5f, 1f, 0f, .5f);
 			break;
 		}
+        final ViewPort view2 = renderManager.createMainView("todo"+c.toString(), c);
+        view2.setClearFlags(true, true, true);
+        view2.attachScene(rootNode);
+
+		//c.updateViewProjection();
 		return c;
 	}
 

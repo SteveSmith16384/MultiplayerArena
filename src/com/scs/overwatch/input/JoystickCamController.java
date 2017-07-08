@@ -18,6 +18,7 @@ public class JoystickCamController extends FlyByCamera {
 
 		this.joystick = _joystick;
 		super.setMoveSpeed(1f); // todo - make setting
+
 	}
 
 
@@ -25,7 +26,9 @@ public class JoystickCamController extends FlyByCamera {
 	public void registerWithInput(InputManager inputManager){
 		this.inputManager = inputManager;
 
-		mapJoystick(this.joystick);
+		//mapJoystick(this.joystick);
+
+		super.registerWithInput(inputManager);
 	}
 
 }
