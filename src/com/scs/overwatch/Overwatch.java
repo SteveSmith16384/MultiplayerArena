@@ -116,6 +116,7 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 
 		this.keyboard = new KeyboardController();
 		this.addPlayer(0, keyboard); // Keyboard
+		
 		Joystick[] joysticks = inputManager.getJoysticks();
 		if (joysticks.length > 0) {
 			joystick = new JoystickController(joysticks[0]);
@@ -172,7 +173,6 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
         view2.setClearFlags(true, true, true);
         view2.attachScene(rootNode);
 
-		//c.updateViewProjection();
 		return c;
 	}
 
