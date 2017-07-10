@@ -1,25 +1,26 @@
 URGENT
-Try using PS4 gamepad with simple FPS and Overwatchclone
-How to move the direction of the camera with the gamepad?
-
+	Try using PS4 gamepad with simple FPS and Overwatchclone
+	How to move the direction of the camera with the gamepad?
 Choose a name
-PS4 controls
+	PS4 controls
 Shooting
 Player start pos
-Only one keyboard player
+	Only one keyboard player
+
+
+LATER
+If player shot, teleport randomly
 If two-player, use top and bottom of screen
 Position player's hud in the right place
+Headshots - have small box at top
+Physics crates
+Random map generation
+AI comrades & enemy
+Show shot accuracy
 
 
 NOTES
 We move the player and set the camera location based on player's node
-
-
-LATER
-Headshots - have small box at top
-Physics crates
-Random map generation
-AI comrades
 
 
 GRAPHICS

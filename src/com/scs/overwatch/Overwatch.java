@@ -101,19 +101,16 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 
 		// Create players for each joystick
 		Joystick[] joysticks = inputManager.getJoysticks();
-		if (joysticks == null) {
+		if (joysticks == null || joysticks.length == 0) {
 			Settings.p("NO JOYSTICKS/GAMEPADS");
 		} else {
-			if (joysticks.length > 0) { // loop through joysticks
-				int nextid=1;
-				for (Joystick j : joysticks) {
-					int id = nextid++;
-					Camera newCam = this.createCamera(id);
-					JoystickCamera joyCam = new JoystickCamera(newCam, j);
-					this.addPlayersAvatar(id, newCam, joyCam);
-					//joyCam.registerWithInput(inputManager);
-				}
-			} 
+			int nextid=1;
+			for (Joystick j : joysticks) {
+				int id = nextid++;
+				Camera newCam = this.createCamera(id);
+				JoystickCamera joyCam = new JoystickCamera(newCam, j);
+				this.addPlayersAvatar(id, newCam, joyCam);
+			}
 		}
 
 		bulletAppState.getPhysicsSpace().addCollisionListener(this);

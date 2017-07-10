@@ -21,6 +21,7 @@ import com.scs.overwatch.MyFlyByCamera;
 public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawInputListener {
 
 	protected Joystick joystick;
+	private boolean left = false, right = false, up = false, down = false, jump = false;
 
 	public JoystickCamera(Camera cam, Joystick _joystick) {
 		super(cam);
@@ -77,38 +78,34 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 
 	@Override
 	public boolean isFwdPressed() {
-		// TODO Auto-generated method stub
-		return false;
+		return up;
 	}
 
-
+	
 	@Override
 	public boolean isBackPressed() {
-		// TODO Auto-generated method stub
-		return false;
+		return down;
 	}
 
-
+	
 	@Override
 	public boolean isJumpPressed() {
-		// TODO Auto-generated method stub
-		return false;
+		return jump;
 	}
-
+	
 
 	@Override
 	public boolean isStrafeLeftPressed() {
-		// TODO Auto-generated method stub
-		return false;
+		return left;
 	}
-
+	
 
 	@Override
 	public boolean isStrafeRightPressed() {
-		// TODO Auto-generated method stub
-		return false;
+		return right;
 	}
-
+	
+	
 	// Raw Input Listener ------------------------
 
 	@Override
