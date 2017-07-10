@@ -15,10 +15,10 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 
 	private boolean left = false, right = false, up = false, down = false, jump = false;
 
-	public MouseAndKeyboardCamera(Camera cam, InputManager inputManager) {
+	public MouseAndKeyboardCamera(Camera cam, InputManager _inputManager) {
 		super(cam);
 		
-		this.setUpKeys(inputManager);
+		this.setUpKeys(_inputManager);
 	}
 
 
@@ -88,6 +88,42 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 	}
 
 
+	@Override
+	public void onAnalog(String name, float value, float tpf) {
+		if (!enabled)
+			return;
+
+		//Settings.p("name=" + name);
+		//Settings.p("CAM=" +this.cam.getName());
+
+		if (name.equals("FLYCAM_Left")){
+			rotateCamera(value, initialUpVec);
+		}else if (name.equals("FLYCAM_Right")){
+			rotateCamera(-value, initialUpVec);
+		}else if (name.equals("FLYCAM_Up")){
+			rotateCamera(-value * (invertY ? -1 : 1), cam.getLeft());
+		}else if (name.equals("FLYCAM_Down")){
+			rotateCamera(value * (invertY ? -1 : 1), cam.getLeft());
+		}else if (name.equals("FLYCAM_Forward")){
+			moveCamera(value, false);
+		}else if (name.equals("FLYCAM_Backward")){
+			moveCamera(-value, false);
+		}else if (name.equals("FLYCAM_StrafeLeft")){
+			moveCamera(value, true);
+		}else if (name.equals("FLYCAM_StrafeRight")){
+			moveCamera(-value, true);
+		}else if (name.equals("FLYCAM_Rise")){
+			riseCamera(value);
+		}else if (name.equals("FLYCAM_Lower")){
+			riseCamera(-value);
+		}else if (name.equals("FLYCAM_ZoomIn")){
+			zoomCamera(value);
+		}else if (name.equals("FLYCAM_ZoomOut")){
+			zoomCamera(-value);
+		}
+	}
+
+	
 	public void onAction(String binding, boolean isPressed, float tpf) {
 		if (binding.equals("Left")) {
 			left = isPressed;

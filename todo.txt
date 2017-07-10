@@ -1,4 +1,6 @@
 URGENT
+Give joystick its own mappings
+Try and get JME source to compile
 	Try using PS4 gamepad with simple FPS and Overwatchclone
 	How to move the direction of the camera with the gamepad?
 Choose a name

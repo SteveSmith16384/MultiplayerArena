@@ -108,7 +108,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 			for (Joystick j : joysticks) {
 				int id = nextid++;
 				Camera newCam = this.createCamera(id);
-				JoystickCamera joyCam = new JoystickCamera(newCam, j);
+				JoystickCamera joyCam = new JoystickCamera(newCam, j, this.inputManager);
 				this.addPlayersAvatar(id, newCam, joyCam);
 			}
 		}
@@ -134,18 +134,22 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		case 0: // TL
 			Settings.p("Creating camera top-left");
 			c.setViewPort(0f, 0.5f, 0.5f, 1f);
+			c.setName("Cam_TL");
 			break;
 		case 1: // TR
 			Settings.p("Creating camera top-right");
 			c.setViewPort(0.5f, 1f, 0.5f, 1f);
+			c.setName("Cam_TR");
 			break;
 		case 2: // BL
 			Settings.p("Creating camera bottom-left");
 			c.setViewPort(0f, 0.5f, 0f, .5f);
+			c.setName("Cam_BL");
 			break;
 		case 3: // BR
 			Settings.p("Creating camera bottom-right");
 			c.setViewPort(0.5f, 1f, 0f, .5f);
+			c.setName("Cam_BR");
 			break;
 		}
 		final ViewPort view2 = renderManager.createMainView("viewport_"+c.toString(), c);
