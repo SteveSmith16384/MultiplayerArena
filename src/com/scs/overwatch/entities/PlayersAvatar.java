@@ -23,8 +23,8 @@ public class PlayersAvatar extends PhysicalEntity {
 
 	//private SpotLight spotlight;
 	private Vector3f walkDirection = new Vector3f();
-	public boolean left = false, right = false, up = false, down = false;
-	private IInputDevice input; // todo - use this
+	//public boolean left = false, right = false, up = false, down = false;
+	private IInputDevice input;
 	
 	//Temporary vectors used on each frame.
 	private Camera cam;
@@ -90,16 +90,16 @@ public class PlayersAvatar extends PhysicalEntity {
 		camDir.set(cam.getDirection()).multLocal(Settings.moveSpeed, 0.0f, Settings.moveSpeed);
 		camLeft.set(cam.getLeft()).multLocal(Settings.strafeSpeed);
 		walkDirection.set(0, 0, 0);
-		if (left) {
+		if (input.isStrafeLeftPressed()) {
 			walkDirection.addLocal(camLeft);
 		}
-		if (right) {
+		if (input.isStrafeRightPressed()) {
 			walkDirection.addLocal(camLeft.negate());
 		}
-		if (up) {
+		if (input.isFwdPressed()) {
 			walkDirection.addLocal(camDir);
 		}
-		if (down) {
+		if (input.isBackPressed()) {
 			walkDirection.addLocal(camDir.negate());
 		}
 		playerControl.setWalkDirection(walkDirection);

@@ -6,7 +6,6 @@ import com.scs.overwatch.Settings;
 import com.scs.overwatch.entities.Fence;
 import com.scs.overwatch.entities.MedievalStatue;
 import com.scs.overwatch.entities.PhysicalEntity;
-import com.scs.overwatch.entities.SimpleCross;
 import com.scs.overwatch.entities.SimplePillar;
 import com.scs.overwatch.entities.Skull;
 import com.scs.overwatch.entities.Skull2;
@@ -108,8 +107,8 @@ public class MapLoader {
 					break;
 
 				case Settings.MAP_SIMPLE_CROSS:
-					PhysicalEntity cross = new SimpleCross(main, x, z);
-					this.rootNode.attachChild(cross.getMainNode());
+					//PhysicalEntity cross = new SimpleCross(main, x, z);
+					//this.rootNode.attachChild(cross.getMainNode());
 					break;
 
 				case Settings.MAP_SKULL:

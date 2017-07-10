@@ -1,6 +1,5 @@
 package com.scs.overwatch;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,24 +7,11 @@ import java.util.Map;
 import java.util.Random;
 import java.util.prefs.BackingStoreException;
 
-import com.jme3.app.SimpleApplication;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.input.Joystick;
-import com.jme3.input.KeyInput;
-import com.jme3.input.MouseInput;
-import com.jme3.input.RawInputListener;
-import com.jme3.input.controls.ActionListener;
-import com.jme3.input.controls.KeyTrigger;
-import com.jme3.input.controls.MouseButtonTrigger;
-import com.jme3.input.event.JoyAxisEvent;
-import com.jme3.input.event.JoyButtonEvent;
-import com.jme3.input.event.KeyInputEvent;
-import com.jme3.input.event.MouseButtonEvent;
-import com.jme3.input.event.MouseMotionEvent;
-import com.jme3.input.event.TouchEvent;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.Light;
 import com.jme3.light.LightList;
@@ -40,24 +26,21 @@ import com.scs.overwatch.entities.Entity;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
 import com.scs.overwatch.input.IInputDevice;
-import com.scs.overwatch.input.JoystickCamController;
-import com.scs.overwatch.input.JoystickController;
-import com.scs.overwatch.input.KeyboardController;
+import com.scs.overwatch.input.JoystickCamera;
+import com.scs.overwatch.input.MouseAndKeyboardCamera;
 import com.scs.overwatch.map.IMapInterface;
 import com.scs.overwatch.map.MapLoader;
 
-public class Overwatch extends SimpleApplication implements ActionListener, PhysicsCollisionListener, RawInputListener {
+public class Overwatch extends MySimpleApplication implements PhysicsCollisionListener {//, ActionListener, RawInputListener { 
 
 	public BulletAppState bulletAppState;
 
 	public static final Random rnd = new Random();
 
 	public List<Entity> entities = new ArrayList<Entity>();
-	private Map<Integer, PlayersAvatar> players = new HashMap<>(); // input id-> player
+	//private Map<Integer, PlayersAvatar> players = new HashMap<>(); // input id-> player
 	private IMapInterface map;
-	private KeyboardController keyboard;
-	private JoystickController joystick;
-	
+
 	public static void main(String[] args) {
 		try {
 			AppSettings settings = new AppSettings(true);
@@ -66,7 +49,7 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 			} catch (BackingStoreException e) {
 				e.printStackTrace();
 			}
-	        settings.setUseJoysticks(true);
+			settings.setUseJoysticks(true);
 			settings.setTitle(Settings.NAME + " (v" + Settings.VERSION + ")");
 			if (Settings.SHOW_LOGO) {
 				//settings.setSettingsDialogImage("/game_logo.png");
@@ -78,13 +61,7 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 			app.setSettings(settings);
 			app.setPauseOnLostFocus(true);
 
-			File video, audio;
 			app.start();
-
-			if (Settings.RECORD_VID) {
-				System.out.println("Video saved at " + video.getCanonicalPath());
-				System.out.println("Audio saved at " + audio.getCanonicalPath());
-			}
 
 		} catch (Exception e) {
 			Settings.p("Error: " + e);
@@ -94,6 +71,7 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 	}
 
 
+	@Override
 	public void simpleInitApp() {
 		assetManager.registerLocator("assets/", FileLocator.class); // default
 		assetManager.registerLocator("assets/Textures/", FileLocator.class);
@@ -108,31 +86,44 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 
 		viewPort.setBackgroundColor(new ColorRGBA(0.0f, 1f, 0.1f, 1f));
 
-		setUpKeys();
+		//setUpKeys();
 		setUpLight();
 
 		MapLoader maploader = new MapLoader(this);
 		map = maploader.loadMap();
 
-		this.keyboard = new KeyboardController();
-		this.addPlayer(0, keyboard); // Keyboard
-		
+		// Create player 0 - keyboard and mouse
+		{
+			Camera newCam = this.createCamera(0);
+			MouseAndKeyboardCamera keyboard = new MouseAndKeyboardCamera(newCam, this.inputManager);
+			this.addPlayersAvatar(0, newCam, keyboard); // Keyboard
+		}
+
+		// Create players for each joystick
 		Joystick[] joysticks = inputManager.getJoysticks();
-		if (joysticks.length > 0) {
-			joystick = new JoystickController(joysticks[0]);
-			Camera c = this.addPlayer(1, joystick);
-			JoystickCamController joycam = new JoystickCamController(c, joysticks[0]);
-			joycam.registerWithInput(inputManager);
+		if (joysticks == null) {
+			Settings.p("NO JOYSTICKS/GAMEPADS");
+		} else {
+			if (joysticks.length > 0) { // loop through joysticks
+				int nextid=1;
+				for (Joystick j : joysticks) {
+					int id = nextid++;
+					Camera newCam = this.createCamera(id);
+					JoystickCamera joyCam = new JoystickCamera(newCam, j);
+					this.addPlayersAvatar(id, newCam, joyCam);
+					//joyCam.registerWithInput(inputManager);
+				}
+			} 
 		}
 
 		bulletAppState.getPhysicsSpace().addCollisionListener(this);
 
 		//stateManager.getState(StatsAppState.class).toggleStats(); // Turn off stats
-		
+
 	}
 
 
-	private Camera addPlayer(int id, IInputDevice input) {
+	private Camera createCamera(int id) {
 		Camera c = null;
 		if (id == 0) {
 			c = cam;
@@ -140,15 +131,6 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 			c = cam.clone();
 		}
 		c.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
-		PlayersAvatar player = new PlayersAvatar(this, id, c, input);
-		//this.players[id] = player;
-		rootNode.attachChild(player.getMainNode());
-		this.entities.add(player);
-
-		player.playerControl.warp(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2));
-
-		// Look towards centre
-		player.getMainNode().lookAt(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2), Vector3f.UNIT_Y);
 
 		// todo - Reframe all the cameras based on number of players
 		switch (id) { // left/right/bottom/top, from bottom-left!
@@ -169,11 +151,23 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 			c.setViewPort(0.5f, 1f, 0f, .5f);
 			break;
 		}
-        final ViewPort view2 = renderManager.createMainView("todo"+c.toString(), c);
-        view2.setClearFlags(true, true, true);
-        view2.attachScene(rootNode);
+		final ViewPort view2 = renderManager.createMainView("viewport_"+c.toString(), c);
+		view2.setClearFlags(true, true, true);
+		view2.attachScene(rootNode);
 
 		return c;
+	}
+
+
+	private void addPlayersAvatar(int id, Camera c, IInputDevice input) { 
+		PlayersAvatar player = new PlayersAvatar(this, id, c, input);
+		rootNode.attachChild(player.getMainNode());
+		this.entities.add(player);
+
+		player.playerControl.warp(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2));
+
+		// Look towards centre
+		player.getMainNode().lookAt(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2), Vector3f.UNIT_Y);
 	}
 
 
@@ -210,42 +204,12 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 	}
 
 
-	/** We over-write some navigational key mappings here, so we can
-	 * add physics-controlled walking and jumping: */
-	private void setUpKeys() {
-		//inputManager.clearMappings();
-
-		inputManager.addMapping(Settings.KEY_RECORD, new KeyTrigger(KeyInput.KEY_R));
-		inputManager.addListener(this, Settings.KEY_RECORD);
-
-		inputManager.addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
-		inputManager.addListener(this, "Left");
-		inputManager.addMapping("Right", new KeyTrigger(KeyInput.KEY_D));
-		inputManager.addListener(this, "Right");
-		inputManager.addMapping("Up", new KeyTrigger(KeyInput.KEY_W));
-		inputManager.addListener(this, "Up");
-		inputManager.addMapping("Down", new KeyTrigger(KeyInput.KEY_S));
-		inputManager.addListener(this, "Down");
-		inputManager.addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
-		inputManager.addListener(this, "Jump");
-		inputManager.addMapping("shoot", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
-		inputManager.addListener(this, "shoot");
-
-		Joystick[] joysticks = inputManager.getJoysticks();
-		if (joysticks == null) {
-			Settings.p("NO JOYSTICKS/GAMEPADS");
-		}
-
-		inputManager.addRawInputListener(this);
-	}
-
-
 	/** These are our custom actions triggered by key presses.
 	 * We do not walk yet, we just keep track of the direction the user pressed. */
-	@Override
+	/*@Override
 	public void onAction(String binding, boolean isPressed, float tpf) {
 		this.keyboard.onAction(binding, isPressed, tpf);
-		/*if (binding.equals("Left")) {
+		if (binding.equals("Left")) {
 			players[0].left = isPressed;
 		} else if (binding.equals("Right")) {
 			players[0].right = isPressed;
@@ -262,10 +226,10 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 				players[0].shoot();
 			}
 
-		}*/
+		}
 
 	}
-
+	 */
 
 	@Override
 	public void collision(PhysicsCollisionEvent event) {
@@ -294,26 +258,4 @@ public class Overwatch extends SimpleApplication implements ActionListener, Phys
 	}
 
 
-	// Raw Input Listener
-	@Override
-	public void onJoyAxisEvent(JoyAxisEvent evt) {
-		Joystick stick = evt.getAxis().getJoystick();
-		joystick.setAxisValue( evt.getAxis(), evt.getValue() ); 
-	}
-
-	@Override
-	public void onJoyButtonEvent(JoyButtonEvent evt) {
-		Joystick stick = evt.getButton().getJoystick();
-		joystick.setButtonValue( evt.getButton(), evt.isPressed() ); 
-	}
-
-	public void beginInput() {}
-	public void endInput() {}
-	public void onMouseMotionEvent(MouseMotionEvent evt) {}
-	public void onMouseButtonEvent(MouseButtonEvent evt) {}
-	public void onKeyEvent(KeyInputEvent evt) {}
-	public void onTouchEvent(TouchEvent evt) {}        
-
-	// End of Raw Input Listener
-	
 }
