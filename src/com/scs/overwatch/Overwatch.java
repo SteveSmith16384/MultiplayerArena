@@ -59,9 +59,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 			Overwatch app = new Overwatch();
 			app.setSettings(settings);
 			app.setPauseOnLostFocus(true);
-
 			app.start();
-
 		} catch (Exception e) {
 			Settings.p("Error: " + e);
 			e.printStackTrace();
@@ -104,7 +102,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 			Settings.p("NO JOYSTICKS/GAMEPADS");
 		} else {
 			for (Joystick j : joysticks) {
-				int id = nextid++;
+				int id = nextid++; // todo - show when creating player
 				Camera newCam = this.createCamera(id);
 				JoystickCamera joyCam = new JoystickCamera(newCam, j, this.inputManager);
 				this.addPlayersAvatar(id, newCam, joyCam);
@@ -155,7 +153,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 			break;
 		}
 		// Look at the centre by default
-		c.lookAt(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2), Vector3f.UNIT_Y);
+		//c.lookAt(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2), Vector3f.UNIT_Y);
 		
 		final ViewPort view2 = renderManager.createMainView("viewport_"+c.toString(), c);
 		view2.setClearFlags(true, true, true);

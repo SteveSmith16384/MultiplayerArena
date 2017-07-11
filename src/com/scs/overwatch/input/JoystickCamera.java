@@ -2,6 +2,7 @@ package com.scs.overwatch.input;
 
 import com.jme3.input.InputManager;
 import com.jme3.input.Joystick;
+import com.jme3.input.JoystickAxis;
 import com.jme3.input.JoystickButton;
 import com.jme3.input.RawInputListener;
 import com.jme3.input.event.JoyAxisEvent;
@@ -12,6 +13,7 @@ import com.jme3.input.event.MouseMotionEvent;
 import com.jme3.input.event.TouchEvent;
 import com.jme3.renderer.Camera;
 import com.scs.overwatch.MyFlyByCamera;
+import com.scs.overwatch.Settings;
 
 /**
  * Class to control the direction of the camera with a joystick
@@ -22,15 +24,17 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 	protected Joystick joystick;
 	private boolean left = false, right = false, up = false, down = false, jump = false, shoot = false;
 	private int id;
-	
+
 	public JoystickCamera(Camera _cam, Joystick _joystick, InputManager _inputManager) {
 		super(_cam);
 
 		this.inputManager = _inputManager;
 		this.joystick = _joystick;
 		id = joystick.getJoyId();
-		
+
 		super.setMoveSpeed(1f); // todo - make setting
+
+		this.inputManager.addRawInputListener(this);
 
 		// both mouse and button - rotation of cam
 		//inputManager.addMapping("jFLYCAM_Left", new MouseAxisTrigger(MouseInput.AXIS_X, true),
@@ -62,23 +66,52 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
         inputManager.addMapping("FLYCAM_Backward", new KeyTrigger(KeyInput.KEY_S));
         inputManager.addMapping("FLYCAM_Rise", new KeyTrigger(KeyInput.KEY_Q));
         inputManager.addMapping("FLYCAM_Lower", new KeyTrigger(KeyInput.KEY_Z));
-*/
+		 */
 		inputManager.addListener(this, "jFLYCAM_StrafeLeft" + id);
 		inputManager.addListener(this, "jFLYCAM_StrafeRight" + id);
 		inputManager.addListener(this, "jFLYCAM_Forward" + id);
 		inputManager.addListener(this, "jFLYCAM_Backward" + id);
 
-  /*      inputManager.addListener(this, mappings);
+		/*      inputManager.addListener(this, mappings);
         inputManager.setCursorVisible(dragToRotate || !isEnabled());
 		 */
 		/*Joystick[] joysticks = inputManager.getJoysticks();
 		if (joysticks != null && joysticks.length > 0){
 			for (Joystick j : joysticks) {
 				if (j == joystick) {*/
-		mapJoystick(joystick);
+		mapJoystick(joystick, id);
 		/*}
 			}
 		}*/
+	}
+
+
+	protected void mapJoystick( Joystick joystick, int id ) {
+		// Map it differently if there are Z axis
+		if( joystick.getAxis( JoystickAxis.Z_ROTATION ) != null && joystick.getAxis( JoystickAxis.Z_AXIS ) != null ) {
+
+			// Make the left stick move
+			joystick.getXAxis().assignAxis( "jFLYCAM_StrafeRight"+id, "jFLYCAM_StrafeLeft"+id );
+			joystick.getYAxis().assignAxis( "jFLYCAM_Backward"+id, "jFLYCAM_Forward"+id );
+
+			// And the right stick control the camera                       
+			joystick.getAxis( JoystickAxis.Z_ROTATION ).assignAxis( "jFLYCAM_Down"+id, "jFLYCAM_Up"+id );
+			joystick.getAxis( JoystickAxis.Z_AXIS ).assignAxis(  "jFLYCAM_Right"+id, "jFLYCAM_Left"+id );
+
+			// And let the dpad be up and down           
+			/*joystick.getPovYAxis().assignAxis("FLYCAM_Rise", "FLYCAM_Lower");
+
+			if( joystick.getButton( "Button 8" ) != null ) { 
+				// Let the stanard select button be the y invert toggle
+				joystick.getButton( "Button 8" ).assignButton( "FLYCAM_InvertY" );
+			}*/
+
+		} else {             
+			joystick.getPovXAxis().assignAxis("jFLYCAM_StrafeRight"+id, "jFLYCAM_StrafeLeft"+id);
+			joystick.getPovYAxis().assignAxis("jFLYCAM_Forward"+id, "jFLYCAM_Backward"+id);
+			joystick.getXAxis().assignAxis("jFLYCAM_Right"+id, "jFLYCAM_Left"+id);
+			joystick.getYAxis().assignAxis("jFLYCAM_Down"+id, "jFLYCAM_Up"+id);
+		}
 	}
 
 
@@ -124,30 +157,31 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 			return;
 
 		//Settings.p("name=" + name);
+		//Settings.p("value=" + value);
 		//Settings.p("CAM=" +this.cam.getName());
 
 		if (name.equals("jFLYCAM_Left" + id)) {
 			rotateCamera(value, initialUpVec);
-		}else if (name.equals("jFLYCAM_Right" + id)) {
+		} else if (name.equals("jFLYCAM_Right" + id)) {
 			rotateCamera(-value, initialUpVec);
-		}else if (name.equals("jFLYCAM_Up" + id)) {
+		} else if (name.equals("jFLYCAM_Up" + id)) {
 			rotateCamera(-value * (invertY ? -1 : 1), cam.getLeft());
-		}else if (name.equals("jFLYCAM_Down" + id)) {
+		} else if (name.equals("jFLYCAM_Down" + id)) {
 			rotateCamera(value * (invertY ? -1 : 1), cam.getLeft());
-		}else if (name.equals("jFLYCAM_Forward" + id)) {
-			up = true;
+		} else if (name.equals("jFLYCAM_Forward" + id)) {
+			up = value > 0.001f; //todo not always true
 			//moveCamera(value, false);
-		}else if (name.equals("jFLYCAM_Backward" + id)) {
-			down = true;
+		} else if (name.equals("jFLYCAM_Backward" + id)) {
+			down = value > 0.001f;
 			//moveCamera(-value, false);
-		}else if (name.equals("jFLYCAM_StrafeLeft" + id)) {
-			left = true;
+		} else if (name.equals("jFLYCAM_StrafeLeft" + id)) {
+			left = value > 0.001f;
 			//moveCamera(value, true);
-		}else if (name.equals("jFLYCAM_StrafeRight" + id)) {
-			right = true;
+		} else if (name.equals("jFLYCAM_StrafeRight" + id)) {
+			right = value > 0.001f;
 			//moveCamera(-value, true);
 		}
-		
+
 		/*else if (name.equals("FLYCAM_Rise")){
 			riseCamera(value);
 		}else if (name.equals("FLYCAM_Lower")){
@@ -159,7 +193,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		}*/
 	}
 
-	
+
 	// Raw Input Listener ------------------------
 
 	@Override
@@ -170,7 +204,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		}*/
 	}
 
-	
+
 	@Override
 	public void onJoyButtonEvent(JoyButtonEvent evt) {
 		Joystick stick = evt.getButton().getJoystick();
@@ -193,7 +227,13 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 	}*/
 
 	public void setButtonValue( JoystickButton button, boolean isPressed ) {
-		// todo
+		Settings.p("button=" + button.getButtonId());
+
+		if (button.getButtonId() == 1) {
+			this.jump = isPressed;
+		} else if (button.getButtonId() == 2) {
+			this.shoot = isPressed;
+		}
 	}
 
 }

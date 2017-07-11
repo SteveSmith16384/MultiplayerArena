@@ -21,7 +21,6 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 	private HUD hud;
 
-	//private SpotLight spotlight;
 	private Vector3f walkDirection = new Vector3f();
 	private IInputDevice input;
 
@@ -47,16 +46,16 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		input = _input;
 
 		/** Create a box to use as our player model */
-		/*Box box1 = new Box(Settings.PLAYER_RAD, Settings.PLAYER_HEIGHT, Settings.PLAYER_RAD);
-		playerGeometry = new Geometry("Player", box1);
+		Box box1 = new Box(Settings.PLAYER_RAD, Settings.PLAYER_HEIGHT, Settings.PLAYER_RAD);
+		Geometry playerGeometry = new Geometry("Player", box1);
 		Material mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");  // create a simple material
 		mat.setColor("Color", ColorRGBA.Blue);
 		playerGeometry.setMaterial(mat);    
 		playerGeometry.setLocalTranslation(new Vector3f(0,2,0));
-		//playerGeometry.setCullHint(CullHint.Always);
-		this.getMainNode().attachChild(playerGeometry);*/
-		Crate crate = new Crate(game, 0, 0, 0);
-		this.getMainNode().attachChild(crate.getMainNode());
+		this.getMainNode().attachChild(playerGeometry);
+		
+		//Crate crate = new Crate(game, 0, 0, 0);
+		//this.getMainNode().attachChild(crate.getMainNode());
 		
 		// create character control parameters (Radius,Height,Weight)
 		playerControl = new BetterCharacterControl(Settings.PLAYER_RAD, Settings.PLAYER_HEIGHT, 1f);
@@ -74,13 +73,6 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		hud = new HUD(game, game.getAssetManager(), 0, 0, cam.getWidth(), cam.getHeight(), guiFont_small);
 		game.getGuiNode().attachChild(hud);
 		//this.entities.add(hud);
-
-		/*this.spotlight = new SpotLight();
-		spotlight.setColor(ColorRGBA.White.mult(3f));
-		spotlight.setSpotRange(10f);
-		spotlight.setSpotInnerAngle(FastMath.QUARTER_PI / 8);
-		spotlight.setSpotOuterAngle(FastMath.QUARTER_PI / 2);
-		game.getRootNode().addLight(spotlight);*/
 	}
 
 
@@ -114,7 +106,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		}
 		playerControl.setWalkDirection(walkDirection);
 
-		if (input.isJumpPressed() || timeSinceLastMove > 10) {
+		if (input.isJumpPressed()) {// || timeSinceLastMove > 10) {
 			timeSinceLastMove = 0;
 			this.jump();
 		}
@@ -141,33 +133,6 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 	public void shoot() {
 		if (shotInterval.hitInterval()) {
-			/*Sphere sphere = new Sphere(32, 32, 0.4f, true, false); // todo - create bullet entity
-			sphere.setTextureMode(TextureMode.Projected);
-			Geometry ball_geo = new Geometry("cannon ball", sphere);
-
-			TextureKey key3 = new TextureKey( "Textures/OldRedBricks_T.jpg");
-			Texture tex3 = game.getAssetManager().loadTexture(key3);
-			Material floor_mat = null;
-			if (Settings.LIGHTING) {
-				floor_mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
-				floor_mat.setTexture("DiffuseMap", tex3);
-			} else {
-				floor_mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
-				floor_mat.setTexture("ColorMap", tex3);
-			}
-			ball_geo.setMaterial(floor_mat);
-
-			game.getRootNode().attachChild(ball_geo);
-
-			ball_geo.setLocalTranslation(cam.getLocation());
-
-			RigidBodyControl ball_phy = new RigidBodyControl(1f);
-
-			ball_geo.addControl(ball_phy);
-			game.bulletAppState.getPhysicsSpace().add(ball_phy);
-
-			ball_phy.setLinearVelocity(cam.getDirection().mult(25));*/
-			
 			Bullet b = new Bullet(game, this);
 			game.addEntity(b);
 		}

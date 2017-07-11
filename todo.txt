@@ -1,4 +1,8 @@
 URGENT
+Players box not in right position
+PS4 sometimes keeps moving
+Camera not turning right
+Players box is offset
 	Make avatars into crates
 Improve map - walls around edge, lots of boxes
 Show score on screen
