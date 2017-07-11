@@ -13,4 +13,6 @@ public interface IMapInterface {
 	//int getNumCollectables();
 	
 	Point getPlayerStartPos(int id);
+	
+	void addMisc();
 }

@@ -36,7 +36,7 @@ public class StoneCoffin extends PhysicalEntity {
 	
 	@Override
 	public void remove() {
-		this.main_node.removeFromParent();
+		super.remove();
 		this.game.bulletAppState.getPhysicsSpace().remove(this.floor_phy);
 		
 	}

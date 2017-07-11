@@ -1,11 +1,10 @@
 package com.scs.overwatch;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.awt.Point;
 import java.util.Random;
 import java.util.prefs.BackingStoreException;
+
+import ssmith.util.TSArrayList;
 
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.bullet.BulletAppState;
@@ -31,13 +30,13 @@ import com.scs.overwatch.input.MouseAndKeyboardCamera;
 import com.scs.overwatch.map.IMapInterface;
 import com.scs.overwatch.map.MapLoader;
 
-public class Overwatch extends MySimpleApplication implements PhysicsCollisionListener {//, ActionListener, RawInputListener { 
+public class Overwatch extends MySimpleApplication implements PhysicsCollisionListener { 
 
 	public BulletAppState bulletAppState;
 
 	public static final Random rnd = new Random();
 
-	public List<Entity> entities = new ArrayList<Entity>();
+	public TSArrayList<Entity> entities = new TSArrayList<Entity>();
 	//private Map<Integer, PlayersAvatar> players = new HashMap<>(); // input id-> player
 	private IMapInterface map;
 
@@ -86,13 +85,12 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 
 		viewPort.setBackgroundColor(new ColorRGBA(0.0f, 1f, 0.1f, 1f));
 
-		//setUpKeys();
 		setUpLight();
 
 		MapLoader maploader = new MapLoader(this);
 		map = maploader.loadMap();
 
-		// Create player 0 - keyboard and mouse
+		// Auto-Create player 0 - keyboard and mouse
 		{
 			Camera newCam = this.createCamera(0);
 			MouseAndKeyboardCamera keyboard = new MouseAndKeyboardCamera(newCam, this.inputManager);
@@ -100,17 +98,21 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		}
 
 		// Create players for each joystick
+		int nextid=1;
 		Joystick[] joysticks = inputManager.getJoysticks();
 		if (joysticks == null || joysticks.length == 0) {
 			Settings.p("NO JOYSTICKS/GAMEPADS");
 		} else {
-			int nextid=1;
 			for (Joystick j : joysticks) {
 				int id = nextid++;
 				Camera newCam = this.createCamera(id);
 				JoystickCamera joyCam = new JoystickCamera(newCam, j, this.inputManager);
 				this.addPlayersAvatar(id, newCam, joyCam);
 			}
+		}
+		// Create extra cameras
+		for (int id=nextid ; id<=3 ; id++) {
+			this.createCamera(id);
 		}
 
 		bulletAppState.getPhysicsSpace().addCollisionListener(this);
@@ -152,6 +154,9 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 			c.setName("Cam_BR");
 			break;
 		}
+		// Look at the centre by default
+		c.lookAt(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2), Vector3f.UNIT_Y);
+		
 		final ViewPort view2 = renderManager.createMainView("viewport_"+c.toString(), c);
 		view2.setClearFlags(true, true, true);
 		view2.attachScene(rootNode);
@@ -165,7 +170,9 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		rootNode.attachChild(player.getMainNode());
 		this.entities.add(player);
 
-		player.playerControl.warp(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2));
+		//player.playerControl.warp(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2));
+		Point p = map.getPlayerStartPos(id);
+		player.playerControl.warp(new Vector3f(p.x, 10f, p.y));
 
 		// Look towards centre
 		player.getMainNode().lookAt(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2), Vector3f.UNIT_Y);
@@ -174,6 +181,8 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 
 	@Override
 	public void simpleUpdate(float tpf_secs) {
+		this.entities.refresh();
+
 		for(Entity e : entities) {
 			if (e instanceof IProcessable) {
 				IProcessable ip = (IProcessable)e;
@@ -251,6 +260,20 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		if (a != null && b != null) {
 			CollisionLogic.collision(this, a, b);
 		}
+	}
+
+
+	public void addEntity(Entity e) {
+		//synchronized (this.entities) {
+		this.entities.add(e);
+		//}
+	}
+
+
+	public void removeEntity(Entity e) {
+		//synchronized (this.entities) {
+		this.entities.remove(e);
+		//}
 	}
 
 

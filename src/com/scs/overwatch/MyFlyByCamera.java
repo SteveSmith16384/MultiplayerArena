@@ -211,7 +211,6 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
     }
 	 */
 	protected void mapJoystick( Joystick joystick ) {
-
 		// Map it differently if there are Z axis
 		if( joystick.getAxis( JoystickAxis.Z_ROTATION ) != null && joystick.getAxis( JoystickAxis.Z_AXIS ) != null ) {
 
@@ -239,6 +238,7 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 		}                
 	}
 
+	
 	/**
 	 * Registers the FlyByCamera to receive input events from the provided
 	 * Dispatcher.

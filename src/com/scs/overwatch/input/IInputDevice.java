@@ -6,9 +6,12 @@ public interface IInputDevice {
 
 	boolean isBackPressed();
 
-	boolean isJumpPressed();
-
 	boolean isStrafeLeftPressed();
 
 	boolean isStrafeRightPressed();
+
+	boolean isJumpPressed();
+
+	boolean isShootPressed();
+
 }

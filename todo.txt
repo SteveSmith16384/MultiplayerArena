@@ -1,21 +1,26 @@
 URGENT
-Give joystick its own mappings
-Try and get JME source to compile
-	Try using PS4 gamepad with simple FPS and Overwatchclone
-	How to move the direction of the camera with the gamepad?
+	Make avatars into crates
+Improve map - walls around edge, lots of boxes
+Show score on screen
 Choose a name
-	PS4 controls
-Shooting
-Player start pos
-	Only one keyboard player
+Get new textures
+If player shot, teleport randomly
+If player hits another player, they jump
+	Player jump if not moved for a while
+	Only shoot once every so often
+	Remove bullets after a while
+	Player start pos
+	Add boxes
+	Move using left joystick
+	Debug mode - set up other cameras
 
 
 LATER
-If player shot, teleport randomly
+Improve resource loading
+Try and get JME source to compile
 If two-player, use top and bottom of screen
 Position player's hud in the right place
 Headshots - have small box at top
-Physics crates
 Random map generation
 AI comrades & enemy
 Show shot accuracy

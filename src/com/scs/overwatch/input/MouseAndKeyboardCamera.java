@@ -9,26 +9,24 @@ import com.jme3.input.controls.MouseAxisTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.renderer.Camera;
 import com.scs.overwatch.MyFlyByCamera;
-import com.scs.overwatch.Settings;
 
 public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListener, IInputDevice { 
 
-	private boolean left = false, right = false, up = false, down = false, jump = false;
+	private boolean left = false, right = false, up = false, down = false, jump = false, shoot = false;
 
 	public MouseAndKeyboardCamera(Camera cam, InputManager _inputManager) {
 		super(cam);
-		
-		this.setUpKeys(_inputManager);
+
+		this.inputManager = _inputManager;
+
+		this.setUpKeys();
 	}
 
 
 	/** We over-write some navigational key mappings here, so we can
 	 * add physics-controlled walking and jumping: */
-	private void setUpKeys(InputManager inputManager) {
+	private void setUpKeys() {
 		//inputManager.clearMappings();
-
-		inputManager.addMapping(Settings.KEY_RECORD, new KeyTrigger(KeyInput.KEY_R));
-		inputManager.addListener(this, Settings.KEY_RECORD);
 
 		inputManager.addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
 		inputManager.addListener(this, "Left");
@@ -42,13 +40,6 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 		inputManager.addListener(this, "Jump");
 		inputManager.addMapping("shoot", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
 		inputManager.addListener(this, "shoot");
-
-	/*}
-
-
-	@Override
-	public void registerWithInput(InputManager inputManager){*/
-		this.inputManager = inputManager;
 
 		// both mouse and button - rotation of cam
 		inputManager.addMapping("FLYCAM_Left", new MouseAxisTrigger(MouseInput.AXIS_X, true),
@@ -104,7 +95,7 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 			rotateCamera(-value * (invertY ? -1 : 1), cam.getLeft());
 		}else if (name.equals("FLYCAM_Down")){
 			rotateCamera(value * (invertY ? -1 : 1), cam.getLeft());
-		}else if (name.equals("FLYCAM_Forward")){
+		}/*else if (name.equals("FLYCAM_Forward")){
 			moveCamera(value, false);
 		}else if (name.equals("FLYCAM_Backward")){
 			moveCamera(-value, false);
@@ -120,10 +111,10 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 			zoomCamera(value);
 		}else if (name.equals("FLYCAM_ZoomOut")){
 			zoomCamera(-value);
-		}
+		}*/
 	}
 
-	
+
 	public void onAction(String binding, boolean isPressed, float tpf) {
 		if (binding.equals("Left")) {
 			left = isPressed;
@@ -134,41 +125,42 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 		} else if (binding.equals("Down")) {
 			down = isPressed;
 		} else if (binding.equals("Jump")) {
-			if (isPressed) { 
-				jump = isPressed; 
-			}
+			jump = isPressed;
 		} else if (binding.equals("shoot")) {
-			if (isPressed) { 
-				//shoot = true;
-			}
-
+			shoot = isPressed;
 		}		
 	}
 
-	
+
 	@Override
 	public boolean isFwdPressed() {
 		return up;
 	}
 
-	
+
 	@Override
 	public boolean isBackPressed() {
 		return down;
 	}
 
-	
+
 	@Override
 	public boolean isJumpPressed() {
 		return jump;
 	}
-	
+
+
+	@Override
+	public boolean isShootPressed() {
+		return shoot;
+	}
+
 
 	@Override
 	public boolean isStrafeLeftPressed() {
 		return left;
 	}
-	
+
 
 	@Override
 	public boolean isStrafeRightPressed() {

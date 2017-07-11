@@ -29,23 +29,13 @@ public class Settings {
 	public static final int MAP_NOTHING = 0;
 	public static final int MAP_TREE = 1;
 	//public static final int MAP_PLAYER = 2;
-	public static final int MAP_MONSTER_GHOST = 3; // 2D ghost, moves when not looked at.
 	public static final int MAP_FENCE_LR = 4;
 	public static final int MAP_FENCE_FB = 5;
 	public static final int MAP_MEDIEVAL_STATUE = 6;
 	public static final int MAP_SIMPLE_PILLAR = 7;
-	public static final int MAP_MONSTER_STATUE = 8; // moves when NOT looked at.
-	public static final int MAP_SIMPLE_CROSS = 9;
 	public static final int MAP_SKULL = 10;
-	public static final int MAP_SKULL2 = 11;
 	public static final int MAP_STONE_COFFIN = 13;
-	public static final int MAP_MONSTER_MOVING_STATUE = 14; // Moves fast when looked at
-	public static final int MAP_CHARGING_GHOST = 15;
 	
-	// Key codes
-	public static final String KEY_RECORD = "record";
-
-
 	public static void p(String s) {
 		System.out.println(System.currentTimeMillis() + ": " + s);
 	}

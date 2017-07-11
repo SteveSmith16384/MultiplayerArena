@@ -57,4 +57,11 @@ public class ArrayMap implements IMapInterface {
 	}
 
 
+	@Override
+	public void addMisc() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }

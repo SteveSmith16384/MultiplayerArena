@@ -16,14 +16,12 @@ public abstract class PhysicalEntity extends Entity implements IProcessable {
 
 	private static final float TURN_SPEED = 1f;
 
-	protected Overwatch game;
 	protected Node main_node, left_node, right_node;
 	public String name;
 
 	public PhysicalEntity(Overwatch _game, String _name) {
-		super();
+		super(_game);
 
-		this.game = _game;
 		name = _name;
 
 		main_node = new Node(name + "_MainNode");
@@ -38,10 +36,12 @@ public abstract class PhysicalEntity extends Entity implements IProcessable {
 	}
 
 
+	@Override
 	public void remove() {
-		this.main_node.removeFromParent();
-		// Don't need to remove left/right nodes as they are attached to the main node
+		super.remove();
+		this.main_node.removeFromParent(); // Don't need to remove left/right nodes as they are attached to the main node
 	}
+	
 
 	public void turnLeft(float tpf) {
 		this.getMainNode().rotate(new Quaternion().fromAngleAxis(-1 * TURN_SPEED * tpf, Vector3f.UNIT_Y));

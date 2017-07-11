@@ -1,7 +1,8 @@
 package com.scs.overwatch.entities;
 
+import ssmith.util.RealtimeInterval;
+
 import com.jme3.bullet.control.BetterCharacterControl;
-import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.font.BitmapFont;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -10,31 +11,33 @@ import com.jme3.renderer.Camera;
 import com.jme3.renderer.Camera.FrustumIntersect;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
-import com.jme3.scene.shape.Sphere;
-import com.jme3.scene.shape.Sphere.TextureMode;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
+import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 
-public class PlayersAvatar extends PhysicalEntity {
+public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 	private HUD hud;
 
 	//private SpotLight spotlight;
 	private Vector3f walkDirection = new Vector3f();
-	//public boolean left = false, right = false, up = false, down = false;
 	private IInputDevice input;
-	
+
 	//Temporary vectors used on each frame.
 	private Camera cam;
 	private Vector3f camDir = new Vector3f();
 	private Vector3f camLeft = new Vector3f();
 
-	private Geometry playerGeometry;
+	//private Geometry playerGeometry;
 	public BetterCharacterControl playerControl;
 
 	public final int id;
+	private RealtimeInterval shotInterval = new RealtimeInterval(200);
+	private float timeSinceLastMove = 0;
+	
+	public int score = 0;
 
 	public PlayersAvatar(Overwatch _game, int _id, Camera _cam, IInputDevice _input) {
 		super(_game, "Player");
@@ -44,15 +47,17 @@ public class PlayersAvatar extends PhysicalEntity {
 		input = _input;
 
 		/** Create a box to use as our player model */
-		Box box1 = new Box(Settings.PLAYER_RAD, Settings.PLAYER_HEIGHT, Settings.PLAYER_RAD);
+		/*Box box1 = new Box(Settings.PLAYER_RAD, Settings.PLAYER_HEIGHT, Settings.PLAYER_RAD);
 		playerGeometry = new Geometry("Player", box1);
 		Material mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");  // create a simple material
 		mat.setColor("Color", ColorRGBA.Blue);
 		playerGeometry.setMaterial(mat);    
 		playerGeometry.setLocalTranslation(new Vector3f(0,2,0));
 		//playerGeometry.setCullHint(CullHint.Always);
-		this.getMainNode().attachChild(playerGeometry);
-
+		this.getMainNode().attachChild(playerGeometry);*/
+		Crate crate = new Crate(game, 0, 0, 0);
+		this.getMainNode().attachChild(crate.getMainNode());
+		
 		// create character control parameters (Radius,Height,Weight)
 		playerControl = new BetterCharacterControl(Settings.PLAYER_RAD, Settings.PLAYER_HEIGHT, 1f);
 		// set basic physical properties:
@@ -81,6 +86,7 @@ public class PlayersAvatar extends PhysicalEntity {
 
 	@Override
 	public void process(float tpf) {
+		timeSinceLastMove += tpf;
 		/*
 		 * The direction of character is determined by the camera angle
 		 * the Y direction is set to zero to keep our character from
@@ -92,17 +98,31 @@ public class PlayersAvatar extends PhysicalEntity {
 		walkDirection.set(0, 0, 0);
 		if (input.isStrafeLeftPressed()) {
 			walkDirection.addLocal(camLeft);
+			timeSinceLastMove = 0;
 		}
 		if (input.isStrafeRightPressed()) {
 			walkDirection.addLocal(camLeft.negate());
+			timeSinceLastMove = 0;
 		}
 		if (input.isFwdPressed()) {
 			walkDirection.addLocal(camDir);
+			timeSinceLastMove = 0;
 		}
 		if (input.isBackPressed()) {
 			walkDirection.addLocal(camDir.negate());
+			timeSinceLastMove = 0;
 		}
 		playerControl.setWalkDirection(walkDirection);
+
+		if (input.isJumpPressed() || timeSinceLastMove > 10) {
+			timeSinceLastMove = 0;
+			this.jump();
+		}
+
+		if (input.isShootPressed()) {
+			timeSinceLastMove = 0;
+			shoot();
+		}
 
 		/*
 		 * By default the location of the box is on the bottom of the terrain
@@ -120,21 +140,37 @@ public class PlayersAvatar extends PhysicalEntity {
 
 
 	public void shoot() {
-		Sphere sphere = new Sphere(32, 32, 0.4f, true, false); // todo - create bullet entity
-		sphere.setTextureMode(TextureMode.Projected);
-		/** Create a cannon ball geometry and attach to scene graph. */
-		Geometry ball_geo = new Geometry("cannon ball", sphere);
-		//ball_geo.setMaterial(stone_mat);
-		game.getRootNode().attachChild(ball_geo);
-		/** Position the cannon ball  */
-		ball_geo.setLocalTranslation(cam.getLocation());
-		/** Make the ball physical with a mass > 0.0f */
-		RigidBodyControl ball_phy = new RigidBodyControl(1f);
-		/** Add physical ball to physics space. */
-		ball_geo.addControl(ball_phy);
-		game.bulletAppState.getPhysicsSpace().add(ball_phy);
-		/** Accelerate the physical ball to shoot it. */
-		ball_phy.setLinearVelocity(cam.getDirection().mult(25));
+		if (shotInterval.hitInterval()) {
+			/*Sphere sphere = new Sphere(32, 32, 0.4f, true, false); // todo - create bullet entity
+			sphere.setTextureMode(TextureMode.Projected);
+			Geometry ball_geo = new Geometry("cannon ball", sphere);
+
+			TextureKey key3 = new TextureKey( "Textures/OldRedBricks_T.jpg");
+			Texture tex3 = game.getAssetManager().loadTexture(key3);
+			Material floor_mat = null;
+			if (Settings.LIGHTING) {
+				floor_mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
+				floor_mat.setTexture("DiffuseMap", tex3);
+			} else {
+				floor_mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+				floor_mat.setTexture("ColorMap", tex3);
+			}
+			ball_geo.setMaterial(floor_mat);
+
+			game.getRootNode().attachChild(ball_geo);
+
+			ball_geo.setLocalTranslation(cam.getLocation());
+
+			RigidBodyControl ball_phy = new RigidBodyControl(1f);
+
+			ball_geo.addControl(ball_phy);
+			game.bulletAppState.getPhysicsSpace().add(ball_phy);
+
+			ball_phy.setLinearVelocity(cam.getDirection().mult(25));*/
+			
+			Bullet b = new Bullet(game, this);
+			game.addEntity(b);
+		}
 	}
 
 
@@ -149,6 +185,30 @@ public class PlayersAvatar extends PhysicalEntity {
 		super.remove();
 		this.game.bulletAppState.getPhysicsSpace().remove(this.playerControl);
 
+	}
+
+
+	@Override
+	public Vector3f getLocation() {
+		return this.cam.getLocation();
+	}
+
+
+	@Override
+	public Vector3f getDir() {
+		return this.cam.getDirection();
+	}
+	
+	
+	public void jump() {
+		this.playerControl.jump();
+	}
+
+
+	@Override
+	public void hasSuccessfullyHit(Entity e) {
+		this.score++;
+		
 	}
 
 }

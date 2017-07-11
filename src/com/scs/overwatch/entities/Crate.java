@@ -11,7 +11,7 @@ import com.jme3.texture.Texture.WrapMode;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 
-public class Fence extends PhysicalEntity {
+public class Crate extends PhysicalEntity {
 
 	private static final float WIDTH = 2f;
 	private static final float HEIGHT = 1.5f;
@@ -19,14 +19,13 @@ public class Fence extends PhysicalEntity {
 	private Geometry geometry;
 	private RigidBodyControl floor_phy;
 	
-	public Fence(Overwatch _game, float x, float z, float rot) {
-		super(_game, "Fence");
+	public Crate(Overwatch _game, float x, float z, float rotDegrees) {
+		super(_game, "FeCratence");
 
-		Box box1 = new Box(WIDTH/2, HEIGHT/2, .1f);
+		Box box1 = new Box(WIDTH/2, HEIGHT/2, WIDTH/2);
 		box1.scaleTextureCoordinates(new Vector2f(WIDTH, HEIGHT));
-		geometry = new Geometry("Fence", box1);
-		//TextureKey key3 = new TextureKey("Textures/Terrain/Pond/Pond.jpg");
-		TextureKey key3 = new TextureKey("Textures/bricktex.jpg");
+		geometry = new Geometry("Crate", box1);
+		TextureKey key3 = new TextureKey("Textures/crate.png");
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);
@@ -40,18 +39,16 @@ public class Fence extends PhysicalEntity {
 			floor_mat.setTexture("ColorMap", tex3);
 		}
 		geometry.setMaterial(floor_mat);
-		// Uncomment if tex is transparent
 		//floor_mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
 		//geometry.setQueueBucket(Bucket.Transparent);
 		
 		this.main_node.attachChild(geometry);
-		float rads = (float)Math.toRadians(rot);
+		float rads = (float)Math.toRadians(rotDegrees);
 		main_node.rotate(0, rads, 0);
 		main_node.setLocalTranslation(x+(WIDTH/2), HEIGHT/2, z+0.5f);
 
-		floor_phy = new RigidBodyControl(0);
+		floor_phy = new RigidBodyControl(1f);
 		geometry.addControl(floor_phy);
-
 		game.bulletAppState.getPhysicsSpace().add(floor_phy);
 		
 		this.geometry.setUserData(Settings.ENTITY, this);
