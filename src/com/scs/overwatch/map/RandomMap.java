@@ -55,8 +55,6 @@ public class RandomMap implements IMapInterface {
 
 	@Override
 	public void addMisc() {
-		// TODO Auto-generated method stub
-		
 	}
 
 

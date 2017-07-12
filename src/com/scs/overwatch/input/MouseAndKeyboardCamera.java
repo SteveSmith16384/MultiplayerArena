@@ -12,7 +12,7 @@ import com.scs.overwatch.MyFlyByCamera;
 
 public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListener, IInputDevice { 
 
-	private boolean left = false, right = false, up = false, down = false, jump = false, shoot = false;
+	private boolean left = false, right = false, up = false, down = false, jump = false, shoot = false, ability1 = false;
 
 	public MouseAndKeyboardCamera(Camera cam, InputManager _inputManager) {
 		super(cam);
@@ -38,8 +38,10 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 		inputManager.addListener(this, "Down");
 		inputManager.addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
 		inputManager.addListener(this, "Jump");
-		inputManager.addMapping("shoot", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
-		inputManager.addListener(this, "shoot");
+		inputManager.addMapping("Ability1", new KeyTrigger(KeyInput.KEY_C));
+		inputManager.addListener(this, "Ability1");
+		inputManager.addMapping("Shoot", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+		inputManager.addListener(this, "Shoot");
 
 		// both mouse and button - rotation of cam
 		inputManager.addMapping("FLYCAM_Left", new MouseAxisTrigger(MouseInput.AXIS_X, true),
@@ -126,8 +128,10 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 			down = isPressed;
 		} else if (binding.equals("Jump")) {
 			jump = isPressed;
-		} else if (binding.equals("shoot")) {
+		} else if (binding.equals("Shoot")) {
 			shoot = isPressed;
+		} else if (binding.equals("Ability1")) {
+			ability1 = isPressed;
 		}		
 	}
 
@@ -165,6 +169,12 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 	@Override
 	public boolean isStrafeRightPressed() {
 		return right;
+	}
+
+
+	@Override
+	public boolean isAbility1Pressed() {
+		return ability1;
 	}
 
 }

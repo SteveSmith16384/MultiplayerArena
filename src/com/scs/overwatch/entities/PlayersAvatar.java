@@ -4,17 +4,15 @@ import java.awt.Point;
 
 import ssmith.util.RealtimeInterval;
 
-import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.font.BitmapFont;
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.Camera.FrustumIntersect;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.shape.Box;
+import com.scs.overwatch.MyBetterCharacterControl;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
+import com.scs.overwatch.abilities.IAbility;
+import com.scs.overwatch.abilities.JetPac;
 import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
@@ -25,8 +23,6 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	public static final float PLAYER_HEIGHT = 1.5f;
 	public static final float PLAYER_RAD = .35f;
 	
-	private HUD hud;
-
 	private Vector3f walkDirection = new Vector3f();
 	private IInputDevice input;
 
@@ -35,11 +31,12 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	private Vector3f camDir = new Vector3f();
 	private Vector3f camLeft = new Vector3f();
 
-	public BetterCharacterControl playerControl;
-
+	private HUD hud;
+	public MyBetterCharacterControl playerControl;
 	public final int id;
 	private RealtimeInterval shotInterval = new RealtimeInterval(200);
 	private float timeSinceLastMove = 0;
+	private IAbility ability;
 	
 	public int score = 0;
 
@@ -59,27 +56,34 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		playerGeometry.setLocalTranslation(new Vector3f(0,PLAYER_HEIGHT/2,0));
 		this.getMainNode().attachChild(playerGeometry);*/
 		
-		Crate crate = new Crate(game, 0, 0, PLAYER_RAD*2, PLAYER_HEIGHT, 0);
+		Crate crate = new Crate(game, 0, 0, PLAYER_RAD*2, PLAYER_HEIGHT, PLAYER_RAD*2, 0);
 		crate.getMainNode().setLocalTranslation(new Vector3f(0,PLAYER_HEIGHT/2,0));
 		this.getMainNode().attachChild(crate.getMainNode());
 		
 		// create character control parameters (Radius,Height,Weight)
-		playerControl = new BetterCharacterControl(PLAYER_RAD, PLAYER_HEIGHT, 1f);
+		playerControl = new MyBetterCharacterControl(PLAYER_RAD, PLAYER_HEIGHT, 1f);
 		playerControl.setJumpForce(new Vector3f(0, 2f, 0)); 
 		playerControl.setGravity(new Vector3f(0, 1f, 0));
 		this.getMainNode().addControl(playerControl);
 
 		game.bulletAppState.getPhysicsSpace().add(playerControl);
-
+		
 		this.getMainNode().setUserData(Settings.ENTITY, this);
 
 		BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
 		hud = new HUD(game, game.getAssetManager(), cam.getViewPortLeft(), cam.getViewPortTop(), cam.getWidth(), cam.getHeight(), guiFont_small);
 		game.getGuiNode().attachChild(hud);
-		//this.entities.add(hud);
+		
+		this.ability = new JetPac(this); // todo - make random
 	}
 
 
+	public void hitByBullet() {
+		this.hud.showDamageBox();
+		this.moveToStartPostion();
+	}
+	
+	
 	public void moveToStartPostion() {
 		Point p = game.map.getPlayerStartPos(id);
 		playerControl.warp(new Vector3f(p.x, 10f, p.y));

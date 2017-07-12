@@ -22,7 +22,7 @@ import com.scs.overwatch.Settings;
 public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawInputListener {
 
 	protected Joystick joystick;
-	private boolean left = false, right = false, up = false, down = false, jump = false, shoot = false;
+	private boolean left = false, right = false, up = false, down = false, jump = false, shoot = false, ability1 = false;
 	private int id;
 
 	public JoystickCamera(Camera _cam, Joystick _joystick, InputManager _inputManager) {
@@ -152,6 +152,12 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 
 
 	@Override
+	public boolean isAbility1Pressed() {
+		return ability1;
+	}
+
+
+	@Override
 	public void onAnalog(String name, float value, float tpf) {
 		if (!enabled)
 			return;
@@ -167,7 +173,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		} else if (name.equals("jFLYCAM_Down" + id)) {
 			rotateCamera(value * (invertY ? -1 : 1), cam.getLeft());
 		} else if (name.equals("jFLYCAM_Forward" + id)) {
-			up = value > 0.001f; //todo not always true!
+			up = value > 0.001f;
 			//moveCamera(value, false);
 		} else if (name.equals("jFLYCAM_Backward" + id)) {
 			down = value > 0.001f;
@@ -198,7 +204,14 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 	public void onJoyAxisEvent(JoyAxisEvent evt) {
 		Joystick stick = evt.getAxis().getJoystick();
 		if (stick == joystick) {
-			//setAxisValue( evt.getAxis(), evt.getValue() ); 
+			JoystickAxis axis = evt.getAxis();
+			if( axis == axis.getJoystick().getXAxis() ) {
+				Settings.p("Xaxis=" + evt.getValue());
+				// todo - set u/d to false?
+			} else if( axis == axis.getJoystick().getYAxis() ) {
+				Settings.p("Yaxis=" + evt.getValue()); 
+				// todo - set l/r to false?
+			}
 		}
 	}
 
@@ -213,6 +226,8 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 				this.jump = evt.isPressed();
 			} else if (button.getButtonId() == 2) {
 				this.shoot = evt.isPressed();
+			} else if (button.getButtonId() == 3) {
+				this.ability1 = evt.isPressed();
 			}
 
 		}

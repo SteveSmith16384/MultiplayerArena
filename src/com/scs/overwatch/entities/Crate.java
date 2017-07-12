@@ -19,10 +19,10 @@ public class Crate extends PhysicalEntity {
 	private Geometry geometry;
 	private RigidBodyControl floor_phy;
 	
-	public Crate(Overwatch _game, float x, float z, float WIDTH, float HEIGHT, float rotDegrees) {
+	public Crate(Overwatch _game, float x, float z, float w, float h, float d, float rotDegrees) {
 		super(_game, "Crate");
 
-		Box box1 = new Box(WIDTH/2, HEIGHT/2, WIDTH/2);
+		Box box1 = new Box(w/2, h/2, d/2);
 		//box1.scaleTextureCoordinates(new Vector2f(WIDTH, HEIGHT));
 		geometry = new Geometry("Crate", box1);
 		//TextureKey key3 = new TextureKey("Textures/crate.png");
@@ -46,14 +46,13 @@ public class Crate extends PhysicalEntity {
 		this.main_node.attachChild(geometry);
 		float rads = (float)Math.toRadians(rotDegrees);
 		main_node.rotate(0, rads, 0);
-		main_node.setLocalTranslation(x+(WIDTH/2), HEIGHT/2, z+0.5f);
+		main_node.setLocalTranslation(x+(w/2), h/2, z+0.5f);
 
 		floor_phy = new RigidBodyControl(1f);
 		geometry.addControl(floor_phy);
 		game.bulletAppState.getPhysicsSpace().add(floor_phy);
 		
 		this.geometry.setUserData(Settings.ENTITY, this);
-
 	}
 
 

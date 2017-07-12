@@ -1,0 +1,17 @@
+package com.scs.overwatch;
+
+import com.jme3.bullet.control.BetterCharacterControl;
+import com.jme3.bullet.objects.PhysicsRigidBody;
+
+public class MyBetterCharacterControl extends BetterCharacterControl {
+
+	public MyBetterCharacterControl(float a, float b, float c) {
+		super(a, b, c);
+	}
+	
+	
+	public PhysicsRigidBody getPhysicsRigidBody() {
+		return super.rigidBody;
+	}
+
+}

@@ -47,7 +47,7 @@ public class MapLoader {
 		for (int z=0 ; z<map.getDepth() ; z+= Settings.FLOOR_SECTION_SIZE) {
 			for (int x=0 ; x<map.getWidth() ; x+= Settings.FLOOR_SECTION_SIZE) {
 				//p("Creating floor at " + x + "," + z);
-				CreateShapes.CreateFloorTL(game.getAssetManager(), game.bulletAppState, this.rootNode, x, 0f, z, Settings.FLOOR_SECTION_SIZE, 0.1f, Settings.FLOOR_SECTION_SIZE, "Textures/DirtWithWeeds_S.jpg");
+				CreateShapes.CreateFloorTL(game.getAssetManager(), game.bulletAppState, this.rootNode, x, 0f, z, Settings.FLOOR_SECTION_SIZE, 0.1f, Settings.FLOOR_SECTION_SIZE, "Textures/sandstone.png");
 			}			
 		}
 

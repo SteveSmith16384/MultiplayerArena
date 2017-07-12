@@ -10,7 +10,7 @@ public interface IAbility {
 	/**
 	 * Called when activated
 	 */
-	void activate();
+	void activate(long interpol);
 	
 	String getHudText();
 }

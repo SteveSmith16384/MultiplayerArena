@@ -89,8 +89,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		stateManager.attach(bulletAppState);
 		//bulletAppState.getPhysicsSpace().enableDebug(assetManager);
 
-		//todo - remove viewPort.setBackgroundColor(new ColorRGBA(0.1f, 0.1f, .9f, 0f));
-		this.renderManager.removeMainView(viewPort);
+		this.renderManager.removeMainView(viewPort); // Since we create new ones for each player
 
 		setUpLight();
 
@@ -111,7 +110,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 			Settings.p("NO JOYSTICKS/GAMEPADS");
 		} else {
 			for (Joystick j : joysticks) {
-				int id = nextid++; // todo - show when creating player
+				int id = nextid++;
 				Camera newCam = this.createCamera(id);
 				JoystickCamera joyCam = new JoystickCamera(newCam, j, this.inputManager);
 				this.addPlayersAvatar(id, newCam, joyCam);
@@ -165,7 +164,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		//c.lookAt(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2), Vector3f.UNIT_Y);
 		
 		final ViewPort view2 = renderManager.createMainView("viewport_"+c.toString(), c);
-		view2.setBackgroundColor(new ColorRGBA(0.5f, 0.5f, .9f, 0f));
+		view2.setBackgroundColor(new ColorRGBA(0f, 0.9f, .9f, 0f));
 		view2.setClearFlags(true, true, true);
 		view2.attachScene(rootNode);
 
@@ -173,7 +172,9 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 	}
 
 
-	private void addPlayersAvatar(int id, Camera c, IInputDevice input) { 
+	private void addPlayersAvatar(int id, Camera c, IInputDevice input) {
+		Settings.p("Creating player " + id);
+
 		PlayersAvatar player = new PlayersAvatar(this, id, c, input);
 		rootNode.attachChild(player.getMainNode());
 		this.entities.add(player);
@@ -183,7 +184,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		player.moveToStartPostion();
 
 		// Look towards centre
-		player.getMainNode().lookAt(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2), Vector3f.UNIT_Y);
+		player.getMainNode().lookAt(new Vector3f(map.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, map.getDepth()/2), Vector3f.UNIT_Y);
 	}
 
 

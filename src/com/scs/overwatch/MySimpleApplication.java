@@ -41,7 +41,7 @@ public abstract class MySimpleApplication extends Application {
 
             if (name.equals(INPUT_MAPPING_EXIT)) {
                 stop();
-            }else if (name.equals(INPUT_MAPPING_HIDE_STATS)){
+            } else if (name.equals(INPUT_MAPPING_HIDE_STATS)){
                 if (stateManager.getState(StatsAppState.class) != null) {
                     stateManager.getState(StatsAppState.class).toggleStats();
                 }
@@ -51,9 +51,11 @@ public abstract class MySimpleApplication extends Application {
 
     public MySimpleApplication() {
         //this( new StatsAppState(), new MyFlyCamAppState(), new DebugKeysAppState() );
-        this( new DebugKeysAppState() ); // todo - re-add StatsAppState
+    	//StatsAppState stats = new StatsAppState();//this.guiNode, this.guiFont);
+        this(new DebugKeysAppState()); // todo - re-add StatsAppState
     }
 
+    
     public MySimpleApplication( AppState... initialStates ) {
         super();
         
@@ -65,6 +67,7 @@ public abstract class MySimpleApplication extends Application {
             }
         }
     }
+    
 
     @Override
     public void start() {
@@ -152,7 +155,7 @@ public abstract class MySimpleApplication extends Application {
             // many SimpleApplication subclasses expect it to exist in
             // simpleInit().  But at least it only gets initialized if
             // the app state is added.
-            /*if (stateManager.getState(MyFlyCamAppState.class) != null) { todo - add this elsewhere?
+            /*if (stateManager.getState(MyFlyCamAppState.class) != null) {
                 flyCam = new FlyByCamera(cam);
                 flyCam.setMoveSpeed(1f); // odd to set this here but it did it before
                 stateManager.getState(MyFlyCamAppState.class).setCamera( flyCam ); 

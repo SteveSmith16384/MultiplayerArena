@@ -22,7 +22,7 @@ public class Bullet extends PhysicalEntity {
 
 		this.shooter = _shooter;
 		
-		Sphere sphere = new Sphere(32, 32, 0.4f, true, false); // todo - create bullet entity
+		Sphere sphere = new Sphere(16, 16, 0.2f, true, false);
 		sphere.setTextureMode(TextureMode.Projected);
 		/** Create a cannon ball geometry and attach to scene graph. */
 		Geometry ball_geo = new Geometry("cannon ball", sphere);
@@ -51,6 +51,7 @@ public class Bullet extends PhysicalEntity {
 		ball_phy.setLinearVelocity(shooter.getDir().mult(25));
 	}
 
+	
 	@Override
 	public void process(float tpf) {
 		this.timeLeft -= tpf;
@@ -64,9 +65,8 @@ public class Bullet extends PhysicalEntity {
 
 	@Override
 	public void remove() {
-		super.remove();
 		this.game.bulletAppState.getPhysicsSpace().remove(this.ball_phy);
-		
+		super.remove();
 	}
 
 }

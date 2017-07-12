@@ -1,19 +1,19 @@
 TEX
 
 https://opengameart.org/content/fluffy-clouds
-https://opengameart.org/content/hand-painted-texture-sandstone
 https://opengameart.org/content/hand-painted-mountain-texture
 https://opengameart.org/content/kiira-texture-collection
 https://opengameart.org/content/cartonny-tree-leaves-and-flowers
 https://opengameart.org/content/cartoony-sky
-USED: https://opengameart.org/content/seamless-bricks
 https://opengameart.org/content/mayan-stone-ornament
 https://opengameart.org/content/handpainted-tileable-wall
 https://opengameart.org/content/scifi-metal-texture
-USED: https://opengameart.org/content/tileable-crates
 https://opengameart.org/content/hand-painted-texture-iceberg
 https://opengameart.org/content/stone-wall-with-cracks
 
+USED: https://opengameart.org/content/hand-painted-texture-sandstone
+USED: https://opengameart.org/content/seamless-bricks
+USED: https://opengameart.org/content/tileable-crates
 
 
 NAMES
@@ -21,25 +21,21 @@ Crates
 
 
 URGENT
-Bullets not flying from centre
+	Activate ability
 Bullets not removing
-Make sky colour better
-Add text to floor
-Make crates more square
-HUD
-Show score on screen
-Improve textures
+Players box not in right position
+Test JetPac
+HUD - Test at home
 PS4 sometimes keeps moving
+	Make sky colour better
 	Make avatars into crates
 Choose a name
-	Players box not in right position
 	If player shot, teleport randomly
 	If player hits another player, they jump
-	Player jump if not moved for a while
-	Remove bullets after a while
 
 
 LATER
+Show score on screen
 Create multi-level map files
 Remove JME logging
 Improve resource loading
@@ -57,10 +53,6 @@ Show shot accuracy
 
 NOTES
 We move the player and set the camera location based on player's node
-
-
-GRAPHICS
-Cholo remake
 
 
 INSPIRATION
@@ -81,8 +73,8 @@ Beam laser
 
 
 ABILITIES
-Invisible
-Fly
+	Invisible
+	Jet Pac
 Jump high
 Freeze enemy
 Heal
