@@ -1,6 +1,10 @@
 package com.scs.overwatch;
 
-import java.awt.Point;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Properties;
 import java.util.Random;
 import java.util.prefs.BackingStoreException;
 
@@ -32,16 +36,20 @@ import com.scs.overwatch.map.MapLoader;
 
 public class Overwatch extends MySimpleApplication implements PhysicsCollisionListener { 
 
+	private static final String PROPS_FILE = "overwatch_settings.txt";
+
 	public BulletAppState bulletAppState;
 
 	public static final Random rnd = new Random();
 
 	public TSArrayList<Entity> entities = new TSArrayList<Entity>();
 	//private Map<Integer, PlayersAvatar> players = new HashMap<>(); // input id-> player
-	private IMapInterface map;
+	public IMapInterface map;
+	private static Properties properties;
 
 	public static void main(String[] args) {
 		try {
+			properties = loadProperties();
 			AppSettings settings = new AppSettings(true);
 			try {
 				settings.load(Settings.NAME);
@@ -81,7 +89,8 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		stateManager.attach(bulletAppState);
 		//bulletAppState.getPhysicsSpace().enableDebug(assetManager);
 
-		viewPort.setBackgroundColor(new ColorRGBA(0.0f, 1f, 0.1f, 1f));
+		//todo - remove viewPort.setBackgroundColor(new ColorRGBA(0.1f, 0.1f, .9f, 0f));
+		this.renderManager.removeMainView(viewPort);
 
 		setUpLight();
 
@@ -156,6 +165,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		//c.lookAt(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2), Vector3f.UNIT_Y);
 		
 		final ViewPort view2 = renderManager.createMainView("viewport_"+c.toString(), c);
+		view2.setBackgroundColor(new ColorRGBA(0.5f, 0.5f, .9f, 0f));
 		view2.setClearFlags(true, true, true);
 		view2.attachScene(rootNode);
 
@@ -168,9 +178,9 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		rootNode.attachChild(player.getMainNode());
 		this.entities.add(player);
 
-		//player.playerControl.warp(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2));
-		Point p = map.getPlayerStartPos(id);
-		player.playerControl.warp(new Vector3f(p.x, 10f, p.y));
+		//Point p = map.getPlayerStartPos(id);
+		//player.playerControl.warp(new Vector3f(p.x, 10f, p.y));
+		player.moveToStartPostion();
 
 		// Look towards centre
 		player.getMainNode().lookAt(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2), Vector3f.UNIT_Y);
@@ -277,6 +287,22 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 
 	public BulletAppState getBulletAppState() {
 		return bulletAppState;
+	}
+
+
+	private static Properties loadProperties() throws IOException {
+		String filepath = PROPS_FILE;
+		File propsFile = new File(filepath);
+		if (propsFile.canRead() == false) {
+			// Create the properties file
+			PrintWriter out = new PrintWriter(propsFile.getAbsolutePath());
+			out.println("#");
+			out.close();
+		}
+
+		Properties props = new Properties();
+		props.load(new FileInputStream(new File(filepath)));
+		return props;
 	}
 
 

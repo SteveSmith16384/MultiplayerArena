@@ -1,5 +1,7 @@
 package com.scs.overwatch.entities;
 
+import java.awt.Point;
+
 import ssmith.util.RealtimeInterval;
 
 import com.jme3.bullet.control.BetterCharacterControl;
@@ -19,6 +21,10 @@ import com.scs.overwatch.input.IInputDevice;
 
 public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
+	// Player dimensions
+	public static final float PLAYER_HEIGHT = 1.5f;
+	public static final float PLAYER_RAD = .35f;
+	
 	private HUD hud;
 
 	private Vector3f walkDirection = new Vector3f();
@@ -29,7 +35,6 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	private Vector3f camDir = new Vector3f();
 	private Vector3f camLeft = new Vector3f();
 
-	//private Geometry playerGeometry;
 	public BetterCharacterControl playerControl;
 
 	public final int id;
@@ -46,23 +51,22 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		input = _input;
 
 		/** Create a box to use as our player model */
-		Box box1 = new Box(Settings.PLAYER_RAD, Settings.PLAYER_HEIGHT, Settings.PLAYER_RAD);
+		/*Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT, PLAYER_RAD);
 		Geometry playerGeometry = new Geometry("Player", box1);
 		Material mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");  // create a simple material
 		mat.setColor("Color", ColorRGBA.Blue);
 		playerGeometry.setMaterial(mat);    
-		playerGeometry.setLocalTranslation(new Vector3f(0,2,0));
-		this.getMainNode().attachChild(playerGeometry);
+		playerGeometry.setLocalTranslation(new Vector3f(0,PLAYER_HEIGHT/2,0));
+		this.getMainNode().attachChild(playerGeometry);*/
 		
-		//Crate crate = new Crate(game, 0, 0, 0);
-		//this.getMainNode().attachChild(crate.getMainNode());
+		Crate crate = new Crate(game, 0, 0, PLAYER_RAD*2, PLAYER_HEIGHT, 0);
+		crate.getMainNode().setLocalTranslation(new Vector3f(0,PLAYER_HEIGHT/2,0));
+		this.getMainNode().attachChild(crate.getMainNode());
 		
 		// create character control parameters (Radius,Height,Weight)
-		playerControl = new BetterCharacterControl(Settings.PLAYER_RAD, Settings.PLAYER_HEIGHT, 1f);
-		// set basic physical properties:
-		playerControl.setJumpForce(new Vector3f(0, 5f, 0)); 
+		playerControl = new BetterCharacterControl(PLAYER_RAD, PLAYER_HEIGHT, 1f);
+		playerControl.setJumpForce(new Vector3f(0, 2f, 0)); 
 		playerControl.setGravity(new Vector3f(0, 1f, 0));
-		//playerControl.warp(new Vector3f(0, 6, 0)); // So we drop
 		this.getMainNode().addControl(playerControl);
 
 		game.bulletAppState.getPhysicsSpace().add(playerControl);
@@ -70,12 +74,19 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		this.getMainNode().setUserData(Settings.ENTITY, this);
 
 		BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
-		hud = new HUD(game, game.getAssetManager(), 0, 0, cam.getWidth(), cam.getHeight(), guiFont_small);
+		hud = new HUD(game, game.getAssetManager(), cam.getViewPortLeft(), cam.getViewPortTop(), cam.getWidth(), cam.getHeight(), guiFont_small);
 		game.getGuiNode().attachChild(hud);
 		//this.entities.add(hud);
 	}
 
 
+	public void moveToStartPostion() {
+		Point p = game.map.getPlayerStartPos(id);
+		playerControl.warp(new Vector3f(p.x, 10f, p.y));
+
+	}
+	
+	
 	@Override
 	public void process(float tpf) {
 		timeSinceLastMove += tpf;
@@ -106,7 +117,8 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		}
 		playerControl.setWalkDirection(walkDirection);
 
-		if (input.isJumpPressed()) {// || timeSinceLastMove > 10) {
+		if (input.isJumpPressed()|| timeSinceLastMove > 10) {
+			Settings.p("timeSinceLastMove=" + timeSinceLastMove);
 			timeSinceLastMove = 0;
 			this.jump();
 		}
@@ -121,12 +133,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		 * we make a slight offset to adjust for head height.
 		 */
 		Vector3f vec = getMainNode().getWorldTranslation();
-		cam.setLocation(new Vector3f(vec.x, vec.y + Settings.PLAYER_HEIGHT, vec.z));
-
-		/*if (spotlight != null) {
-			this.spotlight.setPosition(cam.getLocation());
-			this.spotlight.setDirection(cam.getDirection());
-		}*/
+		cam.setLocation(new Vector3f(vec.x, vec.y + (PLAYER_HEIGHT/2), vec.z));
 
 	}
 
@@ -173,7 +180,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	@Override
 	public void hasSuccessfullyHit(Entity e) {
 		this.score++;
-		
+		this.jump();
 	}
 
 }

@@ -25,8 +25,8 @@ public class Fence extends PhysicalEntity {
 		Box box1 = new Box(WIDTH/2, HEIGHT/2, .1f);
 		box1.scaleTextureCoordinates(new Vector2f(WIDTH, HEIGHT));
 		geometry = new Geometry("Fence", box1);
-		//TextureKey key3 = new TextureKey("Textures/Terrain/Pond/Pond.jpg");
-		TextureKey key3 = new TextureKey("Textures/bricktex.jpg");
+		//TextureKey key3 = new TextureKey("Textures/bricktex.jpg");
+		TextureKey key3 = new TextureKey("seamless_bricks/bricks.png");
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);

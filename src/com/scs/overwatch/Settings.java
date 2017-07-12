@@ -16,11 +16,7 @@ public class Settings {
 	public static final float CAM_DIST = 30f;
 	public static final int FLOOR_SECTION_SIZE=12;
 	public static final boolean LIGHTING = true;
-	public static final String NAME = "JOverwatch";
-	
-	// Player dimensions
-	public static final float PLAYER_HEIGHT = 1.5f;
-	public static final float PLAYER_RAD = .35f;
+	public static final String NAME = "Crates";
 	
 	// User Data
 	public static final String ENTITY = "Entity";

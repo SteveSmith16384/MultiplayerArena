@@ -55,6 +55,7 @@ public class Bullet extends PhysicalEntity {
 	public void process(float tpf) {
 		this.timeLeft -= tpf;
 		if (this.timeLeft < 0) {
+			Settings.p("Bullet removed");
 			this.remove();
 		}
 		

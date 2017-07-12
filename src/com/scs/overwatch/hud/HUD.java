@@ -27,7 +27,7 @@ public class HUD extends Node implements IProcessable {
 	private ColorRGBA dam_box_col = new ColorRGBA(1, 0, 0, 0.0f);
 	private boolean process_damage_box;
 
-	public HUD(Overwatch _module, AssetManager assetManager, int x, int z, int w, int h, BitmapFont font_small) {
+	public HUD(Overwatch _module, AssetManager assetManager, float x, float z, int w, int h, BitmapFont font_small) {
 		super("HUD");
 		
 		super.setLocalTranslation(x, 0, z);
@@ -36,7 +36,7 @@ public class HUD extends Node implements IProcessable {
 		screen_width = w;
 		screen_height = h;
 
-		log_ta = new TextArea("log", font_small, 6, "");
+		log_ta = new TextArea("log", font_small, 6, "TEXT TEST");
 		log_ta.setLocalTranslation(0, screen_height, 0);
 		this.attachChild(log_ta);
 
@@ -67,10 +67,6 @@ public class HUD extends Node implements IProcessable {
 			}
 		}
 
-	}
-
-
-	public void updateAllText() {
 	}
 
 

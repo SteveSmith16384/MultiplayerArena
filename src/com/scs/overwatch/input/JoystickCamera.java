@@ -32,7 +32,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		this.joystick = _joystick;
 		id = joystick.getJoyId();
 
-		super.setMoveSpeed(1f); // todo - make setting
+		super.setMoveSpeed(1f);
 
 		this.inputManager.addRawInputListener(this);
 
@@ -156,9 +156,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		if (!enabled)
 			return;
 
-		//Settings.p("name=" + name);
-		//Settings.p("value=" + value);
-		//Settings.p("CAM=" +this.cam.getName());
+		//Settings.p("name=" + name + "  value=" + value);
 
 		if (name.equals("jFLYCAM_Left" + id)) {
 			rotateCamera(value, initialUpVec);
@@ -169,7 +167,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		} else if (name.equals("jFLYCAM_Down" + id)) {
 			rotateCamera(value * (invertY ? -1 : 1), cam.getLeft());
 		} else if (name.equals("jFLYCAM_Forward" + id)) {
-			up = value > 0.001f; //todo not always true
+			up = value > 0.001f; //todo not always true!
 			//moveCamera(value, false);
 		} else if (name.equals("jFLYCAM_Backward" + id)) {
 			down = value > 0.001f;
@@ -198,10 +196,10 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 
 	@Override
 	public void onJoyAxisEvent(JoyAxisEvent evt) {
-		/*Joystick stick = evt.getAxis().getJoystick();
+		Joystick stick = evt.getAxis().getJoystick();
 		if (stick == joystick) {
-			setAxisValue( evt.getAxis(), evt.getValue() ); 
-		}*/
+			//setAxisValue( evt.getAxis(), evt.getValue() ); 
+		}
 	}
 
 
@@ -209,7 +207,14 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 	public void onJoyButtonEvent(JoyButtonEvent evt) {
 		Joystick stick = evt.getButton().getJoystick();
 		if (stick == joystick) {
-			setButtonValue( evt.getButton(), evt.isPressed() ); 
+			//setButtonValue( evt.getButton(), evt.isPressed() );
+			JoystickButton button = evt.getButton();
+			if (button.getButtonId() == 1) {
+				this.jump = evt.isPressed();
+			} else if (button.getButtonId() == 2) {
+				this.shoot = evt.isPressed();
+			}
+
 		}
 	}
 
@@ -221,19 +226,5 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 	public void onTouchEvent(TouchEvent evt) {}        
 
 	// End of Raw Input Listener
-
-	/*public void setAxisValue( JoystickAxis axis, float value ) {
-		// Do nothing
-	}*/
-
-	public void setButtonValue( JoystickButton button, boolean isPressed ) {
-		Settings.p("button=" + button.getButtonId());
-
-		if (button.getButtonId() == 1) {
-			this.jump = isPressed;
-		} else if (button.getButtonId() == 2) {
-			this.shoot = isPressed;
-		}
-	}
 
 }

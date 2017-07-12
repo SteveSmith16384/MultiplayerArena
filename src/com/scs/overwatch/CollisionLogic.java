@@ -8,20 +8,22 @@ import com.scs.overwatch.entities.PlayersAvatar;
 public class CollisionLogic {
 
 	public static void collision(Overwatch game, PhysicalEntity a, PhysicalEntity b) {
-		if (a instanceof PlayersAvatar && b instanceof Collectable) {
-			Player_Collectable(game, (PlayersAvatar)a, (Collectable)b);
-		}
-		if (a instanceof Collectable && b instanceof PlayersAvatar) {
-			Player_Collectable(game, (PlayersAvatar)b, (Collectable)a);
-		}
-		
+		Settings.p(a + " has collided with " + b);
+	
 		if (a instanceof PlayersAvatar && b instanceof Bullet) {
 			Player_Bullet(game, (PlayersAvatar)a, (Bullet)b);
 		}
 		if (a instanceof Bullet && b instanceof PlayersAvatar) {
 			Player_Bullet(game, (PlayersAvatar)b, (Bullet)a);
 		}
-	}
+
+		if (a instanceof PlayersAvatar && b instanceof Collectable) {
+			Player_Collectable(game, (PlayersAvatar)a, (Collectable)b);
+		}
+		if (a instanceof Collectable && b instanceof PlayersAvatar) {
+			Player_Collectable(game, (PlayersAvatar)b, (Collectable)a);
+		}
+}
 	
 	
 	private static void Player_Collectable(Overwatch game, PlayersAvatar player, Collectable col) {
@@ -30,7 +32,7 @@ public class CollisionLogic {
 
 	private static void Player_Bullet(Overwatch game, PlayersAvatar player, Bullet col) {
 		if (col.shooter != player) {
-			player.jump();
+			player.moveToStartPostion();//.jump();
 			col.shooter.hasSuccessfullyHit(player);
 		}
 	}

@@ -13,19 +13,20 @@ import com.scs.overwatch.Settings;
 
 public class Crate extends PhysicalEntity {
 
-	private static final float WIDTH = 2f;
-	private static final float HEIGHT = 1.5f;
+	//private static final float WIDTH = 2f;
+	//private static final float HEIGHT = 1.5f;
 
 	private Geometry geometry;
 	private RigidBodyControl floor_phy;
 	
-	public Crate(Overwatch _game, float x, float z, float rotDegrees) {
-		super(_game, "FeCratence");
+	public Crate(Overwatch _game, float x, float z, float WIDTH, float HEIGHT, float rotDegrees) {
+		super(_game, "Crate");
 
 		Box box1 = new Box(WIDTH/2, HEIGHT/2, WIDTH/2);
-		box1.scaleTextureCoordinates(new Vector2f(WIDTH, HEIGHT));
+		//box1.scaleTextureCoordinates(new Vector2f(WIDTH, HEIGHT));
 		geometry = new Geometry("Crate", box1);
-		TextureKey key3 = new TextureKey("Textures/crate.png");
+		//TextureKey key3 = new TextureKey("Textures/crate.png");
+		TextureKey key3 = new TextureKey("Textures/boxes and crates/1.jpg");
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);

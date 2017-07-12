@@ -1,29 +1,54 @@
+TEX
+
+https://opengameart.org/content/fluffy-clouds
+https://opengameart.org/content/hand-painted-texture-sandstone
+https://opengameart.org/content/hand-painted-mountain-texture
+https://opengameart.org/content/kiira-texture-collection
+https://opengameart.org/content/cartonny-tree-leaves-and-flowers
+https://opengameart.org/content/cartoony-sky
+USED: https://opengameart.org/content/seamless-bricks
+https://opengameart.org/content/mayan-stone-ornament
+https://opengameart.org/content/handpainted-tileable-wall
+https://opengameart.org/content/scifi-metal-texture
+USED: https://opengameart.org/content/tileable-crates
+https://opengameart.org/content/hand-painted-texture-iceberg
+https://opengameart.org/content/stone-wall-with-cracks
+
+
+
+NAMES
+Crates
+
+
 URGENT
-Players box not in right position
-PS4 sometimes keeps moving
-Camera not turning right
-Players box is offset
-	Make avatars into crates
-Improve map - walls around edge, lots of boxes
+Bullets not flying from centre
+Bullets not removing
+Make sky colour better
+Add text to floor
+Make crates more square
+HUD
 Show score on screen
+Improve textures
+PS4 sometimes keeps moving
+	Make avatars into crates
 Choose a name
-Get new textures
-If player shot, teleport randomly
-If player hits another player, they jump
+	Players box not in right position
+	If player shot, teleport randomly
+	If player hits another player, they jump
 	Player jump if not moved for a while
-	Only shoot once every so often
 	Remove bullets after a while
-	Player start pos
-	Add boxes
-	Move using left joystick
-	Debug mode - set up other cameras
 
 
 LATER
+Create multi-level map files
+Remove JME logging
 Improve resource loading
 Try and get JME source to compile
 If two-player, use top and bottom of screen
 Position player's hud in the right place
+
+
+MUCH LATER
 Headshots - have small box at top
 Random map generation
 AI comrades & enemy
@@ -63,3 +88,5 @@ Freeze enemy
 Heal
 Drop mines
 Teleport forwards
+
+

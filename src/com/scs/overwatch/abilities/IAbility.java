@@ -11,4 +11,6 @@ public interface IAbility {
 	 * Called when activated
 	 */
 	void activate();
+	
+	String getHudText();
 }
