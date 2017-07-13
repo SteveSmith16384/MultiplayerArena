@@ -21,14 +21,15 @@ Crates
 
 
 URGENT
-	Activate ability
+Call iability methods
+Give players a diff texture
+Model not rotating
+Activate ability
 Bullets not removing
 Players box not in right position
 Test JetPac
-HUD - Test at home
+HUD
 PS4 sometimes keeps moving
-	Make sky colour better
-	Make avatars into crates
 Choose a name
 	If player shot, teleport randomly
 	If player hits another player, they jump

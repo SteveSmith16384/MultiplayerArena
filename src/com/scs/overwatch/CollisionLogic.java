@@ -8,7 +8,7 @@ import com.scs.overwatch.entities.PlayersAvatar;
 public class CollisionLogic {
 
 	public static void collision(Overwatch game, PhysicalEntity a, PhysicalEntity b) {
-		Settings.p(a + " has collided with " + b);
+		//Settings.p(a + " has collided with " + b);
 
 		if (a instanceof PlayersAvatar && b instanceof Bullet) {
 			Player_Bullet(game, (PlayersAvatar)a, (Bullet)b);

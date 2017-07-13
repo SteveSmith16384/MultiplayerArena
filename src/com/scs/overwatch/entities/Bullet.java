@@ -15,7 +15,7 @@ public class Bullet extends PhysicalEntity {
 
 	public ICanShoot shooter;
 	private RigidBodyControl ball_phy;
-	private long timeLeft = 5000;
+	private float timeLeft = 500;
 	
 	public Bullet(Overwatch _game, ICanShoot _shooter) {
 		super(_game, "Bullet");
@@ -27,7 +27,7 @@ public class Bullet extends PhysicalEntity {
 		/** Create a cannon ball geometry and attach to scene graph. */
 		Geometry ball_geo = new Geometry("cannon ball", sphere);
 
-		TextureKey key3 = new TextureKey( "Textures/OldRedBricks_T.jpg");
+		TextureKey key3 = new TextureKey( "Textures/mud.png");
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		Material floor_mat = null;
 		if (Settings.LIGHTING) {

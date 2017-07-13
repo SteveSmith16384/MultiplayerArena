@@ -2,12 +2,14 @@ package com.scs.overwatch.entities;
 
 import java.awt.Point;
 
-import ssmith.util.RealtimeInterval;
-
 import com.jme3.font.BitmapFont;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.Camera.FrustumIntersect;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.shape.Box;
 import com.scs.overwatch.MyBetterCharacterControl;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
@@ -17,11 +19,13 @@ import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 
+import ssmith.util.RealtimeInterval;
+
 public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 	// Player dimensions
-	public static final float PLAYER_HEIGHT = 1.5f;
-	public static final float PLAYER_RAD = .35f;
+	public static final float PLAYER_HEIGHT = 1.5f;//1.5f;
+	public static final float PLAYER_RAD = .2f;//.35f;
 	
 	private Vector3f walkDirection = new Vector3f();
 	private IInputDevice input;
@@ -48,18 +52,18 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		input = _input;
 
 		/** Create a box to use as our player model */
-		/*Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT, PLAYER_RAD);
+		Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
 		Geometry playerGeometry = new Geometry("Player", box1);
 		Material mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");  // create a simple material
 		mat.setColor("Color", ColorRGBA.Blue);
 		playerGeometry.setMaterial(mat);    
 		playerGeometry.setLocalTranslation(new Vector3f(0,PLAYER_HEIGHT/2,0));
-		this.getMainNode().attachChild(playerGeometry);*/
+		this.getMainNode().attachChild(playerGeometry);
 		
-		Crate crate = new Crate(game, 0, 0, PLAYER_RAD*2, PLAYER_HEIGHT, PLAYER_RAD*2, 0);
-		crate.getMainNode().setLocalTranslation(new Vector3f(0,PLAYER_HEIGHT/2,0));
+/*		Crate crate = new Crate(game, 0, 0, PLAYER_RAD*2, PLAYER_HEIGHT, PLAYER_RAD*2, 0);
+		crate.getMainNode().setLocalTranslation(new Vector3f(0, PLAYER_HEIGHT, 0));
 		this.getMainNode().attachChild(crate.getMainNode());
-		
+	*/	
 		// create character control parameters (Radius,Height,Weight)
 		playerControl = new MyBetterCharacterControl(PLAYER_RAD, PLAYER_HEIGHT, 1f);
 		playerControl.setJumpForce(new Vector3f(0, 2f, 0)); 
@@ -71,6 +75,8 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		this.getMainNode().setUserData(Settings.ENTITY, this);
 
 		BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
+		// todo - cam.getWidth() = 640x480
+		// cam.getViewPortLeft() = 0,5f
 		hud = new HUD(game, game.getAssetManager(), cam.getViewPortLeft(), cam.getViewPortTop(), cam.getWidth(), cam.getHeight(), guiFont_small);
 		game.getGuiNode().attachChild(hud);
 		

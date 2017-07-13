@@ -61,7 +61,7 @@ public class BoxMap implements IMapInterface {
 	public Point getPlayerStartPos(int id) {
 		int x = NumberFunctions.rnd(2, getWidth()-3);
 		int z = NumberFunctions.rnd(2, getDepth()-3);
-		return new Point(x, z);
+		return new Point(5,5); // todo - readd x, z);
 	}
 
 
@@ -73,8 +73,8 @@ public class BoxMap implements IMapInterface {
 			int z = NumberFunctions.rnd(2, getDepth()-3);
 			float w = NumberFunctions.rndFloat(.5f, 1.5f);
 			float d = NumberFunctions.rndFloat(w, w+0.3f);
-			Crate crate = new Crate(game, x, z, w, w, d, NumberFunctions.rnd(0, 359));
-			game.getRootNode().attachChild(crate.getMainNode());
+			//Crate crate = new Crate(game, x, z, w, w, d, NumberFunctions.rnd(0, 359));
+			//game.getRootNode().attachChild(crate.getMainNode());
 		}
 	}
 
