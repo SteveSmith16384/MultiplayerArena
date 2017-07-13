@@ -62,7 +62,7 @@ public class BoxMap implements IMapInterface {
 	public Point getPlayerStartPos(int id) {
 		int x = NumberFunctions.rnd(2, getWidth()-3);
 		int z = NumberFunctions.rnd(2, getDepth()-3);
-		return new Point(5,5); // todo - readd x, z);
+		return new Point(x, z);
 	}
 
 

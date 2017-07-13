@@ -50,6 +50,10 @@ public class Bullet extends PhysicalEntity {
 		game.bulletAppState.getPhysicsSpace().add(ball_phy);
 		/** Accelerate the physical ball to shoot it. */
 		ball_phy.setLinearVelocity(shooter.getDir().mult(25));
+		
+		this.getMainNode().setUserData(Settings.ENTITY, this);
+		ball_phy.setUserObject(this);
+
 	}
 
 	

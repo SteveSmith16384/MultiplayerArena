@@ -68,7 +68,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 		Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
 		playerGeometry = new Geometry("Player", box1);
-		TextureKey key3 = new TextureKey("Textures/boxes and crates/2.jpg");
+		TextureKey key3 = new TextureKey("Textures/boxes and crates/1.jpg");
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		Material floor_mat = null;
@@ -93,6 +93,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		game.bulletAppState.getPhysicsSpace().add(playerControl);
 		
 		this.getMainNode().setUserData(Settings.ENTITY, this);
+		playerControl.getPhysicsRigidBody().setUserObject(this);
 
 		BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
 		// cam.getWidth() = 640x480
@@ -176,7 +177,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		 * we make a slight offset to adjust for head height.
 		 */
 		Vector3f vec = getMainNode().getWorldTranslation();
-		cam.setLocation(new Vector3f(vec.x, vec.y + (PLAYER_HEIGHT), vec.z));
+		cam.setLocation(new Vector3f(vec.x, vec.y + (PLAYER_HEIGHT-0.1f), vec.z));
 		
 		// Rotate us to point in the direction of the camera
 		Vector3f lookAtPoint = cam.getLocation().add(cam.getDirection().mult(10));

@@ -164,7 +164,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		}
 		// Look at the centre by default
 		//c.lookAt(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2), Vector3f.UNIT_Y);
-		
+
 		final ViewPort view2 = renderManager.createMainView("viewport_"+c.toString(), c);
 		view2.setBackgroundColor(new ColorRGBA(0f, 0.9f, .9f, 0f));
 		view2.setClearFlags(true, true, true);
@@ -254,19 +254,29 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 
 	@Override
 	public void collision(PhysicsCollisionEvent event) {
-		//System.out.println(event.getObjectA().getUserObject().toString() + " collided with " + event.getObjectB().getUserObject().toString());
-
-		Spatial ga = (Spatial)event.getObjectA().getUserObject(); 
-		PhysicalEntity a = ga.getUserData(Settings.ENTITY);
-		/*if (a == null) {
-			throw new RuntimeException("Geometry " + ga.getName() + " has no entity");
+		/*String s = event.getObjectA().getUserObject().toString() + " collided with " + event.getObjectB().getUserObject().toString();
+		System.out.println(s);
+		if (s.equals("Entity:Player collided with cannon ball (Geometry)")) {
+			int f = 3;
 		}*/
+		PhysicalEntity a=null, b=null;
+		Object oa = event.getObjectA().getUserObject(); 
+		if (oa instanceof Spatial) {
+			Spatial ga = (Spatial)event.getObjectA().getUserObject(); 
+			a = ga.getUserData(Settings.ENTITY);
+		} else if (oa instanceof PhysicalEntity) {
+			a = (PhysicalEntity)oa;
+		}
 
-		Spatial gb = (Spatial)event.getObjectB().getUserObject(); 
-		PhysicalEntity b = gb.getUserData(Settings.ENTITY);
-		/*if (b == null) {
-			throw new RuntimeException("Geometry " + gb.getName() + " has no entity");
-		}*/
+		//Spatial gb = (Spatial)event.getObjectB().getUserObject(); 
+		//PhysicalEntity b = gb.getUserData(Settings.ENTITY);
+		Object ob = event.getObjectB().getUserObject(); 
+		if (ob instanceof Spatial) {
+			Spatial gb = (Spatial)event.getObjectB().getUserObject(); 
+			b = gb.getUserData(Settings.ENTITY);
+		} else if (oa instanceof PhysicalEntity) {
+			b = (PhysicalEntity)ob;
+		}
 
 		if (a != null && b != null) {
 			CollisionLogic.collision(this, a, b);
