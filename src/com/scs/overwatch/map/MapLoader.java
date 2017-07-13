@@ -25,7 +25,7 @@ public class MapLoader {
 
 
 	public IMapInterface loadMap() {
-		IMapInterface map = new BoxMap(game);
+		IMapInterface map = new EmptyMap(game);//BoxMap(game); //
 		/*try {
 			map = new CSVMap("bin/maps/map1.csv");//"./maps/map1.csv");
 		} catch (Exception e) {

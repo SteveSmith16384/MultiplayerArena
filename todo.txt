@@ -10,7 +10,9 @@ https://opengameart.org/content/handpainted-tileable-wall
 https://opengameart.org/content/scifi-metal-texture
 https://opengameart.org/content/hand-painted-texture-iceberg
 https://opengameart.org/content/stone-wall-with-cracks
+https://opengameart.org/content/3-crate-textures-w-bump-normal
 
+USED: https://opengameart.org/content/5-wood-textures
 USED: https://opengameart.org/content/hand-painted-texture-sandstone
 USED: https://opengameart.org/content/seamless-bricks
 USED: https://opengameart.org/content/tileable-crates
@@ -21,28 +23,26 @@ Crates
 
 
 URGENT
-Call iability methods
-Give players a diff texture
-Model not rotating
-Activate ability
-Bullets not removing
-Players box not in right position
-Test JetPac
-HUD
-PS4 sometimes keeps moving
+	Restart player if they fall off the edge
+	Camera is very low - move mainnode, not crate
+Why does player jump when box too big?  Try increasing weight
+	PS4 sometimes keeps moving
+	Position player's hud in the right place
+	Show ability text on hud
+	Show score on screen
 Choose a name
 	If player shot, teleport randomly
 	If player hits another player, they jump
+Create logo
 
 
 LATER
-Show score on screen
+Unit Tests
 Create multi-level map files
 Remove JME logging
 Improve resource loading
 Try and get JME source to compile
 If two-player, use top and bottom of screen
-Position player's hud in the right place
 
 
 MUCH LATER

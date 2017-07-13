@@ -198,6 +198,16 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 	}
 
 
+	@Override
+	public void resetFlags() {
+		left = false;
+		right = false;
+		up = false;
+		down = false;
+		
+	}        
+
+
 	// Raw Input Listener ------------------------
 
 	@Override
@@ -205,16 +215,16 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		Joystick stick = evt.getAxis().getJoystick();
 		if (stick == joystick) {
 			if (evt.getValue() == 0) {
-			JoystickAxis axis = evt.getAxis();
-			if( axis == axis.getJoystick().getXAxis() ) {
-				Settings.p("Xaxis=" + evt.getValue());
-				// todo - set u/d to false?
-			} else if( axis == axis.getJoystick().getYAxis() ) {
-				//Settings.p("Yaxis=" + evt.getValue()); 
-				// todo - set l/r to false?
+				JoystickAxis axis = evt.getAxis();
+				if( axis == axis.getJoystick().getXAxis() ) {
+					Settings.p("Xaxis=" + evt.getValue());
+					// todo - set u/d to false?
+				} else if( axis == axis.getJoystick().getYAxis() ) {
+					//Settings.p("Yaxis=" + evt.getValue()); 
+					// todo - set l/r to false?
+				}
 			}
-			}
-			}
+		}
 	}
 
 
@@ -241,7 +251,8 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 	public void onMouseMotionEvent(MouseMotionEvent evt) {}
 	public void onMouseButtonEvent(MouseButtonEvent evt) {}
 	public void onKeyEvent(KeyInputEvent evt) {}
-	public void onTouchEvent(TouchEvent evt) {}        
+	public void onTouchEvent(TouchEvent evt) {}
+
 
 	// End of Raw Input Listener
 

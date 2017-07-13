@@ -5,10 +5,8 @@ import java.awt.Point;
 import ssmith.lang.NumberFunctions;
 
 import com.scs.overwatch.Overwatch;
-import com.scs.overwatch.entities.Crate;
-import com.scs.overwatch.entities.Plank;
 
-public class BoxMap implements IMapInterface {
+public class EmptyMap implements IMapInterface {
 
 	int[][] data = new int[][]{
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},  
@@ -18,14 +16,14 @@ public class BoxMap implements IMapInterface {
 			{0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},  
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  
 			{0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},  
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 5, 0, 6, 0, 0},  
-			{0, 5, 0, 0, 0, 0, 5, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},  
-			{1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 1},  
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  
 			{0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},  
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0},  
+			{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  
 			{0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},  
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  
-			{0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 5, 0},  
+			{0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},  
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  
+			{0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},  
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  
 			{0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},  
 			{0, 0, 4, 0, 4, 0, 4, 0, 4, 0, 4, 0, 4, 0, 4, 0, 4, 0, 0},  
@@ -35,7 +33,7 @@ public class BoxMap implements IMapInterface {
 
 	private Overwatch game;
 
-	public BoxMap(Overwatch _game) {
+	public EmptyMap(Overwatch _game) {
 		game = _game;
 	}
 
@@ -68,26 +66,7 @@ public class BoxMap implements IMapInterface {
 
 	@Override
 	public void addMisc() {
-		// Sprinkle lots of blanks
-		for (int i=0 ; i<10 ; i++) {
-			int x = NumberFunctions.rnd(2, getWidth()-3);
-			int z = NumberFunctions.rnd(2, getDepth()-3);
-			float w = NumberFunctions.rndFloat(.2f, .4f);
-			float d = NumberFunctions.rndFloat(3f, 5f);
-			Plank plank = new Plank(game, x, z, w, w, d, NumberFunctions.rnd(0, 359));
-			game.getRootNode().attachChild(plank.getMainNode());
-		}
-
-		// Sprinkle lots of boxes
-		for (int i=0 ; i<25 ; i++) {
-			int x = NumberFunctions.rnd(2, getWidth()-3);
-			int z = NumberFunctions.rnd(2, getDepth()-3);
-			float w = NumberFunctions.rndFloat(.5f, 1.5f);
-			float d = NumberFunctions.rndFloat(w, w+0.3f);
-			Crate crate = new Crate(game, x, z, w, w, d, NumberFunctions.rnd(0, 359));
-			game.getRootNode().attachChild(crate.getMainNode());
-		}
-
+		
 	}
 
 

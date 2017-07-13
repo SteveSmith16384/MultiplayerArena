@@ -15,7 +15,7 @@ public class Bullet extends PhysicalEntity {
 
 	public ICanShoot shooter;
 	private RigidBodyControl ball_phy;
-	private float timeLeft = 500;
+	private float timeLeft = 10;
 	
 	public Bullet(Overwatch _game, ICanShoot _shooter) {
 		super(_game, "Bullet");
@@ -39,7 +39,8 @@ public class Bullet extends PhysicalEntity {
 		}
 		ball_geo.setMaterial(floor_mat);
 
-		game.getRootNode().attachChild(ball_geo);
+		this.main_node.attachChild(ball_geo);
+		game.getRootNode().attachChild(this.main_node);
 		/** Position the cannon ball  */
 		ball_geo.setLocalTranslation(shooter.getLocation());
 		/** Make the ball physical with a mass > 0.0f */
@@ -65,8 +66,8 @@ public class Bullet extends PhysicalEntity {
 
 	@Override
 	public void remove() {
-		this.game.bulletAppState.getPhysicsSpace().remove(this.ball_phy);
 		super.remove();
+		this.game.bulletAppState.getPhysicsSpace().remove(this.ball_phy);
 	}
 
 }

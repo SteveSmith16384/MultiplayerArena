@@ -177,4 +177,15 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 		return ability1;
 	}
 
+
+	@Override
+	public void resetFlags() {
+		/*left = false;
+		right = false;
+		up = false;
+		down = false;*/
+		
+	}        
+
+
 }

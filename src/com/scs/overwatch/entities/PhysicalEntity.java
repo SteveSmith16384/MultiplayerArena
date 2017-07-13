@@ -14,9 +14,9 @@ import com.scs.overwatch.components.IProcessable;
 
 public abstract class PhysicalEntity extends Entity implements IProcessable {
 
-	private static final float TURN_SPEED = 1f;
+	//private static final float TURN_SPEED = 1f;
 
-	protected Node main_node, left_node, right_node;
+	protected Node main_node;//, left_node, right_node;
 	public String name;
 
 	public PhysicalEntity(Overwatch _game, String _name) {
@@ -26,31 +26,34 @@ public abstract class PhysicalEntity extends Entity implements IProcessable {
 
 		main_node = new Node(name + "_MainNode");
 
-		left_node = new Node("left_node");
+		/*left_node = new Node("left_node");
 		main_node.attachChild(left_node);
 		left_node.setLocalTranslation(-3, 0, 0);
 
 		right_node = new Node("right_node");
 		main_node.attachChild(right_node);
-		right_node.setLocalTranslation(3, 0, 0);
+		right_node.setLocalTranslation(3, 0, 0);*/
 	}
 
 
 	@Override
 	public void remove() {
 		super.remove();
+		if (this.main_node.getParent() == null) {
+			throw new RuntimeException("No parent!");
+		}
 		this.main_node.removeFromParent(); // Don't need to remove left/right nodes as they are attached to the main node
 	}
 	
 
-	public void turnLeft(float tpf) {
+	/*public void turnLeft(float tpf) {
 		this.getMainNode().rotate(new Quaternion().fromAngleAxis(-1 * TURN_SPEED * tpf, Vector3f.UNIT_Y));
 	}
 
 
 	public void turnRight(float tpf) {
 		this.getMainNode().rotate(new Quaternion().fromAngleAxis(1 * TURN_SPEED * tpf, Vector3f.UNIT_Y));
-	}
+	}*/
 
 
 	public Node getMainNode() {

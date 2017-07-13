@@ -21,17 +21,17 @@ public class Invisibility extends AbstractAbility {
 
 	
 	@Override
-	public void process(long interpol) {
+	public boolean process(float interpol) {
 		this.player.getMainNode().setCullHint(CullHint.Inherit); // Default
 		invisible = false;
 		fuel += interpol;
 		fuel = Math.min(fuel, MAX_FUEL);
-		
+		return true;
 	}
 
 	
 	@Override
-	public void activate(long interpol) {
+	public void activate(float interpol) {
 		fuel -= interpol;
 		fuel = Math.max(fuel, 0);
 		if (fuel > 0) {

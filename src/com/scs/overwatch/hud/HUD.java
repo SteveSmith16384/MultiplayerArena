@@ -3,6 +3,7 @@ package com.scs.overwatch.hud;
 import com.jme3.asset.AssetManager;
 import com.jme3.bounding.BoundingBox;
 import com.jme3.font.BitmapFont;
+import com.jme3.font.BitmapText;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
@@ -19,13 +20,15 @@ import com.scs.overwatch.gui.TextArea;
  */
 public class HUD extends Node implements IProcessable {
 
-	public TextArea log_ta, options;
+	public TextArea log_ta;
 	private int screen_width, screen_height;
 	protected Overwatch module;
 
 	private Geometry damage_box;
 	private ColorRGBA dam_box_col = new ColorRGBA(1, 0, 0, 0.0f);
 	private boolean process_damage_box;
+	
+	private BitmapText ability, score; 
 
 	public HUD(Overwatch _module, AssetManager assetManager, float x, float z, int w, int h, BitmapFont font_small) {
 		super("HUD");
@@ -36,6 +39,14 @@ public class HUD extends Node implements IProcessable {
 		screen_width = w;
 		screen_height = h;
 
+		score = new BitmapText(font_small, false);
+		score.setLocalTranslation(0, screen_height-20, 0);
+		this.attachChild(score);
+		
+		ability = new BitmapText(font_small, false);
+		ability.setLocalTranslation(0, screen_height-40, 0);
+		this.attachChild(ability);
+		
 		log_ta = new TextArea("log", font_small, 6, "TEXT TEST");
 		log_ta.setLocalTranslation(0, screen_height, 0);
 		this.attachChild(log_ta);
@@ -74,9 +85,19 @@ public class HUD extends Node implements IProcessable {
 		this.log_ta.addLine(s);
 	}
 
+	
+	public void setScore(int s) {
+		this.score.setText("SCORE: " + s);
+	}
+
+
+	public void setAbilityText(String s) {
+		this.ability.setText(s);
+	}
+
 
 	public void showDamageBox() {
-		//process_damage_box = true;
+		process_damage_box = true;
 		this.dam_box_col.a = .5f;
 		this.dam_box_col.r = 1f;
 		this.dam_box_col.g = 0f;

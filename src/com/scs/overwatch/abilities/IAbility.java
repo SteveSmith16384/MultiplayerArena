@@ -3,14 +3,14 @@ package com.scs.overwatch.abilities;
 public interface IAbility {
 
 	/**
-	 * Called every interval
+	 * Called every interval.  Returns whether the HUD needs updating
 	 */
-	void process(long interpol);
+	boolean process(float interpol);
 	
 	/**
 	 * Called when activated
 	 */
-	void activate(long interpol);
+	void activate(float interpol);
 	
 	String getHudText();
 }

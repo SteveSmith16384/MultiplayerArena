@@ -2,14 +2,17 @@ package com.scs.overwatch.entities;
 
 import java.awt.Point;
 
+import ssmith.util.RealtimeInterval;
+
+import com.jme3.asset.TextureKey;
 import com.jme3.font.BitmapFont;
 import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.Camera.FrustumIntersect;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
+import com.jme3.texture.Texture;
 import com.scs.overwatch.MyBetterCharacterControl;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
@@ -19,15 +22,13 @@ import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 
-import ssmith.util.RealtimeInterval;
-
 public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 	// Player dimensions
-	public static final float PLAYER_HEIGHT = 1.5f;//1.5f;
-	public static final float PLAYER_RAD = .2f;//.35f;
+	public static final float PLAYER_HEIGHT = 0.5f;//1.5f;
+	public static final float PLAYER_RAD = .2f; //.5f;//.35f; // if you increase this, player bounces!?
 	
-	private Vector3f walkDirection = new Vector3f();
+	public Vector3f walkDirection = new Vector3f();
 	private IInputDevice input;
 
 	//Temporary vectors used on each frame.
@@ -41,7 +42,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	private RealtimeInterval shotInterval = new RealtimeInterval(200);
 	private float timeSinceLastMove = 0;
 	private IAbility ability;
-	
+	public Geometry playerGeometry;
 	public int score = 0;
 
 	public PlayersAvatar(Overwatch _game, int _id, Camera _cam, IInputDevice _input) {
@@ -52,20 +53,39 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		input = _input;
 
 		/** Create a box to use as our player model */
-		Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
+		/*Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
 		Geometry playerGeometry = new Geometry("Player", box1);
 		Material mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");  // create a simple material
 		mat.setColor("Color", ColorRGBA.Blue);
 		playerGeometry.setMaterial(mat);    
 		playerGeometry.setLocalTranslation(new Vector3f(0,PLAYER_HEIGHT/2,0));
-		this.getMainNode().attachChild(playerGeometry);
+		this.getMainNode().attachChild(playerGeometry);*/
 		
 /*		Crate crate = new Crate(game, 0, 0, PLAYER_RAD*2, PLAYER_HEIGHT, PLAYER_RAD*2, 0);
 		crate.getMainNode().setLocalTranslation(new Vector3f(0, PLAYER_HEIGHT, 0));
 		this.getMainNode().attachChild(crate.getMainNode());
 	*/	
+
+		Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
+		playerGeometry = new Geometry("Player", box1);
+		TextureKey key3 = new TextureKey("Textures/boxes and crates/2.jpg");
+		key3.setGenerateMips(true);
+		Texture tex3 = game.getAssetManager().loadTexture(key3);
+		Material floor_mat = null;
+		if (Settings.LIGHTING) {
+			floor_mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
+			floor_mat.setTexture("DiffuseMap", tex3);
+		} else {
+			floor_mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+			floor_mat.setTexture("ColorMap", tex3);
+		}
+		playerGeometry.setMaterial(floor_mat);
+		playerGeometry.setLocalTranslation(new Vector3f(0,PLAYER_HEIGHT/2,0)); // Need this to ensure the crate is on the floor
+		this.getMainNode().attachChild(playerGeometry);
+		//this.getMainNode().setLocalTranslation(new Vector3f(0,PLAYER_HEIGHT,0)); // Need this to ensure the crate is on the floor
+
 		// create character control parameters (Radius,Height,Weight)
-		playerControl = new MyBetterCharacterControl(PLAYER_RAD, PLAYER_HEIGHT, 1f);
+		playerControl = new MyBetterCharacterControl(PLAYER_RAD, PLAYER_HEIGHT, 2f);
 		playerControl.setJumpForce(new Vector3f(0, 2f, 0)); 
 		playerControl.setGravity(new Vector3f(0, 1f, 0));
 		this.getMainNode().addControl(playerControl);
@@ -75,12 +95,16 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		this.getMainNode().setUserData(Settings.ENTITY, this);
 
 		BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
-		// todo - cam.getWidth() = 640x480
+		// cam.getWidth() = 640x480
 		// cam.getViewPortLeft() = 0,5f
-		hud = new HUD(game, game.getAssetManager(), cam.getViewPortLeft(), cam.getViewPortTop(), cam.getWidth(), cam.getHeight(), guiFont_small);
+		float x = cam.getWidth() * cam.getViewPortLeft();
+		float y = cam.getHeight() * cam.getViewPortTop();
+		int w = cam.getWidth();
+		int h = cam.getHeight();
+		hud = new HUD(game, game.getAssetManager(), x, y, w, h, guiFont_small);
 		game.getGuiNode().attachChild(hud);
 		
-		this.ability = new JetPac(this); // todo - make random
+		this.ability = new JetPac(this); //Invisibility(this);//  todo - make random
 	}
 
 
@@ -100,6 +124,10 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	@Override
 	public void process(float tpf) {
 		timeSinceLastMove += tpf;
+		if (ability.process(tpf)) {
+			this.hud.setAbilityText(this.ability.getHudText());
+		}
+		
 		/*
 		 * The direction of character is determined by the camera angle
 		 * the Y direction is set to zero to keep our character from
@@ -125,10 +153,15 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 			walkDirection.addLocal(camDir.negate());
 			timeSinceLastMove = 0;
 		}
+		if (input.isAbility1Pressed()) { // Must be before we set the walkDirection, as this method may affect it
+			Settings.p("Using " + this.ability.toString());
+			this.ability.activate(tpf);
+		}
+
 		playerControl.setWalkDirection(walkDirection);
 
-		if (input.isJumpPressed()|| timeSinceLastMove > 10) {
-			Settings.p("timeSinceLastMove=" + timeSinceLastMove);
+		if (input.isJumpPressed() || timeSinceLastMove > 10) {
+			//Settings.p("timeSinceLastMove=" + timeSinceLastMove);
 			timeSinceLastMove = 0;
 			this.jump();
 		}
@@ -143,8 +176,18 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		 * we make a slight offset to adjust for head height.
 		 */
 		Vector3f vec = getMainNode().getWorldTranslation();
-		cam.setLocation(new Vector3f(vec.x, vec.y + (PLAYER_HEIGHT/2), vec.z));
-
+		cam.setLocation(new Vector3f(vec.x, vec.y + (PLAYER_HEIGHT), vec.z));
+		
+		// Rotate us to point in the direction of the camera
+		Vector3f lookAtPoint = cam.getLocation().add(cam.getDirection().mult(10));
+		lookAtPoint.y = this.PLAYER_HEIGHT;
+		this.playerGeometry.lookAt(lookAtPoint, Vector3f.UNIT_Y);
+		
+		this.input.resetFlags();
+		
+		if (this.getMainNode().getWorldTranslation().y < -5f) {
+			this.moveToStartPostion();
+		}
 	}
 
 
@@ -190,6 +233,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	@Override
 	public void hasSuccessfullyHit(Entity e) {
 		this.score++;
+		this.hud.setScore(this.score);
 		this.jump();
 	}
 

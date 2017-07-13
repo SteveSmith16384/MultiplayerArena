@@ -118,7 +118,9 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		}
 		// Create extra cameras
 		for (int id=nextid ; id<=3 ; id++) {
-			this.createCamera(id);
+			Camera c = this.createCamera(id);
+			c.setLocation(new Vector3f(2f, PlayersAvatar.PLAYER_HEIGHT, 2f));
+			c.lookAt(new Vector3f(map.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, map.getDepth()/2), Vector3f.UNIT_Y);
 		}
 
 		bulletAppState.getPhysicsSpace().addCollisionListener(this);

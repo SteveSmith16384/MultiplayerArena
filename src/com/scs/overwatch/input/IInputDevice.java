@@ -16,4 +16,5 @@ public interface IInputDevice {
 
 	boolean isAbility1Pressed();
 
+	void resetFlags();
 }
