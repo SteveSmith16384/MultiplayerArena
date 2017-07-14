@@ -5,11 +5,11 @@ import java.util.Iterator;
 import com.jme3.collision.CollisionResult;
 import com.jme3.collision.CollisionResults;
 import com.jme3.collision.UnsupportedCollisionException;
-import com.jme3.math.Quaternion;
 import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.scs.overwatch.Overwatch;
+import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
 
 public abstract class PhysicalEntity extends Entity implements IProcessable {
@@ -77,9 +77,9 @@ public abstract class PhysicalEntity extends Entity implements IProcessable {
 		//synchronized (module.objects) {
 		//if (go.collides) {
 		CollisionResults results = new CollisionResults();
-		Iterator<Entity> it = game.entities.iterator();
+		Iterator<IEntity> it = game.entities.iterator();
 		while (it.hasNext()) {
-			Entity o = it.next();
+			IEntity o = it.next();
 			if (o instanceof PhysicalEntity && o != this) {
 				PhysicalEntity go = (PhysicalEntity)o;
 				// if (go.collides) {

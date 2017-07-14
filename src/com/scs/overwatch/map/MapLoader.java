@@ -4,11 +4,8 @@ import com.jme3.scene.Node;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.entities.Fence;
-import com.scs.overwatch.entities.MedievalStatue;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.SimplePillar;
-import com.scs.overwatch.entities.Skull;
-import com.scs.overwatch.entities.StoneCoffin;
 import com.scs.overwatch.entities.Tree;
 import com.scs.overwatch.shapes.CreateShapes;
 
@@ -64,19 +61,14 @@ public class MapLoader {
 					this.rootNode.attachChild(tree.getMainNode());
 					break;
 
-				case Settings.MAP_FENCE_LR:
-					PhysicalEntity fence1 = new Fence(game, x, z, 0);
+				case Settings.MAP_FENCE_LR_HIGH:
+					PhysicalEntity fence1 = new Fence(game, x, 4f, z, 0);
 					this.rootNode.attachChild(fence1.getMainNode());
 					break;
 
-				case Settings.MAP_FENCE_FB:
-					PhysicalEntity fence2 = new Fence(game, x, z, 90);
+				case Settings.MAP_FENCE_FB_HIGH:
+					PhysicalEntity fence2 = new Fence(game, x, 4f, z, 90);
 					this.rootNode.attachChild(fence2.getMainNode());
-					break;
-
-				case Settings.MAP_MEDIEVAL_STATUE:
-					PhysicalEntity ms = new MedievalStatue(game, x, z);
-					this.rootNode.attachChild(ms.getMainNode());
 					break;
 
 				case Settings.MAP_SIMPLE_PILLAR:
@@ -84,14 +76,14 @@ public class MapLoader {
 					this.rootNode.attachChild(lg.getMainNode());
 					break;
 
-				case Settings.MAP_STONE_COFFIN:
-					PhysicalEntity gs = new StoneCoffin(game, x, z);
-					this.rootNode.attachChild(gs.getMainNode());
+				case Settings.MAP_FENCE_LR_NORMAL:
+					PhysicalEntity fence1n = new Fence(game, x, 1.5f, z, 0);
+					this.rootNode.attachChild(fence1n.getMainNode());
 					break;
 
-				case Settings.MAP_SKULL:
-					PhysicalEntity skull = new Skull(game, x, z);
-					this.rootNode.attachChild(skull.getMainNode());
+				case Settings.MAP_FENCE_FB_NORMAL:
+					PhysicalEntity fence2n = new Fence(game, x, 1.5f, z, 90);
+					this.rootNode.attachChild(fence2n.getMainNode());
 					break;
 
 				default:

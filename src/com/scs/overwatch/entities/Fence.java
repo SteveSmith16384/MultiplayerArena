@@ -14,16 +14,16 @@ import com.scs.overwatch.Settings;
 public class Fence extends PhysicalEntity {
 
 	private static final float WIDTH = 2f;
-	private static final float HEIGHT = 1.5f;
+	//private static final float HEIGHT = 1.5f;
 
 	private Geometry geometry;
 	private RigidBodyControl floor_phy;
 	
-	public Fence(Overwatch _game, float x, float z, float rot) {
+	public Fence(Overwatch _game, float x, float height, float z, float rot) {
 		super(_game, "Fence");
 
-		Box box1 = new Box(WIDTH/2, HEIGHT/2, .1f);
-		box1.scaleTextureCoordinates(new Vector2f(WIDTH, HEIGHT));
+		Box box1 = new Box(WIDTH/2, height/2, .1f);
+		box1.scaleTextureCoordinates(new Vector2f(WIDTH, height));
 		geometry = new Geometry("Fence", box1);
 		//TextureKey key3 = new TextureKey("Textures/bricktex.jpg");
 		TextureKey key3 = new TextureKey("seamless_bricks/bricks.png");
@@ -47,7 +47,7 @@ public class Fence extends PhysicalEntity {
 		this.main_node.attachChild(geometry);
 		float rads = (float)Math.toRadians(rot);
 		main_node.rotate(0, rads, 0);
-		main_node.setLocalTranslation(x+(WIDTH/2), HEIGHT/2, z+0.5f);
+		main_node.setLocalTranslation(x+(WIDTH/2), height/2, z+0.5f);
 
 		floor_phy = new RigidBodyControl(0);
 		geometry.addControl(floor_phy);

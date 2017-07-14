@@ -36,7 +36,6 @@ public class Collectable extends PhysicalEntity {
 			floor_mat.setTexture("ColorMap", tex3);
 		}
 		geometry.setMaterial(floor_mat);
-		//geometry.setLocalTranslation(x, 5f, z);
 
 		this.main_node.attachChild(geometry);
 		main_node.setLocalTranslation(x, 5f, z); // Drop from sky

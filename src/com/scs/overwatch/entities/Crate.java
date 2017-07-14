@@ -3,7 +3,6 @@ package com.scs.overwatch.entities;
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
-import com.jme3.math.Vector2f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 import com.jme3.texture.Texture;
@@ -12,9 +11,6 @@ import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 
 public class Crate extends PhysicalEntity {
-
-	//private static final float WIDTH = 2f;
-	//private static final float HEIGHT = 1.5f;
 
 	private Geometry geometry;
 	private RigidBodyControl floor_phy;

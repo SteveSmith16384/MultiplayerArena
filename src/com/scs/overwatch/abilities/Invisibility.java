@@ -1,17 +1,15 @@
 package com.scs.overwatch.abilities;
 
-import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial.CullHint;
 import com.scs.overwatch.entities.PlayersAvatar;
 
 public class Invisibility extends AbstractAbility {
 
-	private static final Vector3f FORCE = new Vector3f(0, 1f, 0);
 	private static final float MAX_FUEL = 10;
 	
-	private float fuel;
+	private float power;
 	private PlayersAvatar player;
-	private boolean invisible;
+	private boolean isInvisible;
 	
 	public Invisibility(PlayersAvatar _player) {
 		super();
@@ -23,27 +21,28 @@ public class Invisibility extends AbstractAbility {
 	@Override
 	public boolean process(float interpol) {
 		this.player.getMainNode().setCullHint(CullHint.Inherit); // Default
-		invisible = false;
-		fuel += interpol;
-		fuel = Math.min(fuel, MAX_FUEL);
+		isInvisible = false;
+		power += interpol;
+		power = Math.min(power, MAX_FUEL);
 		return true;
 	}
 
 	
 	@Override
 	public void activate(float interpol) {
-		fuel -= interpol;
-		fuel = Math.max(fuel, 0);
-		if (fuel > 0) {
+		power -= interpol*2;
+		power = Math.max(power, 0);
+		if (power > 0) {
 			this.player.getMainNode().setCullHint(CullHint.Always);
-			invisible = true;
+			isInvisible = true;
 		}
 		
 	}
 
+	
 	@Override
 	public String getHudText() {
-		return invisible ? "INVISIBLE!" : "";
+		return isInvisible ? "INVISIBLE!" : "";
 	}
 
 }

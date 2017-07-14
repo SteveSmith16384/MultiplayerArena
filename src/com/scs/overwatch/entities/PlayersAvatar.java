@@ -86,7 +86,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 		// create character control parameters (Radius,Height,Weight)
 		playerControl = new MyBetterCharacterControl(PLAYER_RAD, PLAYER_HEIGHT, 2f);
-		playerControl.setJumpForce(new Vector3f(0, 2f, 0)); 
+		playerControl.setJumpForce(new Vector3f(0, 4f, 0)); 
 		playerControl.setGravity(new Vector3f(0, 1f, 0));
 		this.getMainNode().addControl(playerControl);
 
@@ -97,7 +97,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 		BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
 		// cam.getWidth() = 640x480
-		// cam.getViewPortLeft() = 0,5f
+		// cam.getViewPortLeft() = 0.5f
 		float x = cam.getWidth() * cam.getViewPortLeft();
 		float y = cam.getHeight() * cam.getViewPortTop();
 		int w = cam.getWidth();
@@ -128,6 +128,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		if (ability.process(tpf)) {
 			this.hud.setAbilityText(this.ability.getHudText());
 		}
+		hud.process(tpf);
 		
 		/*
 		 * The direction of character is determined by the camera angle

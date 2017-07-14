@@ -399,5 +399,10 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 			}
 		}        
 	}
+	
+	
+	public Vector3f getLocation() {
+		return cam.getLocation();
+	}
 
 }

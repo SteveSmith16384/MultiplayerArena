@@ -28,7 +28,7 @@ public class JetPac extends AbstractAbility {
 
 	@Override
 	public void activate(float interpol) {
-		fuel -= interpol;
+		fuel -= (interpol*2);
 		fuel = Math.max(fuel, 0);
 		if (fuel > 0) {
 			Settings.p("Jetpac-ing!");

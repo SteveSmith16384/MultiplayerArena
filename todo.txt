@@ -1,5 +1,4 @@
 TEX
-
 https://opengameart.org/content/fluffy-clouds
 https://opengameart.org/content/hand-painted-mountain-texture
 https://opengameart.org/content/kiira-texture-collection
@@ -19,28 +18,37 @@ USED: https://opengameart.org/content/tileable-crates
 
 
 NAMES
-Crates
+It's Crate!
+Overkill
 
 
 URGENT
-Choose a name
-Not removing red mist
-	No bullet collision
-	Adjust cam position
-	Restart player if they fall off the edge
-	If player shot, teleport randomly
-	If player hits another player, they jump
+High wall around edge
+	Player jump higher
+Billboard for messages
+SFX
+	Plank - scale text along length
+If two-player, use top and bottom of screen
+Check tex licences
+Create logo
+	Fix jetpac duration
+	PS4 turning slowly
+	Not removing red mist
+Post to Java-gaming
+Simple GUI
+Test TestPssmShadow
+Skybox - copy from Ares
+Upload youtube vid
 
 
 LATER
-Create logo
+Store settings in props file
 Why does player jump when box too big?  Try increasing weight
 Unit Tests
 Create multi-level map files
 Remove JME logging
 Improve resource loading
 Try and get JME source to compile
-If two-player, use top and bottom of screen
 
 
 MUCH LATER
@@ -80,4 +88,9 @@ Heal
 Drop mines
 Teleport forwards
 
+
+GAME MODES
+What the Box
+Dodgeball
+Overwatch
 
