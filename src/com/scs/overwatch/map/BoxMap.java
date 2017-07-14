@@ -68,7 +68,7 @@ public class BoxMap implements IMapInterface {
 
 	@Override
 	public void addMisc() {
-		// Sprinkle lots of blanks
+		// Sprinkle lots of planks
 		for (int i=0 ; i<10 ; i++) {
 			int x = NumberFunctions.rnd(2, getWidth()-3);
 			int z = NumberFunctions.rnd(2, getDepth()-3);
@@ -86,6 +86,7 @@ public class BoxMap implements IMapInterface {
 			float d = NumberFunctions.rndFloat(w, w+0.3f);
 			Crate crate = new Crate(game, x, z, w, w, d, NumberFunctions.rnd(0, 359));
 			game.getRootNode().attachChild(crate.getMainNode());
+			game.addEntity(crate);
 		}
 
 	}

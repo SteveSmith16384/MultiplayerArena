@@ -23,12 +23,11 @@ Overkill
 
 
 URGENT
+	NPC boxes sometimes jump
 Jetpac too powerful if moving fwd
 Show "victory!" billboard
-	Adjust billboard to centre
-	Skybox
 	Billboard for messages
-If two-player, use top and bottom of screen
+	If two-player, use top and bottom of screen
 Check tex licences
 Create logo
 SFX

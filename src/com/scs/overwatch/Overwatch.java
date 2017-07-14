@@ -114,7 +114,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 
 		MapLoader maploader = new MapLoader(this);
 		map = maploader.loadMap();
-		
+
 		Sky sky = new Sky(this.getAssetManager());
 		sky.geom.setLocalTranslation(-map.getWidth()/2, 9f, -map.getDepth()/2);
 		sky.geom.lookAt(new Vector3f(-map.getWidth()/2, 0f, -map.getDepth()/2), Vector3f.UNIT_Y);
@@ -124,13 +124,13 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 
 		Joystick[] joysticks = inputManager.getJoysticks();
 		int numPlayers = 1+joysticks.length;
-		
+
 		// Auto-Create player 0 - keyboard and mouse
 		{
 			Camera newCam = this.createCamera(0, numPlayers);
 			MouseAndKeyboardCamera keyboard = new MouseAndKeyboardCamera(newCam, this.inputManager);
 			this.addPlayersAvatar(0, newCam, keyboard); // Keyboard
-			
+
 			// Test billboard
 			/*AbstractBillboard bb = new AbstractBillboard(this.getAssetManager(), "Textures/boxes and crates/1.jpg", 1, 1, newCam);
 			this.rootNode.attachChild(bb.node);
@@ -149,11 +149,13 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 				this.addPlayersAvatar(id, newCam, joyCam);
 			}
 		}
-		// Create extra cameras
-		for (int id=nextid ; id<=3 ; id++) {
-			Camera c = this.createCamera(id, numPlayers);
-			c.setLocation(new Vector3f(2f, PlayersAvatar.PLAYER_HEIGHT, 2f));
-			c.lookAt(new Vector3f(map.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, map.getDepth()/2), Vector3f.UNIT_Y);
+		if (Settings.ALWAYS_SHOW_4_CAMS) {
+			// Create extra cameras
+			for (int id=nextid ; id<=3 ; id++) {
+				Camera c = this.createCamera(id, numPlayers);
+				c.setLocation(new Vector3f(2f, PlayersAvatar.PLAYER_HEIGHT, 2f));
+				c.lookAt(new Vector3f(map.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, map.getDepth()/2), Vector3f.UNIT_Y);
+			}
 		}
 
 		bulletAppState.getPhysicsSpace().addCollisionListener(this);
@@ -177,27 +179,54 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		c.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
 
 		// todo - Reframe all the cameras based on number of players
-		switch (id) { // left/right/bottom/top, from bottom-left!
-		case 0: // TL
-			Settings.p("Creating camera top-left");
-			c.setViewPort(0f, 0.5f, 0.5f, 1f);
-			c.setName("Cam_TL");
-			break;
-		case 1: // TR
-			Settings.p("Creating camera top-right");
-			c.setViewPort(0.5f, 1f, 0.5f, 1f);
-			c.setName("Cam_TR");
-			break;
-		case 2: // BL
-			Settings.p("Creating camera bottom-left");
-			c.setViewPort(0f, 0.5f, 0f, .5f);
-			c.setName("Cam_BL");
-			break;
-		case 3: // BR
-			Settings.p("Creating camera bottom-right");
-			c.setViewPort(0.5f, 1f, 0f, .5f);
-			c.setName("Cam_BR");
-			break;
+		if (Settings.ALWAYS_SHOW_4_CAMS || numPlayers > 2) {
+			switch (id) { // left/right/bottom/top, from bottom-left!
+			case 0: // TL
+				Settings.p("Creating camera top-left");
+				c.setViewPort(0f, 0.5f, 0.5f, 1f);
+				c.setName("Cam_TL");
+				break;
+			case 1: // TR
+				Settings.p("Creating camera top-right");
+				c.setViewPort(0.5f, 1f, 0.5f, 1f);
+				c.setName("Cam_TR");
+				break;
+			case 2: // BL
+				Settings.p("Creating camera bottom-left");
+				c.setViewPort(0f, 0.5f, 0f, .5f);
+				c.setName("Cam_BL");
+				break;
+			case 3: // BR
+				Settings.p("Creating camera bottom-right");
+				c.setViewPort(0.5f, 1f, 0f, .5f);
+				c.setName("Cam_BR");
+				break;
+			default:
+				throw new RuntimeException("todo");
+			}
+		} else if (numPlayers == 2) {
+			switch (id) { // left/right/bottom/top, from bottom-left!
+			case 0: // TL
+				Settings.p("Creating camera top");
+				c.setViewPort(0f, 1f, 0.5f, 1f);
+				c.setName("Cam_Top");
+				break;
+			case 1: // TR
+				Settings.p("Creating camera bottom");
+				c.setViewPort(0.0f, 1f, 0f, .5f);
+				c.setName("Cam_bottom");
+				break;
+			default:
+				throw new RuntimeException("todo");
+			}
+		} else if (numPlayers == 1) {
+			Settings.p("Creating full-screen camera");
+			c.setViewPort(0f, 0f, 1f, 1f);
+			c.setName("Cam_FullScreen");
+
+		} else {
+			throw new RuntimeException("todo");
+			
 		}
 		// Look at the centre by default
 		//c.lookAt(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2), Vector3f.UNIT_Y);
@@ -250,16 +279,16 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 			this.rootNode.removeLight(it);
 		}
 
-		if (Settings.DEBUG_LIGHT == false) {
+		/*if (Settings.DEBUG_LIGHT == false) {
 			AmbientLight al = new AmbientLight();
 			al.setColor(ColorRGBA.White.mult(.5f));
 			rootNode.addLight(al);
 
-		} else {
-			AmbientLight al = new AmbientLight();
-			al.setColor(ColorRGBA.White.mult(3));
-			rootNode.addLight(al);
-		}
+		} else {*/
+		AmbientLight al = new AmbientLight();
+		al.setColor(ColorRGBA.White.mult(3));
+		rootNode.addLight(al);
+		//}
 	}
 
 
@@ -294,16 +323,12 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 
 
 	public void addEntity(IEntity e) {
-		//synchronized (this.entities) {
 		this.entities.add(e);
-		//}
 	}
 
 
 	public void removeEntity(IEntity e) {
-		//synchronized (this.entities) {
 		this.entities.remove(e);
-		//}
 	}
 
 
