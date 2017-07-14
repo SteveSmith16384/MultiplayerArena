@@ -52,15 +52,6 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		cam = _cam;
 		input = _input;
 
-		/** Create a box to use as our player model */
-		/*Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
-		Geometry playerGeometry = new Geometry("Player", box1);
-		Material mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");  // create a simple material
-		mat.setColor("Color", ColorRGBA.Blue);
-		playerGeometry.setMaterial(mat);    
-		playerGeometry.setLocalTranslation(new Vector3f(0,PLAYER_HEIGHT/2,0));
-		this.getMainNode().attachChild(playerGeometry);*/
-		
 /*		Crate crate = new Crate(game, 0, 0, PLAYER_RAD*2, PLAYER_HEIGHT, PLAYER_RAD*2, 0);
 		crate.getMainNode().setLocalTranslation(new Vector3f(0, PLAYER_HEIGHT, 0));
 		this.getMainNode().attachChild(crate.getMainNode());
@@ -178,7 +169,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		 * we make a slight offset to adjust for head height.
 		 */
 		Vector3f vec = getMainNode().getWorldTranslation();
-		cam.setLocation(new Vector3f(vec.x, vec.y + (PLAYER_HEIGHT-0.1f), vec.z));
+		cam.setLocation(new Vector3f(vec.x, vec.y + (PLAYER_HEIGHT/2), vec.z));
 		
 		// Rotate us to point in the direction of the camera
 		Vector3f lookAtPoint = cam.getLocation().add(cam.getDirection().mult(10));

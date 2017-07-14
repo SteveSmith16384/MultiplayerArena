@@ -23,6 +23,7 @@ Overkill
 
 
 URGENT
+	Player can see own box when jumping
 	NPC boxes sometimes jump
 Jetpac too powerful if moving fwd
 Show "victory!" billboard
@@ -42,7 +43,7 @@ LATER
 Test TestPssmShadow
 Post to Java-gaming
 Store settings in props file
-Why does player jump when box too big?  Try increasing weight
+Why does player jump when box too big?
 Unit Tests
 Create multi-level map files
 Remove JME logging
