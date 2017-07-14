@@ -82,7 +82,7 @@ public class BoxMap implements IMapInterface {
 		for (int i=0 ; i<25 ; i++) {
 			int x = NumberFunctions.rnd(2, getWidth()-3);
 			int z = NumberFunctions.rnd(2, getDepth()-3);
-			float w = NumberFunctions.rndFloat(.5f, 1.5f);
+			float w = NumberFunctions.rndFloat(.2f, 1f);
 			float d = NumberFunctions.rndFloat(w, w+0.3f);
 			Crate crate = new Crate(game, x, z, w, w, d, NumberFunctions.rnd(0, 359));
 			game.getRootNode().attachChild(crate.getMainNode());

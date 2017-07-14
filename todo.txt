@@ -23,13 +23,12 @@ Crates
 
 
 URGENT
+Dont allow too many balls
+Remove players balls when they die
+Non-player boxes sometimes jump
 Choose a name
 Not removing red mist
-	No bullet collision
-	Adjust cam position
 	Restart player if they fall off the edge
-	If player shot, teleport randomly
-	If player hits another player, they jump
 
 
 LATER
