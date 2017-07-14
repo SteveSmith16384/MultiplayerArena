@@ -18,14 +18,14 @@ public class BoxMap implements IMapInterface {
 			{0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},  
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  
 			{0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},  
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 5, 0, 6, 0, 0},  
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0},  
 			{0, 5, 0, 0, 0, 0, 5, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},  
-			{1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 1},  
+			{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  
 			{0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},  
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0},  
 			{0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},  
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  
-			{0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 5, 0},  
+			{0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 5, 0},  
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  
 			{0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},  
 			{0, 0, 4, 0, 4, 0, 4, 0, 4, 0, 4, 0, 4, 0, 4, 0, 4, 0, 0},  
@@ -60,15 +60,15 @@ public class BoxMap implements IMapInterface {
 
 	@Override
 	public Point getPlayerStartPos(int id) {
-		int x = NumberFunctions.rnd(2, getWidth()-3);
-		int z = NumberFunctions.rnd(2, getDepth()-3);
+		int x = NumberFunctions.rnd(4, getWidth()-5);
+		int z = NumberFunctions.rnd(4, getDepth()-5);
 		return new Point(x, z);
 	}
 
 
 	@Override
 	public void addMisc() {
-		// Sprinkle lots of blanks
+		// Sprinkle lots of planks
 		for (int i=0 ; i<10 ; i++) {
 			int x = NumberFunctions.rnd(2, getWidth()-3);
 			int z = NumberFunctions.rnd(2, getDepth()-3);
@@ -86,6 +86,7 @@ public class BoxMap implements IMapInterface {
 			float d = NumberFunctions.rndFloat(w, w+0.3f);
 			Crate crate = new Crate(game, x, z, w, w, d, NumberFunctions.rnd(0, 359));
 			game.getRootNode().attachChild(crate.getMainNode());
+			game.addEntity(crate);
 		}
 
 	}

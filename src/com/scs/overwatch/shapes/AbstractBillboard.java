@@ -1,5 +1,5 @@
 package com.scs.overwatch.shapes;
-
+/*
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
@@ -27,4 +27,4 @@ public class AbstractBillboard extends Geometry {
 
 	}
 
-}
+}*/

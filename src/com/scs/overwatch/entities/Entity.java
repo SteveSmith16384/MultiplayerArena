@@ -6,8 +6,9 @@ import com.jme3.export.JmeExporter;
 import com.jme3.export.JmeImporter;
 import com.jme3.export.Savable;
 import com.scs.overwatch.Overwatch;
+import com.scs.overwatch.components.IEntity;
 
-public class Entity implements Savable {
+public class Entity implements IEntity, Savable {
 	
 	private static int nextId = 0;
 	

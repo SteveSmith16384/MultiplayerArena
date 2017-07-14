@@ -1,10 +1,8 @@
 TEX
-
 https://opengameart.org/content/fluffy-clouds
 https://opengameart.org/content/hand-painted-mountain-texture
 https://opengameart.org/content/kiira-texture-collection
 https://opengameart.org/content/cartonny-tree-leaves-and-flowers
-https://opengameart.org/content/cartoony-sky
 https://opengameart.org/content/mayan-stone-ornament
 https://opengameart.org/content/handpainted-tileable-wall
 https://opengameart.org/content/scifi-metal-texture
@@ -16,10 +14,12 @@ USED: https://opengameart.org/content/5-wood-textures
 USED: https://opengameart.org/content/hand-painted-texture-sandstone
 USED: https://opengameart.org/content/seamless-bricks
 USED: https://opengameart.org/content/tileable-crates
+USED: https://opengameart.org/content/cartoony-sky
 
 
 NAMES
-Crates
+It's Crate!
+Overkill
 
 
 URGENT
@@ -29,17 +29,32 @@ Non-player boxes sometimes jump
 Choose a name
 Not removing red mist
 	Restart player if they fall off the edge
+	Player can see own box when jumping
+	NPC boxes sometimes jump
+Jetpac too powerful if moving fwd
+Show "victory!" billboard
+	Billboard for messages
+	If two-player, use top and bottom of screen
+Check tex licences
+Create logo
+SFX
+	Fix jetpac duration
+	PS4 turning slowly
+	Not removing red mist
+Simple GUI
+Upload youtube vid
 
 
 LATER
-Create logo
-Why does player jump when box too big?  Try increasing weight
+Test TestPssmShadow
+Post to Java-gaming
+Store settings in props file
+Why does player jump when box too big?
 Unit Tests
 Create multi-level map files
 Remove JME logging
 Improve resource loading
 Try and get JME source to compile
-If two-player, use top and bottom of screen
 
 
 MUCH LATER
@@ -79,4 +94,9 @@ Heal
 Drop mines
 Teleport forwards
 
+
+GAME MODES
+What the Box
+Dodgeball
+Overwatch
 

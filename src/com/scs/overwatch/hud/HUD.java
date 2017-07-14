@@ -11,6 +11,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Quad;
 import com.scs.overwatch.Overwatch;
+import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.gui.TextArea;
 
@@ -18,7 +19,7 @@ import com.scs.overwatch.gui.TextArea;
  * Positioning text = the co-ords of BitmapText are for the top-left of the first line of text, and they go down from there.
  * 
  */
-public class HUD extends Node implements IProcessable {
+public class HUD extends Node implements IEntity, IProcessable {
 
 	public TextArea log_ta;
 	private int screen_width, screen_height;
@@ -42,6 +43,7 @@ public class HUD extends Node implements IProcessable {
 		score = new BitmapText(font_small, false);
 		score.setLocalTranslation(0, screen_height-20, 0);
 		this.attachChild(score);
+		this.setScore(0);
 		
 		ability = new BitmapText(font_small, false);
 		ability.setLocalTranslation(0, screen_height-40, 0);
@@ -98,10 +100,10 @@ public class HUD extends Node implements IProcessable {
 
 	public void showDamageBox() {
 		process_damage_box = true;
-		/*todo this.dam_box_col.a = .5f;
+		this.dam_box_col.a = .5f;
 		this.dam_box_col.r = 1f;
 		this.dam_box_col.g = 0f;
-		this.dam_box_col.b = 0f;*/
+		this.dam_box_col.b = 0f;
 	}
 
 

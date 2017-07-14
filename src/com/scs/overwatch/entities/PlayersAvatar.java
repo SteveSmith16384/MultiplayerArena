@@ -52,15 +52,6 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		cam = _cam;
 		input = _input;
 
-		/** Create a box to use as our player model */
-		/*Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
-		Geometry playerGeometry = new Geometry("Player", box1);
-		Material mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");  // create a simple material
-		mat.setColor("Color", ColorRGBA.Blue);
-		playerGeometry.setMaterial(mat);    
-		playerGeometry.setLocalTranslation(new Vector3f(0,PLAYER_HEIGHT/2,0));
-		this.getMainNode().attachChild(playerGeometry);*/
-		
 /*		Crate crate = new Crate(game, 0, 0, PLAYER_RAD*2, PLAYER_HEIGHT, PLAYER_RAD*2, 0);
 		crate.getMainNode().setLocalTranslation(new Vector3f(0, PLAYER_HEIGHT, 0));
 		this.getMainNode().attachChild(crate.getMainNode());
@@ -86,7 +77,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 		// create character control parameters (Radius,Height,Weight)
 		playerControl = new MyBetterCharacterControl(PLAYER_RAD, PLAYER_HEIGHT, 2f);
-		playerControl.setJumpForce(new Vector3f(0, 2f, 0)); 
+		playerControl.setJumpForce(new Vector3f(0, 6f, 0)); 
 		playerControl.setGravity(new Vector3f(0, 1f, 0));
 		this.getMainNode().addControl(playerControl);
 
@@ -97,7 +88,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 		BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
 		// cam.getWidth() = 640x480
-		// cam.getViewPortLeft() = 0,5f
+		// cam.getViewPortLeft() = 0.5f
 		float x = cam.getWidth() * cam.getViewPortLeft();
 		float y = cam.getHeight() * cam.getViewPortTop();
 		int w = cam.getWidth();
@@ -128,6 +119,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		if (ability.process(tpf)) {
 			this.hud.setAbilityText(this.ability.getHudText());
 		}
+		hud.process(tpf);
 		
 		/*
 		 * The direction of character is determined by the camera angle
@@ -177,7 +169,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		 * we make a slight offset to adjust for head height.
 		 */
 		Vector3f vec = getMainNode().getWorldTranslation();
-		cam.setLocation(new Vector3f(vec.x, vec.y + (PLAYER_HEIGHT-0.1f), vec.z));
+		cam.setLocation(new Vector3f(vec.x, vec.y + (PLAYER_HEIGHT/2), vec.z));
 		
 		// Rotate us to point in the direction of the camera
 		Vector3f lookAtPoint = cam.getLocation().add(cam.getDirection().mult(10));

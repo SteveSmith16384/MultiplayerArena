@@ -10,6 +10,7 @@ import java.util.prefs.BackingStoreException;
 
 import ssmith.util.TSArrayList;
 
+import com.jme3.app.state.VideoRecorderAppState;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
@@ -24,8 +25,9 @@ import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
 import com.jme3.system.AppSettings;
+import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
-import com.scs.overwatch.entities.Entity;
+import com.scs.overwatch.entities.AbstractBillboard;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
 import com.scs.overwatch.input.IInputDevice;
@@ -42,10 +44,11 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 
 	public static final Random rnd = new Random();
 
-	public TSArrayList<Entity> entities = new TSArrayList<Entity>();
+	public TSArrayList<IEntity> entities = new TSArrayList<IEntity>();
 	//private Map<Integer, PlayersAvatar> players = new HashMap<>(); // input id-> player
 	public IMapInterface map;
 	private static Properties properties;
+	private VideoRecorderAppState video_recorder;
 
 	public static void main(String[] args) {
 		try {
@@ -67,7 +70,23 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 			Overwatch app = new Overwatch();
 			app.setSettings(settings);
 			app.setPauseOnLostFocus(true);
+
+			/*File video, audio;
+			if (Settings.RECORD_VID) {
+				//app.setTimer(new IsoTimer(60));
+				video = File.createTempFile("JME-water-video", ".avi");
+				audio = File.createTempFile("JME-water-audio", ".wav");
+				Capture.captureVideo(app, video);
+				Capture.captureAudio(app, audio);
+			}*/
+
 			app.start();
+
+			/*if (Settings.RECORD_VID) {
+				System.out.println("Video saved at " + video.getCanonicalPath());
+				System.out.println("Audio saved at " + audio.getCanonicalPath());
+			}*/
+
 		} catch (Exception e) {
 			Settings.p("Error: " + e);
 			e.printStackTrace();
@@ -96,41 +115,61 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		MapLoader maploader = new MapLoader(this);
 		map = maploader.loadMap();
 
+		Sky sky = new Sky(this.getAssetManager());
+		sky.geom.setLocalTranslation(-map.getWidth()/2, 9f, -map.getDepth()/2);
+		sky.geom.lookAt(new Vector3f(-map.getWidth()/2, 0f, -map.getDepth()/2), Vector3f.UNIT_Y);
+		//sky.geom.setLocalTranslation(-map.getWidth()/2, 9f, -map.getDepth()/2);
+		//sky.geom.lookAt(new Vector3f(-map.getWidth()/2, 0f, -map.getDepth()/2), Vector3f.UNIT_Y);
+		this.getRootNode().attachChild(sky.geom);
+
+		Joystick[] joysticks = inputManager.getJoysticks();
+		int numPlayers = 1+joysticks.length;
+
 		// Auto-Create player 0 - keyboard and mouse
 		{
-			Camera newCam = this.createCamera(0);
+			Camera newCam = this.createCamera(0, numPlayers);
 			MouseAndKeyboardCamera keyboard = new MouseAndKeyboardCamera(newCam, this.inputManager);
 			this.addPlayersAvatar(0, newCam, keyboard); // Keyboard
+
+			// Test billboard
+			/*AbstractBillboard bb = new AbstractBillboard(this.getAssetManager(), "Textures/boxes and crates/1.jpg", 1, 1, newCam);
+			this.rootNode.attachChild(bb.node);
+			this.addEntity(bb);*/
 		}
 
 		// Create players for each joystick
 		int nextid=1;
-		Joystick[] joysticks = inputManager.getJoysticks();
 		if (joysticks == null || joysticks.length == 0) {
 			Settings.p("NO JOYSTICKS/GAMEPADS");
 		} else {
 			for (Joystick j : joysticks) {
 				int id = nextid++;
-				Camera newCam = this.createCamera(id);
+				Camera newCam = this.createCamera(id, numPlayers);
 				JoystickCamera joyCam = new JoystickCamera(newCam, j, this.inputManager);
 				this.addPlayersAvatar(id, newCam, joyCam);
 			}
 		}
-		// Create extra cameras
-		for (int id=nextid ; id<=3 ; id++) {
-			Camera c = this.createCamera(id);
-			c.setLocation(new Vector3f(2f, PlayersAvatar.PLAYER_HEIGHT, 2f));
-			c.lookAt(new Vector3f(map.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, map.getDepth()/2), Vector3f.UNIT_Y);
+		if (Settings.ALWAYS_SHOW_4_CAMS) {
+			// Create extra cameras
+			for (int id=nextid ; id<=3 ; id++) {
+				Camera c = this.createCamera(id, numPlayers);
+				c.setLocation(new Vector3f(2f, PlayersAvatar.PLAYER_HEIGHT, 2f));
+				c.lookAt(new Vector3f(map.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, map.getDepth()/2), Vector3f.UNIT_Y);
+			}
 		}
 
 		bulletAppState.getPhysicsSpace().addCollisionListener(this);
 
 		//stateManager.getState(StatsAppState.class).toggleStats(); // Turn off stats
-
+		if (Settings.RECORD_VID) {
+			Settings.p("Recording video");
+			video_recorder = new VideoRecorderAppState();
+			stateManager.attach(video_recorder);
+		}
 	}
 
 
-	private Camera createCamera(int id) {
+	private Camera createCamera(int id, int numPlayers) {
 		Camera c = null;
 		if (id == 0) {
 			c = cam;
@@ -140,33 +179,61 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		c.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
 
 		// todo - Reframe all the cameras based on number of players
-		switch (id) { // left/right/bottom/top, from bottom-left!
-		case 0: // TL
-			Settings.p("Creating camera top-left");
-			c.setViewPort(0f, 0.5f, 0.5f, 1f);
-			c.setName("Cam_TL");
-			break;
-		case 1: // TR
-			Settings.p("Creating camera top-right");
-			c.setViewPort(0.5f, 1f, 0.5f, 1f);
-			c.setName("Cam_TR");
-			break;
-		case 2: // BL
-			Settings.p("Creating camera bottom-left");
-			c.setViewPort(0f, 0.5f, 0f, .5f);
-			c.setName("Cam_BL");
-			break;
-		case 3: // BR
-			Settings.p("Creating camera bottom-right");
-			c.setViewPort(0.5f, 1f, 0f, .5f);
-			c.setName("Cam_BR");
-			break;
+		if (Settings.ALWAYS_SHOW_4_CAMS || numPlayers > 2) {
+			switch (id) { // left/right/bottom/top, from bottom-left!
+			case 0: // TL
+				Settings.p("Creating camera top-left");
+				c.setViewPort(0f, 0.5f, 0.5f, 1f);
+				c.setName("Cam_TL");
+				break;
+			case 1: // TR
+				Settings.p("Creating camera top-right");
+				c.setViewPort(0.5f, 1f, 0.5f, 1f);
+				c.setName("Cam_TR");
+				break;
+			case 2: // BL
+				Settings.p("Creating camera bottom-left");
+				c.setViewPort(0f, 0.5f, 0f, .5f);
+				c.setName("Cam_BL");
+				break;
+			case 3: // BR
+				Settings.p("Creating camera bottom-right");
+				c.setViewPort(0.5f, 1f, 0f, .5f);
+				c.setName("Cam_BR");
+				break;
+			default:
+				throw new RuntimeException("todo");
+			}
+		} else if (numPlayers == 2) {
+			switch (id) { // left/right/bottom/top, from bottom-left!
+			case 0: // TL
+				Settings.p("Creating camera top");
+				c.setViewPort(0f, 1f, 0.5f, 1f);
+				c.setName("Cam_Top");
+				break;
+			case 1: // TR
+				Settings.p("Creating camera bottom");
+				c.setViewPort(0.0f, 1f, 0f, .5f);
+				c.setName("Cam_bottom");
+				break;
+			default:
+				throw new RuntimeException("todo");
+			}
+		} else if (numPlayers == 1) {
+			Settings.p("Creating full-screen camera");
+			c.setViewPort(0f, 0f, 1f, 1f);
+			c.setName("Cam_FullScreen");
+
+		} else {
+			throw new RuntimeException("todo");
+			
 		}
 		// Look at the centre by default
 		//c.lookAt(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2), Vector3f.UNIT_Y);
 
 		final ViewPort view2 = renderManager.createMainView("viewport_"+c.toString(), c);
-		view2.setBackgroundColor(new ColorRGBA(0f, 0.9f, .9f, 0f));
+		//view2.setBackgroundColor(new ColorRGBA(0f, 0.9f, .9f, 0f)); // 148 187 242
+		view2.setBackgroundColor(new ColorRGBA(148f/255f, 187f/255f, 242f/255f, 0f));
 		view2.setClearFlags(true, true, true);
 		view2.attachScene(rootNode);
 
@@ -194,7 +261,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 	public void simpleUpdate(float tpf_secs) {
 		this.entities.refresh();
 
-		for(Entity e : entities) {
+		for(IEntity e : entities) {
 			if (e instanceof IProcessable) {
 				IProcessable ip = (IProcessable)e;
 				ip.process(tpf_secs);
@@ -212,45 +279,18 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 			this.rootNode.removeLight(it);
 		}
 
-		if (Settings.DEBUG_LIGHT == false) {
+		/*if (Settings.DEBUG_LIGHT == false) {
 			AmbientLight al = new AmbientLight();
 			al.setColor(ColorRGBA.White.mult(.5f));
 			rootNode.addLight(al);
 
-		} else {
-			AmbientLight al = new AmbientLight();
-			al.setColor(ColorRGBA.White.mult(3));
-			rootNode.addLight(al);
-		}
+		} else {*/
+		AmbientLight al = new AmbientLight();
+		al.setColor(ColorRGBA.White.mult(3));
+		rootNode.addLight(al);
+		//}
 	}
 
-
-	/** These are our custom actions triggered by key presses.
-	 * We do not walk yet, we just keep track of the direction the user pressed. */
-	/*@Override
-	public void onAction(String binding, boolean isPressed, float tpf) {
-		this.keyboard.onAction(binding, isPressed, tpf);
-		if (binding.equals("Left")) {
-			players[0].left = isPressed;
-		} else if (binding.equals("Right")) {
-			players[0].right = isPressed;
-		} else if (binding.equals("Up")) {
-			players[0].up = isPressed;
-		} else if (binding.equals("Down")) {
-			players[0].down = isPressed;
-		} else if (binding.equals("Jump")) {
-			if (isPressed) { 
-				players[0].playerControl.jump(); 
-			}
-		} else if (binding.equals("shoot")) {
-			if (isPressed) { 
-				players[0].shoot();
-			}
-
-		}
-
-	}
-	 */
 
 	@Override
 	public void collision(PhysicsCollisionEvent event) {
@@ -268,8 +308,6 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 			a = (PhysicalEntity)oa;
 		}
 
-		//Spatial gb = (Spatial)event.getObjectB().getUserObject(); 
-		//PhysicalEntity b = gb.getUserData(Settings.ENTITY);
 		Object ob = event.getObjectB().getUserObject(); 
 		if (ob instanceof Spatial) {
 			Spatial gb = (Spatial)event.getObjectB().getUserObject(); 
@@ -284,17 +322,13 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 	}
 
 
-	public void addEntity(Entity e) {
-		//synchronized (this.entities) {
+	public void addEntity(IEntity e) {
 		this.entities.add(e);
-		//}
 	}
 
 
-	public void removeEntity(Entity e) {
-		//synchronized (this.entities) {
+	public void removeEntity(IEntity e) {
 		this.entities.remove(e);
-		//}
 	}
 
 
