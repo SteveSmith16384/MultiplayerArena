@@ -58,9 +58,9 @@ public class EmptyMap implements IMapInterface {
 
 	@Override
 	public Point getPlayerStartPos(int id) {
-		int x = NumberFunctions.rnd(2, getWidth()-3);
-		int z = NumberFunctions.rnd(2, getDepth()-3);
-		return new Point(5,5); // todo - readd x, z);
+		int x = NumberFunctions.rnd(4, getWidth()-5);
+		int z = NumberFunctions.rnd(4, getDepth()-5);
+		return new Point(x, z);
 	}
 
 

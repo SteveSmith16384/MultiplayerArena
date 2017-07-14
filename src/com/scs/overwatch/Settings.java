@@ -13,7 +13,7 @@ public class Settings {
 	public static final float moveSpeed = 3f;
 	public static final float strafeSpeed = 3f;
 
-	public static final float CAM_DIST = 30f;
+	public static final float CAM_DIST = 50f;
 	public static final int FLOOR_SECTION_SIZE=12;
 	public static final boolean LIGHTING = true;
 	public static final String NAME = "Crates";

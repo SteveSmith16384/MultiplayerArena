@@ -7,6 +7,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.queue.RenderQueue.Bucket;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Node;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
@@ -16,7 +17,8 @@ import com.scs.overwatch.components.IProcessable;
 public class AbstractBillboard implements IEntity, IProcessable {
 
 	private Camera cam;
-	private Geometry geom;
+	//public Geometry geom;
+	public Node node;
 	
 	public AbstractBillboard(AssetManager assetManager, String tex, float w, float h, Camera _cam) {
 		super();
@@ -31,20 +33,22 @@ public class AbstractBillboard implements IEntity, IProcessable {
 		mat.setTexture("DiffuseMap", t);
 
 		Quad quad = new Quad(w, h);
-		geom = new Geometry("Billboard", quad);
+		Geometry geom = new Geometry("Billboard", quad);
 		geom.setMaterial(mat);
-
-		geom.setQueueBucket(Bucket.Transparent);
+		//geom.setQueueBucket(Bucket.Transparent);
+		
+		node = new Node("SkyNode");
+		node.attachChild(geom);
+		geom.setLocalTranslation(-w/2, -h/2, 0);
 	}
 
 	
 	@Override
 	public void process(float tpf) {
 		// Stay in front of player?
-		Vector3f pos = cam.getLocation().add(cam.getDirection().mult(10));
-		geom.setLocalTranslation(pos
-				);
-		this.geom.lookAt(cam.getLocation(), Vector3f.UNIT_Y);
+		Vector3f pos = cam.getLocation().add(cam.getDirection().mult(2));
+		node.setLocalTranslation(pos);
+		this.node.lookAt(cam.getLocation(), Vector3f.UNIT_Y);
 		
 	}
 

@@ -86,7 +86,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 		// create character control parameters (Radius,Height,Weight)
 		playerControl = new MyBetterCharacterControl(PLAYER_RAD, PLAYER_HEIGHT, 2f);
-		playerControl.setJumpForce(new Vector3f(0, 4f, 0)); 
+		playerControl.setJumpForce(new Vector3f(0, 6f, 0)); 
 		playerControl.setGravity(new Vector3f(0, 1f, 0));
 		this.getMainNode().addControl(playerControl);
 

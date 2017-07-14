@@ -27,6 +27,7 @@ import com.jme3.scene.Spatial;
 import com.jme3.system.AppSettings;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
+import com.scs.overwatch.entities.AbstractBillboard;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
 import com.scs.overwatch.input.IInputDevice;
@@ -113,6 +114,13 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 
 		MapLoader maploader = new MapLoader(this);
 		map = maploader.loadMap();
+		
+		Sky sky = new Sky(this.getAssetManager());
+		sky.geom.setLocalTranslation(-map.getWidth()/2, 9f, -map.getDepth()/2);
+		sky.geom.lookAt(new Vector3f(-map.getWidth()/2, 0f, -map.getDepth()/2), Vector3f.UNIT_Y);
+		//sky.geom.setLocalTranslation(-map.getWidth()/2, 9f, -map.getDepth()/2);
+		//sky.geom.lookAt(new Vector3f(-map.getWidth()/2, 0f, -map.getDepth()/2), Vector3f.UNIT_Y);
+		this.getRootNode().attachChild(sky.geom);
 
 		Joystick[] joysticks = inputManager.getJoysticks();
 		int numPlayers = 1+joysticks.length;
@@ -122,6 +130,11 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 			Camera newCam = this.createCamera(0, numPlayers);
 			MouseAndKeyboardCamera keyboard = new MouseAndKeyboardCamera(newCam, this.inputManager);
 			this.addPlayersAvatar(0, newCam, keyboard); // Keyboard
+			
+			// Test billboard
+			/*AbstractBillboard bb = new AbstractBillboard(this.getAssetManager(), "Textures/boxes and crates/1.jpg", 1, 1, newCam);
+			this.rootNode.attachChild(bb.node);
+			this.addEntity(bb);*/
 		}
 
 		// Create players for each joystick
@@ -190,7 +203,8 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		//c.lookAt(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2), Vector3f.UNIT_Y);
 
 		final ViewPort view2 = renderManager.createMainView("viewport_"+c.toString(), c);
-		view2.setBackgroundColor(new ColorRGBA(0f, 0.9f, .9f, 0f));
+		//view2.setBackgroundColor(new ColorRGBA(0f, 0.9f, .9f, 0f)); // 148 187 242
+		view2.setBackgroundColor(new ColorRGBA(148f/255f, 187f/255f, 242f/255f, 0f));
 		view2.setClearFlags(true, true, true);
 		view2.attachScene(rootNode);
 
