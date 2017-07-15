@@ -79,7 +79,7 @@ public class BoxMap implements IMapInterface {
 		}
 
 		// Sprinkle lots of boxes
-		for (int i=0 ; i<25 ; i++) {
+		for (int i=0 ; i<30 ; i++) {
 			int x = NumberFunctions.rnd(2, getWidth()-3);
 			int z = NumberFunctions.rnd(2, getDepth()-3);
 			float w = NumberFunctions.rndFloat(.2f, 1f);

@@ -62,7 +62,7 @@ public class Crate extends PhysicalEntity implements IProcessable {
 
 	@Override
 	public void process(float tpf) {
-		if (NumberFunctions.rnd(0, 50) == 0) {
+		if (NumberFunctions.rnd(0, 10) == 0) { // todo - 50
 			floor_phy.applyCentralForce(JUMP);
 		}
 	}

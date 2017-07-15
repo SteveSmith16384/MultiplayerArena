@@ -176,10 +176,10 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		} else {
 			c = cam.clone();
 		}
-		c.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
 
 		// todo - Reframe all the cameras based on number of players
 		if (Settings.ALWAYS_SHOW_4_CAMS || numPlayers > 2) {
+			c.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
 			switch (id) { // left/right/bottom/top, from bottom-left!
 			case 0: // TL
 				Settings.p("Creating camera top-left");
@@ -205,6 +205,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 				throw new RuntimeException("todo");
 			}
 		} else if (numPlayers == 2) {
+			c.setFrustumPerspective(45f, (float) (cam.getWidth()*2) / cam.getHeight(), 0.01f, Settings.CAM_DIST);
 			switch (id) { // left/right/bottom/top, from bottom-left!
 			case 0: // TL
 				Settings.p("Creating camera top");
@@ -220,6 +221,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 				throw new RuntimeException("todo");
 			}
 		} else if (numPlayers == 1) {
+			c.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
 			Settings.p("Creating full-screen camera");
 			c.setViewPort(0f, 0f, 1f, 1f);
 			c.setName("Cam_FullScreen");

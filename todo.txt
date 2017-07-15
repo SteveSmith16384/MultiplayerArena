@@ -23,17 +23,20 @@ Overkill
 
 
 URGENT
-Dont allow too many balls
-Remove players balls when they die
-Non-player boxes sometimes jump
-Choose a name
-Not removing red mist
-	Restart player if they fall off the edge
-	Player can see own box when jumping
-	NPC boxes sometimes jump
+players floating slightly
+	PS4 pad not stopping
+Remember jme settings
 Jetpac too powerful if moving fwd
+Red mist on wrong hud?
+
+
+TODO
+RMB to activate ability
+raised platforms
+poles to knock over
+moving platforms
+Costs 1pt to shoot, get 5 pts for hitting or collecting a collectable
 Show "victory!" billboard
-	Billboard for messages
 	If two-player, use top and bottom of screen
 Check tex licences
 Create logo
@@ -93,10 +96,12 @@ Freeze enemy
 Heal
 Drop mines
 Teleport forwards
+See through walls
 
 
 GAME MODES
 What the Box
 Dodgeball
 Overwatch
+Hide and Seek
 

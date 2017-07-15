@@ -39,7 +39,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	private HUD hud;
 	public MyBetterCharacterControl playerControl;
 	public final int id;
-	private RealtimeInterval shotInterval = new RealtimeInterval(200);
+	private RealtimeInterval shotInterval = new RealtimeInterval(1000);
 	private float timeSinceLastMove = 0;
 	private IAbility ability;
 	public Geometry playerGeometry;

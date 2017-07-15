@@ -21,7 +21,7 @@ public class Sky {
 		t.setWrap(WrapMode.Repeat);
 		mat.setTexture("DiffuseMap", t);
 
-		Quad quad = new Quad(160, 160); // todo - use map size
+		Quad quad = new Quad(200, 200); // todo - use map size
 		quad.scaleTextureCoordinates(new Vector2f(5, 5));
 		geom = new Geometry("Billboard", quad);
 		geom.setMaterial(mat);

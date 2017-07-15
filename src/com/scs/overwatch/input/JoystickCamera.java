@@ -22,7 +22,7 @@ import com.scs.overwatch.Settings;
 public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawInputListener {
 
 	protected Joystick joystick;
-	private boolean left = false, right = false, up = false, down = false, jump = false, shoot = false, ability1 = false;
+	private boolean strafeLeft = false, strafeRight = false, fwd = false, backward = false, jump = false, shoot = false, ability1 = false;
 	private int id;
 
 	public JoystickCamera(Camera _cam, Joystick _joystick, InputManager _inputManager) {
@@ -33,7 +33,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		id = joystick.getJoyId();
 
 		super.setMoveSpeed(1f);
-		super.setRotationSpeed(2f); 
+		super.setRotationSpeed(1.5f);//1.4f); 
 
 		this.inputManager.addRawInputListener(this);
 
@@ -118,25 +118,25 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 
 	@Override
 	public boolean isFwdPressed() {
-		return up;
+		return fwd;
 	}
 
 
 	@Override
 	public boolean isBackPressed() {
-		return down;
+		return backward;
 	}
 
 
 	@Override
 	public boolean isStrafeLeftPressed() {
-		return left;
+		return strafeLeft;
 	}
 
 
 	@Override
 	public boolean isStrafeRightPressed() {
-		return right;
+		return strafeRight;
 	}
 
 
@@ -163,6 +163,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		if (!enabled)
 			return;
 
+		float CUTOFF = 0.0015f;
 		//Settings.p("name=" + name + "  value=" + value);
 
 		if (name.equals("jFLYCAM_Left" + id)) {
@@ -174,16 +175,19 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		} else if (name.equals("jFLYCAM_Down" + id)) {
 			rotateCamera(value * (invertY ? -1 : 1), cam.getLeft());
 		} else if (name.equals("jFLYCAM_Forward" + id)) {
-			up = value > 0.001f;
+			fwd = value > CUTOFF;
+			//if (fwd) 
+				Settings.p("fwd:" + value);
 			//moveCamera(value, false);
 		} else if (name.equals("jFLYCAM_Backward" + id)) {
-			down = value > 0.001f;
+			backward = value > CUTOFF;
+			if (backward) Settings.p("backward:" + value);
 			//moveCamera(-value, false);
 		} else if (name.equals("jFLYCAM_StrafeLeft" + id)) {
-			left = value > 0.001f;
+			strafeLeft = value > CUTOFF;
 			//moveCamera(value, true);
 		} else if (name.equals("jFLYCAM_StrafeRight" + id)) {
-			right = value > 0.001f;
+			strafeRight = value > CUTOFF;
 			//moveCamera(-value, true);
 		}
 
@@ -201,10 +205,10 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 
 	@Override
 	public void resetFlags() {
-		left = false;
-		right = false;
-		up = false;
-		down = false;
+		strafeLeft = false;
+		strafeRight = false;
+		fwd = false;
+		backward = false;
 		
 	}        
 
@@ -228,7 +232,13 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		}
 	}
 
-
+/*
+ * (non-Javadoc)
+ * @see com.jme3.input.RawInputListener#onJoyButtonEvent(com.jme3.input.event.JoyButtonEvent)
+ * 2 = O
+ * 5 = R1
+ * 7 = R2
+ */
 	@Override
 	public void onJoyButtonEvent(JoyButtonEvent evt) {
 		Joystick stick = evt.getButton().getJoystick();
@@ -238,7 +248,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 			Settings.p("button.getButtonId()=" + button.getButtonId());
 			if (button.getButtonId() == 1) {
 				this.jump = evt.isPressed();
-			} else if (button.getButtonId() == 2) {
+			} else if (button.getButtonId() == 7) {
 				this.shoot = evt.isPressed();
 			} else if (button.getButtonId() == 3) {
 				this.ability1 = evt.isPressed();
