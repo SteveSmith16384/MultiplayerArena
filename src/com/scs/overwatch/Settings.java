@@ -2,12 +2,12 @@ package com.scs.overwatch;
 
 public class Settings {
 	
+	public static final boolean DEBUG_HUD = true;
 	public static final String VERSION = "0.01";
 	public static final boolean RECORD_VID = false;
-	public static final boolean DEBUG = false;
+	//public static final boolean DEBUG = false;
 	public static final boolean SHOW_LOGO = false;
 	public static final boolean ALWAYS_SHOW_4_CAMS = false;
-	//public static final boolean DEBUG_LIGHT = true;
 	
 	// Our movement speed
 	public static final float moveSpeed = 3f;

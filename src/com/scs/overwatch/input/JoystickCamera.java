@@ -98,15 +98,6 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 			// And the right stick control the camera                       
 			joystick.getAxis( JoystickAxis.Z_ROTATION ).assignAxis( "jFLYCAM_Down"+id, "jFLYCAM_Up"+id );
 			joystick.getAxis( JoystickAxis.Z_AXIS ).assignAxis(  "jFLYCAM_Right"+id, "jFLYCAM_Left"+id );
-
-			// And let the dpad be up and down           
-			/*joystick.getPovYAxis().assignAxis("FLYCAM_Rise", "FLYCAM_Lower");
-
-			if( joystick.getButton( "Button 8" ) != null ) { 
-				// Let the stanard select button be the y invert toggle
-				joystick.getButton( "Button 8" ).assignButton( "FLYCAM_InvertY" );
-			}*/
-
 		} else {             
 			joystick.getPovXAxis().assignAxis("jFLYCAM_StrafeRight"+id, "jFLYCAM_StrafeLeft"+id);
 			joystick.getPovYAxis().assignAxis("jFLYCAM_Forward"+id, "jFLYCAM_Backward"+id);

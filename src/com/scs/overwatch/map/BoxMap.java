@@ -70,8 +70,8 @@ public class BoxMap implements IMapInterface {
 	public void addMisc() {
 		// Sprinkle lots of planks
 		for (int i=0 ; i<10 ; i++) {
-			int x = NumberFunctions.rnd(2, getWidth()-3);
-			int z = NumberFunctions.rnd(2, getDepth()-3);
+			int x = NumberFunctions.rnd(4, getWidth()-5);
+			int z = NumberFunctions.rnd(4, getDepth()-5);
 			float w = NumberFunctions.rndFloat(.2f, .4f);
 			float d = NumberFunctions.rndFloat(3f, 5f);
 			Plank plank = new Plank(game, x, z, w, w, d, NumberFunctions.rnd(0, 359));
@@ -79,9 +79,9 @@ public class BoxMap implements IMapInterface {
 		}
 
 		// Sprinkle lots of boxes
-		for (int i=0 ; i<30 ; i++) {
-			int x = NumberFunctions.rnd(2, getWidth()-3);
-			int z = NumberFunctions.rnd(2, getDepth()-3);
+		for (int i=0 ; i<35 ; i++) {
+			int x = NumberFunctions.rnd(4, getWidth()-5);
+			int z = NumberFunctions.rnd(4, getDepth()-5);
 			float w = NumberFunctions.rndFloat(.2f, 1f);
 			float d = NumberFunctions.rndFloat(w, w+0.3f);
 			Crate crate = new Crate(game, x, z, w, w, d, NumberFunctions.rnd(0, 359));

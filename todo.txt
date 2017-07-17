@@ -23,29 +23,34 @@ Overkill
 
 
 URGENT
+Not showing single screen!
 players floating slightly
-	PS4 pad not stopping
-Remember jme settings
-Jetpac too powerful if moving fwd
-Red mist on wrong hud?
+	Costs 1pt to shoot, get 5 pts for hitting
+HOME Gamepad always rotating
+	No HUD for bottom players
+	Red mist on wrong hud?
+Show "victory!" billboard
+Create "LOST" billboard
+Player out when score 0;
+Change bullet tex
+Search for todos
 
 
 TODO
+Jetpac too powerful if moving fwd
+Remember jme settings
+Create "last shot!" billboard
 RMB to activate ability
+Improve sky
+Points for collecting a collectable
 raised platforms
 poles to knock over
 moving platforms
-Costs 1pt to shoot, get 5 pts for hitting or collecting a collectable
-Show "victory!" billboard
-	If two-player, use top and bottom of screen
 Check tex licences
-Create logo
+	Create logo
 SFX
 	Fix jetpac duration
-	PS4 turning slowly
-	Not removing red mist
 Simple GUI
-Upload youtube vid
 
 
 LATER

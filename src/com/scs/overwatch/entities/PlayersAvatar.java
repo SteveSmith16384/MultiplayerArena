@@ -26,7 +26,8 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 	// Player dimensions
 	public static final float PLAYER_HEIGHT = 0.5f;//1.5f;
-	public static final float PLAYER_RAD = .2f; //.5f;//.35f; // if you increase this, player bounces!?
+	public static final float PLAYER_RAD = 0.25f; //.2f; //.5f;//.35f; // if you increase this, player bounces!?
+	private static final float WEIGHT = 3f;
 	
 	public Vector3f walkDirection = new Vector3f();
 	private IInputDevice input;
@@ -43,19 +44,20 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	private float timeSinceLastMove = 0;
 	private IAbility ability;
 	public Geometry playerGeometry;
-	public int score = 0;
+	public int score = 20;
 
-	public PlayersAvatar(Overwatch _game, int _id, Camera _cam, IInputDevice _input) {
+	public PlayersAvatar(Overwatch _game, int _id, Camera _cam, IInputDevice _input, HUD _hud) {
 		super(_game, "Player");
 
 		id = _id;
 		cam = _cam;
 		input = _input;
+		hud = _hud;
 
-/*		Crate crate = new Crate(game, 0, 0, PLAYER_RAD*2, PLAYER_HEIGHT, PLAYER_RAD*2, 0);
+		/*		Crate crate = new Crate(game, 0, 0, PLAYER_RAD*2, PLAYER_HEIGHT, PLAYER_RAD*2, 0);
 		crate.getMainNode().setLocalTranslation(new Vector3f(0, PLAYER_HEIGHT, 0));
 		this.getMainNode().attachChild(crate.getMainNode());
-	*/	
+		 */	
 
 		Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
 		playerGeometry = new Geometry("Player", box1);
@@ -71,48 +73,41 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 			floor_mat.setTexture("ColorMap", tex3);
 		}
 		playerGeometry.setMaterial(floor_mat);
-		playerGeometry.setLocalTranslation(new Vector3f(0,PLAYER_HEIGHT/2,0)); // Need this to ensure the crate is on the floor
+		playerGeometry.setLocalTranslation(new Vector3f(0, PLAYER_HEIGHT/2, 0)); // Need this to ensure the crate is on the floor
 		this.getMainNode().attachChild(playerGeometry);
 		//this.getMainNode().setLocalTranslation(new Vector3f(0,PLAYER_HEIGHT,0)); // Need this to ensure the crate is on the floor
 
 		// create character control parameters (Radius,Height,Weight)
-		playerControl = new MyBetterCharacterControl(PLAYER_RAD, PLAYER_HEIGHT, 2f);
+		playerControl = new MyBetterCharacterControl(PLAYER_RAD, PLAYER_HEIGHT, WEIGHT);
 		playerControl.setJumpForce(new Vector3f(0, 6f, 0)); 
-		playerControl.setGravity(new Vector3f(0, 1f, 0));
+		//playerControl.setGravity(new Vector3f(0, 1f, 0));
 		this.getMainNode().addControl(playerControl);
 
 		game.bulletAppState.getPhysicsSpace().add(playerControl);
-		
+
 		this.getMainNode().setUserData(Settings.ENTITY, this);
 		playerControl.getPhysicsRigidBody().setUserObject(this);
 
-		BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
-		// cam.getWidth() = 640x480
-		// cam.getViewPortLeft() = 0.5f
+		/*BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
+		// cam.getWidth() = 640x480, cam.getViewPortLeft() = 0.5f
 		float x = cam.getWidth() * cam.getViewPortLeft();
 		float y = cam.getHeight() * cam.getViewPortTop();
 		int w = cam.getWidth();
 		int h = cam.getHeight();
 		hud = new HUD(game, game.getAssetManager(), x, y, w, h, guiFont_small);
-		game.getGuiNode().attachChild(hud);
-		
+		game.getGuiNode().attachChild(hud);*/
+
 		this.ability = new JetPac(this); //Invisibility(this);//  todo - make random
 	}
 
 
-	public void hitByBullet() {
-		this.hud.showDamageBox();
-		this.moveToStartPostion();
-	}
-	
-	
 	public void moveToStartPostion() {
 		Point p = game.map.getPlayerStartPos(id);
 		playerControl.warp(new Vector3f(p.x, 10f, p.y));
 
 	}
-	
-	
+
+
 	@Override
 	public void process(float tpf) {
 		timeSinceLastMove += tpf;
@@ -120,7 +115,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 			this.hud.setAbilityText(this.ability.getHudText());
 		}
 		hud.process(tpf);
-		
+
 		/*
 		 * The direction of character is determined by the camera angle
 		 * the Y direction is set to zero to keep our character from
@@ -170,14 +165,15 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		 */
 		Vector3f vec = getMainNode().getWorldTranslation();
 		cam.setLocation(new Vector3f(vec.x, vec.y + (PLAYER_HEIGHT/2), vec.z));
-		
+
 		// Rotate us to point in the direction of the camera
 		Vector3f lookAtPoint = cam.getLocation().add(cam.getDirection().mult(10));
-		lookAtPoint.y = this.PLAYER_HEIGHT;
+		lookAtPoint.y = PLAYER_HEIGHT;
 		this.playerGeometry.lookAt(lookAtPoint, Vector3f.UNIT_Y);
-		
+
 		this.input.resetFlags();
-		
+
+		// Have we fallen off the edge
 		if (this.getMainNode().getWorldTranslation().y < -5f) {
 			this.moveToStartPostion();
 		}
@@ -188,6 +184,10 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		if (shotInterval.hitInterval()) {
 			Bullet b = new Bullet(game, this);
 			game.addEntity(b);
+			this.score--;
+			if (this.score <= 0) {
+				game.playerOut(this);
+			}
 		}
 	}
 
@@ -216,18 +216,28 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	public Vector3f getDir() {
 		return this.cam.getDirection();
 	}
-	
-	
+
+
 	public void jump() {
 		this.playerControl.jump();
 	}
 
 
+	public void hitByBullet() {
+		this.hud.showDamageBox();
+		this.moveToStartPostion();
+	}
+
+
+
 	@Override
 	public void hasSuccessfullyHit(Entity e) {
-		this.score++;
+		this.score += 5;
 		this.hud.setScore(this.score);
 		this.jump();
+
+		TimedBillboard bb = new TimedBillboard(game, "Textures/text/hit.png", this.cam, 4);
+		game.addEntity(bb);
 	}
 
 }

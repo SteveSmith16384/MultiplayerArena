@@ -11,24 +11,26 @@ import com.jme3.scene.Node;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
+import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
 
 public class AbstractBillboard implements IEntity, IProcessable {
 
+	protected Overwatch game;
 	private Camera cam;
-	//public Geometry geom;
-	public Node node;
+	protected Node node;
 	
-	public AbstractBillboard(AssetManager assetManager, String tex, float w, float h, Camera _cam) {
+	public AbstractBillboard(Overwatch _game, String tex, float w, float h, Camera _cam) {
 		super();
 		
+		game = _game;
 		cam = _cam;
 		
-		Material mat = new Material(assetManager,"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
+		Material mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
 		mat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
 
-		Texture t = assetManager.loadTexture(tex);
+		Texture t = game.getAssetManager().loadTexture(tex);
 		t.setWrap(WrapMode.Repeat);
 		mat.setTexture("DiffuseMap", t);
 
@@ -40,6 +42,9 @@ public class AbstractBillboard implements IEntity, IProcessable {
 		node = new Node("SkyNode");
 		node.attachChild(geom);
 		geom.setLocalTranslation(-w/2, -h/2, 0);
+		
+		game.getRootNode().attachChild(node);
+
 	}
 
 	

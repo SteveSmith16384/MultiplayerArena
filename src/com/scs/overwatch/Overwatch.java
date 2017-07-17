@@ -15,6 +15,7 @@ import com.jme3.asset.plugins.FileLocator;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
+import com.jme3.font.BitmapFont;
 import com.jme3.input.Joystick;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.Light;
@@ -30,6 +31,7 @@ import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.entities.AbstractBillboard;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
+import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 import com.scs.overwatch.input.JoystickCamera;
 import com.scs.overwatch.input.MouseAndKeyboardCamera;
@@ -128,12 +130,12 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		// Auto-Create player 0 - keyboard and mouse
 		{
 			Camera newCam = this.createCamera(0, numPlayers);
+			HUD hud = this.createHUD(newCam);
 			MouseAndKeyboardCamera keyboard = new MouseAndKeyboardCamera(newCam, this.inputManager);
-			this.addPlayersAvatar(0, newCam, keyboard); // Keyboard
+			this.addPlayersAvatar(0, newCam, keyboard, hud); // Keyboard player
 
 			// Test billboard
 			/*AbstractBillboard bb = new AbstractBillboard(this.getAssetManager(), "Textures/boxes and crates/1.jpg", 1, 1, newCam);
-			this.rootNode.attachChild(bb.node);
 			this.addEntity(bb);*/
 		}
 
@@ -145,14 +147,17 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 			for (Joystick j : joysticks) {
 				int id = nextid++;
 				Camera newCam = this.createCamera(id, numPlayers);
+				HUD hud = this.createHUD(newCam);
 				JoystickCamera joyCam = new JoystickCamera(newCam, j, this.inputManager);
-				this.addPlayersAvatar(id, newCam, joyCam);
+				this.addPlayersAvatar(id, newCam, joyCam, hud);
 			}
 		}
 		if (Settings.ALWAYS_SHOW_4_CAMS) {
 			// Create extra cameras
 			for (int id=nextid ; id<=3 ; id++) {
 				Camera c = this.createCamera(id, numPlayers);
+				HUD hud = this.createHUD(c); // todo - show some default text
+				//hud.log_ta
 				c.setLocation(new Vector3f(2f, PlayersAvatar.PLAYER_HEIGHT, 2f));
 				c.lookAt(new Vector3f(map.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, map.getDepth()/2), Vector3f.UNIT_Y);
 			}
@@ -169,6 +174,20 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 	}
 
 
+	private HUD createHUD(Camera _cam) {
+		BitmapFont guiFont_small = this.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
+		// cam.getWidth() = 640x480, cam.getViewPortLeft() = 0.5f
+		float x = _cam.getWidth() * _cam.getViewPortLeft();
+		float y = _cam.getHeight() * _cam.getViewPortTop();
+		float w = _cam.getWidth() * (_cam.getViewPortRight()-_cam.getViewPortLeft());
+		float h = _cam.getHeight() * (_cam.getViewPortTop()-_cam.getViewPortBottom());
+		HUD hud = new HUD(this, this.getAssetManager(), x, y, w, h, guiFont_small);
+		//getGuiNode().attachChild(hud);
+		return hud;
+
+	}
+
+	
 	private Camera createCamera(int id, int numPlayers) {
 		Camera c = null;
 		if (id == 0) {
@@ -228,14 +247,14 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 
 		} else {
 			throw new RuntimeException("todo");
-			
+
 		}
 		// Look at the centre by default
 		//c.lookAt(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2), Vector3f.UNIT_Y);
 
 		final ViewPort view2 = renderManager.createMainView("viewport_"+c.toString(), c);
 		//view2.setBackgroundColor(new ColorRGBA(0f, 0.9f, .9f, 0f)); // 148 187 242
-		view2.setBackgroundColor(new ColorRGBA(148f/255f, 187f/255f, 242f/255f, 0f));
+		view2.setBackgroundColor(new ColorRGBA(148f/255f, 187f/255f, 242f/255f, 0f)); // todo
 		view2.setClearFlags(true, true, true);
 		view2.attachScene(rootNode);
 
@@ -243,10 +262,10 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 	}
 
 
-	private void addPlayersAvatar(int id, Camera c, IInputDevice input) {
+	private void addPlayersAvatar(int id, Camera c, IInputDevice input, HUD hud) {
 		Settings.p("Creating player " + id);
 
-		PlayersAvatar player = new PlayersAvatar(this, id, c, input);
+		PlayersAvatar player = new PlayersAvatar(this, id, c, input, hud);
 		rootNode.attachChild(player.getMainNode());
 		this.entities.add(player);
 
@@ -354,5 +373,9 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		return props;
 	}
 
+	
+	public void playerOut(PlayersAvatar avatar) {
+		// todo
+	}
 
 }

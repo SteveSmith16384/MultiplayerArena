@@ -18,7 +18,7 @@ import com.scs.overwatch.components.IProcessable;
 
 public class Crate extends PhysicalEntity implements IProcessable {
 
-	private static final Vector3f JUMP = new Vector3f(0, -2, 0);
+	private static final Vector3f JUMP = new Vector3f(0, -50, 0);
 
 	private Geometry geometry;
 	private RigidBodyControl floor_phy;
@@ -62,9 +62,9 @@ public class Crate extends PhysicalEntity implements IProcessable {
 
 	@Override
 	public void process(float tpf) {
-		if (NumberFunctions.rnd(0, 10) == 0) { // todo - 50
+		/*if (NumberFunctions.rnd(0, 10) == 0) { // todo - 50
 			floor_phy.applyCentralForce(JUMP);
-		}
+		}*/
 	}
 
 
