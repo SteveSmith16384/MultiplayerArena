@@ -73,7 +73,8 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 			floor_mat.setTexture("ColorMap", tex3);
 		}
 		playerGeometry.setMaterial(floor_mat);
-		playerGeometry.setLocalTranslation(new Vector3f(0, PLAYER_HEIGHT/2, 0)); // Need this to ensure the crate is on the floor
+		//playerGeometry.setLocalTranslation(new Vector3f(0, PLAYER_HEIGHT/2, 0)); // Need this to ensure the crate is on the floor
+		playerGeometry.setLocalTranslation(new Vector3f(0, (PLAYER_HEIGHT/2)-.075f, 0)); // Need this to ensure the crate is on the floor
 		this.getMainNode().attachChild(playerGeometry);
 		//this.getMainNode().setLocalTranslation(new Vector3f(0,PLAYER_HEIGHT,0)); // Need this to ensure the crate is on the floor
 

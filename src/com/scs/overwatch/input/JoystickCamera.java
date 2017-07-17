@@ -208,19 +208,17 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 
 	@Override
 	public void onJoyAxisEvent(JoyAxisEvent evt) {
-		Joystick stick = evt.getAxis().getJoystick();
+		/*Joystick stick = evt.getAxis().getJoystick();
 		if (stick == joystick) {
 			if (evt.getValue() == 0) {
 				JoystickAxis axis = evt.getAxis();
 				if( axis == axis.getJoystick().getXAxis() ) {
 					Settings.p("Xaxis=" + evt.getValue());
-					// todo - set u/d to false?
 				} else if( axis == axis.getJoystick().getYAxis() ) {
 					//Settings.p("Yaxis=" + evt.getValue()); 
-					// todo - set l/r to false?
 				}
 			}
-		}
+		}*/
 	}
 
 /*

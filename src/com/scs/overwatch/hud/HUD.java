@@ -32,7 +32,7 @@ public class HUD extends Node implements IEntity, IProcessable {
 
 	private BitmapText ability, score; 
 
-	public HUD(Overwatch _module, AssetManager assetManager, float x, float y, float w, float h, BitmapFont font_small) {
+	public HUD(Overwatch _module, AssetManager assetManager, float x, float y, float w, float h, BitmapFont font_small, int id) {
 		super("HUD");
 
 		module = _module;
@@ -50,10 +50,6 @@ public class HUD extends Node implements IEntity, IProcessable {
 		ability.setLocalTranslation(0, hud_height-40, 0);
 		this.attachChild(ability);
 
-		log_ta = new TextArea("log", font_small, 6, "TEXT TEST");
-		log_ta.setLocalTranslation(0, hud_height/2, 0);
-		this.attachChild(log_ta);
-
 		// Damage box
 		{
 			Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
@@ -66,6 +62,10 @@ public class HUD extends Node implements IEntity, IProcessable {
 		}
 
 		if (Settings.DEBUG_HUD) {
+			log_ta = new TextArea("log", font_small, 6, "TEXT TEST_" + id);
+			log_ta.setLocalTranslation(0, hud_height/2, 0);
+			this.attachChild(log_ta);
+
 			Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 			mat.setColor("Color", new ColorRGBA(1, 1, 0, 0.5f));
 			mat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);

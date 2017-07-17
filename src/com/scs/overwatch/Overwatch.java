@@ -17,6 +17,8 @@ import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.font.BitmapFont;
 import com.jme3.input.Joystick;
+import com.jme3.input.KeyInput;
+import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.Light;
 import com.jme3.light.LightList;
@@ -41,7 +43,8 @@ import com.scs.overwatch.map.MapLoader;
 public class Overwatch extends MySimpleApplication implements PhysicsCollisionListener { 
 
 	private static final String PROPS_FILE = "overwatch_settings.txt";
-
+	private static final String TEST = "Test";
+	
 	public BulletAppState bulletAppState;
 
 	public static final Random rnd = new Random();
@@ -102,7 +105,9 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		assetManager.registerLocator("assets/", FileLocator.class); // default
 		assetManager.registerLocator("assets/Textures/", FileLocator.class);
 
-		cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
+        inputManager.addMapping(TEST, new KeyTrigger(KeyInput.KEY_T));
+
+        cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
 		cam.setViewPort(0f, 0.5f, 0f, 0.5f); // BL
 
 		// Set up Physics
@@ -130,7 +135,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		// Auto-Create player 0 - keyboard and mouse
 		{
 			Camera newCam = this.createCamera(0, numPlayers);
-			HUD hud = this.createHUD(newCam);
+			HUD hud = this.createHUD(newCam, 0);
 			MouseAndKeyboardCamera keyboard = new MouseAndKeyboardCamera(newCam, this.inputManager);
 			this.addPlayersAvatar(0, newCam, keyboard, hud); // Keyboard player
 
@@ -147,7 +152,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 			for (Joystick j : joysticks) {
 				int id = nextid++;
 				Camera newCam = this.createCamera(id, numPlayers);
-				HUD hud = this.createHUD(newCam);
+				HUD hud = this.createHUD(newCam, id);
 				JoystickCamera joyCam = new JoystickCamera(newCam, j, this.inputManager);
 				this.addPlayersAvatar(id, newCam, joyCam, hud);
 			}
@@ -156,7 +161,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 			// Create extra cameras
 			for (int id=nextid ; id<=3 ; id++) {
 				Camera c = this.createCamera(id, numPlayers);
-				HUD hud = this.createHUD(c); // todo - show some default text
+				HUD hud = this.createHUD(c, id); // todo - show some default text
 				//hud.log_ta
 				c.setLocation(new Vector3f(2f, PlayersAvatar.PLAYER_HEIGHT, 2f));
 				c.lookAt(new Vector3f(map.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, map.getDepth()/2), Vector3f.UNIT_Y);
@@ -174,15 +179,15 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 	}
 
 
-	private HUD createHUD(Camera _cam) {
+	private HUD createHUD(Camera _cam, int id) {
 		BitmapFont guiFont_small = this.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
 		// cam.getWidth() = 640x480, cam.getViewPortLeft() = 0.5f
 		float x = _cam.getWidth() * _cam.getViewPortLeft();
-		float y = _cam.getHeight() * _cam.getViewPortTop();
+		float y = (_cam.getHeight() * _cam.getViewPortTop())-(_cam.getHeight()/2);
 		float w = _cam.getWidth() * (_cam.getViewPortRight()-_cam.getViewPortLeft());
 		float h = _cam.getHeight() * (_cam.getViewPortTop()-_cam.getViewPortBottom());
-		HUD hud = new HUD(this, this.getAssetManager(), x, y, w, h, guiFont_small);
-		//getGuiNode().attachChild(hud);
+		HUD hud = new HUD(this, this.getAssetManager(), x, y, w, h, guiFont_small, id);
+		getGuiNode().attachChild(hud);
 		return hud;
 
 	}
@@ -196,7 +201,6 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 			c = cam.clone();
 		}
 
-		// todo - Reframe all the cameras based on number of players
 		if (Settings.ALWAYS_SHOW_4_CAMS || numPlayers > 2) {
 			c.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
 			switch (id) { // left/right/bottom/top, from bottom-left!
@@ -221,7 +225,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 				c.setName("Cam_BR");
 				break;
 			default:
-				throw new RuntimeException("todo");
+				throw new RuntimeException("Unknown player id: " + id);
 			}
 		} else if (numPlayers == 2) {
 			c.setFrustumPerspective(45f, (float) (cam.getWidth()*2) / cam.getHeight(), 0.01f, Settings.CAM_DIST);
@@ -237,7 +241,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 				c.setName("Cam_bottom");
 				break;
 			default:
-				throw new RuntimeException("todo");
+				throw new RuntimeException("Unknown player id: " + id);
 			}
 		} else if (numPlayers == 1) {
 			c.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
@@ -246,7 +250,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 			c.setName("Cam_FullScreen");
 
 		} else {
-			throw new RuntimeException("todo");
+			throw new RuntimeException("Unknown number of players");
 
 		}
 		// Look at the centre by default

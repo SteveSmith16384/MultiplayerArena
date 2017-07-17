@@ -23,20 +23,21 @@ Overkill
 
 
 URGENT
-Not showing single screen!
-players floating slightly
-	Costs 1pt to shoot, get 5 pts for hitting
+Black screen when single screen
+	HUD not in right position for all players
 HOME Gamepad always rotating
-	No HUD for bottom players
 	Red mist on wrong hud?
 Show "victory!" billboard
 Create "LOST" billboard
 Player out when score 0;
-Change bullet tex
-Search for todos
+	Costs 1pt to shoot, get 5 pts for hitting
 
 
 TODO
+Cube looking up and down when player looks u/d
+Search for todos
+Why does player jump when box too big?  https://stackoverflow.com/questions/22506892/jmonkeyengine-bettercharactercontrol-always-bouncing
+Change bullet tex
 Jetpac too powerful if moving fwd
 Remember jme settings
 Create "last shot!" billboard
@@ -55,9 +56,7 @@ Simple GUI
 
 LATER
 Test TestPssmShadow
-Post to Java-gaming
 Store settings in props file
-Why does player jump when box too big?
 Unit Tests
 Create multi-level map files
 Remove JME logging
