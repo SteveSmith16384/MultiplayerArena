@@ -9,6 +9,6 @@ public interface ICanShoot {
 
 	Vector3f getDir();
 	
-	void hasSuccessfullyHit(Entity e);
+	void hasSuccessfullyHit(IEntity e);
 	
 }

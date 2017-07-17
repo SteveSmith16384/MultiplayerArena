@@ -19,7 +19,7 @@ public class BoxMap implements IMapInterface {
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  
 			{0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},  
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0},  
-			{0, 5, 0, 0, 0, 0, 5, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},  
+			{0, 5, 0, 0, 0, 0, 9, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},  
 			{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},  
 			{0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},  
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0},  
@@ -68,18 +68,15 @@ public class BoxMap implements IMapInterface {
 
 	@Override
 	public void addMisc() {
-		// Sprinkle lots of planks
-		for (int i=0 ; i<10 ; i++) {
-			int x = NumberFunctions.rnd(4, getWidth()-5);
-			int z = NumberFunctions.rnd(4, getDepth()-5);
-			float w = NumberFunctions.rndFloat(.2f, .4f);
-			float d = NumberFunctions.rndFloat(3f, 5f);
-			Plank plank = new Plank(game, x, z, w, w, d, NumberFunctions.rnd(0, 359));
-			game.getRootNode().attachChild(plank.getMainNode());
+		int numCrates = 35;
+		try {
+			numCrates = Integer.parseInt(game.properties.getProperty("numCrates"));
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
-
+		
 		// Sprinkle lots of boxes
-		for (int i=0 ; i<35 ; i++) {
+		for (int i=0 ; i<numCrates ; i++) {
 			int x = NumberFunctions.rnd(4, getWidth()-5);
 			int z = NumberFunctions.rnd(4, getDepth()-5);
 			float w = NumberFunctions.rndFloat(.2f, 1f);
@@ -87,6 +84,22 @@ public class BoxMap implements IMapInterface {
 			Crate crate = new Crate(game, x, z, w, w, d, NumberFunctions.rnd(0, 359));
 			game.getRootNode().attachChild(crate.getMainNode());
 			game.addEntity(crate);
+		}
+
+		// Sprinkle lots of planks
+		int numPlanks = 10;
+		try {
+			numPlanks = Integer.parseInt(game.properties.getProperty("numPlanks"));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		for (int i=0 ; i<numPlanks ; i++) {
+			int x = NumberFunctions.rnd(4, getWidth()-5);
+			int z = NumberFunctions.rnd(4, getDepth()-5);
+			float w = NumberFunctions.rndFloat(.2f, .4f);
+			float d = NumberFunctions.rndFloat(3f, 5f);
+			Plank plank = new Plank(game, x, z, w, d, w, NumberFunctions.rnd(0, 359));
+			game.getRootNode().attachChild(plank.getMainNode());
 		}
 
 	}

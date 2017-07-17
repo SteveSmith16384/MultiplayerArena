@@ -18,6 +18,7 @@ import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.font.BitmapFont;
 import com.jme3.input.Joystick;
 import com.jme3.input.KeyInput;
+import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.Light;
@@ -30,7 +31,6 @@ import com.jme3.scene.Spatial;
 import com.jme3.system.AppSettings;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
-import com.scs.overwatch.entities.AbstractBillboard;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
 import com.scs.overwatch.hud.HUD;
@@ -40,11 +40,11 @@ import com.scs.overwatch.input.MouseAndKeyboardCamera;
 import com.scs.overwatch.map.IMapInterface;
 import com.scs.overwatch.map.MapLoader;
 
-public class Overwatch extends MySimpleApplication implements PhysicsCollisionListener { 
+public class Overwatch extends MySimpleApplication implements PhysicsCollisionListener, ActionListener { 
 
 	private static final String PROPS_FILE = "overwatch_settings.txt";
 	private static final String TEST = "Test";
-	
+
 	public BulletAppState bulletAppState;
 
 	public static final Random rnd = new Random();
@@ -52,7 +52,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 	public TSArrayList<IEntity> entities = new TSArrayList<IEntity>();
 	//private Map<Integer, PlayersAvatar> players = new HashMap<>(); // input id-> player
 	public IMapInterface map;
-	private static Properties properties;
+	public static Properties properties;
 	private VideoRecorderAppState video_recorder;
 
 	public static void main(String[] args) {
@@ -92,6 +92,12 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 				System.out.println("Audio saved at " + audio.getCanonicalPath());
 			}*/
 
+			try {
+				settings.save(Settings.NAME);
+			} catch (BackingStoreException e) {
+				e.printStackTrace();
+			}
+
 		} catch (Exception e) {
 			Settings.p("Error: " + e);
 			e.printStackTrace();
@@ -105,9 +111,10 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		assetManager.registerLocator("assets/", FileLocator.class); // default
 		assetManager.registerLocator("assets/Textures/", FileLocator.class);
 
-        inputManager.addMapping(TEST, new KeyTrigger(KeyInput.KEY_T));
+		inputManager.addMapping(TEST, new KeyTrigger(KeyInput.KEY_T));
+		inputManager.addListener(this, TEST);            
 
-        cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
+		cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
 		cam.setViewPort(0f, 0.5f, 0f, 0.5f); // BL
 
 		// Set up Physics
@@ -122,11 +129,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		MapLoader maploader = new MapLoader(this);
 		map = maploader.loadMap();
 
-		Sky sky = new Sky(this.getAssetManager());
-		sky.geom.setLocalTranslation(-map.getWidth()/2, 9f, -map.getDepth()/2);
-		sky.geom.lookAt(new Vector3f(-map.getWidth()/2, 0f, -map.getDepth()/2), Vector3f.UNIT_Y);
-		//sky.geom.setLocalTranslation(-map.getWidth()/2, 9f, -map.getDepth()/2);
-		//sky.geom.lookAt(new Vector3f(-map.getWidth()/2, 0f, -map.getDepth()/2), Vector3f.UNIT_Y);
+		Sky sky = new Sky(this.getAssetManager(), map);
 		this.getRootNode().attachChild(sky.geom);
 
 		Joystick[] joysticks = inputManager.getJoysticks();
@@ -161,8 +164,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 			// Create extra cameras
 			for (int id=nextid ; id<=3 ; id++) {
 				Camera c = this.createCamera(id, numPlayers);
-				HUD hud = this.createHUD(c, id); // todo - show some default text
-				//hud.log_ta
+				this.createHUD(c, id);
 				c.setLocation(new Vector3f(2f, PlayersAvatar.PLAYER_HEIGHT, 2f));
 				c.lookAt(new Vector3f(map.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, map.getDepth()/2), Vector3f.UNIT_Y);
 			}
@@ -171,6 +173,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		bulletAppState.getPhysicsSpace().addCollisionListener(this);
 
 		//stateManager.getState(StatsAppState.class).toggleStats(); // Turn off stats
+
 		if (Settings.RECORD_VID) {
 			Settings.p("Recording video");
 			video_recorder = new VideoRecorderAppState();
@@ -192,7 +195,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 
 	}
 
-	
+
 	private Camera createCamera(int id, int numPlayers) {
 		Camera c = null;
 		if (id == 0) {
@@ -246,7 +249,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		} else if (numPlayers == 1) {
 			c.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
 			Settings.p("Creating full-screen camera");
-			c.setViewPort(0f, 0f, 1f, 1f);
+			c.setViewPort(0f, 1f, 1f, 0f);
 			c.setName("Cam_FullScreen");
 
 		} else {
@@ -368,7 +371,10 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		if (propsFile.canRead() == false) {
 			// Create the properties file
 			PrintWriter out = new PrintWriter(propsFile.getAbsolutePath());
-			out.println("#");
+			out.println("#" + Settings.NAME);
+			out.println("# If you mess up this file, just move it out the way and another will be created.");
+			out.println("numCrates=35");
+			out.println("numPlanks=10");
 			out.close();
 		}
 
@@ -377,9 +383,35 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		return props;
 	}
 
-	
+
 	public void playerOut(PlayersAvatar avatar) {
 		// todo
 	}
 
+
+	@Override
+	public void onAction(String name, boolean value, float tpf) {
+		if (!value) {
+			return;
+		}
+
+		if (name.equals(TEST)) {
+			/*for(IEntity e : entities) {
+				if (e instanceof PlayersAvatar) {
+					PlayersAvatar ip = (PlayersAvatar)e;
+					ip.hud.showDamageBox();
+					break;
+				}
+			}*/
+
+			for(IEntity e : entities) {
+				if (e instanceof PlayersAvatar) {
+					PlayersAvatar ip = (PlayersAvatar)e;
+					ip.hasSuccessfullyHit(e);
+					break;
+				}
+			}
+
+		}
+	}
 }

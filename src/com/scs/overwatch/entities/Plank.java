@@ -35,8 +35,6 @@ public class Plank extends PhysicalEntity {
 			floor_mat.setTexture("ColorMap", tex3);
 		}
 		geometry.setMaterial(floor_mat);
-		//floor_mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
-		//geometry.setQueueBucket(Bucket.Transparent);
 		
 		this.main_node.attachChild(geometry);
 		float rads = (float)Math.toRadians(rotDegrees);

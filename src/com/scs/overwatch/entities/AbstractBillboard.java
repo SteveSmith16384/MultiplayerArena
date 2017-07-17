@@ -1,6 +1,5 @@
 package com.scs.overwatch.entities;
 
-import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
 import com.jme3.math.Vector3f;
@@ -37,11 +36,11 @@ public class AbstractBillboard implements IEntity, IProcessable {
 		Quad quad = new Quad(w, h);
 		Geometry geom = new Geometry("Billboard", quad);
 		geom.setMaterial(mat);
-		//geom.setQueueBucket(Bucket.Transparent);
+		geom.setQueueBucket(Bucket.Transparent);
 		
 		node = new Node("SkyNode");
 		node.attachChild(geom);
-		geom.setLocalTranslation(-w/2, -h/2, 0);
+		geom.setLocalTranslation(-w/2, -h/2, 0); // todo - remove?
 		
 		game.getRootNode().attachChild(node);
 
@@ -50,9 +49,10 @@ public class AbstractBillboard implements IEntity, IProcessable {
 	
 	@Override
 	public void process(float tpf) {
-		// Stay in front of player?
-		Vector3f pos = cam.getLocation().add(cam.getDirection().mult(2));
+		// Stay in front of player
+		Vector3f pos = cam.getLocation().add(cam.getDirection().mult(.5f));
 		node.setLocalTranslation(pos);
+		
 		this.node.lookAt(cam.getLocation(), Vector3f.UNIT_Y);
 		
 	}

@@ -1,60 +1,42 @@
-TEX
-https://opengameart.org/content/fluffy-clouds
-https://opengameart.org/content/hand-painted-mountain-texture
-https://opengameart.org/content/kiira-texture-collection
-https://opengameart.org/content/cartonny-tree-leaves-and-flowers
-https://opengameart.org/content/mayan-stone-ornament
-https://opengameart.org/content/handpainted-tileable-wall
-https://opengameart.org/content/scifi-metal-texture
-https://opengameart.org/content/hand-painted-texture-iceberg
-https://opengameart.org/content/stone-wall-with-cracks
-https://opengameart.org/content/3-crate-textures-w-bump-normal
-
-USED: https://opengameart.org/content/5-wood-textures
-USED: https://opengameart.org/content/hand-painted-texture-sandstone
-USED: https://opengameart.org/content/seamless-bricks
-USED: https://opengameart.org/content/tileable-crates
-USED: https://opengameart.org/content/cartoony-sky
-
-
 NAMES
+Killer Crates
 It's Crate!
 Overkill
 
 
 URGENT
-Black screen when single screen
-	HUD not in right position for all players
+	Billboard slightly hidden
 HOME Gamepad always rotating
-	Red mist on wrong hud?
-Show "victory!" billboard
-Create "LOST" billboard
-Player out when score 0;
-	Costs 1pt to shoot, get 5 pts for hitting
+HOME Check HUD with 2 players
 
 
 TODO
+	Costs 1pt to shoot, get 5 pts for hitting
+Change bullet tex
+Record vid with kids
+Player out when score 0;
+Show "victory!" billboard
+Create "LOST" billboard
 Cube looking up and down when player looks u/d
 Search for todos
 Why does player jump when box too big?  https://stackoverflow.com/questions/22506892/jmonkeyengine-bettercharactercontrol-always-bouncing
-Change bullet tex
 Jetpac too powerful if moving fwd
-Remember jme settings
+	Remember jme settings
 Create "last shot!" billboard
 RMB to activate ability
-Improve sky
 Points for collecting a collectable
 raised platforms
-poles to knock over
+	poles to knock over
 moving platforms
 Check tex licences
 	Create logo
 SFX
 	Fix jetpac duration
-Simple GUI
+Simple GUI - copy from Ares - select game mode
 
 
 LATER
+Different environments (textures)
 Test TestPssmShadow
 Store settings in props file
 Unit Tests
@@ -86,6 +68,7 @@ Quazatron
 STATS
 Move Speed
 Jump height
+Turn speed
 
 
 WEAPONS
@@ -108,4 +91,24 @@ What the Box
 Dodgeball
 Overwatch
 Hide and Seek
+
+
+TEX
+https://opengameart.org/content/fluffy-clouds
+https://opengameart.org/content/hand-painted-mountain-texture
+https://opengameart.org/content/kiira-texture-collection
+https://opengameart.org/content/cartonny-tree-leaves-and-flowers
+https://opengameart.org/content/mayan-stone-ornament
+https://opengameart.org/content/handpainted-tileable-wall
+https://opengameart.org/content/scifi-metal-texture
+https://opengameart.org/content/hand-painted-texture-iceberg
+https://opengameart.org/content/stone-wall-with-cracks
+https://opengameart.org/content/3-crate-textures-w-bump-normal
+
+USED: https://opengameart.org/content/5-wood-textures
+USED: https://opengameart.org/content/hand-painted-texture-sandstone
+USED: https://opengameart.org/content/seamless-bricks
+USED: https://opengameart.org/content/tileable-crates
+USED: https://opengameart.org/content/cartoony-sky
+
 

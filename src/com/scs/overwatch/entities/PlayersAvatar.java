@@ -5,7 +5,6 @@ import java.awt.Point;
 import ssmith.util.RealtimeInterval;
 
 import com.jme3.asset.TextureKey;
-import com.jme3.font.BitmapFont;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
@@ -19,6 +18,7 @@ import com.scs.overwatch.Settings;
 import com.scs.overwatch.abilities.IAbility;
 import com.scs.overwatch.abilities.JetPac;
 import com.scs.overwatch.components.ICanShoot;
+import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 
@@ -37,7 +37,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	private Vector3f camDir = new Vector3f();
 	private Vector3f camLeft = new Vector3f();
 
-	private HUD hud;
+	public HUD hud;
 	public MyBetterCharacterControl playerControl;
 	public final int id;
 	private RealtimeInterval shotInterval = new RealtimeInterval(1000);
@@ -232,7 +232,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 
 	@Override
-	public void hasSuccessfullyHit(Entity e) {
+	public void hasSuccessfullyHit(IEntity e) {
 		this.score += 5;
 		this.hud.setScore(this.score);
 		this.jump();

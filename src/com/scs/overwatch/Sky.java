@@ -3,16 +3,20 @@ package com.scs.overwatch;
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
 import com.jme3.math.Vector2f;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
+import com.scs.overwatch.map.IMapInterface;
 
 public class Sky {
+	
+	private static final float SIZE = 200f;
 
 	public Geometry geom;
 	
-	public Sky(AssetManager assetManager) {
+	public Sky(AssetManager assetManager, IMapInterface map) {
 		super();
 		
 		Material mat = new Material(assetManager,"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
@@ -21,10 +25,14 @@ public class Sky {
 		t.setWrap(WrapMode.Repeat);
 		mat.setTexture("DiffuseMap", t);
 
-		Quad quad = new Quad(200, 200); // todo - use map size
-		quad.scaleTextureCoordinates(new Vector2f(5, 5));
+		Quad quad = new Quad(SIZE, SIZE); // todo - use map size
+		quad.scaleTextureCoordinates(new Vector2f(SIZE/10, SIZE/10));
 		geom = new Geometry("Billboard", quad);
 		geom.setMaterial(mat);
+
+		geom.setLocalTranslation(-SIZE/2, 9f, -SIZE/2);
+		geom.lookAt(new Vector3f(-SIZE/2, 0f, -SIZE/2), Vector3f.UNIT_Y);
+		//geom.lookAt(new Vector3f(-map.getWidth()/4, 0f, -map.getDepth()/4), Vector3f.UNIT_Y);
 
 	}
 
