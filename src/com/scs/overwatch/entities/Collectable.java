@@ -22,7 +22,7 @@ public class Collectable extends PhysicalEntity {
 
 		Box box1 = new Box(SIZE, SIZE, SIZE);
 		geometry = new Geometry("Collectable", box1);
-		TextureKey key3 = new TextureKey("Textures/Terrain/Pond/Pond.jpg");
+		TextureKey key3 = new TextureKey("Textures/Terrain/Pond/Pond.jpg"); // todo - change
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);

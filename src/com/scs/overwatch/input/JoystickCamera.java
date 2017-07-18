@@ -164,11 +164,13 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		} else if (name.equals("jFLYCAM_Up" + id)) {
 			rotateCamera(-value * (invertY ? -1 : 1), cam.getLeft());
 		} else if (name.equals("jFLYCAM_Down" + id)) {
-			rotateCamera(value * (invertY ? -1 : 1), cam.getLeft());
+			if (value > CUTOFF) { // SCS
+				rotateCamera(value * (invertY ? -1 : 1), cam.getLeft());
+			}
 		} else if (name.equals("jFLYCAM_Forward" + id)) {
 			fwd = value > CUTOFF;
 			//if (fwd) 
-				Settings.p("fwd:" + value);
+			Settings.p("fwd:" + value);
 			//moveCamera(value, false);
 		} else if (name.equals("jFLYCAM_Backward" + id)) {
 			backward = value > CUTOFF;
@@ -200,7 +202,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		strafeRight = false;
 		fwd = false;
 		backward = false;
-		
+
 	}        
 
 
@@ -221,13 +223,14 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		}*/
 	}
 
-/*
- * (non-Javadoc)
- * @see com.jme3.input.RawInputListener#onJoyButtonEvent(com.jme3.input.event.JoyButtonEvent)
- * 2 = O
- * 5 = R1
- * 7 = R2
- */
+	/*
+	 * (non-Javadoc)
+	 * @see com.jme3.input.RawInputListener#onJoyButtonEvent(com.jme3.input.event.JoyButtonEvent)
+	 * 1 = X
+	 * 2 = O
+	 * 5 = R1
+	 * 7 = R2
+	 */
 	@Override
 	public void onJoyButtonEvent(JoyButtonEvent evt) {
 		Joystick stick = evt.getButton().getJoystick();
@@ -237,7 +240,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 			Settings.p("button.getButtonId()=" + button.getButtonId());
 			if (button.getButtonId() == 1) {
 				this.jump = evt.isPressed();
-			} else if (button.getButtonId() == 7) {
+			} else if (button.getButtonId() == 5 || button.getButtonId() == 7) {
 				this.shoot = evt.isPressed();
 			} else if (button.getButtonId() == 3) {
 				this.ability1 = evt.isPressed();

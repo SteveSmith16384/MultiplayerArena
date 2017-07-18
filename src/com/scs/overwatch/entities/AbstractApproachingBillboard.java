@@ -14,18 +14,19 @@ import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
 
-public class AbstractBillboard implements IEntity, IProcessable {
+public class AbstractApproachingBillboard implements IEntity, IProcessable {
 
+	private float dist = 10f;
 	protected Overwatch game;
 	private Camera cam;
 	protected Node node;
-	
-	public AbstractBillboard(Overwatch _game, String tex, float w, float h, Camera _cam) {
+
+	public AbstractApproachingBillboard(Overwatch _game, String tex, float w, float h, Camera _cam) {
 		super();
-		
+
 		game = _game;
 		cam = _cam;
-		
+
 		Material mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
 		mat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
 
@@ -37,24 +38,30 @@ public class AbstractBillboard implements IEntity, IProcessable {
 		Geometry geom = new Geometry("Billboard", quad);
 		geom.setMaterial(mat);
 		geom.setQueueBucket(Bucket.Transparent);
-		
+
 		node = new Node("SkyNode");
 		node.attachChild(geom);
 		geom.setLocalTranslation(-w/2, -h/2, 0); // todo - remove?
-		
+
 		game.getRootNode().attachChild(node);
 
 	}
 
-	
+
 	@Override
 	public void process(float tpf) {
 		// Stay in front of player
-		Vector3f pos = cam.getLocation().add(cam.getDirection().mult(.5f));
+		Vector3f pos = cam.getLocation().add(cam.getDirection().mult(dist));
 		node.setLocalTranslation(pos);
-		
+
 		this.node.lookAt(cam.getLocation(), Vector3f.UNIT_Y);
-		
+
+		this.dist -= tpf*5;
+		if (dist <= 0)		 {
+			node.removeFromParent();
+			game.removeEntity(this);
+		}
+
 	}
 
 }

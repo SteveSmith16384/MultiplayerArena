@@ -210,7 +210,7 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
         }
     }
 	 */
-	protected void mapJoystick( Joystick joystick ) {
+	/*protected void mapJoystick( Joystick joystick ) {
 		// Map it differently if there are Z axis
 		if( joystick.getAxis( JoystickAxis.Z_ROTATION ) != null && joystick.getAxis( JoystickAxis.Z_AXIS ) != null ) {
 
@@ -218,7 +218,7 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 			joystick.getXAxis().assignAxis( "FLYCAM_StrafeRight", "FLYCAM_StrafeLeft" );
 			joystick.getYAxis().assignAxis( "FLYCAM_Backward", "FLYCAM_Forward" );
 
-			// And the right stick control the camera                       
+			// And the right stick control the camera
 			joystick.getAxis( JoystickAxis.Z_ROTATION ).assignAxis( "jFLYCAM_Down", "jFLYCAM_Up" );
 			joystick.getAxis( JoystickAxis.Z_AXIS ).assignAxis(  "jFLYCAM_Right", "jFLYCAM_Left" );
 
@@ -236,7 +236,7 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 			joystick.getXAxis().assignAxis("FLYCAM_Right", "FLYCAM_Left");
 			joystick.getYAxis().assignAxis("FLYCAM_Down", "FLYCAM_Up");
 		}                
-	}
+	}*/
 
 	
 	/**
@@ -351,39 +351,7 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 		cam.setLocation(pos);
 	}
 
-	public abstract void onAnalog(String name, float value, float tpf);/* {
-		if (!enabled)
-			return;
-		
-		Settings.p("name=" + name);
-		Settings.p("CAM=" +this.cam.getName());
-		
-		if (name.equals("FLYCAM_Left") || name.equals("jFLYCAM_Left")){
-			rotateCamera(value, initialUpVec);
-		}else if (name.equals("FLYCAM_Right") || name.equals("jFLYCAM_Right")){
-			rotateCamera(-value, initialUpVec);
-		}else if (name.equals("FLYCAM_Up")){
-			rotateCamera(-value * (invertY ? -1 : 1), cam.getLeft());
-		}else if (name.equals("FLYCAM_Down")){
-			rotateCamera(value * (invertY ? -1 : 1), cam.getLeft());
-		}else if (name.equals("FLYCAM_Forward")){
-			moveCamera(value, false);
-		}else if (name.equals("FLYCAM_Backward")){
-			moveCamera(-value, false);
-		}else if (name.equals("FLYCAM_StrafeLeft")){
-			moveCamera(value, true);
-		}else if (name.equals("FLYCAM_StrafeRight")){
-			moveCamera(-value, true);
-		}else if (name.equals("FLYCAM_Rise")){
-			riseCamera(value);
-		}else if (name.equals("FLYCAM_Lower")){
-			riseCamera(-value);
-		}else if (name.equals("FLYCAM_ZoomIn")){
-			zoomCamera(value);
-		}else if (name.equals("FLYCAM_ZoomOut")){
-			zoomCamera(-value);
-		}
-	}*/
+	public abstract void onAnalog(String name, float value, float tpf);
 
 	public void onAction(String name, boolean value, float tpf) {
 		if (!enabled)

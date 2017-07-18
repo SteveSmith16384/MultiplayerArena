@@ -169,7 +169,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 		// Rotate us to point in the direction of the camera
 		Vector3f lookAtPoint = cam.getLocation().add(cam.getDirection().mult(10));
-		lookAtPoint.y = PLAYER_HEIGHT;
+		lookAtPoint.y = cam.getLocation().y;
 		this.playerGeometry.lookAt(lookAtPoint, Vector3f.UNIT_Y);
 
 		this.input.resetFlags();
@@ -186,6 +186,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 			Bullet b = new Bullet(game, this);
 			game.addEntity(b);
 			this.score--;
+			this.hud.setScore(this.score);
 			if (this.score <= 0) {
 				game.playerOut(this);
 			}
@@ -230,14 +231,13 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	}
 
 
-
 	@Override
 	public void hasSuccessfullyHit(IEntity e) {
 		this.score += 5;
 		this.hud.setScore(this.score);
 		this.jump();
 
-		TimedBillboard bb = new TimedBillboard(game, "Textures/text/hit.png", this.cam, 4);
+		AbstractApproachingBillboard bb = new AbstractApproachingBillboard(game, "Textures/text/hit.png", 2f, 1f, this.cam);
 		game.addEntity(bb);
 	}
 

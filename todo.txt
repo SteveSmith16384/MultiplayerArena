@@ -5,34 +5,35 @@ Overkill
 
 
 URGENT
-	Billboard slightly hidden
-	HOME Gamepad always rotating
-HOME Check HUD with 2 players
+	Move billboard forwards
+Gamepad always rotating - post to JME - Tried adding cutoff
+Record vid with kids
+	Update score immed
+Why does player jump when box too big?  https://stackoverflow.com/questions/22506892/jmonkeyengine-bettercharactercontrol-always-bouncing
+raised platforms
+Simple GUI - copy from Ares - select game mode
+Release to GameJolt
 
 
 TODO
-	Costs 1pt to shoot, get 5 pts for hitting
+GUI - show how many controllers connected
 Change bullet tex
-Record vid with kids
 Player out when score 0;
 Show "victory!" billboard
 Create "LOST" billboard
-Cube looking up and down when player looks u/d
+	Cube looking up and down when player looks u/d
 Search for todos
-Why does player jump when box too big?  https://stackoverflow.com/questions/22506892/jmonkeyengine-bettercharactercontrol-always-bouncing
 Jetpac too powerful if moving fwd
 	Remember jme settings
-Create "last shot!" billboard
+HOME Create "last shot!" billboard
 RMB to activate ability
 Points for collecting a collectable
-raised platforms
 	poles to knock over
 moving platforms
 Check tex licences
 	Create logo
 SFX
 	Fix jetpac duration
-Simple GUI - copy from Ares - select game mode
 
 
 LATER
@@ -87,6 +88,7 @@ See through walls
 
 
 GAME MODES
+Collect the most collectables
 What the Box
 Dodgeball
 Overwatch
