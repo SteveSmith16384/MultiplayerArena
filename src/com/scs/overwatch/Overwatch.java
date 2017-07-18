@@ -42,7 +42,7 @@ import com.scs.overwatch.map.MapLoader;
 
 public class Overwatch extends MySimpleApplication implements PhysicsCollisionListener, ActionListener { 
 
-	private static final String PROPS_FILE = "overwatch_settings.txt";
+	private static final String PROPS_FILE = Settings.NAME.replaceAll(" ", "") + "_settings.txt";
 	private static final String TEST = "Test";
 
 	public BulletAppState bulletAppState;
@@ -261,7 +261,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 
 		final ViewPort view2 = renderManager.createMainView("viewport_"+c.toString(), c);
 		//view2.setBackgroundColor(new ColorRGBA(0f, 0.9f, .9f, 0f)); // 148 187 242
-		view2.setBackgroundColor(new ColorRGBA(148f/255f, 187f/255f, 242f/255f, 0f)); // todo
+		view2.setBackgroundColor(new ColorRGBA(148f/255f, 187f/255f, 242f/255f, 0f));
 		view2.setClearFlags(true, true, true);
 		view2.attachScene(rootNode);
 

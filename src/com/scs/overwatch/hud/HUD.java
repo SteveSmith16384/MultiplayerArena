@@ -10,6 +10,7 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Quad;
+import com.jme3.ui.Picture;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.components.IEntity;
@@ -23,8 +24,8 @@ import com.scs.overwatch.gui.TextArea;
 public class HUD extends Node implements IEntity, IProcessable {
 
 	public TextArea log_ta;
-	private float hud_width, hud_height;
-	protected Overwatch module;
+	public float hud_width, hud_height;
+	protected Overwatch game;
 
 	private Geometry damage_box;
 	private ColorRGBA dam_box_col = new ColorRGBA(1, 0, 0, 0.0f);
@@ -35,7 +36,7 @@ public class HUD extends Node implements IEntity, IProcessable {
 	public HUD(Overwatch _module, AssetManager assetManager, float x, float y, float w, float h, BitmapFont font_small, int id) {
 		super("HUD");
 
-		module = _module;
+		game = _module;
 		hud_width = w;
 		hud_height = h;
 
@@ -66,14 +67,32 @@ public class HUD extends Node implements IEntity, IProcessable {
 			log_ta.setLocalTranslation(0, hud_height/2, 0);
 			this.attachChild(log_ta);
 
-			Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+			/*Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 			mat.setColor("Color", new ColorRGBA(1, 1, 0, 0.5f));
 			mat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
 			Geometry testBox = new Geometry("testBox", new Quad(w/2, h/2));
 			testBox.move(10, 10, 0);
 			testBox.setMaterial(mat);
-			this.attachChild(testBox);
-
+			this.attachChild(testBox);*/
+			
+			/*Material mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
+			//mat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
+			Texture t = game.getAssetManager().loadTexture("Textures/text/hit.png");
+			//t.setWrap(WrapMode.Repeat);
+			mat.setTexture("DiffuseMap", t);
+			Geometry geom = new Geometry("Billboard", new Quad(w, h));
+			geom.setMaterial(mat);
+			geom.move(0, 0, 0);
+			//geom.setQueueBucket(Bucket.Transparent);
+			//geom.setLocalTranslation(-w/2, -h/2, 0);
+			this.attachChild(geom);*/
+			
+			Picture pic = new Picture("HUD Picture");
+			pic.setImage(assetManager, "Textures/text/hit.png", true);
+			pic.setWidth(w);
+			pic.setHeight(h);
+			//pic.setPosition(settings.getWidth()/4, settings.getHeight()/4);
+			this.attachChild(pic);
 		}
 
 

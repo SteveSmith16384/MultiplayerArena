@@ -3,8 +3,6 @@ package com.scs.overwatch;
 import com.jme3.collision.MotionAllowedListener;
 import com.jme3.input.FlyByCamera;
 import com.jme3.input.InputManager;
-import com.jme3.input.Joystick;
-import com.jme3.input.JoystickAxis;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.math.FastMath;
@@ -259,12 +257,12 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 		inputManager.removeListener(this);
 		inputManager.setCursorVisible(!dragToRotate);
 
-		Joystick[] joysticks = inputManager.getJoysticks();
+		/*Joystick[] joysticks = inputManager.getJoysticks();
 		if (joysticks != null && joysticks.length > 0){
 			Joystick joystick = joysticks[0];
 
 			// No way to unassing axis
-		}
+		}*/
 	}
 
 	protected void rotateCamera(float value, Vector3f axis){

@@ -1,9 +1,5 @@
 package com.scs.overwatch.entities;
 
-import java.util.LinkedList;
-
-import ssmith.lang.NumberFunctions;
-
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
@@ -57,13 +53,16 @@ public class Crate extends PhysicalEntity implements IProcessable {
 		game.bulletAppState.getPhysicsSpace().add(floor_phy);
 
 		this.geometry.setUserData(Settings.ENTITY, this);
+		
+		//game.addEntity(this);
+
 	}
 
 
 	@Override
 	public void process(float tpf) {
-		//if (NumberFunctions.rnd(0, 10) == 0) { // todo - 50
-			floor_phy.applyCentralForce(JUMP);
+		//if (NumberFunctions.rnd(0, 50) == 0) {
+			//doesn't work floor_phy.applyCentralForce(JUMP);
 		//}
 	}
 

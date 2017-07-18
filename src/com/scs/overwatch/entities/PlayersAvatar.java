@@ -19,6 +19,7 @@ import com.scs.overwatch.abilities.IAbility;
 import com.scs.overwatch.abilities.JetPac;
 import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.components.IEntity;
+import com.scs.overwatch.hud.AbstractHUDImage;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 
@@ -88,15 +89,6 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 		this.getMainNode().setUserData(Settings.ENTITY, this);
 		playerControl.getPhysicsRigidBody().setUserObject(this);
-
-		/*BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
-		// cam.getWidth() = 640x480, cam.getViewPortLeft() = 0.5f
-		float x = cam.getWidth() * cam.getViewPortLeft();
-		float y = cam.getHeight() * cam.getViewPortTop();
-		int w = cam.getWidth();
-		int h = cam.getHeight();
-		hud = new HUD(game, game.getAssetManager(), x, y, w, h, guiFont_small);
-		game.getGuiNode().attachChild(hud);*/
 
 		this.ability = new JetPac(this); //Invisibility(this);//  todo - make random
 	}
@@ -237,8 +229,10 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		this.hud.setScore(this.score);
 		this.jump();
 
-		AbstractApproachingBillboard bb = new AbstractApproachingBillboard(game, "Textures/text/hit.png", 2f, 1f, this.cam);
-		game.addEntity(bb);
+		//AbstractApproachingBillboard bb = new AbstractApproachingBillboard(game, "Textures/text/hit.png", 2f, 1f, this.cam);
+		//game.addEntity(bb);
+		
+		AbstractHUDImage img = new AbstractHUDImage(game, this.hud, "Textures/text/hit.png", this.hud.hud_width, this.hud.hud_height, 2);
 	}
 
 }

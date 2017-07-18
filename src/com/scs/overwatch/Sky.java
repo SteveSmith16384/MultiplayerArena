@@ -12,8 +12,6 @@ import com.scs.overwatch.map.IMapInterface;
 
 public class Sky {
 	
-	private static final float SIZE = 200f;
-
 	public Geometry geom;
 	
 	public Sky(AssetManager assetManager, IMapInterface map) {
@@ -25,7 +23,8 @@ public class Sky {
 		t.setWrap(WrapMode.Repeat);
 		mat.setTexture("DiffuseMap", t);
 
-		Quad quad = new Quad(SIZE, SIZE); // todo - use map size
+		float SIZE = map.getWidth()*10;
+		Quad quad = new Quad(SIZE, SIZE);
 		quad.scaleTextureCoordinates(new Vector2f(SIZE/10, SIZE/10));
 		geom = new Geometry("Billboard", quad);
 		geom.setMaterial(mat);

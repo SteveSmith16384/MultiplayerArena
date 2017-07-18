@@ -83,7 +83,6 @@ public class BoxMap implements IMapInterface {
 			float d = NumberFunctions.rndFloat(w, w+0.3f);
 			Crate crate = new Crate(game, x, z, w, w, d, NumberFunctions.rnd(0, 359));
 			game.getRootNode().attachChild(crate.getMainNode());
-			game.addEntity(crate);
 		}
 
 		// Sprinkle lots of planks

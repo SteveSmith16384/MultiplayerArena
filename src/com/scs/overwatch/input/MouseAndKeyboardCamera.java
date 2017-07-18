@@ -38,7 +38,7 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 		inputManager.addListener(this, "Down");
 		inputManager.addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
 		inputManager.addListener(this, "Jump");
-		inputManager.addMapping("Ability1", new KeyTrigger(KeyInput.KEY_C));
+		inputManager.addMapping("Ability1", new KeyTrigger(KeyInput.KEY_C),  new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
 		inputManager.addListener(this, "Ability1");
 		inputManager.addMapping("Shoot", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
 		inputManager.addListener(this, "Shoot");
@@ -57,17 +57,17 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 				new KeyTrigger(KeyInput.KEY_DOWN));
 
 		// mouse only - zoom in/out with wheel, and rotate drag
-		inputManager.addMapping("FLYCAM_ZoomIn", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false));
+		/*inputManager.addMapping("FLYCAM_ZoomIn", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false));
 		inputManager.addMapping("FLYCAM_ZoomOut", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, true));
-		inputManager.addMapping("FLYCAM_RotateDrag", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+		inputManager.addMapping("FLYCAM_RotateDrag", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));*/
 
 		// keyboard only WASD for movement and WZ for rise/lower height
-		inputManager.addMapping("FLYCAM_StrafeLeft", new KeyTrigger(KeyInput.KEY_A));
+		/*inputManager.addMapping("FLYCAM_StrafeLeft", new KeyTrigger(KeyInput.KEY_A));
 		inputManager.addMapping("FLYCAM_StrafeRight", new KeyTrigger(KeyInput.KEY_D));
 		inputManager.addMapping("FLYCAM_Forward", new KeyTrigger(KeyInput.KEY_W));
 		inputManager.addMapping("FLYCAM_Backward", new KeyTrigger(KeyInput.KEY_S));
 		inputManager.addMapping("FLYCAM_Rise", new KeyTrigger(KeyInput.KEY_Q));
-		inputManager.addMapping("FLYCAM_Lower", new KeyTrigger(KeyInput.KEY_Z));
+		inputManager.addMapping("FLYCAM_Lower", new KeyTrigger(KeyInput.KEY_Z));*/
 
 		inputManager.addListener(this, mappings);
 		inputManager.setCursorVisible(dragToRotate || !isEnabled());

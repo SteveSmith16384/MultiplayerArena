@@ -5,17 +5,21 @@ Overkill
 
 
 URGENT
-	Move billboard forwards
 Gamepad always rotating - post to JME - Tried adding cutoff
+Why does player jump when box too big?  https://stackoverflow.com/questions/22506892/jmonkeyengine-bettercharactercontrol-always-bouncing
+joystick-mapping.properties
+Reply to https://hub.jmonkeyengine.org/t/gamepad-constantly-rotating-down/39008/2
+	Show "Hit" on hud, not as billboard
+	Rename "overwatch settings"
 Record vid with kids
 	Update score immed
-Why does player jump when box too big?  https://stackoverflow.com/questions/22506892/jmonkeyengine-bettercharactercontrol-always-bouncing
-raised platforms
-Simple GUI - copy from Ares - select game mode
 Release to GameJolt
 
 
 TODO
+raised platforms
+Configurable map
+Simple GUI - copy from Ares - select game mode
 GUI - show how many controllers connected
 Change bullet tex
 Player out when score 0;
@@ -26,7 +30,7 @@ Search for todos
 Jetpac too powerful if moving fwd
 	Remember jme settings
 HOME Create "last shot!" billboard
-RMB to activate ability
+	RMB to activate ability
 Points for collecting a collectable
 	poles to knock over
 moving platforms
