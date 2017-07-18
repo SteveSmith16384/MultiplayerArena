@@ -5,14 +5,12 @@ Overkill
 
 
 URGENT
-Gamepad always rotating - post to JME - Tried adding cutoff
-Why does player jump when box too big?  https://stackoverflow.com/questions/22506892/jmonkeyengine-bettercharactercontrol-always-bouncing
-joystick-mapping.properties
 Reply to https://hub.jmonkeyengine.org/t/gamepad-constantly-rotating-down/39008/2
-	Show "Hit" on hud, not as billboard
+Gamepad always rotating - Tried adding cutoff
+joystick-mapping.properties
 	Rename "overwatch settings"
 Record vid with kids
-	Update score immed
+Why does player jump when box too big?  https://stackoverflow.com/questions/22506892/jmonkeyengine-bettercharactercontrol-always-bouncing
 Release to GameJolt
 
 

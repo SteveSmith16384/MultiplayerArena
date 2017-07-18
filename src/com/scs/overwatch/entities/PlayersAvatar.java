@@ -232,7 +232,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		//AbstractApproachingBillboard bb = new AbstractApproachingBillboard(game, "Textures/text/hit.png", 2f, 1f, this.cam);
 		//game.addEntity(bb);
 		
-		AbstractHUDImage img = new AbstractHUDImage(game, this.hud, "Textures/text/hit.png", this.hud.hud_width, this.hud.hud_height, 2);
+		new AbstractHUDImage(game, this.hud, "Textures/text/hit.png", this.hud.hud_width, this.hud.hud_height, 2);
 	}
 
 }

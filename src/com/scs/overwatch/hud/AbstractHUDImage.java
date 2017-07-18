@@ -20,7 +20,7 @@ public class AbstractHUDImage extends Picture implements IEntity, IProcessable {
 		setImage(game.getAssetManager(), tex, true);
 		setWidth(w);
 		setHeight(h);
-		this.setPosition(w/2, h/2);
+		//this.setPosition(w/2, h/2);
 		
 		guiNode.attachChild(this);
 		game.addEntity(this);
