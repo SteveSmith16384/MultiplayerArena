@@ -6,7 +6,7 @@ Overkill
 
 URGENT
 	Billboard slightly hidden
-HOME Gamepad always rotating
+	HOME Gamepad always rotating
 HOME Check HUD with 2 players
 
 
