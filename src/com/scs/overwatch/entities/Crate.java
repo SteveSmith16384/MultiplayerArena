@@ -19,14 +19,14 @@ public class Crate extends PhysicalEntity implements IProcessable {
 	private Geometry geometry;
 	private RigidBodyControl floor_phy;
 
-	public Crate(Overwatch _game, float x, float z, float w, float h, float d, float rotDegrees) {
+	public Crate(Overwatch _game, float x, float z, float w, float h, float d, float rotDegrees, TextureKey key3) {
 		super(_game, "Crate");
 
 		Box box1 = new Box(w/2, h/2, d/2);
 		//box1.scaleTextureCoordinates(new Vector2f(WIDTH, HEIGHT));
 		geometry = new Geometry("Crate", box1);
 		//TextureKey key3 = new TextureKey("Textures/crate.png");
-		TextureKey key3 = new TextureKey("Textures/boxes and crates/1.jpg");
+		//TextureKey key3 = new TextureKey("Textures/boxes and crates/1.jpg");
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);

@@ -1,5 +1,5 @@
 package com.scs.overwatch.entities;
-/*
+
 import com.jme3.renderer.Camera;
 import com.scs.overwatch.Overwatch;
 
@@ -25,4 +25,4 @@ public class TimedBillboard extends AbstractApproachingBillboard {
 		}
 	}
 
-}*/
+}

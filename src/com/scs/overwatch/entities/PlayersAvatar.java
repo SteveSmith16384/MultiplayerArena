@@ -47,7 +47,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	public Geometry playerGeometry;
 	public int score = 20;
 
-	public PlayersAvatar(Overwatch _game, int _id, Camera _cam, IInputDevice _input, HUD _hud) {
+	public PlayersAvatar(Overwatch _game, int _id, Camera _cam, IInputDevice _input, HUD _hud, TextureKey key3) {
 		super(_game, "Player");
 
 		id = _id;
@@ -55,14 +55,9 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		input = _input;
 		hud = _hud;
 
-		/*		Crate crate = new Crate(game, 0, 0, PLAYER_RAD*2, PLAYER_HEIGHT, PLAYER_RAD*2, 0);
-		crate.getMainNode().setLocalTranslation(new Vector3f(0, PLAYER_HEIGHT, 0));
-		this.getMainNode().attachChild(crate.getMainNode());
-		 */	
-
 		Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
 		playerGeometry = new Geometry("Player", box1);
-		TextureKey key3 = new TextureKey("Textures/boxes and crates/1.jpg");
+		//TextureKey key3 = new TextureKey("Textures/boxes and crates/1.jpg");
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		Material floor_mat = null;

@@ -18,15 +18,26 @@ public class Fence extends PhysicalEntity {
 
 	private Geometry geometry;
 	private RigidBodyControl floor_phy;
-	
-	public Fence(Overwatch _game, float x, float height, float z, float rot) {
+
+	public Fence(Overwatch _game, float x, float height, float z, float rot, int texCode) {
 		super(_game, "Fence");
 
 		Box box1 = new Box(WIDTH/2, height/2, .1f);
 		box1.scaleTextureCoordinates(new Vector2f(WIDTH, height));
 		geometry = new Geometry("Fence", box1);
-		//TextureKey key3 = new TextureKey("Textures/bricktex.jpg");
-		TextureKey key3 = new TextureKey("seamless_bricks/bricks.png");
+		TextureKey key3 = null;
+		
+		switch (texCode) {
+		case 0:
+			//TextureKey key3 = new TextureKey("Textures/bricktex.jpg");
+			key3 = new TextureKey("Textures/seamless_bricks/bricks.png");
+			break;
+
+		case 1:
+			key3 = new TextureKey("Textures/bricktex.jpg");
+			break;
+		}
+
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);
@@ -43,7 +54,7 @@ public class Fence extends PhysicalEntity {
 		// Uncomment if tex is transparent
 		//floor_mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
 		//geometry.setQueueBucket(Bucket.Transparent);
-		
+
 		this.main_node.attachChild(geometry);
 		float rads = (float)Math.toRadians(rot);
 		main_node.rotate(0, rads, 0);
@@ -53,7 +64,7 @@ public class Fence extends PhysicalEntity {
 		geometry.addControl(floor_phy);
 
 		game.bulletAppState.getPhysicsSpace().add(floor_phy);
-		
+
 		this.geometry.setUserData(Settings.ENTITY, this);
 
 	}
@@ -69,7 +80,7 @@ public class Fence extends PhysicalEntity {
 	public void remove() {
 		super.remove();
 		this.game.bulletAppState.getPhysicsSpace().remove(this.floor_phy);
-		
+
 	}
 
 

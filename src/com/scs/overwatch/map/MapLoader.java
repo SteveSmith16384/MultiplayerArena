@@ -62,12 +62,12 @@ public class MapLoader {
 					break;
 
 				case Settings.MAP_FENCE_LR_HIGH:
-					PhysicalEntity fence1 = new Fence(game, x, 4f, z, 0);
+					PhysicalEntity fence1 = new Fence(game, x, 4f, z, 0, 0);
 					this.rootNode.attachChild(fence1.getMainNode());
 					break;
 
 				case Settings.MAP_FENCE_FB_HIGH:
-					PhysicalEntity fence2 = new Fence(game, x, 4f, z, 90);
+					PhysicalEntity fence2 = new Fence(game, x, 4f, z, 90, 0);
 					this.rootNode.attachChild(fence2.getMainNode());
 					break;
 
@@ -77,12 +77,12 @@ public class MapLoader {
 					break;
 
 				case Settings.MAP_FENCE_LR_NORMAL:
-					PhysicalEntity fence1n = new Fence(game, x, 1.5f, z, 0);
+					PhysicalEntity fence1n = new Fence(game, x, 1.5f, z, 0, 1);
 					this.rootNode.attachChild(fence1n.getMainNode());
 					break;
 
 				case Settings.MAP_FENCE_FB_NORMAL:
-					PhysicalEntity fence2n = new Fence(game, x, 1.5f, z, 90);
+					PhysicalEntity fence2n = new Fence(game, x, 1.5f, z, 90, 1);
 					this.rootNode.attachChild(fence2n.getMainNode());
 					break;
 

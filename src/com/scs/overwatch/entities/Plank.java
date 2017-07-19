@@ -1,5 +1,7 @@
 package com.scs.overwatch.entities;
 
+import ssmith.lang.NumberFunctions;
+
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
@@ -22,7 +24,8 @@ public class Plank extends PhysicalEntity {
 		Box box1 = new Box(w/2, h/2, d/2);
 		box1.scaleTextureCoordinates(new Vector2f(1, d));
 		geometry = new Geometry("Crate", box1);
-		TextureKey key3 = new TextureKey("Textures/wood_0/wood1.png");
+		int i = NumberFunctions.rnd(1,  5);
+		TextureKey key3 = new TextureKey("Textures/wood_0/wood" + i + ".png");
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);

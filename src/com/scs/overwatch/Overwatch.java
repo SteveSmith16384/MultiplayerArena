@@ -8,9 +8,12 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.prefs.BackingStoreException;
 
+import ssmith.lang.NumberFunctions;
 import ssmith.util.TSArrayList;
 
 import com.jme3.app.state.VideoRecorderAppState;
+import com.jme3.asset.TextureKey;
+import com.jme3.asset.plugins.ClasspathLocator;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
@@ -54,6 +57,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 	public IMapInterface map;
 	public static Properties properties;
 	private VideoRecorderAppState video_recorder;
+	public TextureKey crateTexKey;
 
 	public static void main(String[] args) {
 		try {
@@ -109,7 +113,7 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 	@Override
 	public void simpleInitApp() {
 		assetManager.registerLocator("assets/", FileLocator.class); // default
-		assetManager.registerLocator("assets/Textures/", FileLocator.class);
+		assetManager.registerLocator("assets/", ClasspathLocator.class);
 
 		inputManager.addMapping(TEST, new KeyTrigger(KeyInput.KEY_T));
 		inputManager.addListener(this, TEST);            
@@ -125,6 +129,9 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		this.renderManager.removeMainView(viewPort); // Since we create new ones for each player
 
 		setUpLight();
+		
+		int i = NumberFunctions.rnd(1, 10);
+		crateTexKey = new TextureKey("Textures/boxes and crates/" + i + ".jpg");
 
 		MapLoader maploader = new MapLoader(this);
 		map = maploader.loadMap();
@@ -272,12 +279,10 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 	private void addPlayersAvatar(int id, Camera c, IInputDevice input, HUD hud) {
 		Settings.p("Creating player " + id);
 
-		PlayersAvatar player = new PlayersAvatar(this, id, c, input, hud);
+		PlayersAvatar player = new PlayersAvatar(this, id, c, input, hud, crateTexKey);
 		rootNode.attachChild(player.getMainNode());
 		this.entities.add(player);
 
-		//Point p = map.getPlayerStartPos(id);
-		//player.playerControl.warp(new Vector3f(p.x, 10f, p.y));
 		player.moveToStartPostion();
 
 		// Look towards centre
@@ -371,8 +376,10 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 		if (propsFile.canRead() == false) {
 			// Create the properties file
 			PrintWriter out = new PrintWriter(propsFile.getAbsolutePath());
-			out.println("#" + Settings.NAME);
+			out.println("#" + Settings.NAME + " settings file");
 			out.println("# If you mess up this file, just move it out the way and another will be created.");
+			out.println("mapSize=25");
+			out.println("numInnerWalls=5");
 			out.println("numCrates=35");
 			out.println("numPlanks=10");
 			out.close();
@@ -404,13 +411,13 @@ public class Overwatch extends MySimpleApplication implements PhysicsCollisionLi
 				}
 			}*/
 
-			for(IEntity e : entities) {
+			/*for(IEntity e : entities) {
 				if (e instanceof PlayersAvatar) {
 					PlayersAvatar ip = (PlayersAvatar)e;
 					ip.hasSuccessfullyHit(e);
 					break;
 				}
-			}
+			}*/
 
 		}
 	}
