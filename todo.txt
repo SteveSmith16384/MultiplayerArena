@@ -1,32 +1,20 @@
 NAMES
 Killer Crates
-It's Crate!
-Overkill
-
-RELEASE
-	Create readme
-	Check tex licences
-	Create Killer Crate logo
-	Can't load resources
-	Change tex of inner walls
-	Choose random crate tex
-	Release to GameJolt
 
 
 URGENT
-Make tex smaller
-Make jar smaller
-Add logo to starting options window 
 Post comments to OGA about the game
+HOME Find sfx
+HOME Make tex smaller
 Configurable map
-	Reply to https://hub.jmonkeyengine.org/t/gamepad-constantly-rotating-down/39008/2
-Gamepad always rotating - Tried adding cutoff
-	Rename "overwatch settings"
-Why does player jump when box too big?  https://stackoverflow.com/questions/22506892/jmonkeyengine-bettercharactercontrol-always-bouncing
+SFX
 
 
 TODO
-Warning - cannot scaloe capsule collision shape
+Why does player jump when box too big?  https://stackoverflow.com/questions/22506892/jmonkeyengine-bettercharactercontrol-always-bouncing
+Add logo to starting options window 
+Walk around a city shooting Ai
+Warning - cannot scale capsule collision shape
 No HUD on single player
 Hunt AI
 Shrink ray
@@ -37,29 +25,20 @@ Change bullet tex
 Player out when score 0;
 Show "victory!" billboard
 Create "LOST" billboard
-	Cube looking up and down when player looks u/d
 Search for todos
 Jetpac too powerful if moving fwd
-	Remember jme settings
 HOME Create "last shot!" billboard
-	RMB to activate ability
 Points for collecting a collectable
-	poles to knock over
 moving platforms
-	Create logo
-SFX
-	Fix jetpac duration
+Use http://opengameart.org/content/horror-sci-fi-3d-map-kit
+
 
 
 LATER
 Different environments (textures)
-Test TestPssmShadow
-Store settings in props file
 Unit Tests
 Create multi-level map files
 Remove JME logging
-Improve resource loading
-Try and get JME source to compile
 
 
 MUCH LATER
@@ -100,14 +79,16 @@ Heal
 Drop mines
 Teleport forwards
 See through walls
+Blow enemies away
 
 
 GAME MODES
 Collect the most collectables
-What the Box
+	What the Box
 Dodgeball
 Overwatch
 Hide and Seek
+
 
 
 TEX
@@ -122,11 +103,11 @@ https://opengameart.org/content/hand-painted-texture-iceberg
 https://opengameart.org/content/stone-wall-with-cracks
 https://opengameart.org/content/3-crate-textures-w-bump-normal
 
-USED: https://opengameart.org/content/5-wood-textures - CC0
-USED: https://opengameart.org/content/hand-painted-texture-sandstone - KIIRA
-USED: https://opengameart.org/content/seamless-bricks - CC0
-USED: https://opengameart.org/content/tileable-crates - credit http://borysses.deviantart.com/
-USED: https://opengameart.org/content/cartoony-sky - credit https://opengameart.org/content/cartoony-sky
+CREDITED: https://opengameart.org/content/5-wood-textures - CC0
+CREDITED: https://opengameart.org/content/hand-painted-texture-sandstone - KIIRA
+CREDITED: https://opengameart.org/content/seamless-bricks - CC0
+CREDITED: https://opengameart.org/content/tileable-crates - credit http://borysses.deviantart.com/
+CREDITED: https://opengameart.org/content/cartoony-sky - credit https://opengameart.org/content/cartoony-sky
 
 Thanks for this.  I've used it in my new game Killer Crates:- https://www.youtube.com/watch?v=1qlCDqIQikM
 

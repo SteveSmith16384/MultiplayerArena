@@ -18,7 +18,7 @@ You will need Java installed - https://java.com/en/download/.  Then just double-
 
 CONTROLS
 Mouse & Keyboard (W, A, S, D and Space).
-Gamepads, plugged into USB ports.
+Gamepads, plugged into USB ports - plug them in *before* you run the game.
 
 
 
