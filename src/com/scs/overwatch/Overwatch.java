@@ -12,8 +12,8 @@ import com.jme3.app.state.VideoRecorderAppState;
 import com.jme3.asset.plugins.ClasspathLocator;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.system.AppSettings;
-import com.scs.overwatch.modules.GameModule;
 import com.scs.overwatch.modules.IModule;
+import com.scs.overwatch.modules.StartModule;
 
 public class Overwatch extends MySimpleApplication { 
 
@@ -23,7 +23,7 @@ public class Overwatch extends MySimpleApplication {
 
 	public static Properties properties;
 	private VideoRecorderAppState video_recorder;
-	private IModule module;
+	private IModule currentModule, pendingModule;
 
 	public static void main(String[] args) {
 		try {
@@ -84,8 +84,8 @@ public class Overwatch extends MySimpleApplication {
 		cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
 		cam.setViewPort(0f, 0.5f, 0f, 0.5f); // BL
 
-		module = new GameModule(this);
-		module.init();
+		currentModule = new StartModule(this);//GameModule(this);
+		currentModule.init();
 		
 		if (Settings.RECORD_VID) {
 			Settings.p("Recording video");
@@ -97,10 +97,25 @@ public class Overwatch extends MySimpleApplication {
 
 	@Override
 	public void simpleUpdate(float tpf_secs) {
-		module.update(tpf_secs);
+		if (this.pendingModule != null) {
+			this.currentModule.destroy();
+			this.rootNode.detachAllChildren();
+			this.guiNode.detachAllChildren();
+			// todo - detach lights?
+			this.currentModule = pendingModule;
+			this.currentModule.init();
+			pendingModule = null;
+		}
+		
+		currentModule.update(tpf_secs);
 	}
 
 
+	public void setNextModule(IModule newModule) {
+		pendingModule = newModule;
+	}
+	
+	
 	private static Properties loadProperties() throws IOException {
 		String filepath = PROPS_FILE;
 		File propsFile = new File(filepath);

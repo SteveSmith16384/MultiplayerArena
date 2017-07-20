@@ -10,12 +10,13 @@ Killer Crates
 URGENT
 HOME Find sfx
 HOME Make tex smaller
-Configurable map
 SFX
+Better font
 No HUD on single player
 
 
 TODO
+Configurable map
 Why does player jump when box too big?  https://stackoverflow.com/questions/22506892/jmonkeyengine-bettercharactercontrol-always-bouncing
 Add logo to starting options window 
 Walk around a city shooting Ai

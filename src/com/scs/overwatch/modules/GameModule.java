@@ -37,10 +37,10 @@ import com.scs.overwatch.map.MapLoader;
 
 public class GameModule implements IModule, PhysicsCollisionListener, ActionListener {
 
+	private static final String QUIT = "Quit";
 	private static final String TEST = "Test";
 
 	protected Overwatch game;
-	
 	public BulletAppState bulletAppState;
 	public TSArrayList<IEntity> entities = new TSArrayList<IEntity>();
 	public IMapInterface map;
@@ -48,13 +48,16 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	public GameModule(Overwatch _game) {
 		super();
-		
+
 		game = _game;
 	}
 
-	
+
 	@Override
 	public void init() {
+		game.getInputManager().addMapping(QUIT, new KeyTrigger(KeyInput.KEY_ESCAPE));
+		game.getInputManager().addListener(this, QUIT);            
+
 		game.getInputManager().addMapping(TEST, new KeyTrigger(KeyInput.KEY_T));
 		game.getInputManager().addListener(this, TEST);            
 
@@ -62,13 +65,12 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		bulletAppState = new BulletAppState();
 		game.getStateManager().attach(bulletAppState);
 		bulletAppState.getPhysicsSpace().addCollisionListener(this);
-
 		//bulletAppState.getPhysicsSpace().enableDebug(assetManager);
 
 		game.getRenderManager().removeMainView(game.getViewPort()); // Since we create new ones for each player
 
 		setUpLight();
-		
+
 		int i = NumberFunctions.rnd(1, 10);
 		crateTexKey = new TextureKey("Textures/boxes and crates/" + i + ".jpg");
 
@@ -118,7 +120,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 		//stateManager.getState(StatsAppState.class).toggleStats(); // Turn off stats
 
-		
+
 	}
 
 
@@ -175,7 +177,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		} else if (numPlayers == 1) {
 			c.setFrustumPerspective(45f, (float) c.getWidth() / c.getHeight(), 0.01f, Settings.CAM_DIST);
 			Settings.p("Creating full-screen camera");
-			c.setViewPort(0f, 1f, 1f, 0f);
+			c.setViewPort(0f, 1f, 0f, 1f);
 			c.setName("Cam_FullScreen");
 
 		} else {
@@ -197,8 +199,10 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	private HUD createHUD(Camera _cam, int id) {
 		BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
+
 		// cam.getWidth() = 640x480, cam.getViewPortLeft() = 0.5f
 		float x = _cam.getWidth() * _cam.getViewPortLeft();
+		//float y = (_cam.getHeight() * _cam.getViewPortTop())-(_cam.getHeight()/2);
 		float y = (_cam.getHeight() * _cam.getViewPortTop())-(_cam.getHeight()/2);
 		float w = _cam.getWidth() * (_cam.getViewPortRight()-_cam.getViewPortLeft());
 		float h = _cam.getHeight() * (_cam.getViewPortTop()-_cam.getViewPortBottom());
@@ -255,7 +259,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			}
 		}
 
-		
+
 	}
 
 
@@ -327,9 +331,12 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				}
 			}*/
 
+		} else if (name.equals(QUIT)) {
+			game.setNextModule(new StartModule(game));
 		}
+
 	}
-	
+
 
 	public void playerOut(PlayersAvatar avatar) {
 		// todo
@@ -338,8 +345,10 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
-		
+		game.getInputManager().clearMappings();
+		game.getInputManager().clearRawInputListeners();//.removeRawInputListener(this);
+		game.getInputManager().removeListener(this);
+
 	}
 
 
