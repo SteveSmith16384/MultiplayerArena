@@ -16,6 +16,8 @@ import com.jme3.input.event.KeyInputEvent;
 import com.jme3.input.event.MouseButtonEvent;
 import com.jme3.input.event.MouseMotionEvent;
 import com.jme3.input.event.TouchEvent;
+import com.jme3.math.ColorRGBA;
+import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
 import com.jme3.ui.Picture;
 import com.scs.overwatch.Overwatch;
@@ -38,12 +40,28 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 
 	@Override
 	public void init() {
-		// todo - restire cameras and viewports?
+		// todo - restore cameras and viewports?
 		List<ViewPort> views = game.getRenderManager().getMainViews();
-		for (ViewPort vp : views) {
-			//todo game.getRenderManager().removeMainView(vp);
+		while (!views.isEmpty()) {
+			//for (ViewPort vp : views) {
+			game.getRenderManager().removeMainView(views.get(0));
+			views = game.getRenderManager().getMainViews();
 		}
-		
+
+		// Create viewport
+		Camera newCam = game.getCamera();
+		newCam.setFrustumPerspective(45f, (float) newCam.getWidth() / newCam.getHeight(), 0.01f, Settings.CAM_DIST);
+		Settings.p("Creating full-screen camera");
+		newCam.setViewPort(0f, 1f, 0f, 1f);
+		newCam.setName("Cam_FullScreen");
+
+		final ViewPort view2 = game.getRenderManager().createMainView("viewport_"+newCam.toString(), newCam);
+		//view2.setBackgroundColor(new ColorRGBA(0f, 0.9f, .9f, 0f)); // 148 187 242
+		view2.setBackgroundColor(new ColorRGBA(148f/255f, 187f/255f, 242f/255f, 0f));
+		view2.setClearFlags(true, true, true);
+		view2.attachScene(game.getRootNode());
+
+
 		Joystick[] joysticks = game.getInputManager().getJoysticks();
 		numPlayers = 1+joysticks.length;
 
@@ -59,7 +77,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		if (joysticks == null || joysticks.length == 0) {
 			Settings.p("NO JOYSTICKS/GAMEPADS");
 		}
-		
+
 		Picture pic = new Picture("HUD Picture");
 		pic.setImage(game.getAssetManager(), "Textures/killercrates_logo.png", true);
 		pic.setWidth(game.getCamera().getWidth());
@@ -78,7 +96,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 
 	@Override
 	public void update(float tpf) {
-		
+
 	}
 
 
@@ -102,7 +120,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		}		
 	}
 
-	
+
 	private void startGame() {
 		game.setNextModule(new GameModule(game));
 
@@ -124,11 +142,11 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 	 */
 	@Override
 	public void onJoyButtonEvent(JoyButtonEvent evt) {
-			JoystickButton button = evt.getButton();
-			//Settings.p("button.getButtonId()=" + button.getButtonId());
-			if (button.getButtonId() == 1) {
-				startGame();
-			}
+		JoystickButton button = evt.getButton();
+		//Settings.p("button.getButtonId()=" + button.getButtonId());
+		if (button.getButtonId() == 1) {
+			startGame();
+		}
 	}
 
 	public void beginInput() {}
