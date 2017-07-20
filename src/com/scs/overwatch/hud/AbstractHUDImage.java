@@ -5,16 +5,19 @@ import com.jme3.ui.Picture;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
+import com.scs.overwatch.modules.GameModule;
 
 public class AbstractHUDImage extends Picture implements IEntity, IProcessable {
 
-	private Overwatch game;
+	Overwatch game;
+	private GameModule module;
 	private float timeLeft;
 
-	public AbstractHUDImage(Overwatch _game, Node guiNode, String tex, float w, float h, float dur) {
+	public AbstractHUDImage(Overwatch _game, GameModule _module, Node guiNode, String tex, float w, float h, float dur) {
 		super("AbstractHUDImage");
 		
 		game = _game;
+		module = _module;
 		this.timeLeft = dur;
 		
 		setImage(game.getAssetManager(), tex, true);
@@ -23,7 +26,7 @@ public class AbstractHUDImage extends Picture implements IEntity, IProcessable {
 		//this.setPosition(w/2, h/2);
 		
 		guiNode.attachChild(this);
-		game.addEntity(this);
+		module.addEntity(this);
 		
 	}
 
@@ -33,7 +36,7 @@ public class AbstractHUDImage extends Picture implements IEntity, IProcessable {
 		this.timeLeft -= tpf;
 		if (this.timeLeft <= 0) {
 			this.removeFromParent();
-			game.removeEntity(this);
+			module.removeEntity(this);
 		}
 	}
 

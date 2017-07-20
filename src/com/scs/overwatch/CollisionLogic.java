@@ -4,10 +4,11 @@ import com.scs.overwatch.entities.Bullet;
 import com.scs.overwatch.entities.Collectable;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
+import com.scs.overwatch.modules.GameModule;
 
 public class CollisionLogic {
 
-	public static void collision(Overwatch game, PhysicalEntity a, PhysicalEntity b) {
+	public static void collision(GameModule game, PhysicalEntity a, PhysicalEntity b) {
 		//Settings.p(a + " has collided with " + b);
 
 		if (a instanceof PlayersAvatar && b instanceof Bullet) {
@@ -26,11 +27,11 @@ public class CollisionLogic {
 	}
 
 
-	private static void Player_Collectable(Overwatch game, PlayersAvatar player, Collectable col) {
+	private static void Player_Collectable(GameModule game, PlayersAvatar player, Collectable col) {
 	}
 
 
-	private static void Player_Bullet(Overwatch game, PlayersAvatar playerHit, Bullet col) {
+	private static void Player_Bullet(GameModule game, PlayersAvatar playerHit, Bullet col) {
 		if (col.shooter != playerHit) {
 			playerHit.hitByBullet();
 			col.shooter.hasSuccessfullyHit(playerHit);

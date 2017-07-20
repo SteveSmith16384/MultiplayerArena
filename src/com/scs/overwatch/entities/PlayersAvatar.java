@@ -4,6 +4,7 @@ import java.awt.Point;
 
 import ssmith.util.RealtimeInterval;
 
+import com.jme3.asset.AssetManager;
 import com.jme3.asset.TextureKey;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
@@ -16,12 +17,13 @@ import com.scs.overwatch.MyBetterCharacterControl;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.abilities.IAbility;
-import com.scs.overwatch.abilities.JetPac;
+import com.scs.overwatch.abilities.NoAbility;
 import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.hud.AbstractHUDImage;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
+import com.scs.overwatch.modules.GameModule;
 
 public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
@@ -47,8 +49,8 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	public Geometry playerGeometry;
 	public int score = 20;
 
-	public PlayersAvatar(Overwatch _game, int _id, Camera _cam, IInputDevice _input, HUD _hud, TextureKey key3) {
-		super(_game, "Player");
+	public PlayersAvatar(Overwatch _game, GameModule _module, int _id, Camera _cam, IInputDevice _input, HUD _hud, TextureKey key3) {
+		super(_game, _module, "Player");
 
 		id = _id;
 		cam = _cam;
@@ -80,17 +82,17 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		//playerControl.setGravity(new Vector3f(0, 1f, 0));
 		this.getMainNode().addControl(playerControl);
 
-		game.bulletAppState.getPhysicsSpace().add(playerControl);
+		module.bulletAppState.getPhysicsSpace().add(playerControl);
 
 		this.getMainNode().setUserData(Settings.ENTITY, this);
 		playerControl.getPhysicsRigidBody().setUserObject(this);
 
-		this.ability = new JetPac(this); //Invisibility(this);//  todo - make random
+		this.ability = new NoAbility();  //new JetPac(this); //Invisibility(this);//  todo - make random
 	}
 
 
 	public void moveToStartPostion() {
-		Point p = game.map.getPlayerStartPos(id);
+		Point p = module.map.getPlayerStartPos(id);
 		playerControl.warp(new Vector3f(p.x, 10f, p.y));
 
 	}
@@ -170,12 +172,12 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 	public void shoot() {
 		if (shotInterval.hitInterval()) {
-			Bullet b = new Bullet(game, this);
-			game.addEntity(b);
+			Bullet b = new Bullet(game, module, this);
+			module.addEntity(b);
 			this.score--;
 			this.hud.setScore(this.score);
 			if (this.score <= 0) {
-				game.playerOut(this);
+				module.playerOut(this);
 			}
 		}
 	}
@@ -190,7 +192,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	@Override
 	public void remove() {
 		super.remove();
-		this.game.bulletAppState.getPhysicsSpace().remove(this.playerControl);
+		this.module.bulletAppState.getPhysicsSpace().remove(this.playerControl);
 
 	}
 
@@ -227,7 +229,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		//AbstractApproachingBillboard bb = new AbstractApproachingBillboard(game, "Textures/text/hit.png", 2f, 1f, this.cam);
 		//game.addEntity(bb);
 		
-		new AbstractHUDImage(game, this.hud, "Textures/text/hit.png", this.hud.hud_width, this.hud.hud_height, 2);
+		new AbstractHUDImage(game, module, this.hud, "Textures/text/hit.png", this.hud.hud_width, this.hud.hud_height, 2);
 	}
 
 }

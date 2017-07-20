@@ -7,6 +7,7 @@ import com.jme3.export.JmeImporter;
 import com.jme3.export.Savable;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.components.IEntity;
+import com.scs.overwatch.modules.GameModule;
 
 public class Entity implements IEntity, Savable {
 	
@@ -14,15 +15,17 @@ public class Entity implements IEntity, Savable {
 	
 	public final int id;
 	protected Overwatch game;
+	protected GameModule module;
 
-	public Entity(Overwatch _game) {
+	public Entity(Overwatch _game, GameModule _module) {
 		id = nextId++;
 		game = _game;
+		module = _module;
 	}
 
 
 	public void remove() {
-		game.removeEntity(this);
+		module.removeEntity(this);
 	}
 	
 	

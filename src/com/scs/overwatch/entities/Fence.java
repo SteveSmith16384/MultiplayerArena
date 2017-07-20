@@ -1,5 +1,6 @@
 package com.scs.overwatch.entities;
 
+import com.jme3.asset.AssetManager;
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
@@ -10,6 +11,7 @@ import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
+import com.scs.overwatch.modules.GameModule;
 
 public class Fence extends PhysicalEntity {
 
@@ -19,8 +21,8 @@ public class Fence extends PhysicalEntity {
 	private Geometry geometry;
 	private RigidBodyControl floor_phy;
 
-	public Fence(Overwatch _game, float x, float height, float z, float rot, int texCode) {
-		super(_game, "Fence");
+	public Fence(Overwatch _game, GameModule _module, float x, float height, float z, float rot, int texCode) {
+		super(_game, _module, "Fence");
 
 		Box box1 = new Box(WIDTH/2, height/2, .1f);
 		box1.scaleTextureCoordinates(new Vector2f(WIDTH, height));
@@ -63,7 +65,7 @@ public class Fence extends PhysicalEntity {
 		floor_phy = new RigidBodyControl(0);
 		geometry.addControl(floor_phy);
 
-		game.bulletAppState.getPhysicsSpace().add(floor_phy);
+		module.bulletAppState.getPhysicsSpace().add(floor_phy);
 
 		this.geometry.setUserData(Settings.ENTITY, this);
 
@@ -79,7 +81,7 @@ public class Fence extends PhysicalEntity {
 	@Override
 	public void remove() {
 		super.remove();
-		this.game.bulletAppState.getPhysicsSpace().remove(this.floor_phy);
+		this.module.bulletAppState.getPhysicsSpace().remove(this.floor_phy);
 
 	}
 

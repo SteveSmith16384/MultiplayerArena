@@ -11,6 +11,7 @@ import com.jme3.texture.Texture.WrapMode;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.components.IProcessable;
+import com.scs.overwatch.modules.GameModule;
 
 public class AbstractPlatform extends PhysicalEntity implements IProcessable {
 
@@ -19,8 +20,8 @@ public class AbstractPlatform extends PhysicalEntity implements IProcessable {
 	private Geometry geometry;
 	private RigidBodyControl floor_phy;
 
-	public AbstractPlatform(Overwatch _game, float x, float z, float w, float h, float d, float rotDegrees) {
-		super(_game, "AbstractPlatform");
+	public AbstractPlatform(Overwatch _game, GameModule _module, float x, float z, float w, float h, float d, float rotDegrees) {
+		super(_game, _module, "AbstractPlatform");
 
 		Box box1 = new Box(w/2, h/2, d/2);
 		//box1.scaleTextureCoordinates(new Vector2f(WIDTH, HEIGHT));
@@ -50,11 +51,11 @@ public class AbstractPlatform extends PhysicalEntity implements IProcessable {
 
 		floor_phy = new RigidBodyControl(0);
 		geometry.addControl(floor_phy);
-		game.bulletAppState.getPhysicsSpace().add(floor_phy);
+		module.bulletAppState.getPhysicsSpace().add(floor_phy);
 
 		this.geometry.setUserData(Settings.ENTITY, this);
 		
-		game.addEntity(this);
+		module.addEntity(this);
 
 	}
 
@@ -68,7 +69,7 @@ public class AbstractPlatform extends PhysicalEntity implements IProcessable {
 	@Override
 	public void remove() {
 		super.remove();
-		this.game.bulletAppState.getPhysicsSpace().remove(this.floor_phy);
+		this.module.bulletAppState.getPhysicsSpace().remove(this.floor_phy);
 
 	}
 

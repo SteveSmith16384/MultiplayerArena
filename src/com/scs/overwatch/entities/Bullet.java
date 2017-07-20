@@ -1,5 +1,6 @@
 package com.scs.overwatch.entities;
 
+import com.jme3.asset.AssetManager;
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
@@ -10,6 +11,7 @@ import com.jme3.texture.Texture;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.components.ICanShoot;
+import com.scs.overwatch.modules.GameModule;
 
 public class Bullet extends PhysicalEntity {
 
@@ -17,8 +19,8 @@ public class Bullet extends PhysicalEntity {
 	private RigidBodyControl ball_phy;
 	private float timeLeft = 10;
 	
-	public Bullet(Overwatch _game, ICanShoot _shooter) {
-		super(_game, "Bullet");
+	public Bullet(Overwatch _game, GameModule _module, ICanShoot _shooter) {
+		super(_game, _module, "Bullet");
 
 		this.shooter = _shooter;
 		
@@ -47,7 +49,7 @@ public class Bullet extends PhysicalEntity {
 		ball_phy = new RigidBodyControl(1f);
 		/** Add physical ball to physics space. */
 		ball_geo.addControl(ball_phy);
-		game.bulletAppState.getPhysicsSpace().add(ball_phy);
+		module.bulletAppState.getPhysicsSpace().add(ball_phy);
 		/** Accelerate the physical ball to shoot it. */
 		ball_phy.setLinearVelocity(shooter.getDir().mult(25));
 		
@@ -71,7 +73,7 @@ public class Bullet extends PhysicalEntity {
 	@Override
 	public void remove() {
 		super.remove();
-		this.game.bulletAppState.getPhysicsSpace().remove(this.ball_phy);
+		this.module.bulletAppState.getPhysicsSpace().remove(this.ball_phy);
 	}
 
 }

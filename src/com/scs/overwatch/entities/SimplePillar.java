@@ -1,5 +1,6 @@
 package com.scs.overwatch.entities;
 
+import com.jme3.asset.AssetManager;
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
@@ -10,6 +11,7 @@ import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
+import com.scs.overwatch.modules.GameModule;
 
 public class SimplePillar extends PhysicalEntity {
 
@@ -20,8 +22,8 @@ public class SimplePillar extends PhysicalEntity {
 	private Geometry geometry;
 	private RigidBodyControl floor_phy;
 	
-	public SimplePillar(Overwatch _game, float x, float z) {
-		super(_game, "SimplePillar");
+	public SimplePillar(Overwatch _game, GameModule _module, float x, float z) {
+		super(_game, _module, "SimplePillar");
 
 		Box vert = new Box(THICKNESS/2, HEIGHT/2, THICKNESS/2);
 		vert.scaleTextureCoordinates(new Vector2f(THICKNESS, HEIGHT));
@@ -48,7 +50,7 @@ public class SimplePillar extends PhysicalEntity {
 		floor_phy = new RigidBodyControl(0);
 		geometry.addControl(floor_phy);
 
-		game.bulletAppState.getPhysicsSpace().add(floor_phy);
+		module.bulletAppState.getPhysicsSpace().add(floor_phy);
 		
 		this.geometry.setUserData(Settings.ENTITY, this);
 
@@ -64,7 +66,7 @@ public class SimplePillar extends PhysicalEntity {
 	@Override
 	public void remove() {
 		super.remove();
-		this.game.bulletAppState.getPhysicsSpace().remove(this.floor_phy);
+		this.module.bulletAppState.getPhysicsSpace().remove(this.floor_phy);
 		
 	}
 

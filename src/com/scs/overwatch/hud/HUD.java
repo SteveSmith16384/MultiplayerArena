@@ -25,7 +25,6 @@ public class HUD extends Node implements IEntity, IProcessable {
 
 	public TextArea log_ta;
 	public float hud_width, hud_height;
-	protected Overwatch game;
 
 	private Geometry damage_box;
 	private ColorRGBA dam_box_col = new ColorRGBA(1, 0, 0, 0.0f);
@@ -33,10 +32,9 @@ public class HUD extends Node implements IEntity, IProcessable {
 
 	private BitmapText ability, score; 
 
-	public HUD(Overwatch _module, AssetManager assetManager, float x, float y, float w, float h, BitmapFont font_small, int id) {
+	public HUD(AssetManager assetManager, float x, float y, float w, float h, BitmapFont font_small, int id) {
 		super("HUD");
 
-		game = _module;
 		hud_width = w;
 		hud_height = h;
 

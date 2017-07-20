@@ -7,6 +7,7 @@ import ssmith.lang.NumberFunctions;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.entities.Crate;
 import com.scs.overwatch.entities.Plank;
+import com.scs.overwatch.modules.GameModule;
 
 public class BoxMap implements IMapInterface {
 
@@ -34,9 +35,11 @@ public class BoxMap implements IMapInterface {
 	};
 
 	private Overwatch game;
+	private GameModule module;
 
-	public BoxMap(Overwatch _game) {
+	public BoxMap(Overwatch _game, GameModule _module) {
 		game = _game;
+		module = _module;
 	}
 
 
@@ -81,7 +84,7 @@ public class BoxMap implements IMapInterface {
 			int z = NumberFunctions.rnd(4, getDepth()-5);
 			float w = NumberFunctions.rndFloat(.2f, 1f);
 			float d = NumberFunctions.rndFloat(w, w+0.3f);
-			Crate crate = new Crate(game, x, z, w, w, d, NumberFunctions.rnd(0, 359), game.crateTexKey);
+			Crate crate = new Crate(game, module, x, z, w, w, d, NumberFunctions.rnd(0, 359), module.crateTexKey);
 			game.getRootNode().attachChild(crate.getMainNode());
 		}
 
@@ -97,7 +100,7 @@ public class BoxMap implements IMapInterface {
 			int z = NumberFunctions.rnd(4, getDepth()-5);
 			float w = NumberFunctions.rndFloat(.2f, .4f);
 			float d = NumberFunctions.rndFloat(3f, 5f);
-			Plank plank = new Plank(game, x, z, w, d, w, NumberFunctions.rnd(0, 359));
+			Plank plank = new Plank(game, module, x, z, w, d, w, NumberFunctions.rnd(0, 359));
 			game.getRootNode().attachChild(plank.getMainNode());
 		}
 

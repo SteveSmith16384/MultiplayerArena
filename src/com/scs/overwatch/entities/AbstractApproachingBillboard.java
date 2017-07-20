@@ -1,5 +1,6 @@
 package com.scs.overwatch.entities;
 
+import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
 import com.jme3.math.Vector3f;
@@ -13,18 +14,22 @@ import com.jme3.texture.Texture.WrapMode;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
+import com.scs.overwatch.modules.GameModule;
 
 public class AbstractApproachingBillboard implements IEntity, IProcessable {
 
 	private float dist = 10f;
 	protected Overwatch game;
+	protected GameModule module;
 	private Camera cam;
 	protected Node node;
 
-	public AbstractApproachingBillboard(Overwatch _game, String tex, float w, float h, Camera _cam) {
+	public AbstractApproachingBillboard(Overwatch _game, GameModule _module, String tex, float w, float h, Camera _cam) {
 		super();
 
 		game = _game;
+		module = _module;
+		
 		cam = _cam;
 
 		Material mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
@@ -59,7 +64,7 @@ public class AbstractApproachingBillboard implements IEntity, IProcessable {
 		this.dist -= tpf*5;
 		if (dist <= 0)		 {
 			node.removeFromParent();
-			game.removeEntity(this);
+			module.removeEntity(this);
 		}
 
 	}

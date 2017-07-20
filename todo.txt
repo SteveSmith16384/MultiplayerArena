@@ -8,11 +8,11 @@ Killer Crates
 
 
 URGENT
-Post comments to OGA about the game
 HOME Find sfx
 HOME Make tex smaller
 Configurable map
 SFX
+No HUD on single player
 
 
 TODO
@@ -20,11 +20,10 @@ Why does player jump when box too big?  https://stackoverflow.com/questions/2250
 Add logo to starting options window 
 Walk around a city shooting Ai
 Warning - cannot scale capsule collision shape
-No HUD on single player
 Hunt AI
 Shrink ray
 Raised platforms
-Simple GUI - copy from Ares - select game mode
+Simple GUI - select game mode?
 GUI - show how many controllers connected
 Change bullet tex
 Player out when score 0;
@@ -113,6 +112,4 @@ CREDITED: https://opengameart.org/content/hand-painted-texture-sandstone - KIIRA
 CREDITED: https://opengameart.org/content/seamless-bricks - CC0
 CREDITED: https://opengameart.org/content/tileable-crates - credit http://borysses.deviantart.com/
 CREDITED: https://opengameart.org/content/cartoony-sky - credit https://opengameart.org/content/cartoony-sky
-
-Thanks for this.  I've used it in my new game Killer Crates:- https://www.youtube.com/watch?v=1qlCDqIQikM
 
