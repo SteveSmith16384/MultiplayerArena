@@ -113,4 +113,9 @@ public abstract class PhysicalEntity extends Entity implements IProcessable {
 	}
 
 
+	public Vector3f getLocation() {
+		return this.main_node.getWorldTranslation();
+	}
+
+
 }

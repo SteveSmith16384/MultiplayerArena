@@ -13,7 +13,6 @@ import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.AmbientLight;
-import com.jme3.light.LightList;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
@@ -45,7 +44,8 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	protected Overwatch game;
 	public BulletAppState bulletAppState;
-	public TSArrayList<IEntity> entities = new TSArrayList<IEntity>();
+	public TSArrayList<IEntity> entities = new TSArrayList<>();
+	public TSArrayList<PlayersAvatar> avatars = new TSArrayList<>();
 	public IPertinentMapData mapData;
 	public TextureKey crateTexKey;
 
@@ -223,7 +223,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		float y = (_cam.getHeight() * _cam.getViewPortTop())-(_cam.getHeight()/2);
 		float w = _cam.getWidth() * (_cam.getViewPortRight()-_cam.getViewPortLeft());
 		float h = _cam.getHeight() * (_cam.getViewPortTop()-_cam.getViewPortBottom());
-		HUD hud = new HUD(game.getAssetManager(), x, y, w, h, guiFont_small, id);
+		HUD hud = new HUD(game, this, x, y, w, h, guiFont_small, id, _cam);
 		game.getGuiNode().attachChild(hud);
 		return hud;
 
@@ -254,6 +254,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	@Override
 	public void update(float tpf) {
 		this.entities.refresh();
+		this.avatars.refresh();
 
 		for(IEntity e : entities) {
 			if (e instanceof IProcessable) {
@@ -298,12 +299,22 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	public void addEntity(IEntity e) {
 		this.entities.add(e);
+		
+		if (e instanceof PlayersAvatar) {
+			PlayersAvatar a = (PlayersAvatar)e;
+			this.avatars.add(a);
+		}
 	}
 
 
 	public void removeEntity(IEntity e) {
 		this.entities.remove(e);
-	}
+
+		if (e instanceof PlayersAvatar) {
+			PlayersAvatar a = (PlayersAvatar)e;
+			this.avatars.remove(a);
+		}
+}
 
 
 	public BulletAppState getBulletAppState() {

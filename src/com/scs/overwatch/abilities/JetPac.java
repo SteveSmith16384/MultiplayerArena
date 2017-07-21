@@ -1,7 +1,6 @@
 package com.scs.overwatch.abilities;
 
 import com.jme3.math.Vector3f;
-import com.scs.overwatch.Settings;
 import com.scs.overwatch.entities.PlayersAvatar;
 
 public class JetPac extends AbstractAbility {

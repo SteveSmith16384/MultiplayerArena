@@ -1,20 +1,27 @@
 package com.scs.overwatch.hud;
 
-import com.jme3.asset.AssetManager;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.jme3.bounding.BoundingBox;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
+import com.jme3.renderer.Camera;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Quad;
 import com.jme3.ui.Picture;
+import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
+import com.scs.overwatch.components.IShowOnHUD;
 import com.scs.overwatch.gui.TextArea;
+import com.scs.overwatch.modules.GameModule;
 
 /*
  * Positioning text = the co-ords of BitmapText are for the top-left of the first line of text, and they go down from there.
@@ -25,17 +32,23 @@ public class HUD extends Node implements IEntity, IProcessable {
 	public TextArea log_ta;
 	public float hud_width, hud_height;
 
+	private Camera cam;
 	private Geometry damage_box;
 	private ColorRGBA dam_box_col = new ColorRGBA(1, 0, 0, 0.0f);
 	private boolean process_damage_box;
-
+	private List<Picture> targetting_reticules = new ArrayList<>();
+	private Overwatch game;
+	private GameModule module;
 	private BitmapText ability, score; 
 
-	public HUD(AssetManager assetManager, float x, float y, float w, float h, BitmapFont font_small, int id) {
+	public HUD(Overwatch _game, GameModule _module, float x, float y, float w, float h, BitmapFont font_small, int id, Camera _cam) {
 		super("HUD");
 
+		game = _game;
+		module =_module;
 		hud_width = w;
 		hud_height = h;
+		cam = _cam;
 
 		super.setLocalTranslation(x, y, 0);
 
@@ -50,7 +63,7 @@ public class HUD extends Node implements IEntity, IProcessable {
 
 		// Damage box
 		{
-			Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+			Material mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
 			mat.setColor("Color", this.dam_box_col);
 			mat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
 			damage_box = new Geometry("damagebox", new Quad(w, h));
@@ -71,7 +84,7 @@ public class HUD extends Node implements IEntity, IProcessable {
 			testBox.move(10, 10, 0);
 			testBox.setMaterial(mat);
 			this.attachChild(testBox);*/
-			
+
 			/*Material mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
 			//mat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
 			Texture t = game.getAssetManager().loadTexture("Textures/text/hit.png");
@@ -83,9 +96,9 @@ public class HUD extends Node implements IEntity, IProcessable {
 			//geom.setQueueBucket(Bucket.Transparent);
 			//geom.setLocalTranslation(-w/2, -h/2, 0);
 			this.attachChild(geom);*/
-			
+
 			Picture pic = new Picture("HUD Picture");
-			pic.setImage(assetManager, "Textures/text/hit.png", true);
+			pic.setImage(game.getAssetManager(), "Textures/text/hit.png", true);
 			pic.setWidth(w);
 			pic.setHeight(h);
 			//pic.setPosition(settings.getWidth()/4, settings.getHeight()/4);
@@ -103,6 +116,33 @@ public class HUD extends Node implements IEntity, IProcessable {
 
 	@Override
 	public void process(float tpf) {
+		// Test recticle
+		int id = 0;
+		if (Settings.DEBUG_TARGETTER) {
+			for (IEntity avatar : module.entities) {
+				if (avatar instanceof IShowOnHUD) {
+					if (this.targetting_reticules.size() <= id) {
+						this.addTargetter();
+					}
+					IShowOnHUD soh = (IShowOnHUD) avatar;
+					Picture pic = this.targetting_reticules.get(id);
+					pic.setCullHint(CullHint.Inherit);
+
+					Vector3f screen_pos = cam.getScreenCoordinates(soh.getLocation());
+					pic.setPosition(screen_pos.x, screen_pos.y);
+					id++;
+				}
+			}
+
+			// Hide the rest
+			for (int i=id ; i<this.targetting_reticules.size() ; i++) {
+				Picture pic = this.targetting_reticules.get(id);
+				pic.setCullHint(CullHint.Always);
+
+			}
+
+		}
+
 		if (process_damage_box) {
 			this.dam_box_col.a -= (tpf/2);
 			if (dam_box_col.a < 0) {
@@ -110,6 +150,8 @@ public class HUD extends Node implements IEntity, IProcessable {
 				process_damage_box = false;
 			}
 		}
+
+
 
 	}
 
@@ -138,4 +180,15 @@ public class HUD extends Node implements IEntity, IProcessable {
 	}
 
 
+	private void addTargetter() {
+		Picture targetting_reticule = new Picture("HUD Picture");
+		targetting_reticule.setImage(game.getAssetManager(), "Textures/circular_recticle.png", true);
+		float crosshairs_w = cam.getWidth()/10;
+		targetting_reticule.setWidth(crosshairs_w);
+		float crosshairs_h = cam.getHeight()/10;
+		targetting_reticule.setHeight(crosshairs_h);
+		this.attachChild(targetting_reticule);
+
+		this.targetting_reticules.add(targetting_reticule);
+	}
 }

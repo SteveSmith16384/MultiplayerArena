@@ -20,6 +20,7 @@ import com.scs.overwatch.abilities.Invisibility;
 import com.scs.overwatch.abilities.NoAbility;
 import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.components.IEntity;
+import com.scs.overwatch.components.IShowOnHUD;
 import com.scs.overwatch.hud.AbstractHUDImage;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
@@ -27,7 +28,7 @@ import com.scs.overwatch.modules.GameModule;
 import com.scs.overwatch.weapons.IMainWeapon;
 import com.scs.overwatch.weapons.KillerCrateGun;
 
-public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
+public class PlayersAvatar extends PhysicalEntity implements ICanShoot, IShowOnHUD {
 
 	// Player dimensions
 	public static final float PLAYER_HEIGHT = 0.5f;//1.5f;
@@ -35,7 +36,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	private static final float WEIGHT = 3f;
 
 	public Vector3f walkDirection = new Vector3f();
-	public float moveSpeed = Settings.moveSpeed;
+	public float moveSpeed = Settings.DEFAULT_MOVE_SPEED;
 	private IInputDevice input;
 
 	//Temporary vectors used on each frame.
@@ -125,7 +126,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		 * to Y axis
 		 */
 		camDir.set(cam.getDirection()).multLocal(moveSpeed, 0.0f, moveSpeed);
-		camLeft.set(cam.getLeft()).multLocal(Settings.strafeSpeed);
+		camLeft.set(cam.getLeft()).multLocal(Settings.DEFAULT_STRAFE_SPEED);
 		walkDirection.set(0, 0, 0);
 		if (input.isStrafeLeftPressed()) {
 			walkDirection.addLocal(camLeft);

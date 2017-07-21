@@ -9,9 +9,10 @@ import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
+import com.scs.overwatch.components.IShowOnHUD;
 import com.scs.overwatch.modules.GameModule;
 
-public class Collectable extends PhysicalEntity {
+public class Collectable extends PhysicalEntity implements IShowOnHUD {
 
 	private static final float SIZE = .1f;
 
@@ -55,12 +56,6 @@ public class Collectable extends PhysicalEntity {
 	public void process(float tpf) {
 		// Do nothing
 	}
-
-
-	/*@Override
-	public Geometry getGeometry() {
-		return geometry;
-	}*/
 
 
 	@Override

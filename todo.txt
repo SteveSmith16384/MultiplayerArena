@@ -17,7 +17,6 @@ HOME - Need 3D model for players
 Better font - use SF font?
 HOME Find sfx
 HOME Make tex smaller
-No HUD on single player
 	Winner is first to 100
 	Show "victory!" billboard
 HOME Music
@@ -26,6 +25,8 @@ HOME Add SFX
 
 
 TODO
+Combine IWeapon and IAbility - ability1, ability2
+No HUD on single player
 Select character class at start
 Create vestibules
 Explosions
@@ -55,51 +56,43 @@ AI comrades & enemy
 Show shot accuracy
 
 
-NOTES
-We move the player and set the camera location based on player's node
-
-
-INSPIRATION
-What The Box?
-Cholo remake
-Overwatch
-Goldeneye N64
-Quazatron
-
-
 STATS
 Move Speed
 Jump height
 Turn speed
-Bullet range
+Bullet range & damage
 
 
 WEAPONS
 Beam laser
 Grenade launcher
+Freeze ray
 
 
 ABILITIES
 	Invisible
 	Jet Pac
-Jump high
+Super Jump
 Freeze enemy
 Heal
 Drop mines
 Teleport forwards
-See through walls
+See through walls - recticle
 Blow enemies away
 Force Field
-Run fast
+	Run fast
+Invincible
 
 
 GAME MODES
 Collect the most collectables
+Skirmish
 	What the Box
 Dodgeball
 Overwatch
 Hide and Seek
-
+Defend the Base
+Tig
 
 
 TEX
@@ -120,4 +113,17 @@ CREDITED: https://opengameart.org/content/hand-painted-texture-sandstone - KIIRA
 CREDITED: https://opengameart.org/content/seamless-bricks - CC0
 CREDITED: https://opengameart.org/content/tileable-crates - credit http://borysses.deviantart.com/
 CREDITED: https://opengameart.org/content/cartoony-sky - credit https://opengameart.org/content/cartoony-sky
+
+
+NOTES
+We move the player and set the camera location based on player's node
+
+
+INSPIRATION
+What The Box?
+Cholo remake
+Overwatch
+Goldeneye N64
+Quazatron
+
 
