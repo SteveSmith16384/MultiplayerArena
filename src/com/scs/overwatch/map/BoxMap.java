@@ -9,7 +9,7 @@ import com.scs.overwatch.entities.Crate;
 import com.scs.overwatch.entities.Plank;
 import com.scs.overwatch.modules.GameModule;
 
-public class BoxMap implements IMapInterface {
+public class BoxMap implements ISimpleMapData, IPertinentMapData {
 
 	int[][] data = new int[][]{
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},  

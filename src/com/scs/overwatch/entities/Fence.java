@@ -1,6 +1,5 @@
 package com.scs.overwatch.entities;
 
-import com.jme3.asset.AssetManager;
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;

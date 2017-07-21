@@ -41,7 +41,7 @@ public class CreateShapes {
 		node.attachChild(floor_geo);
 
 		// Make the floor physical with mass 0.0f!
-		RigidBodyControl floor_phy = new RigidBodyControl(0.0f);
+		RigidBodyControl floor_phy = new RigidBodyControl(0f);
 		floor_geo.addControl(floor_phy);
 		bulletAppState.getPhysicsSpace().add(floor_phy);
 		floor_phy.setFriction(1f);

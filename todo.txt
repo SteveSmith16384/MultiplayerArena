@@ -8,19 +8,22 @@ Killer Crates
 
 
 URGENT
+Better font - use SF font?
+Camera lilts when restarting
+	Too bright after restarting game
 HOME Find sfx
 HOME Make tex smaller
-SFX
-Better font
+Add SFX
 No HUD on single player
 
 
 TODO
+Better skybox
+Use subscriber for score?
 Configurable map
 Why does player jump when box too big?  https://stackoverflow.com/questions/22506892/jmonkeyengine-bettercharactercontrol-always-bouncing
-Add logo to starting options window 
+	Add logo to starting options window 
 Walk around a city shooting Ai
-Warning - cannot scale capsule collision shape
 Hunt AI
 Shrink ray
 Raised platforms

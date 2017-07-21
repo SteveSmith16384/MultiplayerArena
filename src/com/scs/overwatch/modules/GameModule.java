@@ -13,7 +13,6 @@ import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.AmbientLight;
-import com.jme3.light.Light;
 import com.jme3.light.LightList;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
@@ -23,6 +22,7 @@ import com.jme3.scene.Spatial;
 import com.scs.overwatch.CollisionLogic;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
+import com.scs.overwatch.Settings.GameMode;
 import com.scs.overwatch.Sky;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
@@ -32,8 +32,11 @@ import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 import com.scs.overwatch.input.JoystickCamera;
 import com.scs.overwatch.input.MouseAndKeyboardCamera;
-import com.scs.overwatch.map.IMapInterface;
-import com.scs.overwatch.map.MapLoader;
+import com.scs.overwatch.map.BoxMap;
+import com.scs.overwatch.map.IMapLoader;
+import com.scs.overwatch.map.IPertinentMapData;
+import com.scs.overwatch.map.SimpleCity;
+import com.scs.overwatch.map.SimpleMapLoader;
 
 public class GameModule implements IModule, PhysicsCollisionListener, ActionListener {
 
@@ -43,7 +46,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	protected Overwatch game;
 	public BulletAppState bulletAppState;
 	public TSArrayList<IEntity> entities = new TSArrayList<IEntity>();
-	public IMapInterface map;
+	public IPertinentMapData mapData;
 	public TextureKey crateTexKey;
 
 	public GameModule(Overwatch _game) {
@@ -74,10 +77,14 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		int i = NumberFunctions.rnd(1, 10);
 		crateTexKey = new TextureKey("Textures/boxes and crates/" + i + ".jpg");
 
-		MapLoader maploader = new MapLoader(game, this);
-		map = maploader.loadMap();
+		if (Settings.gameMode == GameMode.KillerCrates) {
+			IMapLoader maploader = new SimpleMapLoader(game, this, new BoxMap(game, this));
+			mapData = maploader.loadMap();
+		} else {
+			mapData = new SimpleCity(game, this);
+		}
 
-		Sky sky = new Sky(game.getAssetManager(), map);
+		Sky sky = new Sky(game.getAssetManager(), mapData);
 		game.getRootNode().attachChild(sky.geom);
 
 		Joystick[] joysticks = game.getInputManager().getJoysticks();
@@ -114,7 +121,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				Camera c = this.createCamera(id, numPlayers);
 				this.createHUD(c, id);
 				c.setLocation(new Vector3f(2f, PlayersAvatar.PLAYER_HEIGHT, 2f));
-				c.lookAt(new Vector3f(map.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, map.getDepth()/2), Vector3f.UNIT_Y);
+				c.lookAt(new Vector3f(mapData.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, mapData.getDepth()/2), Vector3f.UNIT_Y);
 			}
 		}
 
@@ -223,17 +230,17 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		player.moveToStartPostion();
 
 		// Look towards centre
-		player.getMainNode().lookAt(new Vector3f(map.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, map.getDepth()/2), Vector3f.UNIT_Y);
+		player.getMainNode().lookAt(new Vector3f(mapData.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, mapData.getDepth()/2), Vector3f.UNIT_Y);
 	}
 
 
 	private void setUpLight() {
 		// Remove existing lights
-		game.getRootNode().getWorldLightList().clear();
+		/*game.getRootNode().getWorldLightList().clear();
 		LightList list = game.getRootNode().getWorldLightList();
 		for (Light it : list) {
 			game.getRootNode().removeLight(it);
-		}
+		}*/
 
 		/*if (Settings.DEBUG_LIGHT == false) {
 			AmbientLight al = new AmbientLight();
@@ -244,7 +251,10 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		AmbientLight al = new AmbientLight();
 		al.setColor(ColorRGBA.White.mult(3));
 		game.getRootNode().addLight(al);
-		//}
+		
+		LightList list = game.getRootNode().getWorldLightList();
+		LightList list2 = game.getRootNode().getLocalLightList();
+		Settings.p(list.toString());
 	}
 
 

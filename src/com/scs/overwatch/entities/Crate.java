@@ -1,6 +1,5 @@
 package com.scs.overwatch.entities;
 
-import com.jme3.asset.AssetManager;
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
@@ -48,7 +47,8 @@ public class Crate extends PhysicalEntity implements IProcessable {
 		this.main_node.attachChild(geometry);
 		float rads = (float)Math.toRadians(rotDegrees);
 		main_node.rotate(0, rads, 0);
-		main_node.setLocalTranslation(x+(w/2), h/2, z+0.5f);
+		//main_node.setLocalTranslation(x+(w/2), h/2, z+0.5f);
+		main_node.setLocalTranslation(x+(w/2), h/2, z+(d/2));
 
 		floor_phy = new RigidBodyControl(1f);
 		geometry.addControl(floor_phy);

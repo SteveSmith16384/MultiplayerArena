@@ -9,7 +9,7 @@ import com.scs.overwatch.entities.Crate;
 import com.scs.overwatch.entities.Plank;
 import com.scs.overwatch.modules.GameModule;
 
-public class ConfigMap implements IMapInterface {
+public class ConfigMap implements ISimpleMapData, IPertinentMapData {
 
 	private Overwatch game;
 	private GameModule module;

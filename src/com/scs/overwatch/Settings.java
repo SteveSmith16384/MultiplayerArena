@@ -2,6 +2,9 @@ package com.scs.overwatch;
 
 public class Settings {
 	
+	public enum GameMode {KillerCrates, BladeRunner}
+	
+	public static final GameMode gameMode = GameMode.BladeRunner;
 	public static final String VERSION = "0.01";
 	public static final boolean RECORD_VID = false;
 	//public static final boolean DEBUG = false;

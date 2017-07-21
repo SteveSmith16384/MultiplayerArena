@@ -8,13 +8,13 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
-import com.scs.overwatch.map.IMapInterface;
+import com.scs.overwatch.map.IPertinentMapData;
 
 public class Sky {
 	
 	public Geometry geom;
 	
-	public Sky(AssetManager assetManager, IMapInterface map) {
+	public Sky(AssetManager assetManager, IPertinentMapData map) {
 		super();
 		
 		Material mat = new Material(assetManager,"Common/MatDefs/Light/Lighting.j3md");  // create a simple material

@@ -6,7 +6,7 @@ import ssmith.lang.NumberFunctions;
 
 import com.scs.overwatch.Overwatch;
 
-public class EmptyMap implements IMapInterface {
+public class EmptyMap implements ISimpleMapData, IPertinentMapData {
 
 	int[][] data = new int[][]{
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},  

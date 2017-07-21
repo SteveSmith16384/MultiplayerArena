@@ -3,7 +3,7 @@ package com.scs.overwatch.map;
 import java.awt.Point;
 import java.util.Random;
 
-public class RandomMap implements IMapInterface {
+public class RandomMap implements ISimpleMapData, IPertinentMapData {
 	
 	private static final int WIDTH = 12;
 	private static final int DEPTH = 12;

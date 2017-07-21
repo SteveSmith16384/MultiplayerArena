@@ -11,6 +11,7 @@ import java.util.prefs.BackingStoreException;
 import com.jme3.app.state.VideoRecorderAppState;
 import com.jme3.asset.plugins.ClasspathLocator;
 import com.jme3.asset.plugins.FileLocator;
+import com.jme3.font.BitmapFont;
 import com.jme3.system.AppSettings;
 import com.scs.overwatch.modules.IModule;
 import com.scs.overwatch.modules.StartModule;
@@ -25,6 +26,10 @@ public class Overwatch extends MySimpleApplication {
 	private VideoRecorderAppState video_recorder;
 	private IModule currentModule, pendingModule;
 
+	public static BitmapFont guiFont_small;// = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
+	
+
+	
 	public static void main(String[] args) {
 		try {
 			properties = loadProperties();
@@ -81,6 +86,9 @@ public class Overwatch extends MySimpleApplication {
 		assetManager.registerLocator("assets/", FileLocator.class); // default
 		assetManager.registerLocator("assets/", ClasspathLocator.class);
 
+		//guiFont_small = getAssetManager().loadFont("Interface/Fonts/Console.fnt");
+		guiFont_small = getAssetManager().loadFont("Interface/Fonts/Console.fnt");
+		
 		cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
 		cam.setViewPort(0f, 0.5f, 0f, 0.5f); // BL
 
@@ -101,7 +109,15 @@ public class Overwatch extends MySimpleApplication {
 			this.currentModule.destroy();
 			this.rootNode.detachAllChildren();
 			this.guiNode.detachAllChildren();
-			// todo - detach lights?
+
+			// Remove existing lights
+			getRootNode().getWorldLightList().clear();
+			getRootNode().getLocalLightList().clear();
+			/*LightList list = getRootNode().getWorldLightList();
+			for (Light it : list) {
+				getRootNode().removeLight(it);
+			}*/
+
 			this.currentModule = pendingModule;
 			this.currentModule.init();
 			pendingModule = null;

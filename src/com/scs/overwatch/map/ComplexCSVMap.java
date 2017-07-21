@@ -10,11 +10,15 @@ import java.util.ArrayList;
 
 import com.scs.overwatch.Settings;
 
-public class CSVMap implements ISimpleMapData, IPertinentMapData {
+/**
+ * Format is "code|w|h|d"
+ *
+ */
+public class ComplexCSVMap implements IPertinentMapData {
 
 	private ArrayList<String> al = new ArrayList<>();
 
-	public CSVMap(String filename) throws IOException {
+	public ComplexCSVMap(String filename) throws IOException {
 		Settings.p("Trying to load " + filename + "...");
 		BufferedReader br = null;
 		try {
@@ -38,35 +42,24 @@ public class CSVMap implements ISimpleMapData, IPertinentMapData {
 
 
 	@Override
-	public int getWidth() {
-		return al.get(0).split("\t").length;
-	}
-
-
-	@Override
-	public int getDepth() {
-		return al.size();
-	}
-
-
-	@Override
-	public int getCodeForSquare(int x, int z) {
-		String line = al.get(z);
-		String parts[] = line.split("\t");
-		return Integer.parseInt(parts[x]);
-	}
-
-
-	@Override
 	public Point getPlayerStartPos(int id) {
 		return new Point(2, 2); // todo
 	}
 
 
 	@Override
-	public void addMisc() {
-		
+	public int getWidth() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
+
+
+	@Override
+	public int getDepth() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 
 }

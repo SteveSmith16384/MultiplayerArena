@@ -2,17 +2,12 @@ package com.scs.overwatch.map;
 
 import java.awt.Point;
 
-public interface IMapInterface {
+public interface IPertinentMapData {
 
 	int getWidth();
 	
 	int getDepth();
 	
-	int getCodeForSquare(int x, int z);
-	
-	//int getNumCollectables();
-	
 	Point getPlayerStartPos(int id);
 	
-	void addMisc();
 }

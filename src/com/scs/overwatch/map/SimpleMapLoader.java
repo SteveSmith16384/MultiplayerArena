@@ -10,38 +10,24 @@ import com.scs.overwatch.entities.Tree;
 import com.scs.overwatch.modules.GameModule;
 import com.scs.overwatch.shapes.CreateShapes;
 
-public class MapLoader {
+public class SimpleMapLoader implements IMapLoader {
 
 	private Overwatch game;
 	private GameModule module;
 	private Node rootNode;
+	private ISimpleMapData map;
 	
-	public MapLoader(Overwatch _game, GameModule _module) {
+	public SimpleMapLoader(Overwatch _game, GameModule _module, ISimpleMapData _data) {
 		game = _game;
 		module = _module;
+		this.map = _data;
 		this.rootNode = game.getRootNode();
 		
 	}
 
 
-	public IMapInterface loadMap() {
-		IMapInterface map = new BoxMap(game, module); //EmptyMap(game);//
-		/*try {
-			map = new CSVMap("bin/maps/map1.csv");//"./maps/map1.csv");
-		} catch (Exception e) {
-			e.printStackTrace();
-			try {
-				map = new CSVMap("./map1.csv");
-			} catch (Exception e2) {
-				e2.printStackTrace();
-				try {
-					map = new CSVMap("/map1.csv");
-				} catch (Exception e3) {
-					e3.printStackTrace();
-					throw new RuntimeException("Unable to load map");
-				}
-			}
-		}*/
+	public IPertinentMapData loadMap() {
+		//ISimpleMapData map = new BoxMap(game, module); //EmptyMap(game);//
 
 		// Floor first
 		for (int z=0 ; z<map.getDepth() ; z+= Settings.FLOOR_SECTION_SIZE) {
@@ -98,7 +84,7 @@ public class MapLoader {
 		
 		map.addMisc();
 		
-		return map;
+		return (IPertinentMapData)map;
 
 	}
 

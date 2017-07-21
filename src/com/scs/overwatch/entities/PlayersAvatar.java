@@ -4,7 +4,6 @@ import java.awt.Point;
 
 import ssmith.util.RealtimeInterval;
 
-import com.jme3.asset.AssetManager;
 import com.jme3.asset.TextureKey;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
@@ -92,7 +91,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 
 	public void moveToStartPostion() {
-		Point p = module.map.getPlayerStartPos(id);
+		Point p = module.mapData.getPlayerStartPos(id);
 		playerControl.warp(new Vector3f(p.x, 10f, p.y));
 
 	}

@@ -7,15 +7,18 @@ import com.jme3.font.BitmapText;
 import com.jme3.input.Joystick;
 import com.jme3.input.JoystickButton;
 import com.jme3.input.KeyInput;
+import com.jme3.input.MouseInput;
 import com.jme3.input.RawInputListener;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.input.event.JoyAxisEvent;
 import com.jme3.input.event.JoyButtonEvent;
 import com.jme3.input.event.KeyInputEvent;
 import com.jme3.input.event.MouseButtonEvent;
 import com.jme3.input.event.MouseMotionEvent;
 import com.jme3.input.event.TouchEvent;
+import com.jme3.light.AmbientLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
@@ -40,7 +43,6 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 
 	@Override
 	public void init() {
-		// todo - restore cameras and viewports?
 		List<ViewPort> views = game.getRenderManager().getMainViews();
 		while (!views.isEmpty()) {
 			//for (ViewPort vp : views) {
@@ -51,9 +53,9 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		// Create viewport
 		Camera newCam = game.getCamera();
 		newCam.setFrustumPerspective(45f, (float) newCam.getWidth() / newCam.getHeight(), 0.01f, Settings.CAM_DIST);
-		Settings.p("Creating full-screen camera");
+		//Settings.p("Creating full-screen camera");
 		newCam.setViewPort(0f, 1f, 0f, 1f);
-		newCam.setName("Cam_FullScreen");
+		//newCam.setName("Cam_FullScreen");
 
 		final ViewPort view2 = game.getRenderManager().createMainView("viewport_"+newCam.toString(), newCam);
 		//view2.setBackgroundColor(new ColorRGBA(0f, 0.9f, .9f, 0f)); // 148 187 242
@@ -61,13 +63,17 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		view2.setClearFlags(true, true, true);
 		view2.attachScene(game.getRootNode());
 
+		// Lights
+		AmbientLight al = new AmbientLight();
+		al.setColor(ColorRGBA.White);//.mult(3));
+		game.getRootNode().addLight(al);
 
 		Joystick[] joysticks = game.getInputManager().getJoysticks();
 		numPlayers = 1+joysticks.length;
 
 		// Auto-Create player 0 - keyboard and mouse
 		{
-			game.getInputManager().addMapping(START, new KeyTrigger(KeyInput.KEY_SPACE));
+			game.getInputManager().addMapping(START, new MouseButtonTrigger(MouseInput.BUTTON_LEFT), new KeyTrigger(KeyInput.KEY_SPACE));
 			game.getInputManager().addListener(this, START);            
 		}
 
@@ -81,13 +87,12 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		Picture pic = new Picture("HUD Picture");
 		pic.setImage(game.getAssetManager(), "Textures/killercrates_logo.png", true);
 		pic.setWidth(game.getCamera().getWidth());
-		pic.setHeight(game.getCamera().getWidth()/10);
+		pic.setHeight(game.getCamera().getWidth()/7);
 		//pic.setPosition(settings.getWidth()/4, settings.getHeight()/4);
 		game.getGuiNode().attachChild(pic);
 
-		BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
-		BitmapText score = new BitmapText(guiFont_small, false);
-		score.setText(numPlayers + " players found.");
+		BitmapText score = new BitmapText(Overwatch.guiFont_small, false);
+		score.setText(numPlayers + " players found.\n\nPress FIRE to start!");
 		score.setLocalTranslation(0, game.getCamera().getHeight()-20, 0);
 		game.getGuiNode().attachChild(score);
 
@@ -96,7 +101,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 
 	@Override
 	public void update(float tpf) {
-
+		// Do nothing
 	}
 
 
