@@ -2,8 +2,6 @@ package com.scs.overwatch.entities;
 
 import java.awt.Point;
 
-import ssmith.util.RealtimeInterval;
-
 import com.jme3.asset.TextureKey;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
@@ -15,7 +13,9 @@ import com.jme3.texture.Texture;
 import com.scs.overwatch.MyBetterCharacterControl;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
+import com.scs.overwatch.Settings.GameMode;
 import com.scs.overwatch.abilities.IAbility;
+import com.scs.overwatch.abilities.Invisibility;
 import com.scs.overwatch.abilities.NoAbility;
 import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.components.IEntity;
@@ -23,6 +23,8 @@ import com.scs.overwatch.hud.AbstractHUDImage;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 import com.scs.overwatch.modules.GameModule;
+import com.scs.overwatch.weapons.IMainWeapon;
+import com.scs.overwatch.weapons.KillerCrateGun;
 
 public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
@@ -30,7 +32,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	public static final float PLAYER_HEIGHT = 0.5f;//1.5f;
 	public static final float PLAYER_RAD = 0.25f; //.2f; //.5f;//.35f; // if you increase this, player bounces!?
 	private static final float WEIGHT = 3f;
-	
+
 	public Vector3f walkDirection = new Vector3f();
 	private IInputDevice input;
 
@@ -42,11 +44,11 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	public HUD hud;
 	public MyBetterCharacterControl playerControl;
 	public final int id;
-	private RealtimeInterval shotInterval = new RealtimeInterval(1000);
 	private float timeSinceLastMove = 0;
 	private IAbility ability;
 	public Geometry playerGeometry;
 	public int score = 20;
+	private IMainWeapon weapon;
 
 	public PlayersAvatar(Overwatch _game, GameModule _module, int _id, Camera _cam, IInputDevice _input, HUD _hud, TextureKey key3) {
 		super(_game, _module, "Player");
@@ -55,6 +57,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		cam = _cam;
 		input = _input;
 		hud = _hud;
+		weapon = new KillerCrateGun(_game, _module, this); 
 
 		Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
 		playerGeometry = new Geometry("Player", box1);
@@ -78,7 +81,6 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		// create character control parameters (Radius,Height,Weight)
 		playerControl = new MyBetterCharacterControl(PLAYER_RAD, PLAYER_HEIGHT, WEIGHT);
 		playerControl.setJumpForce(new Vector3f(0, 6f, 0)); 
-		//playerControl.setGravity(new Vector3f(0, 1f, 0));
 		this.getMainNode().addControl(playerControl);
 
 		module.bulletAppState.getPhysicsSpace().add(playerControl);
@@ -86,7 +88,11 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		this.getMainNode().setUserData(Settings.ENTITY, this);
 		playerControl.getPhysicsRigidBody().setUserObject(this);
 
-		this.ability = new NoAbility();  //new JetPac(this); //Invisibility(this);//  todo - make random
+		if (Settings.gameMode == GameMode.KillerCrates) {
+			this.ability = new NoAbility();
+		} else {
+			this.ability = new Invisibility(this);//  todo - make random
+		}
 	}
 
 
@@ -170,14 +176,15 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 
 	public void shoot() {
-		if (shotInterval.hitInterval()) {
-			Bullet b = new Bullet(game, module, this);
-			module.addEntity(b);
+		//if (shotInterval.hitInterval()) {
+		if (this.weapon.shoot()) {
+			//Bullet b = new Bullet(game, module, this);
+			//module.addEntity(b);
 			this.score--;
 			this.hud.setScore(this.score);
-			if (this.score <= 0) {
+			/*if (this.score <= 0) {
 				module.playerOut(this);
-			}
+			}*/
 		}
 	}
 
@@ -221,14 +228,15 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 	@Override
 	public void hasSuccessfullyHit(IEntity e) {
-		this.score += 5;
+		this.score += 20;
 		this.hud.setScore(this.score);
-		this.jump();
 
-		//AbstractApproachingBillboard bb = new AbstractApproachingBillboard(game, "Textures/text/hit.png", 2f, 1f, this.cam);
-		//game.addEntity(bb);
-		
-		new AbstractHUDImage(game, module, this.hud, "Textures/text/hit.png", this.hud.hud_width, this.hud.hud_height, 2);
+		if (this.score < 100) {
+			this.jump();
+			new AbstractHUDImage(game, module, this.hud, "Textures/text/hit.png", this.hud.hud_width, this.hud.hud_height, 2);
+		} else {
+			new AbstractHUDImage(game, module, this.hud, "Textures/text/winner.png", this.hud.hud_width, this.hud.hud_height, 10);
+		}
 	}
 
 }

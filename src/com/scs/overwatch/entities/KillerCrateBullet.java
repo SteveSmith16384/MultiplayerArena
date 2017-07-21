@@ -12,14 +12,14 @@ import com.scs.overwatch.Settings;
 import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.modules.GameModule;
 
-public class Bullet extends PhysicalEntity {
+public class KillerCrateBullet extends PhysicalEntity {
 
 	public ICanShoot shooter;
 	private RigidBodyControl ball_phy;
 	private float timeLeft = 10;
 	
-	public Bullet(Overwatch _game, GameModule _module, ICanShoot _shooter) {
-		super(_game, _module, "Bullet");
+	public KillerCrateBullet(Overwatch _game, GameModule _module, ICanShoot _shooter) {
+		super(_game, _module, "KillerCrateBullet");
 
 		this.shooter = _shooter;
 		
@@ -62,7 +62,7 @@ public class Bullet extends PhysicalEntity {
 	public void process(float tpf) {
 		this.timeLeft -= tpf;
 		if (this.timeLeft < 0) {
-			Settings.p("Bullet removed");
+			//Settings.p("Bullet removed");
 			this.remove();
 		}
 		

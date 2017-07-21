@@ -2,7 +2,6 @@ package com.scs.overwatch.modules;
 
 import java.util.List;
 
-import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
 import com.jme3.input.Joystick;
 import com.jme3.input.JoystickButton;
@@ -29,6 +28,7 @@ import com.scs.overwatch.Settings;
 
 public class StartModule implements IModule, ActionListener, RawInputListener {
 
+	private static final String QUIT = "Quit";
 	private static final String START = "Start";
 
 	protected Overwatch game;
@@ -63,6 +63,9 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		view2.setClearFlags(true, true, true);
 		view2.attachScene(game.getRootNode());
 
+		game.getInputManager().addMapping(QUIT, new KeyTrigger(KeyInput.KEY_ESCAPE));
+		game.getInputManager().addListener(this, QUIT);            
+
 		// Lights
 		AmbientLight al = new AmbientLight();
 		al.setColor(ColorRGBA.White);//.mult(3));
@@ -84,15 +87,16 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 			Settings.p("NO JOYSTICKS/GAMEPADS");
 		}
 
+		if (Settings.SHOW_LOGO) {
 		Picture pic = new Picture("HUD Picture");
 		pic.setImage(game.getAssetManager(), "Textures/killercrates_logo.png", true);
 		pic.setWidth(game.getCamera().getWidth());
 		pic.setHeight(game.getCamera().getWidth()/7);
-		//pic.setPosition(settings.getWidth()/4, settings.getHeight()/4);
 		game.getGuiNode().attachChild(pic);
-
+		}
+		
 		BitmapText score = new BitmapText(Overwatch.guiFont_small, false);
-		score.setText(numPlayers + " players found.\n\nPress FIRE to start!");
+		score.setText("The winner is the first player to score 100.\n\n" + numPlayers + " players found.\n\nPress FIRE to start!");
 		score.setLocalTranslation(0, game.getCamera().getHeight()-20, 0);
 		game.getGuiNode().attachChild(score);
 
@@ -122,6 +126,8 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 
 		if (name.equals(START)) {
 			startGame();
+		} else if (name.equals(QUIT)) {
+			game.stop();
 		}		
 	}
 

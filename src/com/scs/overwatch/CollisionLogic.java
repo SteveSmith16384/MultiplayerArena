@@ -1,6 +1,6 @@
 package com.scs.overwatch;
 
-import com.scs.overwatch.entities.Bullet;
+import com.scs.overwatch.entities.KillerCrateBullet;
 import com.scs.overwatch.entities.Collectable;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
@@ -11,11 +11,11 @@ public class CollisionLogic {
 	public static void collision(GameModule game, PhysicalEntity a, PhysicalEntity b) {
 		//Settings.p(a + " has collided with " + b);
 
-		if (a instanceof PlayersAvatar && b instanceof Bullet) {
-			Player_Bullet(game, (PlayersAvatar)a, (Bullet)b);
+		if (a instanceof PlayersAvatar && b instanceof KillerCrateBullet) {
+			Player_Bullet(game, (PlayersAvatar)a, (KillerCrateBullet)b);
 		}
-		if (a instanceof Bullet && b instanceof PlayersAvatar) {
-			Player_Bullet(game, (PlayersAvatar)b, (Bullet)a);
+		if (a instanceof KillerCrateBullet && b instanceof PlayersAvatar) {
+			Player_Bullet(game, (PlayersAvatar)b, (KillerCrateBullet)a);
 		}
 
 		if (a instanceof PlayersAvatar && b instanceof Collectable) {
@@ -31,7 +31,7 @@ public class CollisionLogic {
 	}
 
 
-	private static void Player_Bullet(GameModule game, PlayersAvatar playerHit, Bullet col) {
+	private static void Player_Bullet(GameModule game, PlayersAvatar playerHit, KillerCrateBullet col) {
 		if (col.shooter != playerHit) {
 			playerHit.hitByBullet();
 			col.shooter.hasSuccessfullyHit(playerHit);

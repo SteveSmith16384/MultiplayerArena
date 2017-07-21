@@ -15,8 +15,6 @@ import com.scs.overwatch.modules.GameModule;
 
 public abstract class PhysicalEntity extends Entity implements IProcessable {
 
-	//private static final float TURN_SPEED = 1f;
-
 	protected Node main_node;//, left_node, right_node;
 	public String name;
 

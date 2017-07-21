@@ -120,7 +120,17 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			for (int id=nextid ; id<=3 ; id++) {
 				Camera c = this.createCamera(id, numPlayers);
 				this.createHUD(c, id);
+				switch (id) {
+				case 1:
 				c.setLocation(new Vector3f(2f, PlayersAvatar.PLAYER_HEIGHT, 2f));
+				break;
+				case 2:
+				c.setLocation(new Vector3f(mapData.getWidth()-3, PlayersAvatar.PLAYER_HEIGHT, 2f));
+				break;
+				case 3:
+				c.setLocation(new Vector3f(2f, PlayersAvatar.PLAYER_HEIGHT, mapData.getDepth()-3));
+				break;
+				}
 				c.lookAt(new Vector3f(mapData.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, mapData.getDepth()/2), Vector3f.UNIT_Y);
 			}
 		}
@@ -235,26 +245,9 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 
 	private void setUpLight() {
-		// Remove existing lights
-		/*game.getRootNode().getWorldLightList().clear();
-		LightList list = game.getRootNode().getWorldLightList();
-		for (Light it : list) {
-			game.getRootNode().removeLight(it);
-		}*/
-
-		/*if (Settings.DEBUG_LIGHT == false) {
-			AmbientLight al = new AmbientLight();
-			al.setColor(ColorRGBA.White.mult(.5f));
-			rootNode.addLight(al);
-
-		} else {*/
 		AmbientLight al = new AmbientLight();
 		al.setColor(ColorRGBA.White.mult(3));
 		game.getRootNode().addLight(al);
-		
-		LightList list = game.getRootNode().getWorldLightList();
-		LightList list2 = game.getRootNode().getLocalLightList();
-		Settings.p(list.toString());
 	}
 
 
@@ -345,11 +338,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			game.setNextModule(new StartModule(game));
 		}
 
-	}
-
-
-	public void playerOut(PlayersAvatar avatar) {
-		// todo
 	}
 
 

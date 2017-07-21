@@ -1,6 +1,7 @@
 https://opengameart.org/content/street-lines
 https://opengameart.org/content/urban-skyboxes
 https://opengameart.org/content/low-poly-skyscraper
+Use http://opengameart.org/content/horror-sci-fi-3d-map-kit
 
 
 https://opengameart.org/content/4-projectile-launches
@@ -8,45 +9,39 @@ Killer Crates
 
 
 URGENT
+Put wall around city
+	Press esc in startup to exit
+	Place dummy cameras in each cormer
+HOME - Need 3D model for players
 Better font - use SF font?
-Camera lilts when restarting
-	Too bright after restarting game
 HOME Find sfx
 HOME Make tex smaller
-Add SFX
 No HUD on single player
+	Winner is first to 100
+	Show "victory!" billboard
 
 
 TODO
+Add SFX
+Create vestibules
+Explosions
+Create diff types of guns
 Better skybox
 Use subscriber for score?
 Configurable map
 Why does player jump when box too big?  https://stackoverflow.com/questions/22506892/jmonkeyengine-bettercharactercontrol-always-bouncing
-	Add logo to starting options window 
-Walk around a city shooting Ai
-Hunt AI
+Walk around a city hunting Ai
+Walk around collecting collectables
 Shrink ray
 Raised platforms
-Simple GUI - select game mode?
-GUI - show how many controllers connected
 Change bullet tex
-Player out when score 0;
-Show "victory!" billboard
-Create "LOST" billboard
 Search for todos
-Jetpac too powerful if moving fwd
-HOME Create "last shot!" billboard
 Points for collecting a collectable
 moving platforms
-Use http://opengameart.org/content/horror-sci-fi-3d-map-kit
-
-
-
-LATER
 Different environments (textures)
 Unit Tests
 Create multi-level map files
-Remove JME logging
+
 
 
 MUCH LATER
@@ -72,10 +67,12 @@ STATS
 Move Speed
 Jump height
 Turn speed
+Bullet range
 
 
 WEAPONS
 Beam laser
+Grenade launcher
 
 
 ABILITIES
@@ -88,6 +85,7 @@ Drop mines
 Teleport forwards
 See through walls
 Blow enemies away
+Force Field
 
 
 GAME MODES
@@ -111,6 +109,7 @@ https://opengameart.org/content/hand-painted-texture-iceberg
 https://opengameart.org/content/stone-wall-with-cracks
 https://opengameart.org/content/3-crate-textures-w-bump-normal
 
+USED:
 CREDITED: https://opengameart.org/content/5-wood-textures - CC0
 CREDITED: https://opengameart.org/content/hand-painted-texture-sandstone - KIIRA
 CREDITED: https://opengameart.org/content/seamless-bricks - CC0

@@ -3,7 +3,6 @@ package com.scs.overwatch.abilities;
 public class NoAbility implements IAbility {
 
 	public NoAbility() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
