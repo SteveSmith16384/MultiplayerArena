@@ -1,17 +1,17 @@
 package com.scs.overwatch.abilities;
 
-import com.jme3.scene.Spatial.CullHint;
+import com.scs.overwatch.Settings;
 import com.scs.overwatch.entities.PlayersAvatar;
 
-public class Invisibility extends AbstractAbility {
+public class RunFast extends AbstractAbility {
 
 	private static final float MAX_POWER = 10;
 	
 	private float power;
 	private PlayersAvatar player;
-	private boolean isInvisible;
+	private boolean isRunningFast;
 	
-	public Invisibility(PlayersAvatar _player) {
+	public RunFast(PlayersAvatar _player) {
 		super();
 		
 		player = _player;
@@ -20,21 +20,21 @@ public class Invisibility extends AbstractAbility {
 	
 	@Override
 	public boolean process(float interpol) {
-		this.player.getMainNode().setCullHint(CullHint.Inherit); // Default
-		isInvisible = false;
+		isRunningFast = false;
 		power += interpol;
 		power = Math.min(power, MAX_POWER);
+		this.player.moveSpeed = Settings.moveSpeed;
 		return true;
 	}
 
 	
 	@Override
 	public void activate(float interpol) {
-		power -= interpol*4;
+		power -= interpol;
 		power = Math.max(power, 0);
-		if (power > 1) {
-			this.player.getMainNode().setCullHint(CullHint.Always);
-			isInvisible = true;
+		if (power > 0) {
+			this.player.moveSpeed = Settings.moveSpeed * 3;
+			isRunningFast = true;
 		}
 		
 	}
@@ -42,7 +42,7 @@ public class Invisibility extends AbstractAbility {
 	
 	@Override
 	public String getHudText() {
-		return isInvisible ? "INVISIBLE!" : "";
+		return isRunningFast ? "RUNNING FAST!" : "";
 	}
 
 }

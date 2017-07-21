@@ -9,6 +9,7 @@ Killer Crates
 
 
 URGENT
+Use better texture for city
 Put wall around city
 	Press esc in startup to exit
 	Place dummy cameras in each cormer
@@ -19,10 +20,13 @@ HOME Make tex smaller
 No HUD on single player
 	Winner is first to 100
 	Show "victory!" billboard
+HOME Music
+HOME Add SFX
+	Start from below sky
 
 
 TODO
-Add SFX
+Select character class at start
 Create vestibules
 Explosions
 Create diff types of guns
@@ -86,6 +90,7 @@ Teleport forwards
 See through walls
 Blow enemies away
 Force Field
+Run fast
 
 
 GAME MODES

@@ -13,7 +13,7 @@ public class Settings {
 	public static final boolean DEBUG_HUD = false;
 	
 	// Our movement speed
-	public static final float moveSpeed = 3f;
+	public static final float moveSpeed = 3f; // todo - rename
 	public static final float strafeSpeed = 3f;
 
 	public static final float CAM_DIST = 50f;

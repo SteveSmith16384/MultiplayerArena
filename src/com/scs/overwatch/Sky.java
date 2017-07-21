@@ -11,6 +11,8 @@ import com.jme3.texture.Texture.WrapMode;
 import com.scs.overwatch.map.IPertinentMapData;
 
 public class Sky {
+
+	public static final float HEIGHT = 9f;
 	
 	public Geometry geom;
 	
@@ -29,7 +31,7 @@ public class Sky {
 		geom = new Geometry("Billboard", quad);
 		geom.setMaterial(mat);
 
-		geom.setLocalTranslation(-SIZE/2, 9f, -SIZE/2);
+		geom.setLocalTranslation(-SIZE/2, HEIGHT, -SIZE/2);
 		geom.lookAt(new Vector3f(-SIZE/2, 0f, -SIZE/2), Vector3f.UNIT_Y);
 		//geom.lookAt(new Vector3f(-map.getWidth()/4, 0f, -map.getDepth()/4), Vector3f.UNIT_Y);
 

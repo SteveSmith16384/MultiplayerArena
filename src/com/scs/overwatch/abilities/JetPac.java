@@ -28,10 +28,10 @@ public class JetPac extends AbstractAbility {
 
 	@Override
 	public void activate(float interpol) {
-		fuel -= (interpol*2);
+		fuel -= (interpol*3);
 		fuel = Math.max(fuel, 0);
-		if (fuel > 0) {
-			Settings.p("Jetpac-ing!");
+		if (fuel > 1) {
+			//Settings.p("Jetpac-ing!");
 			//player.playerControl.getPhysicsRigidBody().applyImpulse(FORCE, Vector3f.ZERO);
 			player.walkDirection.addLocal(FORCE);//, Vector3f.ZERO);
 		}

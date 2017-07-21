@@ -14,6 +14,7 @@ import com.scs.overwatch.MyBetterCharacterControl;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.Settings.GameMode;
+import com.scs.overwatch.Sky;
 import com.scs.overwatch.abilities.IAbility;
 import com.scs.overwatch.abilities.Invisibility;
 import com.scs.overwatch.abilities.NoAbility;
@@ -34,6 +35,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 	private static final float WEIGHT = 3f;
 
 	public Vector3f walkDirection = new Vector3f();
+	public float moveSpeed = Settings.moveSpeed;
 	private IInputDevice input;
 
 	//Temporary vectors used on each frame.
@@ -98,7 +100,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 
 	public void moveToStartPostion() {
 		Point p = module.mapData.getPlayerStartPos(id);
-		playerControl.warp(new Vector3f(p.x, 10f, p.y));
+		playerControl.warp(new Vector3f(p.x, Sky.HEIGHT-1f, p.y));
 
 	}
 
@@ -111,13 +113,18 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 		}
 		hud.process(tpf);
 
+		if (input.isAbility1Pressed()) { // Must be before we set the walkDirection & moveSpeed, as this method may affect it
+			Settings.p("Using " + this.ability.toString());
+			this.ability.activate(tpf);
+		}
+
 		/*
 		 * The direction of character is determined by the camera angle
 		 * the Y direction is set to zero to keep our character from
 		 * lifting of terrain. For free flying games simply add speed 
 		 * to Y axis
 		 */
-		camDir.set(cam.getDirection()).multLocal(Settings.moveSpeed, 0.0f, Settings.moveSpeed);
+		camDir.set(cam.getDirection()).multLocal(moveSpeed, 0.0f, moveSpeed);
 		camLeft.set(cam.getLeft()).multLocal(Settings.strafeSpeed);
 		walkDirection.set(0, 0, 0);
 		if (input.isStrafeLeftPressed()) {
@@ -136,11 +143,6 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot {
 			walkDirection.addLocal(camDir.negate());
 			timeSinceLastMove = 0;
 		}
-		if (input.isAbility1Pressed()) { // Must be before we set the walkDirection, as this method may affect it
-			Settings.p("Using " + this.ability.toString());
-			this.ability.activate(tpf);
-		}
-
 		playerControl.setWalkDirection(walkDirection);
 
 		if (input.isJumpPressed() || timeSinceLastMove > 10) {
