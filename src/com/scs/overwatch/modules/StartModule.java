@@ -32,7 +32,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 	private static final String START = "Start";
 
 	protected Overwatch game;
-	private int numPlayers;
+	private BitmapText numPlayerText;
 
 	public StartModule(Overwatch _game) {
 		super();
@@ -45,7 +45,6 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 	public void init() {
 		List<ViewPort> views = game.getRenderManager().getMainViews();
 		while (!views.isEmpty()) {
-			//for (ViewPort vp : views) {
 			game.getRenderManager().removeMainView(views.get(0));
 			views = game.getRenderManager().getMainViews();
 		}
@@ -53,11 +52,9 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		// Create viewport
 		Camera newCam = game.getCamera();
 		newCam.setFrustumPerspective(45f, (float) newCam.getWidth() / newCam.getHeight(), 0.01f, Settings.CAM_DIST);
-		//Settings.p("Creating full-screen camera");
 		newCam.setViewPort(0f, 1f, 0f, 1f);
-		//newCam.setName("Cam_FullScreen");
 
-		final ViewPort view2 = game.getRenderManager().createMainView("viewport_"+newCam.toString(), newCam);
+		final ViewPort view2 = game.getRenderManager().createMainView("viewport_" + newCam.toString(), newCam);
 		//view2.setBackgroundColor(new ColorRGBA(0f, 0.9f, .9f, 0f)); // 148 187 242
 		view2.setBackgroundColor(new ColorRGBA(148f/255f, 187f/255f, 242f/255f, 0f));
 		view2.setClearFlags(true, true, true);
@@ -71,9 +68,6 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		al.setColor(ColorRGBA.White);//.mult(3));
 		game.getRootNode().addLight(al);
 
-		Joystick[] joysticks = game.getInputManager().getJoysticks();
-		numPlayers = 1+joysticks.length;
-
 		// Auto-Create player 0 - keyboard and mouse
 		{
 			game.getInputManager().addMapping(START, new MouseButtonTrigger(MouseInput.BUTTON_LEFT), new KeyTrigger(KeyInput.KEY_SPACE));
@@ -82,37 +76,38 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 
 		game.getInputManager().addRawInputListener(this);
 
-		// Create players for each joystick
-		if (joysticks == null || joysticks.length == 0) {
-			Settings.p("NO JOYSTICKS/GAMEPADS");
+		if (Settings.SHOW_LOGO) {
+			Picture pic = new Picture("HUD Picture");
+			pic.setImage(game.getAssetManager(), "Textures/killercrates_logo.png", true);
+			pic.setWidth(game.getCamera().getWidth());
+			pic.setHeight(game.getCamera().getWidth()/7);
+			game.getGuiNode().attachChild(pic);
 		}
 
-		if (Settings.SHOW_LOGO) {
-		Picture pic = new Picture("HUD Picture");
-		pic.setImage(game.getAssetManager(), "Textures/killercrates_logo.png", true);
-		pic.setWidth(game.getCamera().getWidth());
-		pic.setHeight(game.getCamera().getWidth()/7);
-		game.getGuiNode().attachChild(pic);
-		}
-		
 		BitmapText score = new BitmapText(Overwatch.guiFont_small, false);
-		score.setText("The winner is the first player to score 100.\n\n" + numPlayers + " players found.\n\nPress FIRE to start!");
-		score.setLocalTranslation(0, game.getCamera().getHeight()-20, 0);
+		score.setText("Version " + Settings.VERSION + "\n\nThe winner is the first player to score 100.\n\nPress FIRE to start!");
+		score.setLocalTranslation(0, game.getCamera().getHeight()-40, 0);
 		game.getGuiNode().attachChild(score);
 
+		numPlayerText = new BitmapText(Overwatch.guiFont_small, false);
+		numPlayerText.setLocalTranslation(0, game.getCamera().getHeight()-20, 0);
+		game.getGuiNode().attachChild(numPlayerText);
 	}
 
 
 	@Override
 	public void update(float tpf) {
-		// Do nothing
+		Joystick[] joysticks = game.getInputManager().getJoysticks();
+		numPlayerText.setText((1+joysticks.length) + " player(s) found.");
+
+
 	}
 
 
 	@Override
 	public void destroy() {
 		game.getInputManager().clearMappings();
-		game.getInputManager().clearRawInputListeners();//.removeRawInputListener(this);
+		game.getInputManager().clearRawInputListeners();
 		game.getInputManager().removeListener(this);
 
 	}

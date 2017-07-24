@@ -1,5 +1,9 @@
 package com.scs.overwatch.modules;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
+
 import ssmith.lang.NumberFunctions;
 import ssmith.util.TSArrayList;
 
@@ -11,6 +15,7 @@ import com.jme3.font.BitmapFont;
 import com.jme3.input.Joystick;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.InputListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.math.ColorRGBA;
@@ -25,6 +30,7 @@ import com.scs.overwatch.Settings.GameMode;
 import com.scs.overwatch.Sky;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
+import com.scs.overwatch.entities.Collectable;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
 import com.scs.overwatch.hud.HUD;
@@ -82,6 +88,11 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			mapData = maploader.loadMap();
 		} else {
 			mapData = new SimpleCity(game, this);
+
+			// Drop new collectable
+			Point p = mapData.getRandomCollectablePos();
+			Collectable c = new Collectable(Overwatch.instance, this, p.x, p.y);
+			Overwatch.instance.getRootNode().attachChild(c.getMainNode());
 		}
 
 		Sky sky = new Sky(game.getAssetManager(), mapData);
@@ -96,10 +107,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			HUD hud = this.createHUD(newCam, 0);
 			MouseAndKeyboardCamera keyboard = new MouseAndKeyboardCamera(newCam, game.getInputManager());
 			this.addPlayersAvatar(0, newCam, keyboard, hud); // Keyboard player
-
-			// Test billboard
-			/*AbstractBillboard bb = new AbstractBillboard(this.getAssetManager(), "Textures/boxes and crates/1.jpg", 1, 1, newCam);
-			this.addEntity(bb);*/
 		}
 
 		// Create players for each joystick
@@ -206,7 +213,14 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 		final ViewPort view2 = game.getRenderManager().createMainView("viewport_"+newCam.toString(), newCam);
 		//view2.setBackgroundColor(new ColorRGBA(0f, 0.9f, .9f, 0f)); // 148 187 242
-		view2.setBackgroundColor(new ColorRGBA(148f/255f, 187f/255f, 242f/255f, 0f));
+		switch (Settings.gameMode) {
+		case KillerCrates:
+			view2.setBackgroundColor(new ColorRGBA(148f/255f, 187f/255f, 242f/255f, 0f));
+			break;
+		case BladeRunner:
+			view2.setBackgroundColor(new ColorRGBA(0, 0, 0, 0f));
+			break;
+		}
 		view2.setClearFlags(true, true, true);
 		view2.attachScene(game.getRootNode());
 
@@ -299,7 +313,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	public void addEntity(IEntity e) {
 		this.entities.add(e);
-		
+
 		if (e instanceof PlayersAvatar) {
 			PlayersAvatar a = (PlayersAvatar)e;
 			this.avatars.add(a);
@@ -314,7 +328,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			PlayersAvatar a = (PlayersAvatar)e;
 			this.avatars.remove(a);
 		}
-}
+	}
 
 
 	public BulletAppState getBulletAppState() {
@@ -356,7 +370,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	public void destroy() {
 		game.getInputManager().clearMappings();
 		game.getInputManager().clearRawInputListeners();//.removeRawInputListener(this);
-		game.getInputManager().removeListener(this);
+		//game.getInputManager().removeListener(this);
 
 	}
 

@@ -9,26 +9,34 @@ Killer Crates
 
 
 URGENT
-Use better texture for city
-Put wall around city
-	Press esc in startup to exit
-	Place dummy cameras in each cormer
+Controls not right after restarting
+Remove sky for city
+Street lights
+	Targetting HUD
+	Refresh num controllers in start
+HOME Use better texture for city
 HOME - Need 3D model for players
-Better font - use SF font?
+HOME Better font - use SF font?
 HOME Find sfx
 HOME Make tex smaller
 	Winner is first to 100
 	Show "victory!" billboard
 HOME Music
 HOME Add SFX
-	Start from below sky
+Show msg whenj collectable collected
+	SimplyCity not right - small road problem
+Do exe release
 
 
 TODO
+Get text colour from game mode
+Guns - magazine size, reload mag time
+Wrap p() in debug
 Combine IWeapon and IAbility - ability1, ability2
 No HUD on single player
 Select character class at start
 Create vestibules
+Cars that drive down roads
 Explosions
 Create diff types of guns
 Better skybox
@@ -46,7 +54,7 @@ moving platforms
 Different environments (textures)
 Unit Tests
 Create multi-level map files
-
+Map with lots of floating walkways 
 
 
 MUCH LATER
@@ -88,7 +96,6 @@ GAME MODES
 Collect the most collectables
 Skirmish
 	What the Box
-Dodgeball
 Overwatch
 Hide and Seek
 Defend the Base

@@ -16,7 +16,7 @@ import com.scs.overwatch.Settings;
 import com.scs.overwatch.Settings.GameMode;
 import com.scs.overwatch.Sky;
 import com.scs.overwatch.abilities.IAbility;
-import com.scs.overwatch.abilities.Invisibility;
+import com.scs.overwatch.abilities.JetPac;
 import com.scs.overwatch.abilities.NoAbility;
 import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.components.IEntity;
@@ -27,6 +27,7 @@ import com.scs.overwatch.input.IInputDevice;
 import com.scs.overwatch.modules.GameModule;
 import com.scs.overwatch.weapons.IMainWeapon;
 import com.scs.overwatch.weapons.KillerCrateGun;
+import com.scs.overwatch.weapons.LaserRifle;
 
 public class PlayersAvatar extends PhysicalEntity implements ICanShoot, IShowOnHUD {
 
@@ -50,7 +51,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot, IShowOnH
 	private float timeSinceLastMove = 0;
 	private IAbility ability;
 	public Geometry playerGeometry;
-	public int score = 20;
+	private int score = 20;
 	private IMainWeapon weapon;
 
 	public PlayersAvatar(Overwatch _game, GameModule _module, int _id, Camera _cam, IInputDevice _input, HUD _hud, TextureKey key3) {
@@ -60,8 +61,15 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot, IShowOnH
 		cam = _cam;
 		input = _input;
 		hud = _hud;
-		weapon = new KillerCrateGun(_game, _module, this); 
 
+		switch (Settings.gameMode) {
+		case KillerCrates:
+			weapon = new KillerCrateGun(_game, _module, this);
+			break;
+		case BladeRunner:
+			weapon = new LaserRifle(_game, _module, this);
+			break;
+		}
 		Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
 		playerGeometry = new Geometry("Player", box1);
 		//TextureKey key3 = new TextureKey("Textures/boxes and crates/1.jpg");
@@ -94,7 +102,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot, IShowOnH
 		if (Settings.gameMode == GameMode.KillerCrates) {
 			this.ability = new NoAbility();
 		} else {
-			this.ability = new Invisibility(this);//  todo - make random
+			this.ability = new JetPac(this);//  todo - make random
 		}
 	}
 
@@ -231,8 +239,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot, IShowOnH
 
 	@Override
 	public void hasSuccessfullyHit(IEntity e) {
-		this.score += 20;
-		this.hud.setScore(this.score);
+		this.incScore(20);
 
 		if (this.score < 100) {
 			this.jump();
@@ -240,6 +247,13 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot, IShowOnH
 		} else {
 			new AbstractHUDImage(game, module, this.hud, "Textures/text/winner.png", this.hud.hud_width, this.hud.hud_height, 10);
 		}
+	}
+
+
+	public void incScore(int amt) {
+		this.score += amt;
+		this.hud.setScore(this.score);
+
 	}
 
 }

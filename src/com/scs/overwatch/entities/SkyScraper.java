@@ -17,7 +17,7 @@ public class SkyScraper extends PhysicalEntity implements IProcessable {
 	//private Geometry geometry;
 	private RigidBodyControl floor_phy;
 
-	public SkyScraper(Overwatch _game, GameModule _module, float x, float z, float w, float h, float d, String tex) {
+	public SkyScraper(Overwatch _game, GameModule _module, float leftX, float backZ, float w, float h, float d, String tex) {
 		super(_game, _module, "SkyScraper");
 
 		Box box1 = new Box(w/2, h/2, d/2);
@@ -41,7 +41,7 @@ public class SkyScraper extends PhysicalEntity implements IProcessable {
 		//geometry.setQueueBucket(Bucket.Transparent);
 
 		this.main_node.attachChild(geometry);
-		main_node.setLocalTranslation(x+(w/2), h/2, z+(d/2));
+		main_node.setLocalTranslation(leftX+(w/2), h/2, backZ+(d/2));
 
 		floor_phy = new RigidBodyControl(0);
 		geometry.addControl(floor_phy);

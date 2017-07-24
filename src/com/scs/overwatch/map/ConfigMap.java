@@ -84,4 +84,11 @@ public class ConfigMap implements ISimpleMapData, IPertinentMapData {
 	}
 
 
+	@Override
+	public Point getRandomCollectablePos() {
+		int x = NumberFunctions.rnd(4, getWidth()-5);
+		int z = NumberFunctions.rnd(4, getDepth()-5);
+		return new Point(x, z);
+	}
+
 }

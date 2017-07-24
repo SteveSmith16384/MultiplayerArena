@@ -46,6 +46,7 @@ public class CreateShapes {
 		floor_geo.addControl(floor_phy);
 		bulletAppState.getPhysicsSpace().add(floor_phy);
 		floor_phy.setFriction(1f);
+		floor_phy.setRestitution(1f); // scs
 		
 		//return floor_geo;
 		return floor_phy;

@@ -10,4 +10,6 @@ public interface IPertinentMapData {
 	
 	Point getPlayerStartPos(int id);
 	
+	Point getRandomCollectablePos();
+	
 }

@@ -9,6 +9,7 @@ import com.jme3.input.controls.MouseAxisTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.renderer.Camera;
 import com.scs.overwatch.MyFlyByCamera;
+import com.scs.overwatch.Settings;
 
 public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListener, IInputDevice { 
 
@@ -46,15 +47,19 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 		// both mouse and button - rotation of cam
 		inputManager.addMapping("FLYCAM_Left", new MouseAxisTrigger(MouseInput.AXIS_X, true),
 				new KeyTrigger(KeyInput.KEY_LEFT));
+		inputManager.addListener(this, "FLYCAM_Left");
 
 		inputManager.addMapping("FLYCAM_Right", new MouseAxisTrigger(MouseInput.AXIS_X, false),
 				new KeyTrigger(KeyInput.KEY_RIGHT));
+		inputManager.addListener(this, "FLYCAM_Right");
 
 		inputManager.addMapping("FLYCAM_Up", new MouseAxisTrigger(MouseInput.AXIS_Y, false),
 				new KeyTrigger(KeyInput.KEY_UP));
+		inputManager.addListener(this, "FLYCAM_Up");
 
 		inputManager.addMapping("FLYCAM_Down", new MouseAxisTrigger(MouseInput.AXIS_Y, true),
 				new KeyTrigger(KeyInput.KEY_DOWN));
+		inputManager.addListener(this, "FLYCAM_Down");
 
 		// mouse only - zoom in/out with wheel, and rotate drag
 		/*inputManager.addMapping("FLYCAM_ZoomIn", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false));
@@ -69,7 +74,7 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 		inputManager.addMapping("FLYCAM_Rise", new KeyTrigger(KeyInput.KEY_Q));
 		inputManager.addMapping("FLYCAM_Lower", new KeyTrigger(KeyInput.KEY_Z));*/
 
-		inputManager.addListener(this, mappings);
+		//inputManager.addListener(this, mappings);  scs!
 		inputManager.setCursorVisible(dragToRotate || !isEnabled());
 
 		/*Joystick[] joysticks = inputManager.getJoysticks();
@@ -90,6 +95,7 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 		//Settings.p("CAM=" +this.cam.getName());
 
 		if (name.equals("FLYCAM_Left")){
+			Settings.p("name=" + name);
 			rotateCamera(value, initialUpVec);
 		}else if (name.equals("FLYCAM_Right")){
 			rotateCamera(-value, initialUpVec);

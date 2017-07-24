@@ -3,6 +3,8 @@ package com.scs.overwatch.map;
 import java.awt.Point;
 import java.util.Random;
 
+import ssmith.lang.NumberFunctions;
+
 public class RandomMap implements ISimpleMapData, IPertinentMapData {
 	
 	private static final int WIDTH = 12;
@@ -45,5 +47,12 @@ public class RandomMap implements ISimpleMapData, IPertinentMapData {
 	public void addMisc() {
 	}
 
+
+	@Override
+	public Point getRandomCollectablePos() {
+		int x = NumberFunctions.rnd(4, getWidth()-5);
+		int z = NumberFunctions.rnd(4, getDepth()-5);
+		return new Point(x, z);
+	}
 
 }

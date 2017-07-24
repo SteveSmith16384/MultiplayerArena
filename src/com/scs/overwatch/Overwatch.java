@@ -25,10 +25,9 @@ public class Overwatch extends MySimpleApplication {
 	public static Properties properties;
 	private VideoRecorderAppState video_recorder;
 	private IModule currentModule, pendingModule;
-
 	public static BitmapFont guiFont_small;// = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
 	
-
+	public static Overwatch instance;
 	
 	public static void main(String[] args) {
 		try {
@@ -48,6 +47,7 @@ public class Overwatch extends MySimpleApplication {
 			}
 
 			Overwatch app = new Overwatch();
+			instance = app;
 			app.setSettings(settings);
 			app.setPauseOnLostFocus(true);
 
@@ -113,10 +113,6 @@ public class Overwatch extends MySimpleApplication {
 			// Remove existing lights
 			getRootNode().getWorldLightList().clear();
 			getRootNode().getLocalLightList().clear();
-			/*LightList list = getRootNode().getWorldLightList();
-			for (Light it : list) {
-				getRootNode().removeLight(it);
-			}*/
 
 			this.currentModule = pendingModule;
 			this.currentModule.init();

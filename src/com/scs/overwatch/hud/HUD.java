@@ -119,18 +119,20 @@ public class HUD extends Node implements IEntity, IProcessable {
 		// Test recticle
 		int id = 0;
 		if (Settings.DEBUG_TARGETTER) {
-			for (IEntity avatar : module.entities) {
-				if (avatar instanceof IShowOnHUD) {
-					if (this.targetting_reticules.size() <= id) {
-						this.addTargetter();
-					}
-					IShowOnHUD soh = (IShowOnHUD) avatar;
-					Picture pic = this.targetting_reticules.get(id);
-					pic.setCullHint(CullHint.Inherit);
+			for (IEntity entity : module.entities) {
+				if (entity != this) {
+					if (entity instanceof IShowOnHUD) {
+						if (this.targetting_reticules.size() <= id) {
+							this.addTargetter();
+						}
+						IShowOnHUD soh = (IShowOnHUD) entity;
+						Picture pic = this.targetting_reticules.get(id);
+						pic.setCullHint(CullHint.Inherit);
 
-					Vector3f screen_pos = cam.getScreenCoordinates(soh.getLocation());
-					pic.setPosition(screen_pos.x, screen_pos.y);
-					id++;
+						Vector3f screen_pos = cam.getScreenCoordinates(soh.getLocation());
+						pic.setPosition(screen_pos.x, screen_pos.y);
+						id++;
+					}
 				}
 			}
 
