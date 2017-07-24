@@ -15,8 +15,8 @@ import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.Settings.GameMode;
 import com.scs.overwatch.Sky;
+import com.scs.overwatch.abilities.AbstractAbility;
 import com.scs.overwatch.abilities.IAbility;
-import com.scs.overwatch.abilities.JetPac;
 import com.scs.overwatch.abilities.NoAbility;
 import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.components.IEntity;
@@ -102,7 +102,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot, IShowOnH
 		if (Settings.gameMode == GameMode.KillerCrates) {
 			this.ability = new NoAbility();
 		} else {
-			this.ability = new JetPac(this);//  todo - make random
+			this.ability = AbstractAbility.GetRandomAbility(this);
 		}
 	}
 

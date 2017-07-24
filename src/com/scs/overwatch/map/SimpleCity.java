@@ -124,7 +124,7 @@ public class SimpleCity implements IPertinentMapData {
 	public Point getPlayerStartPos(int id) {
 		int x = NumberFunctions.rnd(0, SECTORS-1);
 		int z = NumberFunctions.rnd(0, SECTORS-1);
-		return new Point(2, 2);// todo - re-add x*(SKYSCRAPER_WIDTH+6), z*(SKYSCRAPER_WIDTH+6));
+		return new Point(x*(SKYSCRAPER_WIDTH+6), z*(SKYSCRAPER_WIDTH+6));
 	}
 
 
@@ -132,7 +132,7 @@ public class SimpleCity implements IPertinentMapData {
 	public Point getRandomCollectablePos() {
 		int x = NumberFunctions.rnd(0, SECTORS-1);
 		int z = NumberFunctions.rnd(0, SECTORS-1);
-		return new Point(2, 2); // todo - re-add x*(SKYSCRAPER_WIDTH+6), z*(SKYSCRAPER_WIDTH+6));
+		return new Point(x*(SKYSCRAPER_WIDTH+6), z*(SKYSCRAPER_WIDTH+6));
 	}
 
 

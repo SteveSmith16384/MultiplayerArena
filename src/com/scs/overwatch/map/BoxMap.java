@@ -5,6 +5,7 @@ import java.awt.Point;
 import ssmith.lang.NumberFunctions;
 
 import com.scs.overwatch.Overwatch;
+import com.scs.overwatch.Sky;
 import com.scs.overwatch.entities.Crate;
 import com.scs.overwatch.entities.Plank;
 import com.scs.overwatch.modules.GameModule;
@@ -71,6 +72,9 @@ public class BoxMap implements ISimpleMapData, IPertinentMapData {
 
 	@Override
 	public void addMisc() {
+		Sky sky = new Sky(game.getAssetManager(), module.mapData);
+		game.getRootNode().attachChild(sky.geom);
+
 		int numCrates = 35;
 		try {
 			numCrates = Integer.parseInt(game.properties.getProperty("numCrates"));

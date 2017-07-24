@@ -116,24 +116,24 @@ public class HUD extends Node implements IEntity, IProcessable {
 
 	@Override
 	public void process(float tpf) {
-		// Test recticle
+		// Test reticle
 		int id = 0;
 		if (Settings.DEBUG_TARGETTER) {
 			for (IEntity entity : module.entities) {
-				if (entity != this) {
-					if (entity instanceof IShowOnHUD) {
-						if (this.targetting_reticules.size() <= id) {
-							this.addTargetter();
-						}
-						IShowOnHUD soh = (IShowOnHUD) entity;
-						Picture pic = this.targetting_reticules.get(id);
-						pic.setCullHint(CullHint.Inherit);
-
-						Vector3f screen_pos = cam.getScreenCoordinates(soh.getLocation());
-						pic.setPosition(screen_pos.x, screen_pos.y);
-						id++;
+				//if (entity != this) { // todo - not right!
+				if (entity instanceof IShowOnHUD) {
+					if (this.targetting_reticules.size() <= id) {
+						this.addTargetter();
 					}
+					IShowOnHUD soh = (IShowOnHUD) entity;
+					Picture pic = this.targetting_reticules.get(id);
+					pic.setCullHint(CullHint.Inherit);
+
+					Vector3f screen_pos = cam.getScreenCoordinates(soh.getLocation());
+					pic.setLocalTranslation(screen_pos.x, screen_pos.y, 0f);
+					id++;
 				}
+				//}
 			}
 
 			// Hide the rest
@@ -147,7 +147,7 @@ public class HUD extends Node implements IEntity, IProcessable {
 
 		if (process_damage_box) {
 			this.dam_box_col.a -= (tpf/2);
-			if (dam_box_col.a < 0) {
+			if (dam_box_col.a <= 0) {
 				dam_box_col.a = 0;
 				process_damage_box = false;
 			}
@@ -179,6 +179,15 @@ public class HUD extends Node implements IEntity, IProcessable {
 		this.dam_box_col.r = 1f;
 		this.dam_box_col.g = 0f;
 		this.dam_box_col.b = 0f;
+	}
+
+
+	public void showCollectBox() {
+		process_damage_box = true;
+		this.dam_box_col.a = .3f;
+		this.dam_box_col.r = 0f;
+		this.dam_box_col.g = 1f;
+		this.dam_box_col.b = 1f;
 	}
 
 

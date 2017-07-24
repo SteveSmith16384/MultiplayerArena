@@ -1,8 +1,6 @@
 package com.scs.overwatch.modules;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
 
 import ssmith.lang.NumberFunctions;
 import ssmith.util.TSArrayList;
@@ -15,7 +13,6 @@ import com.jme3.font.BitmapFont;
 import com.jme3.input.Joystick;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
-import com.jme3.input.controls.InputListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.math.ColorRGBA;
@@ -94,9 +91,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			Collectable c = new Collectable(Overwatch.instance, this, p.x, p.y);
 			Overwatch.instance.getRootNode().attachChild(c.getMainNode());
 		}
-
-		Sky sky = new Sky(game.getAssetManager(), mapData);
-		game.getRootNode().attachChild(sky.geom);
 
 		Joystick[] joysticks = game.getInputManager().getJoysticks();
 		int numPlayers = 1+joysticks.length;

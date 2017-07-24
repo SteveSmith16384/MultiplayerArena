@@ -17,7 +17,7 @@ public abstract class AbstractAbility implements IAbility {
 		case 3:
 			return new RunFast(_player);
 		default:
-			throw new RuntimeException("todo");
+			throw new RuntimeException("Unknown ability: " + i);
 		}
 		
 	}

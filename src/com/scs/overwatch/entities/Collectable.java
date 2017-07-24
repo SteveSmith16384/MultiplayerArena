@@ -51,6 +51,7 @@ public class Collectable extends PhysicalEntity implements IShowOnHUD {
 		
 		floor_phy.setRestitution(.5f);
 
+		module.addEntity(this); // need this to target it
 	}
 
 

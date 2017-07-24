@@ -9,26 +9,26 @@ Killer Crates
 
 
 URGENT
-Controls not right after restarting
-Remove sky for city
-Street lights
 	Targetting HUD
 	Refresh num controllers in start
+	Winner is first to 100
+	Show "victory!" billboard
+Controls not right after restarting
+	Remove sky for city
+HOME Make tex smaller
 HOME Use better texture for city
 HOME - Need 3D model for players
 HOME Better font - use SF font?
 HOME Find sfx
-HOME Make tex smaller
-	Winner is first to 100
-	Show "victory!" billboard
 HOME Music
 HOME Add SFX
-Show msg whenj collectable collected
+	Show effect when collectable collected
 	SimplyCity not right - small road problem
 Do exe release
 
 
 TODO
+Street lights
 Get text colour from game mode
 Guns - magazine size, reload mag time
 Wrap p() in debug
@@ -68,13 +68,17 @@ STATS
 Move Speed
 Jump height
 Turn speed
-Bullet range & damage
+Gun
+Ability
 
 
 WEAPONS
-Beam laser
+laser rifle
 Grenade launcher
 Freeze ray
+Rocket launcher
+sniper rifle
+Bullets that bounce around corners
 
 
 ABILITIES
@@ -85,11 +89,12 @@ Freeze enemy
 Heal
 Drop mines
 Teleport forwards
-See through walls - recticle
+X-Ray vision
 Blow enemies away
 Force Field
 	Run fast
 Invincible
+Auto-aim
 
 
 GAME MODES

@@ -9,10 +9,11 @@ import com.jme3.scene.shape.Sphere.TextureMode;
 import com.jme3.texture.Texture;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
+import com.scs.overwatch.components.IBullet;
 import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.modules.GameModule;
 
-public class KillerCrateBullet extends PhysicalEntity {
+public class KillerCrateBullet extends PhysicalEntity implements IBullet {
 
 	public ICanShoot shooter;
 	private RigidBodyControl ball_phy;
@@ -73,6 +74,12 @@ public class KillerCrateBullet extends PhysicalEntity {
 	public void remove() {
 		super.remove();
 		this.module.bulletAppState.getPhysicsSpace().remove(this.ball_phy);
+	}
+
+
+	@Override
+	public ICanShoot getShooter() {
+		return shooter;
 	}
 
 }

@@ -10,14 +10,15 @@ import com.jme3.scene.shape.Sphere.TextureMode;
 import com.jme3.texture.Texture;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
+import com.scs.overwatch.components.IBullet;
 import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.modules.GameModule;
 
-public class LaserBullet extends PhysicalEntity {
+public class LaserBullet extends PhysicalEntity implements IBullet {
 
 	public ICanShoot shooter;
 	private RigidBodyControl ball_phy;
-	private float timeLeft = 10;
+	private float timeLeft = 3;
 	
 	public LaserBullet(Overwatch _game, GameModule _module, ICanShoot _shooter) {
 		super(_game, _module, "LaserBullet");
@@ -51,7 +52,7 @@ public class LaserBullet extends PhysicalEntity {
 		ball_geo.addControl(ball_phy);
 		module.bulletAppState.getPhysicsSpace().add(ball_phy);
 		/** Accelerate the physical ball to shoot it. */
-		ball_phy.setLinearVelocity(shooter.getDir().mult(50));
+		ball_phy.setLinearVelocity(shooter.getDir().mult(40));
 		ball_phy.setGravity(Vector3f.ZERO);
 		
 		this.getMainNode().setUserData(Settings.ENTITY, this);
@@ -75,6 +76,12 @@ public class LaserBullet extends PhysicalEntity {
 	public void remove() {
 		super.remove();
 		this.module.bulletAppState.getPhysicsSpace().remove(this.ball_phy);
+	}
+
+
+	@Override
+	public ICanShoot getShooter() {
+		return shooter;
 	}
 
 }
