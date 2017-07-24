@@ -84,11 +84,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			mapData = maploader.loadMap();
 		} else {
 			mapData = new SimpleCity(game, this);
-
-			// Drop new collectable
-			Point p = mapData.getRandomCollectablePos();
-			Collectable c = new Collectable(Overwatch.instance, this, p.x, p.y);
-			Overwatch.instance.getRootNode().attachChild(c.getMainNode());
 		}
 
 		Joystick[] joysticks = game.getInputManager().getJoysticks();

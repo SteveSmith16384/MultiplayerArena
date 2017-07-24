@@ -6,8 +6,7 @@ SFX: https://opengameart.org/content/4-projectile-launches
 
 
 URGENT
-Roaming AI that shoots on-sight
-	Targetting HUD
+	Roaming AI that shoots on-sight
 	Refresh num controllers in start
 	Winner is first to 100
 	Show "victory!" billboard
@@ -19,6 +18,7 @@ HOME Better font - use SF font?
 HOME Find sfx
 HOME Music
 HOME Add SFX
+Targetting HUD
 	SimplyCity not right - small road problem
 Do exe release
 Change avatar for city map 

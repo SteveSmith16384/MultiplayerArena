@@ -1,10 +1,14 @@
 package com.scs.overwatch.entities;
 
+import java.util.List;
+
 import ssmith.util.RealtimeInterval;
 
 import com.jme3.asset.TextureKey;
+import com.jme3.bullet.collision.PhysicsRayTestResult;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
+import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
@@ -17,7 +21,10 @@ import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.components.IShowOnHUD;
+import com.scs.overwatch.components.ITargetByAI;
 import com.scs.overwatch.modules.GameModule;
+import com.scs.overwatch.weapons.IMainWeapon;
+import com.scs.overwatch.weapons.LaserRifle;
 
 public class RoamingAI extends PhysicalEntity implements IProcessable, ICollideable, ICanShoot, IShowOnHUD {
 
@@ -26,10 +33,15 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICollidea
 	private Vector3f currDir = new Vector3f(0, 0, 1);
 	private Vector3f shotDir = new Vector3f(0, 0, 0);
 	protected RealtimeInterval targetCheck = new RealtimeInterval(1000);
+	private IMainWeapon weapon;
 
-	public RoamingAI(Overwatch _game, GameModule _module, float x, float z, float w, float h, float d) {
+	public RoamingAI(Overwatch _game, GameModule _module, float x, float z) {
 		super(_game, _module, "RoamingAI");
 
+		float w = 1f;//0.5f;
+		float h = 1f;//0.5f;
+		float d = 1f;//0.5f;
+		
 		Box box1 = new Box(w/2, h/2, d/2);
 		geometry = new Geometry("Crate", box1);
 		TextureKey key3 = new TextureKey("Textures/boxes and crates/1.jpg");
@@ -61,6 +73,8 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICollidea
 
 		module.addEntity(this);
 
+		weapon = new LaserRifle(_game, _module, this);
+
 	}
 
 
@@ -70,11 +84,28 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICollidea
 
 		if (targetCheck.hitInterval()) {
 			// todo
+			for(IEntity e : module.entities) {
+				if (e instanceof ITargetByAI) {
+					ITargetByAI enemy = (ITargetByAI)e;
+					if (this.canSee(enemy)) {
+						Vector3f dir = enemy.getLocation().subtract(this.getLocation()).normalize();
+						this.shotDir.set(dir);
+						this.weapon.shoot();
+					}
+				}
+			}
+
 			
 		}
 	}
 
 
+	private boolean canSee(ITargetByAI enemy) {
+		List<PhysicsRayTestResult> results = module.bulletAppState.getPhysicsSpace().rayTest(this.getLocation(), enemy.getLocation());
+		return results.size() <= 2;
+	}
+	
+	
 	@Override
 	public void remove() {
 		super.remove();
@@ -99,7 +130,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICollidea
 	@Override
 	public void collidedWith(ICollideable other) {
 		// Change dir
-		this.currDir.multLocal(-1);
+		this.currDir.multLocal(-1); // todo - only change dir if collided with solid
 		
 	}
 

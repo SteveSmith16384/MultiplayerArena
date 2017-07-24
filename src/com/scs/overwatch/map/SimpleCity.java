@@ -5,6 +5,9 @@ import java.awt.Point;
 import ssmith.lang.NumberFunctions;
 
 import com.scs.overwatch.Overwatch;
+import com.scs.overwatch.Settings;
+import com.scs.overwatch.entities.Collectable;
+import com.scs.overwatch.entities.RoamingAI;
 import com.scs.overwatch.entities.SkyScraper;
 import com.scs.overwatch.modules.GameModule;
 import com.scs.overwatch.shapes.CreateShapes;
@@ -47,15 +50,18 @@ public class SimpleCity implements IPertinentMapData {
 
 		}
 
-		// Sidewalk
-		/*CreateFloor(0, 0, 12, 1); // top
-		CreateFloor(11, 1, 1, 11); // right
-		CreateFloor(1, 11, 11, 1); // bottom
-		CreateFloor(0, 1, 1, 11); // Left
+		// Drop new collectable
+		{
+			Point p = getRandomCollectablePos();
+			Collectable c = new Collectable(Overwatch.instance, module, p.x, p.y);
+			Overwatch.instance.getRootNode().attachChild(c.getMainNode());
+		}
 
-		// Add skyscraper
-		SkyScraper skyscraper = new SkyScraper(game, module, 1, 1, 10, 20, 10, "Textures/skyscraper1.jpg");
-		game.getRootNode().attachChild(skyscraper.getMainNode());*/
+		if (Settings.DEBUG_AI) {
+			Point p = getRandomCollectablePos();
+			RoamingAI ai = new RoamingAI(game, module, p.x, p.y);
+			game.getRootNode().attachChild(ai.getMainNode());
+		}
 
 	}
 
@@ -77,8 +83,8 @@ public class SimpleCity implements IPertinentMapData {
 		 * 
 		 * 
 		 */
-		
-		
+
+
 		// Road
 		CreateFloor(x, y, SKYSCRAPER_WIDTH+6, 0.1f, 2, "Textures/road2.png"); // top x
 		CreateFloor(x+SKYSCRAPER_WIDTH+4, y+2, 2, 0.1f, SKYSCRAPER_WIDTH+4, "Textures/road2.png"); // right x
@@ -107,7 +113,7 @@ public class SimpleCity implements IPertinentMapData {
 		CreateShapes.CreateFloorTL(game.getAssetManager(), module.bulletAppState, game.getRootNode(), x, 0f, z, w, h, d, tex);//, "Textures/road2.png");
 	}
 
-	
+
 	@Override
 	public int getWidth() {
 		return SECTORS*(SKYSCRAPER_WIDTH+6);
