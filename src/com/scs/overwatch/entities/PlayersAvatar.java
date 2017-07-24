@@ -18,9 +18,12 @@ import com.scs.overwatch.Sky;
 import com.scs.overwatch.abilities.AbstractAbility;
 import com.scs.overwatch.abilities.IAbility;
 import com.scs.overwatch.abilities.NoAbility;
+import com.scs.overwatch.components.IBullet;
 import com.scs.overwatch.components.ICanShoot;
+import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IShowOnHUD;
+import com.scs.overwatch.components.ITargetByAI;
 import com.scs.overwatch.hud.AbstractHUDImage;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
@@ -29,7 +32,7 @@ import com.scs.overwatch.weapons.IMainWeapon;
 import com.scs.overwatch.weapons.KillerCrateGun;
 import com.scs.overwatch.weapons.LaserRifle;
 
-public class PlayersAvatar extends PhysicalEntity implements ICanShoot, IShowOnHUD {
+public class PlayersAvatar extends PhysicalEntity implements ICollideable, ICanShoot, IShowOnHUD, ITargetByAI {
 
 	// Player dimensions
 	public static final float PLAYER_HEIGHT = 0.5f;//1.5f;
@@ -221,7 +224,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot, IShowOnH
 
 
 	@Override
-	public Vector3f getDir() {
+	public Vector3f getShootDir() {
 		return this.cam.getDirection();
 	}
 
@@ -255,5 +258,29 @@ public class PlayersAvatar extends PhysicalEntity implements ICanShoot, IShowOnH
 		this.hud.setScore(this.score);
 
 	}
+
+
+	@Override
+	public void collidedWith(ICollideable other) {
+		if (other instanceof IBullet) {
+			IBullet bullet = (IBullet)other;
+			if (bullet.getShooter() != this) {
+				this.hitByBullet();
+				bullet.getShooter().hasSuccessfullyHit(this);
+			}
+		} else if (other instanceof Collectable) {
+			Collectable col = (Collectable)other;
+			col.remove();
+			this.incScore(10);
+			this.hud.showCollectBox();
+			
+			// Drop new collectable
+			Point p = module.mapData.getRandomCollectablePos();
+			Collectable c = new Collectable(Overwatch.instance, module, p.x, p.y);
+			Overwatch.instance.getRootNode().attachChild(c.getMainNode());
+
+		}
+	}
+
 
 }

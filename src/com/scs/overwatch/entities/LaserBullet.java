@@ -12,6 +12,7 @@ import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.components.IBullet;
 import com.scs.overwatch.components.ICanShoot;
+import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.modules.GameModule;
 
 public class LaserBullet extends PhysicalEntity implements IBullet {
@@ -45,14 +46,14 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 		this.main_node.attachChild(ball_geo);
 		game.getRootNode().attachChild(this.main_node);
 		/** Position the cannon ball  */
-		ball_geo.setLocalTranslation(shooter.getLocation().add(shooter.getDir().multLocal(PlayersAvatar.PLAYER_RAD*2)));
+		ball_geo.setLocalTranslation(shooter.getLocation().add(shooter.getShootDir().multLocal(PlayersAvatar.PLAYER_RAD*2)));
 		/** Make the ball physical with a mass > 0.0f */
 		ball_phy = new RigidBodyControl(.1f);
 		/** Add physical ball to physics space. */
 		ball_geo.addControl(ball_phy);
 		module.bulletAppState.getPhysicsSpace().add(ball_phy);
 		/** Accelerate the physical ball to shoot it. */
-		ball_phy.setLinearVelocity(shooter.getDir().mult(40));
+		ball_phy.setLinearVelocity(shooter.getShootDir().mult(40));
 		ball_phy.setGravity(Vector3f.ZERO);
 		
 		this.getMainNode().setUserData(Settings.ENTITY, this);
@@ -83,5 +84,12 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 	public ICanShoot getShooter() {
 		return shooter;
 	}
+
+
+	@Override
+	public void collidedWith(ICollideable other) {
+		
+	}
+
 
 }

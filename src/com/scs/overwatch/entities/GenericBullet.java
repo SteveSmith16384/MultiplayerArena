@@ -44,14 +44,14 @@ public class GenericBullet extends PhysicalEntity {
 		this.main_node.attachChild(ball_geo);
 		game.getRootNode().attachChild(this.main_node);
 		/** Position the cannon ball  */
-		ball_geo.setLocalTranslation(shooter.getLocation().add(shooter.getDir().multLocal(PlayersAvatar.PLAYER_RAD*2)));
+		ball_geo.setLocalTranslation(shooter.getLocation().add(shooter.getShootDir().multLocal(PlayersAvatar.PLAYER_RAD*2)));
 		/** Make the ball physical with a mass > 0.0f */
 		ball_phy = new RigidBodyControl(mass);
 		/** Add physical ball to physics space. */
 		ball_geo.addControl(ball_phy);
 		module.bulletAppState.getPhysicsSpace().add(ball_phy);
 		/** Accelerate the physical ball to shoot it. */
-		ball_phy.setLinearVelocity(shooter.getDir().mult(speed));
+		ball_phy.setLinearVelocity(shooter.getShootDir().mult(speed));
 		
 		this.getMainNode().setUserData(Settings.ENTITY, this);
 		ball_phy.setUserObject(this);

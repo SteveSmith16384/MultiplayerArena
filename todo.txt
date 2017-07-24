@@ -1,33 +1,31 @@
-https://opengameart.org/content/street-lines
-https://opengameart.org/content/urban-skyboxes
-https://opengameart.org/content/low-poly-skyscraper
-Use http://opengameart.org/content/horror-sci-fi-3d-map-kit
-
-
-https://opengameart.org/content/4-projectile-launches
 Killer Crates
+
+https://opengameart.org/content/urban-skyboxes
+http://opengameart.org/content/horror-sci-fi-3d-map-kit
+SFX: https://opengameart.org/content/4-projectile-launches
 
 
 URGENT
+Roaming AI that shoots on-sight
 	Targetting HUD
 	Refresh num controllers in start
 	Winner is first to 100
 	Show "victory!" billboard
 Controls not right after restarting
-	Remove sky for city
 HOME Make tex smaller
-HOME Use better texture for city
+HOME Use better texture for city pavement
 HOME - Need 3D model for players
 HOME Better font - use SF font?
 HOME Find sfx
 HOME Music
 HOME Add SFX
-	Show effect when collectable collected
 	SimplyCity not right - small road problem
 Do exe release
+Change avatar for city map 
 
 
 TODO
+Split code for killer crates and BladeRunner
 Street lights
 Get text colour from game mode
 Guns - magazine size, reload mag time
@@ -47,7 +45,6 @@ Walk around a city hunting Ai
 Walk around collecting collectables
 Shrink ray
 Raised platforms
-Change bullet tex
 Search for todos
 Points for collecting a collectable
 moving platforms

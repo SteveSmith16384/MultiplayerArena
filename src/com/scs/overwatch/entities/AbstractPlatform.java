@@ -54,7 +54,8 @@ public class AbstractPlatform extends PhysicalEntity implements IProcessable {
 		module.bulletAppState.getPhysicsSpace().add(floor_phy);
 
 		this.geometry.setUserData(Settings.ENTITY, this);
-		
+		floor_phy.setUserObject(this);
+
 		module.addEntity(this);
 
 	}

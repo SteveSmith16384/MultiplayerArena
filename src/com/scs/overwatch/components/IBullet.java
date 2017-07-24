@@ -1,7 +1,7 @@
 package com.scs.overwatch.components;
 
 
-public interface IBullet {
+public interface IBullet extends ICollideable {
 
 	ICanShoot getShooter();
 }

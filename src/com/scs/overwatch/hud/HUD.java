@@ -129,8 +129,8 @@ public class HUD extends Node implements IEntity, IProcessable {
 					Picture pic = this.targetting_reticules.get(id);
 					pic.setCullHint(CullHint.Inherit);
 
-					Vector3f screen_pos = cam.getScreenCoordinates(soh.getLocation());
-					pic.setLocalTranslation(screen_pos.x, screen_pos.y, 0f);
+					Vector3f screen_pos = cam.getScreenCoordinates(soh.getLocation()); // todo - cache vec3f, don't create each time
+					pic.setPosition(screen_pos.x, screen_pos.y);
 					id++;
 				}
 				//}

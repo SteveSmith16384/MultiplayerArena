@@ -50,6 +50,8 @@ public class Plank extends PhysicalEntity {
 		module.bulletAppState.getPhysicsSpace().add(floor_phy);
 		
 		this.geometry.setUserData(Settings.ENTITY, this);
+		floor_phy.setUserObject(this);
+
 	}
 
 

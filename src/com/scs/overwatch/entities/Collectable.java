@@ -9,10 +9,11 @@ import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
+import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IShowOnHUD;
 import com.scs.overwatch.modules.GameModule;
 
-public class Collectable extends PhysicalEntity implements IShowOnHUD {
+public class Collectable extends PhysicalEntity implements ICollideable, IShowOnHUD {
 
 	private static final float SIZE = .1f;
 
@@ -48,7 +49,8 @@ public class Collectable extends PhysicalEntity implements IShowOnHUD {
 		module.bulletAppState.getPhysicsSpace().add(floor_phy);
 		
 		this.geometry.setUserData(Settings.ENTITY, this);
-		
+		floor_phy.setUserObject(this);
+
 		floor_phy.setRestitution(.5f);
 
 		module.addEntity(this); // need this to target it
@@ -65,6 +67,12 @@ public class Collectable extends PhysicalEntity implements IShowOnHUD {
 	public void remove() {
 		super.remove();
 		this.module.bulletAppState.getPhysicsSpace().remove(this.floor_phy);
+		
+	}
+
+
+	@Override
+	public void collidedWith(ICollideable other) {
 		
 	}
 

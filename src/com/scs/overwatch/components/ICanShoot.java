@@ -6,7 +6,7 @@ public interface ICanShoot {
 
 	Vector3f getLocation();
 
-	Vector3f getDir();
+	Vector3f getShootDir();
 	
 	void hasSuccessfullyHit(IEntity e);
 	

@@ -48,6 +48,8 @@ public class SkyScraper extends PhysicalEntity implements IProcessable {
 		module.bulletAppState.getPhysicsSpace().add(floor_phy);
 
 		geometry.setUserData(Settings.ENTITY, this);
+		floor_phy.setUserObject(this);
+
 	}
 
 

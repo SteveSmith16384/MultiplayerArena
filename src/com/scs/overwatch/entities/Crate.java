@@ -55,17 +55,13 @@ public class Crate extends PhysicalEntity implements IProcessable {
 		module.bulletAppState.getPhysicsSpace().add(floor_phy);
 
 		this.geometry.setUserData(Settings.ENTITY, this);
-		
-		//game.addEntity(this);
+		floor_phy.setUserObject(this);
 
 	}
 
 
 	@Override
 	public void process(float tpf) {
-		//if (NumberFunctions.rnd(0, 50) == 0) {
-			//doesn't work floor_phy.applyCentralForce(JUMP);
-		//}
 	}
 
 

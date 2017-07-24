@@ -20,11 +20,10 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
-import com.scs.overwatch.CollisionLogic;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.Settings.GameMode;
-import com.scs.overwatch.Sky;
+import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.entities.Collectable;
@@ -300,7 +299,13 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		}
 
 		if (a != null && b != null) {
-			CollisionLogic.collision(this, a, b);
+			//CollisionLogic.collision(this, a, b);
+			if (a instanceof ICollideable && b instanceof ICollideable) {
+				ICollideable ica = (ICollideable)a;
+				ICollideable icb = (ICollideable)b;
+				ica.collidedWith(icb);
+				icb.collidedWith(ica);
+			}
 		}
 	}
 

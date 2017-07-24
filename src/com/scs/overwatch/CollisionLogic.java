@@ -1,13 +1,6 @@
 package com.scs.overwatch;
 
-import java.awt.Point;
-
-import com.scs.overwatch.components.IBullet;
-import com.scs.overwatch.entities.Collectable;
-import com.scs.overwatch.entities.PhysicalEntity;
-import com.scs.overwatch.entities.PlayersAvatar;
-import com.scs.overwatch.modules.GameModule;
-
+/*
 public class CollisionLogic {
 
 	public static void collision(GameModule game, PhysicalEntity a, PhysicalEntity b) {
@@ -50,3 +43,4 @@ public class CollisionLogic {
 
 
 }
+*/
