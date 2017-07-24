@@ -1,10 +1,5 @@
 package com.scs.overwatch.modules;
 
-import java.awt.Point;
-
-import ssmith.lang.NumberFunctions;
-import ssmith.util.TSArrayList;
-
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
@@ -26,7 +21,6 @@ import com.scs.overwatch.Settings.GameMode;
 import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
-import com.scs.overwatch.entities.Collectable;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
 import com.scs.overwatch.hud.HUD;
@@ -38,6 +32,9 @@ import com.scs.overwatch.map.IMapLoader;
 import com.scs.overwatch.map.IPertinentMapData;
 import com.scs.overwatch.map.SimpleCity;
 import com.scs.overwatch.map.SimpleMapLoader;
+
+import ssmith.lang.NumberFunctions;
+import ssmith.util.TSArrayList;
 
 public class GameModule implements IModule, PhysicsCollisionListener, ActionListener {
 
@@ -271,11 +268,11 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	@Override
 	public void collision(PhysicsCollisionEvent event) {
-		/*String s = event.getObjectA().getUserObject().toString() + " collided with " + event.getObjectB().getUserObject().toString();
-		System.out.println(s);
+		String s = event.getObjectA().getUserObject().toString() + " collided with " + event.getObjectB().getUserObject().toString();
+		//System.out.println(s);
 		if (s.equals("Entity:Player collided with cannon ball (Geometry)")) {
 			int f = 3;
-		}*/
+		}
 		PhysicalEntity a=null, b=null;
 		Object oa = event.getObjectA().getUserObject(); 
 		if (oa instanceof Spatial) {

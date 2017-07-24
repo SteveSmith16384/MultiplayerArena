@@ -39,9 +39,10 @@ public abstract class PhysicalEntity extends Entity implements IProcessable {
 	public void remove() {
 		super.remove();
 		if (this.main_node.getParent() == null) {
-			throw new RuntimeException("No parent!");
-		}
+			//todo throw new RuntimeException("No parent!");
+		} else {
 		this.main_node.removeFromParent(); // Don't need to remove left/right nodes as they are attached to the main node
+	}
 	}
 	
 

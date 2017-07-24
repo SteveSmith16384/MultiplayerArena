@@ -242,7 +242,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 				this.jump = evt.isPressed();
 			} else if (button.getButtonId() == 5 || button.getButtonId() == 7) {
 				this.shoot = evt.isPressed();
-			} else if (button.getButtonId() == 3) {
+			} else if (button.getButtonId() == 2) {
 				this.ability1 = evt.isPressed();
 			}
 

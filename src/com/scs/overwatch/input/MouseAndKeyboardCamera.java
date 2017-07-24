@@ -95,7 +95,7 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 		//Settings.p("CAM=" +this.cam.getName());
 
 		if (name.equals("FLYCAM_Left")){
-			Settings.p("name=" + name);
+			//Settings.p("name=" + name);
 			rotateCamera(value, initialUpVec);
 		}else if (name.equals("FLYCAM_Right")){
 			rotateCamera(-value, initialUpVec);

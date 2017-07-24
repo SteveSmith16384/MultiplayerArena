@@ -33,7 +33,7 @@ public class RunFast extends AbstractAbility {
 		power -= interpol;
 		power = Math.max(power, 0);
 		if (power > 0) {
-			this.player.moveSpeed = Settings.DEFAULT_MOVE_SPEED * 3;
+			this.player.moveSpeed = Settings.DEFAULT_MOVE_SPEED * 1.5f;
 			isRunningFast = true;
 		}
 		

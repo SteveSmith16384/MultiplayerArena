@@ -126,7 +126,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICollideable, ICanS
 		hud.process(tpf);
 
 		if (input.isAbility1Pressed()) { // Must be before we set the walkDirection & moveSpeed, as this method may affect it
-			Settings.p("Using " + this.ability.toString());
+			//Settings.p("Using " + this.ability.toString());
 			this.ability.activate(tpf);
 		}
 
@@ -242,7 +242,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICollideable, ICanS
 
 	@Override
 	public void hasSuccessfullyHit(IEntity e) {
-		this.incScore(20);
+		this.incScore(10);
 
 		if (this.score < 100) {
 			this.jump();

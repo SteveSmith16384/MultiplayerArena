@@ -72,8 +72,8 @@ public class BoxMap implements ISimpleMapData, IPertinentMapData {
 
 	@Override
 	public void addMisc() {
-		Sky sky = new Sky(game.getAssetManager(), module.mapData);
-		game.getRootNode().attachChild(sky.geom);
+		//Sky sky = new Sky(game.getAssetManager(), module.mapData); // todo - NPE
+		//game.getRootNode().attachChild(sky.geom);
 
 		int numCrates = 35;
 		try {

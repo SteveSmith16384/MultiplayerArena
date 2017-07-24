@@ -9,10 +9,11 @@ import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
+import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.modules.GameModule;
 
-public class SkyScraper extends PhysicalEntity implements IProcessable {
+public class SkyScraper extends PhysicalEntity implements IProcessable, ICollideable {
 
 	//private Geometry geometry;
 	private RigidBodyControl floor_phy;
@@ -63,6 +64,13 @@ public class SkyScraper extends PhysicalEntity implements IProcessable {
 		super.remove();
 		this.module.bulletAppState.getPhysicsSpace().remove(this.floor_phy);
 
+	}
+
+
+	@Override
+	public void collidedWith(ICollideable other) {
+		// Do nothing
+		
 	}
 
 

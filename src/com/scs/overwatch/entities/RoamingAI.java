@@ -80,7 +80,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICollidea
 
 	@Override
 	public void process(float tpf) {
-		this.floor_phy.applyCentralForce(currDir.mult(10));
+		this.floor_phy.applyCentralForce(currDir.mult(5));
 
 		if (targetCheck.hitInterval()) {
 			// todo
@@ -90,7 +90,8 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICollidea
 					if (this.canSee(enemy)) {
 						Vector3f dir = enemy.getLocation().subtract(this.getLocation()).normalize();
 						this.shotDir.set(dir);
-						this.weapon.shoot();
+						//Settings.p("AI shooting at " + enemy);
+						//todo -r-add this.weapon.shoot();
 					}
 				}
 			}
@@ -130,7 +131,10 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICollidea
 	@Override
 	public void collidedWith(ICollideable other) {
 		// Change dir
+		Settings.p("AI collided with " + other);
+		// todo - if bullet, damage
 		this.currDir.multLocal(-1); // todo - only change dir if collided with solid
+		Settings.p("New dir " + this.currDir);
 		
 	}
 

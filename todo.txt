@@ -6,6 +6,11 @@ SFX: https://opengameart.org/content/4-projectile-launches
 
 
 URGENT
+Invis and jetpac not working
+Use capsule for AI
+Say what ability is in hud
+Remove laser when hits
+Make roaming AI a ball
 	Roaming AI that shoots on-sight
 	Refresh num controllers in start
 	Winner is first to 100
