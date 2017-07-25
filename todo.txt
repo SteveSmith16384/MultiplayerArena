@@ -1,4 +1,4 @@
-Killer Crates
+Over-Kill
 
 https://opengameart.org/content/urban-skyboxes
 http://opengameart.org/content/horror-sci-fi-3d-map-kit
@@ -6,6 +6,9 @@ SFX: https://opengameart.org/content/4-projectile-launches
 
 
 URGENT
+Players get harmed by explosion
+Add crates around map? 
+Search for todos
 Keep AI upright
 make ai capsule smaller
 	JetPac - only refuel if on ground

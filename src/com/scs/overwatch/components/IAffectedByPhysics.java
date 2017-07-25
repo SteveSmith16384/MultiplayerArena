@@ -2,7 +2,7 @@ package com.scs.overwatch.components;
 
 import com.jme3.math.Vector3f;
 
-public interface IAffectedByPhysics { // todo - add to other entities
+public interface IAffectedByPhysics {
 
 	Vector3f getLocation();
 	

@@ -93,7 +93,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 					Settings.p("New dir " + this.currDir);
 				}
 			}
-			// todo
+			
 			for(IEntity e : module.entities) {
 				if (e instanceof ITargetByAI) {
 					ITargetByAI enemy = (ITargetByAI)e;

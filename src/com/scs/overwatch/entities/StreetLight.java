@@ -29,7 +29,7 @@ public class StreetLight extends PhysicalEntity {
 		box1.scaleTextureCoordinates(new Vector2f(1, h));
 		geometry = new Geometry("Crate", box1);
 		int i = NumberFunctions.rnd(1,  5);
-		TextureKey key3 = new TextureKey("Textures/wood_0/wood" + i + ".png"); // todo
+		TextureKey key3 = new TextureKey("Textures/wood_0/wood" + i + ".png");
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);

@@ -9,7 +9,7 @@ import com.scs.overwatch.modules.GameModule;
 public class KillerCrateGun extends AbstractGun implements IAbility {
 
 	public KillerCrateGun(Overwatch _game, GameModule _module, ICanShoot shooter) {
-		super(_game, _module, 1000, shooter);
+		super(_game, _module, "KrateGun", 1000, shooter);
 	}
 	
 

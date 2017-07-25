@@ -12,11 +12,13 @@ public abstract class AbstractGun implements IAbility {
 	protected Overwatch game;
 	protected GameModule module;
 	protected ICanShoot shooter;
+	protected String name;
 	protected RealtimeInterval shotInterval;
 
-	public AbstractGun(Overwatch _game, GameModule _module, long shotIntervalMS, ICanShoot _shooter) {
+	public AbstractGun(Overwatch _game, GameModule _module, String _name, long shotIntervalMS, ICanShoot _shooter) {
 		game = _game;
 		module = _module;
+		name = _name;
 		shooter = _shooter;
 		shotInterval = new RealtimeInterval(shotIntervalMS);
 	}
@@ -31,8 +33,7 @@ public abstract class AbstractGun implements IAbility {
 
 	@Override
 	public String getHudText() {
-		// TODO Auto-generated method stub
-		return "todo";
+		return name;
 	}
 
 }

@@ -9,7 +9,7 @@ import com.scs.overwatch.modules.GameModule;
 public class LaserRifle extends AbstractGun implements IAbility {
 
 	public LaserRifle(Overwatch _game, GameModule _module, ICanShoot shooter) {
-		super(_game, _module, 300, shooter);
+		super(_game, _module, "Laser Rifle", 300, shooter);
 	}
 	
 

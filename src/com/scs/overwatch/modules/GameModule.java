@@ -23,6 +23,7 @@ import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
+import com.scs.overwatch.effects.SmallExplosion;
 import com.scs.overwatch.entities.Crate;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
@@ -355,7 +356,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 
 
-	private void explosion(Vector3f pos, float range, float power) {
+	public void explosion(Vector3f pos, float range, float power) {
 		for(IEntity e : entities) {
 			if (e instanceof IAffectedByPhysics) {
 				IAffectedByPhysics pe = (IAffectedByPhysics)e;
@@ -363,19 +364,19 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				if (dist <= range) {
 					Vector3f force = pe.getLocation().subtract(pos).normalizeLocal().multLocal(power);
 					pe.applyForce(force);
-
 				}
 			}
 		}
-
+		// explosion
+		SmallExplosion expl = new SmallExplosion(this, game.getRootNode(), game.getAssetManager(), game.getRenderManager());
+		this.addEntity(expl);
 	}
+	
 
 	@Override
 	public void destroy() {
 		game.getInputManager().clearMappings();
-		game.getInputManager().clearRawInputListeners();//.removeRawInputListener(this);
-		//game.getInputManager().removeListener(this);
-
+		game.getInputManager().clearRawInputListeners();
 	}
 
 
