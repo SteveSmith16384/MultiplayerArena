@@ -42,7 +42,7 @@ public class Invisibility extends AbstractAbility {
 	
 	@Override
 	public String getHudText() {
-		return isInvisible ? "INVISIBLE!" : "[not invisible] " + ((int)power);
+		return (isInvisible ? "INVISIBLE! " : "[not invisible] ") + ((int)power);
 	}
 
 }

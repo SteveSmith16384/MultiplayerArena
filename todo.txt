@@ -6,31 +6,28 @@ SFX: https://opengameart.org/content/4-projectile-launches
 
 
 URGENT
+Use diff skyscraper textures
+JetPac max height
+Split code for killer crates and BladeRunner
+SimplyCity not right - small road problem
+Use better texture for city pavement
+	Remove laser when hits
 Invis and jetpac not working
-Use capsule for AI
-Say what ability is in hud
-Remove laser when hits
-Make roaming AI a ball
-	Roaming AI that shoots on-sight
-	Refresh num controllers in start
-	Winner is first to 100
-	Show "victory!" billboard
-Controls not right after restarting
-HOME Make tex smaller
-HOME Use better texture for city pavement
+	Use capsule for AI
+	AI - check if position not changed, then change dir
+	Say what ability is in hud
+	Win when score reaches 100
 HOME - Need 3D model for players
-HOME Better font - use SF font?
+Better font - use SF font?
 HOME Find sfx
 HOME Music
 HOME Add SFX
-Targetting HUD
-	SimplyCity not right - small road problem
 Do exe release
-Change avatar for city map 
+Change avatar for city map - rotating cylinder? 
 
 
 TODO
-Split code for killer crates and BladeRunner
+Targetting HUD
 Street lights
 Get text colour from game mode
 Guns - magazine size, reload mag time
@@ -43,11 +40,9 @@ Cars that drive down roads
 Explosions
 Create diff types of guns
 Better skybox
-Use subscriber for score?
 Configurable map
 Why does player jump when box too big?  https://stackoverflow.com/questions/22506892/jmonkeyengine-bettercharactercontrol-always-bouncing
 Walk around a city hunting Ai
-Walk around collecting collectables
 Shrink ray
 Raised platforms
 Search for todos

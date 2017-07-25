@@ -107,6 +107,8 @@ public class PlayersAvatar extends PhysicalEntity implements ICollideable, ICanS
 		} else {
 			this.ability = AbstractAbility.GetRandomAbility(this);
 		}
+
+		this.hud.setAbilityText(this.ability.getHudText());
 	}
 
 
@@ -243,13 +245,6 @@ public class PlayersAvatar extends PhysicalEntity implements ICollideable, ICanS
 	@Override
 	public void hasSuccessfullyHit(IEntity e) {
 		this.incScore(10);
-
-		if (this.score < 100) {
-			this.jump();
-			new AbstractHUDImage(game, module, this.hud, "Textures/text/hit.png", this.hud.hud_width, this.hud.hud_height, 2);
-		} else {
-			new AbstractHUDImage(game, module, this.hud, "Textures/text/winner.png", this.hud.hud_width, this.hud.hud_height, 10);
-		}
 	}
 
 
@@ -257,6 +252,12 @@ public class PlayersAvatar extends PhysicalEntity implements ICollideable, ICanS
 		this.score += amt;
 		this.hud.setScore(this.score);
 
+		if (this.score < 100) {
+			this.jump();
+			new AbstractHUDImage(game, module, this.hud, "Textures/text/hit.png", this.hud.hud_width, this.hud.hud_height, 2);
+		} else {
+			new AbstractHUDImage(game, module, this.hud, "Textures/text/winner.png", this.hud.hud_width, this.hud.hud_height, 10);
+		}
 	}
 
 

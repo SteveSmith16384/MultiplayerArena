@@ -42,7 +42,7 @@ public class RunFast extends AbstractAbility {
 	
 	@Override
 	public String getHudText() {
-		return isRunningFast ? "RUNNING FAST!" : "";
+		return isRunningFast ? "RUNNING FAST!" : "[running normally]";
 	}
 
 }

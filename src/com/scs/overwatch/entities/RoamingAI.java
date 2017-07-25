@@ -6,6 +6,7 @@ import ssmith.util.RealtimeInterval;
 
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.collision.PhysicsRayTestResult;
+import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
 import com.jme3.math.Ray;
@@ -26,13 +27,14 @@ import com.scs.overwatch.modules.GameModule;
 import com.scs.overwatch.weapons.IMainWeapon;
 import com.scs.overwatch.weapons.LaserRifle;
 
-public class RoamingAI extends PhysicalEntity implements IProcessable, ICollideable, ICanShoot, IShowOnHUD {
+public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot, IShowOnHUD {
 
 	private Geometry geometry;
 	private RigidBodyControl floor_phy;
 	private Vector3f currDir = new Vector3f(0, 0, 1);
 	private Vector3f shotDir = new Vector3f(0, 0, 0);
 	protected RealtimeInterval targetCheck = new RealtimeInterval(1000);
+	private Vector3f lastPos;
 	private IMainWeapon weapon;
 
 	public RoamingAI(Overwatch _game, GameModule _module, float x, float z) {
@@ -64,7 +66,8 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICollidea
 		this.main_node.attachChild(geometry);
 		main_node.setLocalTranslation(x+(w/2), h/2, z+(d/2));
 
-		floor_phy = new RigidBodyControl(1f);
+        CapsuleCollisionShape shape = new CapsuleCollisionShape(w, h);
+		floor_phy = new RigidBodyControl(shape, 1f);
 		geometry.addControl(floor_phy);
 		module.bulletAppState.getPhysicsSpace().add(floor_phy);
 
@@ -83,6 +86,16 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICollidea
 		this.floor_phy.applyCentralForce(currDir.mult(5));
 
 		if (targetCheck.hitInterval()) {
+			// Check position
+			if (lastPos == null) {
+				lastPos = this.getMainNode().getWorldTranslation().clone();
+			} else {
+				float dist = this.getMainNode().getWorldTranslation().subtract(lastPos).length();
+				if (dist < 0.01f) {
+					this.currDir.multLocal(-1);
+					Settings.p("New dir " + this.currDir);
+				}
+			}
 			// todo
 			for(IEntity e : module.entities) {
 				if (e instanceof ITargetByAI) {
@@ -127,16 +140,6 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICollidea
 		
 	}
 
-
-	@Override
-	public void collidedWith(ICollideable other) {
-		// Change dir
-		Settings.p("AI collided with " + other);
-		// todo - if bullet, damage
-		this.currDir.multLocal(-1); // todo - only change dir if collided with solid
-		Settings.p("New dir " + this.currDir);
-		
-	}
 
 
 }

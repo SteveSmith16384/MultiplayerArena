@@ -38,7 +38,7 @@ public class JetPac extends AbstractAbility {
 
 	@Override
 	public String getHudText() {
-		return "Fuel:" + ((int)fuel);
+		return "JetPac Fuel:" + ((int)fuel);
 	}
 
 }

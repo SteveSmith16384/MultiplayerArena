@@ -88,7 +88,7 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 
 	@Override
 	public void collidedWith(ICollideable other) {
-		
+		this.remove();
 	}
 
 

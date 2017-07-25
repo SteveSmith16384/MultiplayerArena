@@ -74,7 +74,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		setUpLight();
 
 		int i = NumberFunctions.rnd(1, 10);
-		crateTexKey = new TextureKey("Textures/boxes and crates/" + i + ".jpg");
+		crateTexKey = new TextureKey("Textures/boxes and crates/" + i + ".png");
 
 		if (Settings.gameMode == GameMode.KillerCrates) {
 			IMapLoader maploader = new SimpleMapLoader(game, this, new BoxMap(game, this));
