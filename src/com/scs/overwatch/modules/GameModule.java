@@ -1,5 +1,7 @@
 package com.scs.overwatch.modules;
 
+import ssmith.util.TSArrayList;
+
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
@@ -17,24 +19,19 @@ import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
-import com.scs.overwatch.Settings.GameMode;
+import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
+import com.scs.overwatch.entities.Crate;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 import com.scs.overwatch.input.JoystickCamera;
 import com.scs.overwatch.input.MouseAndKeyboardCamera;
-import com.scs.overwatch.map.BoxMap;
-import com.scs.overwatch.map.IMapLoader;
 import com.scs.overwatch.map.IPertinentMapData;
 import com.scs.overwatch.map.SimpleCity;
-import com.scs.overwatch.map.SimpleMapLoader;
-
-import ssmith.lang.NumberFunctions;
-import ssmith.util.TSArrayList;
 
 public class GameModule implements IModule, PhysicsCollisionListener, ActionListener {
 
@@ -46,7 +43,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	public TSArrayList<IEntity> entities = new TSArrayList<>();
 	public TSArrayList<PlayersAvatar> avatars = new TSArrayList<>();
 	public IPertinentMapData mapData;
-	public TextureKey crateTexKey;
 
 	public GameModule(Overwatch _game) {
 		super();
@@ -67,21 +63,16 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		bulletAppState = new BulletAppState();
 		game.getStateManager().attach(bulletAppState);
 		bulletAppState.getPhysicsSpace().addCollisionListener(this);
-		//bulletAppState.getPhysicsSpace().enableDebug(assetManager);
+		bulletAppState.getPhysicsSpace().enableDebug(game.getAssetManager());
 
 		game.getRenderManager().removeMainView(game.getViewPort()); // Since we create new ones for each player
 
 		setUpLight();
 
-		int i = NumberFunctions.rnd(1, 10);
-		crateTexKey = new TextureKey("Textures/boxes and crates/" + i + ".png");
+		//int i = NumberFunctions.rnd(1, 10);
+		//crateTexKey = new TextureKey("Textures/boxes and crates/" + i + ".png");
 
-		if (Settings.gameMode == GameMode.KillerCrates) {
-			IMapLoader maploader = new SimpleMapLoader(game, this, new BoxMap(game, this));
-			mapData = maploader.loadMap();
-		} else {
-			mapData = new SimpleCity(game, this);
-		}
+		mapData = new SimpleCity(game, this);
 
 		Joystick[] joysticks = game.getInputManager().getJoysticks();
 		int numPlayers = 1+joysticks.length;
@@ -197,15 +188,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		//c.lookAt(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2), Vector3f.UNIT_Y);
 
 		final ViewPort view2 = game.getRenderManager().createMainView("viewport_"+newCam.toString(), newCam);
-		//view2.setBackgroundColor(new ColorRGBA(0f, 0.9f, .9f, 0f)); // 148 187 242
-		switch (Settings.gameMode) {
-		case KillerCrates:
-			view2.setBackgroundColor(new ColorRGBA(148f/255f, 187f/255f, 242f/255f, 0f));
-			break;
-		case BladeRunner:
-			view2.setBackgroundColor(new ColorRGBA(0, 0, 0, 0f));
-			break;
-		}
+		view2.setBackgroundColor(new ColorRGBA(0, 0, 0, 0f));
 		view2.setClearFlags(true, true, true);
 		view2.attachScene(game.getRootNode());
 
@@ -229,10 +212,10 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	}
 
 
-	private void addPlayersAvatar(int id, Camera c, IInputDevice input, HUD hud) {
+	private void addPlayersAvatar(int id, Camera cam, IInputDevice input, HUD hud) {
 		Settings.p("Creating player " + id);
 
-		PlayersAvatar player = new PlayersAvatar(game, this, id, c, input, hud, crateTexKey);
+		PlayersAvatar player = new PlayersAvatar(game, this, id, cam, input, hud);
 		game.getRootNode().attachChild(player.getMainNode());
 		this.entities.add(player);
 
@@ -240,6 +223,16 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 		// Look towards centre
 		player.getMainNode().lookAt(new Vector3f(mapData.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, mapData.getDepth()/2), Vector3f.UNIT_Y);
+		
+		if (Settings.DEBUG_EXPLOSIONS) {
+			for (int i=0 ; i<1 ; i++) {
+				TextureKey key3 = new TextureKey("Textures/boxes and crates/1.png");
+				Vector3f pos = player.getLocation().clone();
+				pos.y = 10f;
+				Crate crate = new Crate(game, this, pos.x, pos.y, pos.z, 1f, 1f, 1f, 0, key3);
+				game.getRootNode().attachChild(crate.getMainNode());
+			}
+		}
 	}
 
 
@@ -334,13 +327,17 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		}
 
 		if (name.equals(TEST)) {
-			/*for(IEntity e : entities) {
+			for(IEntity e : entities) {
 				if (e instanceof PlayersAvatar) {
 					PlayersAvatar ip = (PlayersAvatar)e;
-					ip.hud.showDamageBox();
+					Vector3f pos = ip.getLocation().clone();
+					//pos.x--;
+					pos.y = 0;
+					//pos.z--;
+					explosion(pos, 5, 10);
 					break;
 				}
-			}*/
+			}
 
 			/*for(IEntity e : entities) {
 				if (e instanceof PlayersAvatar) {
@@ -356,6 +353,22 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	}
 
+
+
+	private void explosion(Vector3f pos, float range, float power) {
+		for(IEntity e : entities) {
+			if (e instanceof IAffectedByPhysics) {
+				IAffectedByPhysics pe = (IAffectedByPhysics)e;
+				float dist = pe.getLocation().subtract(pos).length();
+				if (dist <= range) {
+					Vector3f force = pe.getLocation().subtract(pos).normalizeLocal().multLocal(power);
+					pe.applyForce(force);
+
+				}
+			}
+		}
+
+	}
 
 	@Override
 	public void destroy() {

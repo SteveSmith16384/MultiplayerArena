@@ -9,16 +9,16 @@ import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
+import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IShowOnHUD;
 import com.scs.overwatch.modules.GameModule;
 
-public class Collectable extends PhysicalEntity implements ICollideable, IShowOnHUD {
+public class Collectable extends PhysicalEntity implements ICollideable, IShowOnHUD, IAffectedByPhysics {
 
 	private static final float SIZE = .1f;
 
 	private Geometry geometry;
-	private RigidBodyControl floor_phy;
 	
 	public Collectable(Overwatch _game, GameModule _module, float x, float z) {
 		super(_game, _module, "Collectable");
@@ -60,14 +60,6 @@ public class Collectable extends PhysicalEntity implements ICollideable, IShowOn
 	@Override
 	public void process(float tpf) {
 		// Do nothing
-	}
-
-
-	@Override
-	public void remove() {
-		super.remove();
-		this.module.bulletAppState.getPhysicsSpace().remove(this.floor_phy);
-		
 	}
 
 

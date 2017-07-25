@@ -144,7 +144,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 
 
 	@Override
-	public boolean isAbility1Pressed() {
+	public boolean isAbilityOtherPressed() {
 		return ability1;
 	}
 

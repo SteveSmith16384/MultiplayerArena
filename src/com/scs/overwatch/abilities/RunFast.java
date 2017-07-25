@@ -29,14 +29,15 @@ public class RunFast extends AbstractAbility {
 
 	
 	@Override
-	public void activate(float interpol) {
+	public boolean activate(float interpol) {
 		power -= interpol;
 		power = Math.max(power, 0);
 		if (power > 0) {
 			this.player.moveSpeed = Settings.DEFAULT_MOVE_SPEED * 1.5f;
 			isRunningFast = true;
+			return true;
 		}
-		
+		return false;
 	}
 
 	

@@ -1,5 +1,7 @@
 package com.scs.overwatch.entities;
 
+import ssmith.lang.NumberFunctions;
+
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
@@ -15,11 +17,12 @@ import com.scs.overwatch.modules.GameModule;
 
 public class SkyScraper extends PhysicalEntity implements IProcessable, ICollideable {
 
-	//private Geometry geometry;
-	private RigidBodyControl floor_phy;
+	//private RigidBodyControl floor_phy;
 
-	public SkyScraper(Overwatch _game, GameModule _module, float leftX, float backZ, float w, float h, float d, String tex) {
+	public SkyScraper(Overwatch _game, GameModule _module, float leftX, float backZ, float w, float h, float d) {
 		super(_game, _module, "SkyScraper");
+		
+		String tex = "Textures/skyscraper" + NumberFunctions.rnd(1, 4) + ".jpg";
 
 		Box box1 = new Box(w/2, h/2, d/2);
 		//box1.scaleTextureCoordinates(new Vector2f(WIDTH, HEIGHT));
@@ -56,14 +59,6 @@ public class SkyScraper extends PhysicalEntity implements IProcessable, ICollide
 
 	@Override
 	public void process(float tpf) {
-	}
-
-
-	@Override
-	public void remove() {
-		super.remove();
-		this.module.bulletAppState.getPhysicsSpace().remove(this.floor_phy);
-
 	}
 
 

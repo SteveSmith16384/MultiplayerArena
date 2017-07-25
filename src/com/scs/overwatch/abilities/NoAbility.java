@@ -12,9 +12,9 @@ public class NoAbility implements IAbility {
 
 	
 	@Override
-	public void activate(float interpol) {
+	public boolean activate(float interpol) {
 		// Do nothing
-		
+		return false;
 	}
 
 	

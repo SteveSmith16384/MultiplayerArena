@@ -17,7 +17,7 @@ import com.scs.overwatch.modules.GameModule;
 public class Plank extends PhysicalEntity {
 
 	private Geometry geometry;
-	private RigidBodyControl floor_phy;
+	//private RigidBodyControl floor_phy;
 	
 	public Plank(Overwatch _game, GameModule _module, float x, float z, float w, float h, float d, float rotDegrees) {
 		super(_game, _module, "Plank");
@@ -58,14 +58,6 @@ public class Plank extends PhysicalEntity {
 	@Override
 	public void process(float tpf) {
 		// Do nothing
-	}
-
-
-	@Override
-	public void remove() {
-		super.remove();
-		this.module.bulletAppState.getPhysicsSpace().remove(this.floor_phy);
-		
 	}
 
 

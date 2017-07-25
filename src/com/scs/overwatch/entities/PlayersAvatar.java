@@ -2,41 +2,42 @@ package com.scs.overwatch.entities;
 
 import java.awt.Point;
 
+import ssmith.lang.NumberFunctions;
+
 import com.jme3.asset.TextureKey;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.Camera.FrustumIntersect;
 import com.jme3.scene.Geometry;
-import com.jme3.scene.shape.Box;
+import com.jme3.scene.shape.Cylinder;
 import com.jme3.texture.Texture;
 import com.scs.overwatch.MyBetterCharacterControl;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
-import com.scs.overwatch.Settings.GameMode;
-import com.scs.overwatch.Sky;
-import com.scs.overwatch.abilities.AbstractAbility;
 import com.scs.overwatch.abilities.IAbility;
-import com.scs.overwatch.abilities.NoAbility;
+import com.scs.overwatch.abilities.Invisibility;
+import com.scs.overwatch.abilities.JetPac;
+import com.scs.overwatch.abilities.RunFast;
+import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.IBullet;
 import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IEntity;
+import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.components.IShowOnHUD;
 import com.scs.overwatch.components.ITargetByAI;
 import com.scs.overwatch.hud.AbstractHUDImage;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 import com.scs.overwatch.modules.GameModule;
-import com.scs.overwatch.weapons.IMainWeapon;
-import com.scs.overwatch.weapons.KillerCrateGun;
 import com.scs.overwatch.weapons.LaserRifle;
 
-public class PlayersAvatar extends PhysicalEntity implements ICollideable, ICanShoot, IShowOnHUD, ITargetByAI {
+public class PlayersAvatar extends PhysicalEntity implements IProcessable, ICollideable, ICanShoot, IShowOnHUD, ITargetByAI, IAffectedByPhysics {
 
 	// Player dimensions
-	public static final float PLAYER_HEIGHT = 0.5f;//1.5f;
-	public static final float PLAYER_RAD = 0.25f; //.2f; //.5f;//.35f; // if you increase this, player bounces!?
+	public static final float PLAYER_HEIGHT = 0.7f;
+	public static final float PLAYER_RAD = 0.2f;
 	private static final float WEIGHT = 3f;
 
 	public Vector3f walkDirection = new Vector3f();
@@ -52,12 +53,11 @@ public class PlayersAvatar extends PhysicalEntity implements ICollideable, ICanS
 	public MyBetterCharacterControl playerControl;
 	public final int id;
 	private float timeSinceLastMove = 0;
-	private IAbility ability;
+	private IAbility abilityGun, abilityOther;
 	public Geometry playerGeometry;
 	private int score = 20;
-	private IMainWeapon weapon;
 
-	public PlayersAvatar(Overwatch _game, GameModule _module, int _id, Camera _cam, IInputDevice _input, HUD _hud, TextureKey key3) {
+	public PlayersAvatar(Overwatch _game, GameModule _module, int _id, Camera _cam, IInputDevice _input, HUD _hud) {
 		super(_game, _module, "Player");
 
 		id = _id;
@@ -65,17 +65,11 @@ public class PlayersAvatar extends PhysicalEntity implements ICollideable, ICanS
 		input = _input;
 		hud = _hud;
 
-		switch (Settings.gameMode) {
-		case KillerCrates:
-			weapon = new KillerCrateGun(_game, _module, this);
-			break;
-		case BladeRunner:
-			weapon = new LaserRifle(_game, _module, this);
-			break;
-		}
-		Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
+		abilityGun = new LaserRifle(_game, _module, this);
+		//Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
+		Cylinder box1 = new Cylinder(1, 8, PLAYER_RAD, PLAYER_HEIGHT, true);
 		playerGeometry = new Geometry("Player", box1);
-		//TextureKey key3 = new TextureKey("Textures/boxes and crates/1.jpg");
+		TextureKey key3 = new TextureKey("Textures/computerconsole2.jpg");
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		Material floor_mat = null;
@@ -102,19 +96,32 @@ public class PlayersAvatar extends PhysicalEntity implements ICollideable, ICanS
 		this.getMainNode().setUserData(Settings.ENTITY, this);
 		playerControl.getPhysicsRigidBody().setUserObject(this);
 
-		if (Settings.gameMode == GameMode.KillerCrates) {
-			this.ability = new NoAbility();
-		} else {
-			this.ability = AbstractAbility.GetRandomAbility(this);
+		this.abilityOther = getRandomAbility(this);
+
+		this.hud.setAbilityGunText(this.abilityGun.getHudText());
+		this.hud.setAbilityOtherText(this.abilityOther.getHudText());
+	}
+
+
+	private static IAbility getRandomAbility(PlayersAvatar _player) {
+		int i = NumberFunctions.rnd(1, 3);
+		switch (i) {
+		case 1:
+			return new JetPac(_player);
+		case 2:
+			return new Invisibility(_player);
+		case 3:
+			return new RunFast(_player);
+		default:
+			throw new RuntimeException("Unknown ability: " + i);
 		}
 
-		this.hud.setAbilityText(this.ability.getHudText());
 	}
 
 
 	public void moveToStartPostion() {
 		Point p = module.mapData.getPlayerStartPos(id);
-		playerControl.warp(new Vector3f(p.x, Sky.HEIGHT-1f, p.y));
+		playerControl.warp(new Vector3f(p.x, 10f, p.y));
 
 	}
 
@@ -122,14 +129,19 @@ public class PlayersAvatar extends PhysicalEntity implements ICollideable, ICanS
 	@Override
 	public void process(float tpf) {
 		timeSinceLastMove += tpf;
-		if (ability.process(tpf)) {
-			this.hud.setAbilityText(this.ability.getHudText());
-		}
+		abilityGun.process(tpf);
+
+		abilityOther.process(tpf);
+
 		hud.process(tpf);
 
-		if (input.isAbility1Pressed()) { // Must be before we set the walkDirection & moveSpeed, as this method may affect it
+		playerGeometry.rotate(0, .1f,  0); // rotate player
+
+		walkDirection.set(0, 0, 0);
+
+		if (input.isAbilityOtherPressed()) { // Must be before we set the walkDirection & moveSpeed, as this method may affect it
 			//Settings.p("Using " + this.ability.toString());
-			this.ability.activate(tpf);
+			this.abilityOther.activate(tpf);
 		}
 
 		/*
@@ -140,7 +152,6 @@ public class PlayersAvatar extends PhysicalEntity implements ICollideable, ICanS
 		 */
 		camDir.set(cam.getDirection()).multLocal(moveSpeed, 0.0f, moveSpeed);
 		camLeft.set(cam.getLeft()).multLocal(Settings.DEFAULT_STRAFE_SPEED);
-		walkDirection.set(0, 0, 0);
 		if (input.isStrafeLeftPressed()) {
 			walkDirection.addLocal(camLeft);
 			timeSinceLastMove = 0;
@@ -170,6 +181,10 @@ public class PlayersAvatar extends PhysicalEntity implements ICollideable, ICanS
 			shoot();
 		}
 
+		 // These must be after we might use them, so the hud is correct 
+		this.hud.setAbilityGunText(this.abilityGun.getHudText());
+		this.hud.setAbilityOtherText(this.abilityOther.getHudText());
+
 		/*
 		 * By default the location of the box is on the bottom of the terrain
 		 * we make a slight offset to adjust for head height.
@@ -188,12 +203,18 @@ public class PlayersAvatar extends PhysicalEntity implements ICollideable, ICanS
 		if (this.getMainNode().getWorldTranslation().y < -5f) {
 			this.moveToStartPostion();
 		}
+		
 	}
 
+	
+	public boolean isOnGround() {
+		return playerControl.isOnGround();
+	}
+	
 
 	public void shoot() {
 		//if (shotInterval.hitInterval()) {
-		if (this.weapon.shoot()) {
+		if (this.abilityGun.activate(0)) {
 			//Bullet b = new Bullet(game, module, this);
 			//module.addEntity(b);
 			this.score--;
@@ -245,6 +266,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICollideable, ICanS
 	@Override
 	public void hasSuccessfullyHit(IEntity e) {
 		this.incScore(10);
+		new AbstractHUDImage(game, module, this.hud, "Textures/text/hit.png", this.hud.hud_width, this.hud.hud_height, 2);
 	}
 
 
@@ -252,10 +274,7 @@ public class PlayersAvatar extends PhysicalEntity implements ICollideable, ICanS
 		this.score += amt;
 		this.hud.setScore(this.score);
 
-		if (this.score < 100) {
-			this.jump();
-			new AbstractHUDImage(game, module, this.hud, "Textures/text/hit.png", this.hud.hud_width, this.hud.hud_height, 2);
-		} else {
+		if (this.score >= 100) {
 			new AbstractHUDImage(game, module, this.hud, "Textures/text/winner.png", this.hud.hud_width, this.hud.hud_height, 10);
 		}
 	}
@@ -274,13 +293,19 @@ public class PlayersAvatar extends PhysicalEntity implements ICollideable, ICanS
 			col.remove();
 			this.incScore(10);
 			this.hud.showCollectBox();
-			
+
 			// Drop new collectable
 			Point p = module.mapData.getRandomCollectablePos();
 			Collectable c = new Collectable(Overwatch.instance, module, p.x, p.y);
 			Overwatch.instance.getRootNode().attachChild(c.getMainNode());
 
 		}
+	}
+
+
+	@Override
+	public void applyForce(Vector3f dir) {
+		playerControl.getPhysicsRigidBody().applyImpulse(dir, Vector3f.ZERO);//.applyCentralForce(dir);
 	}
 
 

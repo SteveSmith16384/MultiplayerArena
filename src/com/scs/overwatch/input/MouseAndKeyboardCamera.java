@@ -9,7 +9,6 @@ import com.jme3.input.controls.MouseAxisTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.renderer.Camera;
 import com.scs.overwatch.MyFlyByCamera;
-import com.scs.overwatch.Settings;
 
 public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListener, IInputDevice { 
 
@@ -179,7 +178,7 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 
 
 	@Override
-	public boolean isAbility1Pressed() {
+	public boolean isAbilityOtherPressed() {
 		return ability1;
 	}
 

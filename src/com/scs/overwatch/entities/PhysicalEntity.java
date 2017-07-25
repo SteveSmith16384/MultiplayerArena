@@ -1,22 +1,18 @@
 package com.scs.overwatch.entities;
 
-import java.util.Iterator;
-
-import com.jme3.collision.CollisionResult;
-import com.jme3.collision.CollisionResults;
-import com.jme3.collision.UnsupportedCollisionException;
-import com.jme3.math.Ray;
+import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.scs.overwatch.Overwatch;
-import com.scs.overwatch.components.IEntity;
+import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.modules.GameModule;
 
-public abstract class PhysicalEntity extends Entity implements IProcessable {
+public abstract class PhysicalEntity extends Entity implements IProcessable, IAffectedByPhysics {
 
 	protected Node main_node;//, left_node, right_node;
 	public String name;
+	protected RigidBodyControl floor_phy;
 
 	public PhysicalEntity(Overwatch _game, GameModule _module, String _name) {
 		super(_game, _module);
@@ -41,10 +37,13 @@ public abstract class PhysicalEntity extends Entity implements IProcessable {
 		if (this.main_node.getParent() == null) {
 			//todo throw new RuntimeException("No parent!");
 		} else {
-		this.main_node.removeFromParent(); // Don't need to remove left/right nodes as they are attached to the main node
+			this.main_node.removeFromParent(); // Don't need to remove left/right nodes as they are attached to the main node
+		}
+		if (floor_phy != null) {
+			this.module.bulletAppState.getPhysicsSpace().remove(this.floor_phy);
+		}
 	}
-	}
-	
+
 
 	/*public void turnLeft(float tpf) {
 		this.getMainNode().rotate(new Quaternion().fromAngleAxis(-1 * TURN_SPEED * tpf, Vector3f.UNIT_Y));
@@ -72,7 +71,7 @@ public abstract class PhysicalEntity extends Entity implements IProcessable {
 	}
 
 
-	public boolean canSee(PhysicalEntity cansee) {
+	/*public boolean canSee(PhysicalEntity cansee) {
 		Ray r = new Ray(this.getMainNode().getWorldTranslation(), cansee.getMainNode().getWorldTranslation().subtract(this.getMainNode().getWorldTranslation()).normalizeLocal());
 		//synchronized (module.objects) {
 		//if (go.collides) {
@@ -93,8 +92,6 @@ public abstract class PhysicalEntity extends Entity implements IProcessable {
 					}
 					if (results.size() > 0) {
 						float go_dist = this.distance(cansee)-1;
-						/*Iterator<CollisionResult> it = results.iterator();
-							while (it.hasNext()) {*/
 						CollisionResult cr = results.getClosestCollision();
 						if (cr.getDistance() < go_dist) {
 							return false;
@@ -105,7 +102,7 @@ public abstract class PhysicalEntity extends Entity implements IProcessable {
 			}
 		}
 		return true;
-	}
+	}*/
 
 
 	@Override
@@ -116,6 +113,12 @@ public abstract class PhysicalEntity extends Entity implements IProcessable {
 
 	public Vector3f getLocation() {
 		return this.main_node.getWorldTranslation();
+	}
+
+
+	public void applyForce(Vector3f dir) {
+		floor_phy.applyImpulse(dir, Vector3f.ZERO);//.applyCentralForce(dir);
+		//Settings.p("Bang!");
 	}
 
 

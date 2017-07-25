@@ -15,7 +15,7 @@ import com.scs.overwatch.modules.GameModule;
 public class GenericBullet extends PhysicalEntity {
 
 	public ICanShoot shooter;
-	private RigidBodyControl ball_phy;
+	//private RigidBodyControl ball_phy;
 	private float timeLeft;
 	
 	public GenericBullet(Overwatch _game, GameModule _module, ICanShoot _shooter, String tex, float mass, float speed, float dur, float rad) {
@@ -46,15 +46,15 @@ public class GenericBullet extends PhysicalEntity {
 		/** Position the cannon ball  */
 		ball_geo.setLocalTranslation(shooter.getLocation().add(shooter.getShootDir().multLocal(PlayersAvatar.PLAYER_RAD*2)));
 		/** Make the ball physical with a mass > 0.0f */
-		ball_phy = new RigidBodyControl(mass);
+		floor_phy = new RigidBodyControl(mass);
 		/** Add physical ball to physics space. */
-		ball_geo.addControl(ball_phy);
-		module.bulletAppState.getPhysicsSpace().add(ball_phy);
+		ball_geo.addControl(floor_phy);
+		module.bulletAppState.getPhysicsSpace().add(floor_phy);
 		/** Accelerate the physical ball to shoot it. */
-		ball_phy.setLinearVelocity(shooter.getShootDir().mult(speed));
+		floor_phy.setLinearVelocity(shooter.getShootDir().mult(speed));
 		
 		this.getMainNode().setUserData(Settings.ENTITY, this);
-		ball_phy.setUserObject(this);
+		floor_phy.setUserObject(this);
 
 	}
 
@@ -69,11 +69,5 @@ public class GenericBullet extends PhysicalEntity {
 		
 	}
 
-
-	@Override
-	public void remove() {
-		super.remove();
-		this.module.bulletAppState.getPhysicsSpace().remove(this.ball_phy);
-	}
 
 }

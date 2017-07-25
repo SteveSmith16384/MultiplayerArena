@@ -10,7 +10,7 @@ import com.scs.overwatch.modules.GameModule;
 public class Tree extends PhysicalEntity {
 	
 	private Spatial floor_geo;
-	private RigidBodyControl floor_phy;
+	//private RigidBodyControl floor_phy;
 	
 	public Tree(Overwatch _game, GameModule _module, float x, float z) {
 		super(_game, _module, "Tree");
@@ -36,12 +36,5 @@ public class Tree extends PhysicalEntity {
 		
 	}
 
-	
-	@Override
-	public void remove() {
-		super.remove();
-		this.module.bulletAppState.getPhysicsSpace().remove(this.floor_phy);
-		
-	}
 	
 }

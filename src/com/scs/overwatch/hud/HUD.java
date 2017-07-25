@@ -39,7 +39,7 @@ public class HUD extends Node implements IEntity, IProcessable {
 	private List<Picture> targetting_reticules = new ArrayList<>();
 	private Overwatch game;
 	private GameModule module;
-	private BitmapText ability, score; 
+	private BitmapText abilityGun, abilityOther, score; 
 
 	public HUD(Overwatch _game, GameModule _module, float x, float y, float w, float h, BitmapFont font_small, int id, Camera _cam) {
 		super("HUD");
@@ -57,9 +57,13 @@ public class HUD extends Node implements IEntity, IProcessable {
 		this.attachChild(score);
 		this.setScore(0);
 
-		ability = new BitmapText(font_small, false);
-		ability.setLocalTranslation(0, hud_height-40, 0);
-		this.attachChild(ability);
+		abilityGun = new BitmapText(font_small, false);
+		abilityGun.setLocalTranslation(0, hud_height-40, 0);
+		this.attachChild(abilityGun);
+
+		abilityOther = new BitmapText(font_small, false);
+		abilityOther.setLocalTranslation(0, hud_height-60, 0);
+		this.attachChild(abilityOther);
 
 		// Damage box
 		{
@@ -168,8 +172,13 @@ public class HUD extends Node implements IEntity, IProcessable {
 	}
 
 
-	public void setAbilityText(String s) {
-		this.ability.setText(s);
+	public void setAbilityGunText(String s) {
+		this.abilityGun.setText(s);
+	}
+
+
+	public void setAbilityOtherText(String s) {
+		this.abilityOther.setText(s);
 	}
 
 

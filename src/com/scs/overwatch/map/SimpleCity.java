@@ -15,7 +15,7 @@ import com.scs.overwatch.shapes.CreateShapes;
 public class SimpleCity implements IPertinentMapData {
 
 	private static final int SKYSCRAPER_WIDTH = 8;
-	private static final int SECTORS = 3;//3;
+	private static final int SECTORS = 3;
 
 	private Overwatch game;
 	private GameModule module;
@@ -33,19 +33,19 @@ public class SimpleCity implements IPertinentMapData {
 		// Add outer walls
 		for (int x=0 ; x<SECTORS ; x++) {
 			float height = NumberFunctions.rndFloat(10, 20);
-			SkyScraper skyscraperBack = new SkyScraper(game, module, x*(SKYSCRAPER_WIDTH+6), -1, SKYSCRAPER_WIDTH+6, height, 1, "Textures/skyscraper1.jpg");
+			SkyScraper skyscraperBack = new SkyScraper(game, module, x*(SKYSCRAPER_WIDTH+6), -1, SKYSCRAPER_WIDTH+6, height, 1);
 			game.getRootNode().attachChild(skyscraperBack.getMainNode());
 
 			height = NumberFunctions.rndFloat(10, 20);
-			SkyScraper skyscraperLeft = new SkyScraper(game, module, -1, x*(SKYSCRAPER_WIDTH+6), 1, height, SKYSCRAPER_WIDTH+6, "Textures/skyscraper1.jpg");
+			SkyScraper skyscraperLeft = new SkyScraper(game, module, -1, x*(SKYSCRAPER_WIDTH+6), 1, height, SKYSCRAPER_WIDTH+6);
 			game.getRootNode().attachChild(skyscraperLeft.getMainNode());
 
 			height = NumberFunctions.rndFloat(10, 20);
-			SkyScraper skyscraperFront = new SkyScraper(game, module, x*(SKYSCRAPER_WIDTH+6), SECTORS*(SKYSCRAPER_WIDTH+6), SKYSCRAPER_WIDTH+6, height, 1, "Textures/skyscraper1.jpg");
+			SkyScraper skyscraperFront = new SkyScraper(game, module, x*(SKYSCRAPER_WIDTH+6), SECTORS*(SKYSCRAPER_WIDTH+6), SKYSCRAPER_WIDTH+6, height, 1);
 			game.getRootNode().attachChild(skyscraperFront.getMainNode());
 
 			height = NumberFunctions.rndFloat(10, 20);
-			SkyScraper skyscraperRight = new SkyScraper(game, module, SECTORS*(SKYSCRAPER_WIDTH+6), x*(SKYSCRAPER_WIDTH+6), 1, height, SKYSCRAPER_WIDTH+6, "Textures/skyscraper1.jpg");
+			SkyScraper skyscraperRight = new SkyScraper(game, module, SECTORS*(SKYSCRAPER_WIDTH+6), x*(SKYSCRAPER_WIDTH+6), 1, height, SKYSCRAPER_WIDTH+6);
 			game.getRootNode().attachChild(skyscraperRight.getMainNode());
 
 		}
@@ -92,17 +92,17 @@ public class SimpleCity implements IPertinentMapData {
 		CreateFloor(x, y+2, 2, 0.1f, SKYSCRAPER_WIDTH+4, "Textures/road2.png"); // Left
 
 		// Sidewalk
-		CreateFloor(x+2, y+2, SKYSCRAPER_WIDTH+2, 0.2f, 1, "Textures/sandstone.png"); // top x
-		CreateFloor(x+SKYSCRAPER_WIDTH+3, y+3, 1, 0.2f, SKYSCRAPER_WIDTH+1, "Textures/sandstone.png"); // right x
-		CreateFloor(x+3, y+SKYSCRAPER_WIDTH+3, SKYSCRAPER_WIDTH+1, 0.2f, 1, "Textures/sandstone.png"); // bottom x
-		CreateFloor(x+2, y+3, 1, 0.2f, SKYSCRAPER_WIDTH+1, "Textures/sandstone.png"); // Left x
+		CreateFloor(x+2, y+2, SKYSCRAPER_WIDTH+2, 0.2f, 1, "Textures/floor015.png"); // top x
+		CreateFloor(x+SKYSCRAPER_WIDTH+3, y+3, 1, 0.2f, SKYSCRAPER_WIDTH+1, "Textures/floor015.png"); // right x
+		CreateFloor(x+2, y+SKYSCRAPER_WIDTH+3, SKYSCRAPER_WIDTH+1, 0.2f, 1, "Textures/floor015.png"); // bottom x
+		CreateFloor(x+2, y+3, 1, 0.2f, SKYSCRAPER_WIDTH, "Textures/floor015.png"); // Left x
 
 		// Add skyscraper
 		if (NumberFunctions.rnd(1, 5) == 1) {
 			CreateFloor(x+3, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, "Textures/grass.jpg");
 		} else {
 			float height = NumberFunctions.rndFloat(10, 20);
-			SkyScraper skyscraper = new SkyScraper(game, module, x+3, y+3, SKYSCRAPER_WIDTH, height, SKYSCRAPER_WIDTH, "Textures/skyscraper1.jpg");
+			SkyScraper skyscraper = new SkyScraper(game, module, x+3, y+3, SKYSCRAPER_WIDTH, height, SKYSCRAPER_WIDTH);
 			game.getRootNode().attachChild(skyscraper.getMainNode());
 		}
 

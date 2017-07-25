@@ -14,7 +14,7 @@ public interface IInputDevice {
 
 	boolean isShootPressed();
 
-	boolean isAbility1Pressed();
+	boolean isAbilityOtherPressed();
 
 	void resetFlags();
 }

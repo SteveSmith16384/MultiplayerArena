@@ -56,7 +56,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 
 		final ViewPort view2 = game.getRenderManager().createMainView("viewport_" + newCam.toString(), newCam);
 		//view2.setBackgroundColor(new ColorRGBA(0f, 0.9f, .9f, 0f)); // 148 187 242
-		view2.setBackgroundColor(new ColorRGBA(148f/255f, 187f/255f, 242f/255f, 0f));
+		view2.setBackgroundColor(new ColorRGBA(0, 0, 0, 0f));
 		view2.setClearFlags(true, true, true);
 		view2.attachScene(game.getRootNode());
 
@@ -86,11 +86,11 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 
 		BitmapText score = new BitmapText(Overwatch.guiFont_small, false);
 		score.setText("Version " + Settings.VERSION + "\n\nThe winner is the first player to score 100.\n\nPress FIRE to start!");
-		score.setLocalTranslation(0, game.getCamera().getHeight()-40, 0);
+		score.setLocalTranslation(20, game.getCamera().getHeight()-40, 0);
 		game.getGuiNode().attachChild(score);
 
 		numPlayerText = new BitmapText(Overwatch.guiFont_small, false);
-		numPlayerText.setLocalTranslation(0, game.getCamera().getHeight()-20, 0);
+		numPlayerText.setLocalTranslation(20, game.getCamera().getHeight()-20, 0);
 		game.getGuiNode().attachChild(numPlayerText);
 	}
 

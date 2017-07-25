@@ -6,33 +6,25 @@ SFX: https://opengameart.org/content/4-projectile-launches
 
 
 URGENT
-Use diff skyscraper textures
-JetPac max height
-Split code for killer crates and BladeRunner
-SimplyCity not right - small road problem
-Use better texture for city pavement
-	Remove laser when hits
-Invis and jetpac not working
-	Use capsule for AI
+Keep AI upright
+make ai capsule smaller
+	JetPac - only refuel if on ground
+	Change avatar for city map - rotating cylinder? 
 	AI - check if position not changed, then change dir
 	Say what ability is in hud
-	Win when score reaches 100
-HOME - Need 3D model for players
 Better font - use SF font?
 HOME Find sfx
 HOME Music
 HOME Add SFX
 Do exe release
-Change avatar for city map - rotating cylinder? 
 
 
 TODO
+Add some low-poly models
+Guns - magazine size, reload mag time
+HOME - Need 3D model for players
 Targetting HUD
 Street lights
-Get text colour from game mode
-Guns - magazine size, reload mag time
-Wrap p() in debug
-Combine IWeapon and IAbility - ability1, ability2
 No HUD on single player
 Select character class at start
 Create vestibules
@@ -40,23 +32,18 @@ Cars that drive down roads
 Explosions
 Create diff types of guns
 Better skybox
-Configurable map
 Why does player jump when box too big?  https://stackoverflow.com/questions/22506892/jmonkeyengine-bettercharactercontrol-always-bouncing
-Walk around a city hunting Ai
 Shrink ray
 Raised platforms
 Search for todos
-Points for collecting a collectable
 moving platforms
 Different environments (textures)
-Unit Tests
 Create multi-level map files
 Map with lots of floating walkways 
 
 
 MUCH LATER
 Headshots - have small box at top
-Random map generation
 AI comrades & enemy
 Show shot accuracy
 
@@ -90,7 +77,6 @@ X-Ray vision
 Blow enemies away
 Force Field
 	Run fast
-Invincible
 Auto-aim
 
 
@@ -105,7 +91,6 @@ Tig
 
 
 TEX
-https://opengameart.org/content/fluffy-clouds
 https://opengameart.org/content/hand-painted-mountain-texture
 https://opengameart.org/content/kiira-texture-collection
 https://opengameart.org/content/cartonny-tree-leaves-and-flowers
@@ -117,19 +102,12 @@ https://opengameart.org/content/stone-wall-with-cracks
 https://opengameart.org/content/3-crate-textures-w-bump-normal
 
 USED:
-CREDITED: https://opengameart.org/content/5-wood-textures - CC0
 CREDITED: https://opengameart.org/content/hand-painted-texture-sandstone - KIIRA
 CREDITED: https://opengameart.org/content/seamless-bricks - CC0
 CREDITED: https://opengameart.org/content/tileable-crates - credit http://borysses.deviantart.com/
-CREDITED: https://opengameart.org/content/cartoony-sky - credit https://opengameart.org/content/cartoony-sky
-
-
-NOTES
-We move the player and set the camera location based on player's node
 
 
 INSPIRATION
-What The Box?
 Cholo remake
 Overwatch
 Goldeneye N64

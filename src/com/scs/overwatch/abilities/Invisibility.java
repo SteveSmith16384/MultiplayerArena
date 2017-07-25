@@ -29,14 +29,15 @@ public class Invisibility extends AbstractAbility {
 
 	
 	@Override
-	public void activate(float interpol) {
-		power -= interpol*3;
+	public boolean activate(float interpol) {
+		power -= interpol*8;
 		power = Math.max(power, 0);
 		if (power > 0) {
 			this.player.getMainNode().setCullHint(CullHint.Always);
 			isInvisible = true;
+			return true;
 		}
-		
+		return false;
 	}
 
 	

@@ -17,7 +17,7 @@ import com.scs.overwatch.modules.GameModule;
 public class KillerCrateBullet extends PhysicalEntity implements IBullet {
 
 	public ICanShoot shooter;
-	private RigidBodyControl ball_phy;
+	//private RigidBodyControl ball_phy;
 	private float timeLeft = 10;
 	
 	public KillerCrateBullet(Overwatch _game, GameModule _module, ICanShoot _shooter) {
@@ -47,15 +47,16 @@ public class KillerCrateBullet extends PhysicalEntity implements IBullet {
 		/** Position the cannon ball  */
 		ball_geo.setLocalTranslation(shooter.getLocation().add(shooter.getShootDir().multLocal(PlayersAvatar.PLAYER_RAD*2)));
 		/** Make the ball physical with a mass > 0.0f */
-		ball_phy = new RigidBodyControl(1f);
+		floor_phy = new RigidBodyControl(1f);
 		/** Add physical ball to physics space. */
-		ball_geo.addControl(ball_phy);
-		module.bulletAppState.getPhysicsSpace().add(ball_phy);
+		ball_geo.addControl(floor_phy);
+		module.bulletAppState.getPhysicsSpace().add(floor_phy);
 		/** Accelerate the physical ball to shoot it. */
-		ball_phy.setLinearVelocity(shooter.getShootDir().mult(25));
+		floor_phy.setLinearVelocity(shooter.getShootDir().mult(25));
 		
 		this.getMainNode().setUserData(Settings.ENTITY, this);
-		ball_phy.setUserObject(this);
+		floor_phy.setUserObject(this);
+		module.addEntity(this);
 
 	}
 
@@ -68,13 +69,6 @@ public class KillerCrateBullet extends PhysicalEntity implements IBullet {
 			this.remove();
 		}
 		
-	}
-
-
-	@Override
-	public void remove() {
-		super.remove();
-		this.module.bulletAppState.getPhysicsSpace().remove(this.ball_phy);
 	}
 
 

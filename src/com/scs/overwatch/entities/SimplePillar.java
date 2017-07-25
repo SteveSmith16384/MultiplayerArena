@@ -19,7 +19,7 @@ public class SimplePillar extends PhysicalEntity {
 	private static final String TEX = "Textures/OldRedBricks_T.jpg";
 
 	private Geometry geometry;
-	private RigidBodyControl floor_phy;
+	//private RigidBodyControl floor_phy;
 	
 	public SimplePillar(Overwatch _game, GameModule _module, float x, float z) {
 		super(_game, _module, "SimplePillar");
@@ -60,14 +60,6 @@ public class SimplePillar extends PhysicalEntity {
 	@Override
 	public void process(float tpf) {
 		// Do nothing
-	}
-
-
-	@Override
-	public void remove() {
-		super.remove();
-		this.module.bulletAppState.getPhysicsSpace().remove(this.floor_phy);
-		
 	}
 
 

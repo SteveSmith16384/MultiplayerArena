@@ -18,7 +18,7 @@ public class Fence extends PhysicalEntity {
 	//private static final float HEIGHT = 1.5f;
 
 	private Geometry geometry;
-	private RigidBodyControl floor_phy;
+	//private RigidBodyControl floor_phy;
 
 	public Fence(Overwatch _game, GameModule _module, float x, float height, float z, float rot, int texCode) {
 		super(_game, _module, "Fence");
@@ -75,14 +75,6 @@ public class Fence extends PhysicalEntity {
 	@Override
 	public void process(float tpf) {
 		// Do nothing
-	}
-
-
-	@Override
-	public void remove() {
-		super.remove();
-		this.module.bulletAppState.getPhysicsSpace().remove(this.floor_phy);
-
 	}
 
 
