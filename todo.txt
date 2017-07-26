@@ -6,13 +6,13 @@ SFX: https://opengameart.org/content/4-projectile-launches
 
 
 URGENT
+	Player sometimes starts outside the map? 
 	Can't see player?
 	Platforms going l/r
 	Explosion
+Change tex on platforms
 Look at other multiplayer split-screen FPSs
-Use ICanCollect
 Cylinder not working
-Players get harmed by explosion
 Search for todos
 Better font - use SF font?
 	Explosion when player dies
@@ -21,11 +21,13 @@ HOME Add SFX
 
 
 TODO
+Use ICanCollect
 Change avatar - rotating cylinder?
 Crosshairs
 Use IDamagable
 Use laser from Ares
 Health
+Players get harmed by explosion
 More scenery
 JetPac too powerful
 Add some low-poly models

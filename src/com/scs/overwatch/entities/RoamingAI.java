@@ -2,6 +2,7 @@ package com.scs.overwatch.entities;
 
 import java.util.List;
 
+import ssmith.lang.NumberFunctions;
 import ssmith.util.RealtimeInterval;
 
 import com.jme3.asset.TextureKey;
@@ -26,8 +27,8 @@ import com.scs.overwatch.weapons.LaserRifle;
 
 public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot, IShowOnHUD {
 
-	private static final float SPEED = 5;
-	
+	private static final float SPEED = 7;
+
 	private Vector3f currDir = new Vector3f(0, 0, 1);
 	private Vector3f shotDir = new Vector3f(0, 0, 0);
 	protected RealtimeInterval targetCheck = new RealtimeInterval(1000);
@@ -40,7 +41,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 		float w = 1f;//0.5f;
 		float h = 1f;//0.5f;
 		float d = 1f;//0.5f;
-		
+
 		Box box1 = new Box(w/2, h/2, d/2); // todo - make cyl
 		Geometry geometry = new Geometry("Crate", box1);
 		TextureKey key3 = new TextureKey("Textures/computerconsole2.jpg");
@@ -63,7 +64,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 		this.main_node.attachChild(geometry);
 		main_node.setLocalTranslation(x+(w/2), h/2, z+(d/2));
 
-        //CapsuleCollisionShape shape = new CapsuleCollisionShape(w, h);
+		//CapsuleCollisionShape shape = new CapsuleCollisionShape(w, h);
 		floor_phy = new RigidBodyControl(1f);
 		main_node.addControl(floor_phy);
 		module.bulletAppState.getPhysicsSpace().add(floor_phy);
@@ -80,7 +81,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 
 	@Override
 	public void process(float tpf) {
-		this.floor_phy.applyCentralForce(currDir.mult(SPEED));
+		this.floor_phy.applyCentralForce(currDir.mult(SPEED)); // todo - change to applyImpulse?
 
 		if (targetCheck.hitInterval()) {
 			// Check position
@@ -90,16 +91,18 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 				float dist = this.getMainNode().getWorldTranslation().subtract(lastPos).length();
 				//Settings.p("dist=" + dist);
 				if (dist < 0.03f) {
-					this.currDir.multLocal(-1);
-					//Settings.p("New dir " + this.currDir);
+					//this.currDir.multLocal(-1);
+					setRandomDir(currDir);
+					Settings.p("ai New dir " + this.currDir);
 				}
 				lastPos.set(this.getMainNode().getWorldTranslation());
 			}
-			
+
 			for(IEntity e : module.entities) {
 				if (e instanceof ITargetByAI) {
 					ITargetByAI enemy = (ITargetByAI)e;
 					if (this.canSee(enemy)) {
+						this.getMainNode().lookAt(enemy.getLocation(), Vector3f.UNIT_Y);
 						Vector3f dir = enemy.getLocation().subtract(this.getLocation()).normalize();
 						this.shotDir.set(dir);
 						//Settings.p("AI shooting at " + enemy);
@@ -108,7 +111,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 				}
 			}
 
-			
+
 		}
 	}
 
@@ -117,8 +120,8 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 		List<PhysicsRayTestResult> results = module.bulletAppState.getPhysicsSpace().rayTest(this.getLocation(), enemy.getLocation());
 		return results.size() <= 2;
 	}
-	
-	
+
+
 	@Override
 	public Vector3f getShootDir() {
 		return shotDir;
@@ -128,9 +131,22 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 	@Override
 	public void hasSuccessfullyHit(IEntity e) {
 		Settings.p("AI has hit " + e.toString());
-		
+
 	}
 
 
+	private static void setRandomDir(Vector3f vec) {
+		int i = NumberFunctions.rnd(1,  4);
+		switch (i) {
+		case 1: vec.set(1,  0,  0);
+		break;
+		case 2: vec.set(-1,  0,  0);
+		break;
+		case 3: vec.set(0,  0,  1);
+		break;
+		case 4: vec.set(0,  0,  -1);
+		break;
+		}
+	}
 
 }

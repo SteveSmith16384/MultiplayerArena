@@ -19,7 +19,7 @@ import com.scs.overwatch.shapes.CreateShapes;
 public class SimpleCity implements IPertinentMapData {
 
 	private static final int SKYSCRAPER_WIDTH = 7;
-	private static final int SECTORS = 1;
+	private static final int SECTORS = 2;
 
 	private Overwatch game;
 	private GameModule module;
@@ -115,9 +115,7 @@ public class SimpleCity implements IPertinentMapData {
 		 * RRXRRRRRRRRR
 		 * RRRRRRRRRRRR
 		 * 
-		 * 
 		 */
-
 
 		// Road
 		CreateFloor(x, y, SKYSCRAPER_WIDTH+6, 0.1f, 2, "Textures/road2.png"); // top x
@@ -169,17 +167,20 @@ public class SimpleCity implements IPertinentMapData {
 
 	@Override
 	public Point getPlayerStartPos(int id) {
-		int x = NumberFunctions.rnd(0, SECTORS-1);
-		int z = NumberFunctions.rnd(0, SECTORS-1);
-		return new Point(x*(SKYSCRAPER_WIDTH+6), z*(SKYSCRAPER_WIDTH+6));
+		int sx = NumberFunctions.rnd(0, SECTORS-1);
+		int sz = NumberFunctions.rnd(0, SECTORS-1);
+		int x = sx*(SKYSCRAPER_WIDTH+6);
+		int z = sz*(SKYSCRAPER_WIDTH+6); 
+		return new Point(x+1, z+1);
 	}
 
 
 	@Override
 	public Point getRandomCollectablePos() {
-		int x = NumberFunctions.rnd(0, SECTORS-1);
+		/*int x = NumberFunctions.rnd(0, SECTORS-1);
 		int z = NumberFunctions.rnd(0, SECTORS-1);
-		return new Point(x*(SKYSCRAPER_WIDTH+6), z*(SKYSCRAPER_WIDTH+6));
+		return new Point(x*(SKYSCRAPER_WIDTH+6), z*(SKYSCRAPER_WIDTH+6));*/
+		return this.getPlayerStartPos(0);
 	}
 
 

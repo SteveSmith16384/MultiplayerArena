@@ -34,7 +34,7 @@ public class SmallExplosion extends Node implements IEntity, IProcessable {
 		module = _module;
 
 		this.createFlame(assetManager);
-		//todo - re-add when got tex this.createFlash(assetManager);
+		this.createFlash(assetManager);
 
 		explosionEffect.scale(.2f);
 		explosionEffect.updateModelBound();
@@ -90,8 +90,7 @@ public class SmallExplosion extends Node implements IEntity, IProcessable {
 		flame.setImagesX(2);
 		flame.setImagesY(2);
 		Material mat = new Material(assetManager, "Common/MatDefs/Misc/Particle.j3md");
-		//mat.setTexture("Texture", assetManager.loadTexture("Effects/Explosion/flame.png")); // todo - missing
-		mat.setTexture("Texture", assetManager.loadTexture("Textures/flame.png")); // todo - missing
+		mat.setTexture("Texture", assetManager.loadTexture("Textures/flame.png"));
 		//mat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
 		mat.setBoolean("PointSprite", POINT_SPRITE);
 		flame.setMaterial(mat);
@@ -116,7 +115,7 @@ public class SmallExplosion extends Node implements IEntity, IProcessable {
 		flash.setImagesX(2);
 		flash.setImagesY(2);
 		Material mat = new Material(assetManager, "Common/MatDefs/Misc/Particle.j3md");
-		mat.setTexture("Texture", assetManager.loadTexture("Effects/Explosion/flash.png"));
+		mat.setTexture("Texture", assetManager.loadTexture("Textures/flash.png"));
 		//mat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
 		mat.setBoolean("PointSprite", POINT_SPRITE);
 		flash.setMaterial(mat);

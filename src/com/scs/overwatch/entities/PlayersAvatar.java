@@ -96,7 +96,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		this.getMainNode().setUserData(Settings.ENTITY, this);
 		playerControl.getPhysicsRigidBody().setUserObject(this);
 
-		//abilityGun = new RocketLauncher(_game, _module, this); // LaserRifle
+		//abilityGun = new RocketLauncher(_game, _module, this);
 		abilityGun = new LaserRifle(_game, _module, this); // 
 		this.abilityOther = getRandomAbility(this);
 
