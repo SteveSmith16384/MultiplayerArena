@@ -64,7 +64,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		bulletAppState = new BulletAppState();
 		game.getStateManager().attach(bulletAppState);
 		bulletAppState.getPhysicsSpace().addCollisionListener(this);
-		bulletAppState.getPhysicsSpace().enableDebug(game.getAssetManager());
+		//bulletAppState.getPhysicsSpace().enableDebug(game.getAssetManager());
 
 		game.getRenderManager().removeMainView(game.getViewPort()); // Since we create new ones for each player
 
@@ -137,22 +137,22 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			newCam.setFrustumPerspective(45f, (float) newCam.getWidth() / newCam.getHeight(), 0.01f, Settings.CAM_DIST);
 			switch (id) { // left/right/bottom/top, from bottom-left!
 			case 0: // TL
-				Settings.p("Creating camera top-left");
+				//Settings.p("Creating camera top-left");
 				newCam.setViewPort(0f, 0.5f, 0.5f, 1f);
 				newCam.setName("Cam_TL");
 				break;
 			case 1: // TR
-				Settings.p("Creating camera top-right");
+				//Settings.p("Creating camera top-right");
 				newCam.setViewPort(0.5f, 1f, 0.5f, 1f);
 				newCam.setName("Cam_TR");
 				break;
 			case 2: // BL
-				Settings.p("Creating camera bottom-left");
+				//Settings.p("Creating camera bottom-left");
 				newCam.setViewPort(0f, 0.5f, 0f, .5f);
 				newCam.setName("Cam_BL");
 				break;
 			case 3: // BR
-				Settings.p("Creating camera bottom-right");
+				//Settings.p("Creating camera bottom-right");
 				newCam.setViewPort(0.5f, 1f, 0f, .5f);
 				newCam.setName("Cam_BR");
 				break;
@@ -163,12 +163,12 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			newCam.setFrustumPerspective(45f, (float) (newCam.getWidth()*2) / newCam.getHeight(), 0.01f, Settings.CAM_DIST);
 			switch (id) { // left/right/bottom/top, from bottom-left!
 			case 0: // TL
-				Settings.p("Creating camera top");
+				//Settings.p("Creating camera top");
 				newCam.setViewPort(0f, 1f, 0.5f, 1f);
 				newCam.setName("Cam_Top");
 				break;
 			case 1: // TR
-				Settings.p("Creating camera bottom");
+				//Settings.p("Creating camera bottom");
 				newCam.setViewPort(0.0f, 1f, 0f, .5f);
 				newCam.setName("Cam_bottom");
 				break;
@@ -227,10 +227,9 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		
 		if (Settings.DEBUG_EXPLOSIONS) {
 			for (int i=0 ; i<1 ; i++) {
-				TextureKey key3 = new TextureKey("Textures/boxes and crates/1.png");
 				Vector3f pos = player.getLocation().clone();
 				pos.y = 10f;
-				Crate crate = new Crate(game, this, pos.x, pos.y, pos.z, 1f, 1f, 1f, 0, key3);
+				Crate crate = new Crate(game, this, pos.x, pos.y, pos.z, 1f, 1f, 1f, 0);
 				game.getRootNode().attachChild(crate.getMainNode());
 			}
 		}
@@ -369,6 +368,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		}
 		// explosion
 		SmallExplosion expl = new SmallExplosion(this, game.getRootNode(), game.getAssetManager(), game.getRenderManager());
+		expl.setLocalTranslation(pos);
 		this.addEntity(expl);
 	}
 	

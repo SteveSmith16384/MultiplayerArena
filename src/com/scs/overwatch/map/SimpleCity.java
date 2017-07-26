@@ -4,9 +4,13 @@ import java.awt.Point;
 
 import ssmith.lang.NumberFunctions;
 
+import com.jme3.math.Vector3f;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.entities.Collectable;
+import com.scs.overwatch.entities.Crate;
+import com.scs.overwatch.entities.Lift;
+import com.scs.overwatch.entities.MovingPlatform;
 import com.scs.overwatch.entities.RoamingAI;
 import com.scs.overwatch.entities.SkyScraper;
 import com.scs.overwatch.modules.GameModule;
@@ -14,8 +18,8 @@ import com.scs.overwatch.shapes.CreateShapes;
 
 public class SimpleCity implements IPertinentMapData {
 
-	private static final int SKYSCRAPER_WIDTH = 8;
-	private static final int SECTORS = 3;
+	private static final int SKYSCRAPER_WIDTH = 7;
+	private static final int SECTORS = 1;
 
 	private Overwatch game;
 	private GameModule module;
@@ -47,8 +51,27 @@ public class SimpleCity implements IPertinentMapData {
 			height = NumberFunctions.rndFloat(10, 20);
 			SkyScraper skyscraperRight = new SkyScraper(game, module, SECTORS*(SKYSCRAPER_WIDTH+6), x*(SKYSCRAPER_WIDTH+6), 1, height, SKYSCRAPER_WIDTH+6);
 			game.getRootNode().attachChild(skyscraperRight.getMainNode());
-
 		}
+		
+		// Add moving platforms - front-back
+		for (int i=0 ; i<SECTORS*2 ; i++) {
+			float x = NumberFunctions.rndFloat(1, (SECTORS-1)*(SKYSCRAPER_WIDTH+6));
+			float y = NumberFunctions.rndFloat(2, 20);
+			Vector3f dir = new Vector3f(0, 0, 1f);
+			MovingPlatform mp = new MovingPlatform(game, module, x, y, 2, dir);
+			game.getRootNode().attachChild(mp.getMainNode());
+		}
+		
+
+		// Add moving platforms - left-right
+		for (int i=0 ; i<SECTORS*2 ; i++) {
+			float z = NumberFunctions.rndFloat(1, (SECTORS-1)*(SKYSCRAPER_WIDTH+6));
+			float y = NumberFunctions.rndFloat(2, 20);
+			Vector3f dir = new Vector3f(0, 1f, 0f);
+			MovingPlatform mp = new MovingPlatform(game, module, 0, y, z, dir);
+			game.getRootNode().attachChild(mp.getMainNode());
+		}
+		
 
 		// Drop new collectable
 		{
@@ -61,6 +84,17 @@ public class SimpleCity implements IPertinentMapData {
 			Point p = getRandomCollectablePos();
 			RoamingAI ai = new RoamingAI(game, module, p.x, p.y);
 			game.getRootNode().attachChild(ai.getMainNode());
+		}
+		
+		
+		// Sprinkle lots of boxes
+		for (int i=0 ; i<SECTORS*5 ; i++) {
+			int x = NumberFunctions.rnd(4, getWidth()-5);
+			int z = NumberFunctions.rnd(4, getDepth()-5);
+			float w = NumberFunctions.rndFloat(.2f, 1f);
+			float d = NumberFunctions.rndFloat(w, w+0.3f);
+			Crate crate = new Crate(game, module, x, 2f, z, w, w, d, NumberFunctions.rnd(0, 359));
+			game.getRootNode().attachChild(crate.getMainNode());
 		}
 
 	}
@@ -101,9 +135,16 @@ public class SimpleCity implements IPertinentMapData {
 		if (NumberFunctions.rnd(1, 5) == 1) {
 			CreateFloor(x+3, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, "Textures/grass.jpg");
 		} else {
-			float height = NumberFunctions.rndFloat(10, 20);
+			float height = NumberFunctions.rndFloat(4, 10);
 			SkyScraper skyscraper = new SkyScraper(game, module, x+3, y+3, SKYSCRAPER_WIDTH, height, SKYSCRAPER_WIDTH);
 			game.getRootNode().attachChild(skyscraper.getMainNode());
+			
+			// Add lift
+			Lift lift1 = new Lift(game, module, x+4, y+2, 0, height);
+			game.getRootNode().attachChild(lift1.getMainNode());
+
+			Lift lift2 = new Lift(game, module, x+5, y+3+SKYSCRAPER_WIDTH, 0, height);
+			game.getRootNode().attachChild(lift2.getMainNode());
 		}
 
 	}

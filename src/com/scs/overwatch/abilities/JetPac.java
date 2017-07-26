@@ -17,6 +17,7 @@ public class JetPac extends AbstractAbility {
 		player = _player;
 	}
 
+	
 	@Override
 	public boolean process(float interpol) {
 		if (player.isOnGround()) {

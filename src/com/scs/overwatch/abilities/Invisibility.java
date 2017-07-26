@@ -30,7 +30,7 @@ public class Invisibility extends AbstractAbility {
 	
 	@Override
 	public boolean activate(float interpol) {
-		power -= interpol*8;
+		power -= interpol*4;
 		power = Math.max(power, 0);
 		if (power > 0) {
 			this.player.getMainNode().setCullHint(CullHint.Always);
@@ -43,7 +43,7 @@ public class Invisibility extends AbstractAbility {
 	
 	@Override
 	public String getHudText() {
-		return (isInvisible ? "INVISIBLE! " : "[not invisible] ") + ((int)power);
+		return (isInvisible ? "INVISIBLE! " : "[not invisible] ") + ((int)(power*10));
 	}
 
 }

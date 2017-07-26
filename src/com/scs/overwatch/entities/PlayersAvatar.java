@@ -10,7 +10,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.Camera.FrustumIntersect;
 import com.jme3.scene.Geometry;
-import com.jme3.scene.shape.Cylinder;
+import com.jme3.scene.shape.Box;
 import com.jme3.texture.Texture;
 import com.scs.overwatch.MyBetterCharacterControl;
 import com.scs.overwatch.Overwatch;
@@ -31,7 +31,7 @@ import com.scs.overwatch.hud.AbstractHUDImage;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 import com.scs.overwatch.modules.GameModule;
-import com.scs.overwatch.weapons.RocketLauncher;
+import com.scs.overwatch.weapons.LaserRifle;
 
 public class PlayersAvatar extends PhysicalEntity implements IProcessable, ICollideable, ICanShoot, IShowOnHUD, ITargetByAI, IAffectedByPhysics {
 
@@ -52,11 +52,12 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	public HUD hud;
 	public MyBetterCharacterControl playerControl;
 	public final int id;
-	private float timeSinceLastMove = 0;
+	//private float timeSinceLastMove = 0;
 	private IAbility abilityGun, abilityOther;
 	public Geometry playerGeometry;
 	private int score = 20;
-
+	private float health = 100;
+	
 	public PlayersAvatar(Overwatch _game, GameModule _module, int _id, Camera _cam, IInputDevice _input, HUD _hud) {
 		super(_game, _module, "Player");
 
@@ -65,8 +66,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		input = _input;
 		hud = _hud;
 
-		//Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
-		Cylinder box1 = new Cylinder(1, 8, PLAYER_RAD, PLAYER_HEIGHT, true);
+		Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
+		//Cylinder box1 = new Cylinder(1, 8, PLAYER_RAD, PLAYER_HEIGHT, true); todo - invisible??
 		playerGeometry = new Geometry("Player", box1);
 		TextureKey key3 = new TextureKey("Textures/computerconsole2.jpg");
 		key3.setGenerateMips(true);
@@ -95,7 +96,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		this.getMainNode().setUserData(Settings.ENTITY, this);
 		playerControl.getPhysicsRigidBody().setUserObject(this);
 
-		abilityGun = new RocketLauncher(_game, _module, this); // LaserRifle
+		//abilityGun = new RocketLauncher(_game, _module, this); // LaserRifle
+		abilityGun = new LaserRifle(_game, _module, this); // 
 		this.abilityOther = getRandomAbility(this);
 
 		this.hud.setAbilityGunText(this.abilityGun.getHudText());
@@ -128,14 +130,13 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	@Override
 	public void process(float tpf) {
-		timeSinceLastMove += tpf;
+		//timeSinceLastMove += tpf;
 		abilityGun.process(tpf);
-
 		abilityOther.process(tpf);
 
 		hud.process(tpf);
-
-		playerGeometry.rotate(0, .1f,  0); // rotate player
+		//this.getMainNode().getWorldTranslation();
+		//playerGeometry.rotate(0, .1f,  0); // rotate player
 
 		walkDirection.set(0, 0, 0);
 
@@ -154,30 +155,31 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		camLeft.set(cam.getLeft()).multLocal(Settings.DEFAULT_STRAFE_SPEED);
 		if (input.isStrafeLeftPressed()) {
 			walkDirection.addLocal(camLeft);
-			timeSinceLastMove = 0;
+			//timeSinceLastMove = 0;
 		}
 		if (input.isStrafeRightPressed()) {
 			walkDirection.addLocal(camLeft.negate());
-			timeSinceLastMove = 0;
+			//timeSinceLastMove = 0;
 		}
 		if (input.isFwdPressed()) {
+			//Settings.p("camDir=" + camDir);
 			walkDirection.addLocal(camDir);
-			timeSinceLastMove = 0;
+			//timeSinceLastMove = 0;
 		}
 		if (input.isBackPressed()) {
 			walkDirection.addLocal(camDir.negate());
-			timeSinceLastMove = 0;
+			//timeSinceLastMove = 0;
 		}
 		playerControl.setWalkDirection(walkDirection);
 
-		if (input.isJumpPressed() || timeSinceLastMove > 10) {
+		if (input.isJumpPressed()){// || timeSinceLastMove > 10) {
 			//Settings.p("timeSinceLastMove=" + timeSinceLastMove);
-			timeSinceLastMove = 0;
+			//timeSinceLastMove = 0;
 			this.jump();
 		}
 
 		if (input.isShootPressed()) {
-			timeSinceLastMove = 0;
+			//timeSinceLastMove = 0;
 			shoot();
 		}
 
@@ -257,7 +259,10 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	}
 
 
-	public void hitByBullet() {
+	public void hitByBullet(float dam) {
+		module.explosion(this.main_node.getWorldTranslation(), 5, 20);
+		this.health -= dam;
+		this.hud.setHealth(this.health);
 		this.hud.showDamageBox();
 		this.moveToStartPostion();
 	}
@@ -285,7 +290,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		if (other instanceof IBullet) {
 			IBullet bullet = (IBullet)other;
 			if (bullet.getShooter() != this) {
-				this.hitByBullet();
+				bullet.remove();
+				this.hitByBullet(1f);// todo bullet.getDamageCaused());
 				bullet.getShooter().hasSuccessfullyHit(this);
 			}
 		} else if (other instanceof Collectable) {

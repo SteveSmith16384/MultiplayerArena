@@ -26,8 +26,8 @@ import com.scs.overwatch.weapons.LaserRifle;
 
 public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot, IShowOnHUD {
 
-	private Geometry geometry;
-	//private RigidBodyControl floor_phy;
+	private static final float SPEED = 5;
+	
 	private Vector3f currDir = new Vector3f(0, 0, 1);
 	private Vector3f shotDir = new Vector3f(0, 0, 0);
 	protected RealtimeInterval targetCheck = new RealtimeInterval(1000);
@@ -42,7 +42,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 		float d = 1f;//0.5f;
 		
 		Box box1 = new Box(w/2, h/2, d/2); // todo - make cyl
-		geometry = new Geometry("Crate", box1);
+		Geometry geometry = new Geometry("Crate", box1);
 		TextureKey key3 = new TextureKey("Textures/computerconsole2.jpg");
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
@@ -65,10 +65,10 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 
         //CapsuleCollisionShape shape = new CapsuleCollisionShape(w, h);
 		floor_phy = new RigidBodyControl(1f);
-		geometry.addControl(floor_phy);
+		main_node.addControl(floor_phy);
 		module.bulletAppState.getPhysicsSpace().add(floor_phy);
 
-		this.geometry.setUserData(Settings.ENTITY, this);
+		geometry.setUserData(Settings.ENTITY, this);
 		floor_phy.setUserObject(this);
 
 		module.addEntity(this);
@@ -80,7 +80,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 
 	@Override
 	public void process(float tpf) {
-		this.floor_phy.applyCentralForce(currDir.mult(5));
+		this.floor_phy.applyCentralForce(currDir.mult(SPEED));
 
 		if (targetCheck.hitInterval()) {
 			// Check position
@@ -88,10 +88,12 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 				lastPos = this.getMainNode().getWorldTranslation().clone();
 			} else {
 				float dist = this.getMainNode().getWorldTranslation().subtract(lastPos).length();
-				if (dist < 0.01f) {
+				//Settings.p("dist=" + dist);
+				if (dist < 0.03f) {
 					this.currDir.multLocal(-1);
-					Settings.p("New dir " + this.currDir);
+					//Settings.p("New dir " + this.currDir);
 				}
+				lastPos.set(this.getMainNode().getWorldTranslation());
 			}
 			
 			for(IEntity e : module.entities) {
@@ -101,7 +103,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 						Vector3f dir = enemy.getLocation().subtract(this.getLocation()).normalize();
 						this.shotDir.set(dir);
 						//Settings.p("AI shooting at " + enemy);
-						//todo -r-add this.weapon.shoot();
+						//todo -re-add this.weapon.shoot();
 					}
 				}
 			}

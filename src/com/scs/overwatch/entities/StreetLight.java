@@ -16,7 +16,7 @@ import com.scs.overwatch.modules.GameModule;
 
 public class StreetLight extends PhysicalEntity {
 
-	private Geometry geometry;
+	//private Geometry geometry;
 	//private RigidBodyControl floor_phy;
 	
 	public StreetLight(Overwatch _game, GameModule _module, float x, float z, float rotDegrees) {
@@ -27,7 +27,7 @@ public class StreetLight extends PhysicalEntity {
 
 		Box box1 = new Box(circ/2, h/2, circ/2);
 		box1.scaleTextureCoordinates(new Vector2f(1, h));
-		geometry = new Geometry("Crate", box1);
+		Geometry geometry = new Geometry("Crate", box1);
 		int i = NumberFunctions.rnd(1,  5);
 		TextureKey key3 = new TextureKey("Textures/wood_0/wood" + i + ".png");
 		key3.setGenerateMips(true);
@@ -49,11 +49,13 @@ public class StreetLight extends PhysicalEntity {
 		main_node.setLocalTranslation(x+(circ/2), h/2, z+0.5f);
 
 		floor_phy = new RigidBodyControl(1f);
-		geometry.addControl(floor_phy);
+		main_node.addControl(floor_phy);
 		module.bulletAppState.getPhysicsSpace().add(floor_phy);
 		
-		this.geometry.setUserData(Settings.ENTITY, this);
+		geometry.setUserData(Settings.ENTITY, this);
 		floor_phy.setUserObject(this);
+		
+		//module.addEntity(this);
 	}
 
 

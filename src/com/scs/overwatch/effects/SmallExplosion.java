@@ -26,19 +26,19 @@ public class SmallExplosion extends Node implements IEntity, IProcessable {
 	private ParticleEmitter flame, flash;
 	private Node explosionEffect = new Node("explosionFX");
 	private GameModule module;
-	private RealtimeInterval expire = new RealtimeInterval(2000, false);
+	private RealtimeInterval expire = new RealtimeInterval(1000, false);
 
 	public SmallExplosion(GameModule _module, Node mainNode, AssetManager assetManager, RenderManager renderManager) {
 		super("SmallExplosionModel");
 
 		module = _module;
-		
+
 		this.createFlame(assetManager);
-		this.createFlash(assetManager);
+		//todo - re-add when got tex this.createFlash(assetManager);
 
 		explosionEffect.scale(.2f);
 		explosionEffect.updateModelBound();
-		
+
 		this.attachChild(explosionEffect);
 		//this.setModelBound(new BoundingSphere());
 		//this.updateGeometricState();
@@ -46,7 +46,7 @@ public class SmallExplosion extends Node implements IEntity, IProcessable {
 		renderManager.preloadScene(this);
 
 		this.setQueueBucket(Bucket.Transparent);
-		
+
 		mainNode.attachChild(this);
 	}
 
@@ -54,8 +54,9 @@ public class SmallExplosion extends Node implements IEntity, IProcessable {
 	@Override
 	public void process(float tpf) {
 		flame.emitAllParticles();
-		flash.emitAllParticles();
-		
+		if (flash != null) {
+			flash.emitAllParticles();
+		}
 		if (expire.hitInterval()) {
 			this.stop();
 			this.removeFromParent();
@@ -63,13 +64,15 @@ public class SmallExplosion extends Node implements IEntity, IProcessable {
 		}
 	}
 
-	
+
 	public void stop() {
 		flame.killAllParticles();
-		flash.killAllParticles();
+		if (flash != null) {
+			flash.killAllParticles();
+		}
 	}
-	
-	
+
+
 	private void createFlame(AssetManager assetManager){
 		flame = new ParticleEmitter("Flame", EMITTER_TYPE, 32 * COUNT_FACTOR);
 		flame.setSelectRandomImage(true);
@@ -87,13 +90,14 @@ public class SmallExplosion extends Node implements IEntity, IProcessable {
 		flame.setImagesX(2);
 		flame.setImagesY(2);
 		Material mat = new Material(assetManager, "Common/MatDefs/Misc/Particle.j3md");
-		mat.setTexture("Texture", assetManager.loadTexture("Effects/Explosion/flame.png"));
+		//mat.setTexture("Texture", assetManager.loadTexture("Effects/Explosion/flame.png")); // todo - missing
+		mat.setTexture("Texture", assetManager.loadTexture("Textures/flame.png")); // todo - missing
 		//mat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
 		mat.setBoolean("PointSprite", POINT_SPRITE);
 		flame.setMaterial(mat);
 		explosionEffect.attachChild(flame);
 	}
-	
+
 
 	private void createFlash(AssetManager assetManager){
 		flash = new ParticleEmitter("Flash", EMITTER_TYPE, 24 * COUNT_FACTOR);

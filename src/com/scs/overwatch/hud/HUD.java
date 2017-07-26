@@ -39,7 +39,7 @@ public class HUD extends Node implements IEntity, IProcessable {
 	private List<Picture> targetting_reticules = new ArrayList<>();
 	private Overwatch game;
 	private GameModule module;
-	private BitmapText abilityGun, abilityOther, score; 
+	private BitmapText abilityGun, abilityOther, score, health; 
 
 	public HUD(Overwatch _game, GameModule _module, float x, float y, float w, float h, BitmapFont font_small, int id, Camera _cam) {
 		super("HUD");
@@ -52,17 +52,22 @@ public class HUD extends Node implements IEntity, IProcessable {
 
 		super.setLocalTranslation(x, y, 0);
 
+		health = new BitmapText(font_small, false);
+		health.setLocalTranslation(0, hud_height-20, 0);
+		this.attachChild(health);
+		this.setHealth(100);
+
 		score = new BitmapText(font_small, false);
-		score.setLocalTranslation(0, hud_height-20, 0);
+		score.setLocalTranslation(0, hud_height-40, 0);
 		this.attachChild(score);
 		this.setScore(0);
 
 		abilityGun = new BitmapText(font_small, false);
-		abilityGun.setLocalTranslation(0, hud_height-40, 0);
+		abilityGun.setLocalTranslation(0, hud_height-60, 0);
 		this.attachChild(abilityGun);
 
 		abilityOther = new BitmapText(font_small, false);
-		abilityOther.setLocalTranslation(0, hud_height-60, 0);
+		abilityOther.setLocalTranslation(0, hud_height-80, 0);
 		this.attachChild(abilityOther);
 
 		// Damage box
@@ -169,6 +174,11 @@ public class HUD extends Node implements IEntity, IProcessable {
 
 	public void setScore(int s) {
 		this.score.setText("SCORE: " + s);
+	}
+
+
+	public void setHealth(float h) {
+		this.health.setText("HEALTH: " + (int)h);
 	}
 
 

@@ -1,5 +1,7 @@
 package com.scs.overwatch.entities;
 
+import ssmith.lang.NumberFunctions;
+
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
@@ -18,7 +20,7 @@ public class Crate extends PhysicalEntity implements IProcessable, IAffectedByPh
 
 	//private RigidBodyControl floor_phy;
 
-	public Crate(Overwatch _game, GameModule _module, float x, float y, float z, float w, float h, float d, float rotDegrees, TextureKey key3) {
+	public Crate(Overwatch _game, GameModule _module, float x, float y, float z, float w, float h, float d, float rotDegrees) {
 		super(_game, _module, "Crate");
 
 		Box box1 = new Box(w/2, h/2, d/2);
@@ -26,6 +28,8 @@ public class Crate extends PhysicalEntity implements IProcessable, IAffectedByPh
 		Geometry geometry = new Geometry("Crate", box1);
 		//TextureKey key3 = new TextureKey("Textures/crate.png");
 		//TextureKey key3 = new TextureKey("Textures/boxes and crates/1.jpg");
+		int i = NumberFunctions.rnd(1, 10);
+		TextureKey key3 = new TextureKey("Textures/boxes and crates/" + i + ".png");
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);

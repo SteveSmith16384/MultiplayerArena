@@ -6,23 +6,28 @@ SFX: https://opengameart.org/content/4-projectile-launches
 
 
 URGENT
+	Can't see player?
+	Platforms going l/r
+	Explosion
+Look at other multiplayer split-screen FPSs
+Use ICanCollect
+Cylinder not working
 Players get harmed by explosion
-Add crates around map? 
 Search for todos
-Keep AI upright
-make ai capsule smaller
-	JetPac - only refuel if on ground
-	Change avatar for city map - rotating cylinder? 
-	AI - check if position not changed, then change dir
-	Say what ability is in hud
 Better font - use SF font?
-HOME Find sfx
+	Explosion when player dies
 HOME Music
 HOME Add SFX
-Do exe release
 
 
 TODO
+Change avatar - rotating cylinder?
+Crosshairs
+Use IDamagable
+Use laser from Ares
+Health
+More scenery
+JetPac too powerful
 Add some low-poly models
 Guns - magazine size, reload mag time
 HOME - Need 3D model for players
@@ -32,17 +37,16 @@ No HUD on single player
 Select character class at start
 Create vestibules
 Cars that drive down roads
-Explosions
+	Explosions
 Create diff types of guns
 Better skybox
 Why does player jump when box too big?  https://stackoverflow.com/questions/22506892/jmonkeyengine-bettercharactercontrol-always-bouncing
 Shrink ray
 Raised platforms
 Search for todos
-moving platforms
+	moving platforms
 Different environments (textures)
 Create multi-level map files
-Map with lots of floating walkways 
 
 
 MUCH LATER
