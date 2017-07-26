@@ -2,8 +2,6 @@ package com.scs.overwatch.entities;
 
 import java.awt.Point;
 
-import ssmith.lang.NumberFunctions;
-
 import com.jme3.asset.TextureKey;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
@@ -32,6 +30,7 @@ import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 import com.scs.overwatch.modules.GameModule;
 import com.scs.overwatch.weapons.LaserRifle;
+import ssmith.lang.NumberFunctions;
 
 public class PlayersAvatar extends PhysicalEntity implements IProcessable, ICollideable, ICanShoot, IShowOnHUD, ITargetByAI, IAffectedByPhysics {
 
@@ -67,7 +66,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		hud = _hud;
 
 		Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
-		//Cylinder box1 = new Cylinder(1, 8, PLAYER_RAD, PLAYER_HEIGHT, true); todo - invisible??
+		//Cylinder box1 = new Cylinder(1, 8, PLAYER_RAD, PLAYER_HEIGHT, true);
 		playerGeometry = new Geometry("Player", box1);
 		TextureKey key3 = new TextureKey("Textures/computerconsole2.jpg");
 		key3.setGenerateMips(true);
