@@ -13,6 +13,12 @@ SFX: https://opengameart.org/content/4-projectile-launches
 
 
 URGENT
+Exploding barrels
+Throw grenades
+Player not affected by explosion force
+Fall through platforms
+Grassis stretched
+Have higher buildings
 Make rocket look better
 	Rockets bouncing off road
 Try others like floor_mat.getAdditionalRenderState().setDepthTest(false)

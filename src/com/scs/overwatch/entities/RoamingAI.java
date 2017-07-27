@@ -1,3 +1,4 @@
+
 package com.scs.overwatch.entities;
 
 import java.util.List;
@@ -109,7 +110,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 						Vector3f dir = enemy.getLocation().subtract(this.getLocation()).normalize();
 						this.shotDir.set(dir);
 						//Settings.p("AI shooting at " + enemy);
-						//todo -re-add this.weapon.shoot();
+						this.weapon.activate(1);//.shoot();
 					}
 				}
 			}

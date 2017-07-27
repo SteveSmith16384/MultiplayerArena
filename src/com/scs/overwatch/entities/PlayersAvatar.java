@@ -98,7 +98,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 		//abilityGun = new RocketLauncher(_game, _module, this);
 		abilityGun = new LaserRifle(_game, _module, this); 
-		this.abilityOther = getRandomAbility(this);
+		this.abilityOther = new JetPac(this);// getRandomAbility(this);
 
 		this.hud.setAbilityGunText(this.abilityGun.getHudText());
 		this.hud.setAbilityOtherText(this.abilityOther.getHudText());
