@@ -2,7 +2,6 @@ package com.scs.overwatch.modules;
 
 import ssmith.util.TSArrayList;
 
-import com.jme3.asset.TextureKey;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
@@ -21,6 +20,7 @@ import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.ICollideable;
+import com.scs.overwatch.components.IDamagable;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.effects.SmallExplosion;
@@ -225,14 +225,14 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		// Look towards centre
 		player.getMainNode().lookAt(new Vector3f(mapData.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, mapData.getDepth()/2), Vector3f.UNIT_Y);
 		
-		if (Settings.DEBUG_EXPLOSIONS) {
+		/*if (Settings.DEBUG_EXPLOSIONS) {
 			for (int i=0 ; i<1 ; i++) {
 				Vector3f pos = player.getLocation().clone();
 				pos.y = 10f;
 				Crate crate = new Crate(game, this, pos.x, pos.y, pos.z, 1f, 1f, 1f, 0);
 				game.getRootNode().attachChild(crate.getMainNode());
 			}
-		}
+		}*/
 	}
 
 
@@ -245,6 +245,10 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	@Override
 	public void update(float tpf) {
+		if (tpf > 1) {
+			Settings.p("TPF is " + tpf);
+			tpf = 1;
+		}
 		this.entities.refresh();
 		this.avatars.refresh();
 
@@ -363,6 +367,10 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				if (dist <= range) {
 					Vector3f force = pe.getLocation().subtract(pos).normalizeLocal().multLocal(power);
 					pe.applyForce(force);
+					if (e instanceof IDamagable) {
+						IDamagable id = (IDamagable)e;
+						id.damaged(1 * (range-dist)); // todo
+					}
 				}
 			}
 		}

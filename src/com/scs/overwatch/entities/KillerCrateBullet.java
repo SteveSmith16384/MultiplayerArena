@@ -84,4 +84,16 @@ public class KillerCrateBullet extends PhysicalEntity implements IBullet {
 	}
 
 
+	@Override
+	public float getDamageCaused() {
+		return 1;
+	}
+
+
+	@Override
+	public boolean blocksPlatforms() {
+		return false;
+	}
+
+
 }

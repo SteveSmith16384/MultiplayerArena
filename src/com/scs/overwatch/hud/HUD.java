@@ -81,18 +81,18 @@ public class HUD extends Node implements IEntity, IProcessable {
 			this.attachChild(damage_box);
 		}
 
-		if (Settings.DEBUG_HUD) {
+		/*if (Settings.DEBUG_HUD) {
 			log_ta = new TextArea("log", font_small, 6, "TEXT TEST_" + id);
 			log_ta.setLocalTranslation(0, hud_height/2, 0);
 			this.attachChild(log_ta);
 
-			/*Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+			Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 			mat.setColor("Color", new ColorRGBA(1, 1, 0, 0.5f));
 			mat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
 			Geometry testBox = new Geometry("testBox", new Quad(w/2, h/2));
 			testBox.move(10, 10, 0);
 			testBox.setMaterial(mat);
-			this.attachChild(testBox);*/
+			this.attachChild(testBox);
 
 			/*Material mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
 			//mat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
@@ -105,14 +105,14 @@ public class HUD extends Node implements IEntity, IProcessable {
 			//geom.setQueueBucket(Bucket.Transparent);
 			//geom.setLocalTranslation(-w/2, -h/2, 0);
 			this.attachChild(geom);*/
-
+/*
 			Picture pic = new Picture("HUD Picture");
 			pic.setImage(game.getAssetManager(), "Textures/text/hit.png", true);
 			pic.setWidth(w);
 			pic.setHeight(h);
 			//pic.setPosition(settings.getWidth()/4, settings.getHeight()/4);
 			this.attachChild(pic);
-		}
+		}*/
 
 
 		this.updateGeometricState();

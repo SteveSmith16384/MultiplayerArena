@@ -18,6 +18,7 @@ import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.abilities.IAbility;
 import com.scs.overwatch.components.ICanShoot;
+import com.scs.overwatch.components.IDamagable;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.components.IShowOnHUD;
@@ -25,7 +26,7 @@ import com.scs.overwatch.components.ITargetByAI;
 import com.scs.overwatch.modules.GameModule;
 import com.scs.overwatch.weapons.LaserRifle;
 
-public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot, IShowOnHUD {
+public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot, IShowOnHUD, IDamagable {
 
 	private static final float SPEED = 7;
 
@@ -148,5 +149,12 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 		break;
 		}
 	}
+
+
+	@Override
+	public void damaged(float amt) {
+		// TODO Auto-generated method stub
+	}
+
 
 }

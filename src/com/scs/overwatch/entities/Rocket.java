@@ -18,12 +18,12 @@ import com.scs.overwatch.modules.GameModule;
 public class Rocket extends PhysicalEntity implements IBullet {
 
 	public ICanShoot shooter;
-	
+
 	public Rocket(Overwatch _game, GameModule _module, ICanShoot _shooter) {
 		super(_game, _module, "Rocket");
 
 		this.shooter = _shooter;
-		
+
 		Sphere sphere = new Sphere(8, 8, 0.2f, true, false);
 		sphere.setTextureMode(TextureMode.Projected);
 		/** Create a cannon ball geometry and attach to scene graph. */
@@ -56,7 +56,7 @@ public class Rocket extends PhysicalEntity implements IBullet {
 
 	}
 
-	
+
 	@Override
 	public void process(float tpf) {
 	}
@@ -70,7 +70,22 @@ public class Rocket extends PhysicalEntity implements IBullet {
 
 	@Override
 	public void collidedWith(ICollideable other) {
-		module.explosion(this.getLocation(), 3, 10);
+		if (other != this.shooter) {
+			module.explosion(this.getLocation(), 3, 10);
+			this.remove();
+		}
+	}
+
+
+	@Override
+	public float getDamageCaused() {
+		return 0;
+	}
+
+
+	@Override
+	public boolean blocksPlatforms() {
+		return false;
 	}
 
 

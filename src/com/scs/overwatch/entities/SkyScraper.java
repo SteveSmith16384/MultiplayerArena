@@ -69,4 +69,10 @@ public class SkyScraper extends PhysicalEntity implements IProcessable, ICollide
 	}
 
 
+	@Override
+	public boolean blocksPlatforms() {
+		return false;
+	}
+
+
 }

@@ -5,6 +5,7 @@ import ssmith.lang.NumberFunctions;
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
+import com.jme3.renderer.queue.RenderQueue.Bucket;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 import com.jme3.texture.Texture;
@@ -61,7 +62,7 @@ public class Crate extends PhysicalEntity implements IProcessable, IAffectedByPh
 		floor_phy.setUserObject(this);
 		
 		module.addEntity(this);
-		
+
 	}
 
 
@@ -74,6 +75,12 @@ public class Crate extends PhysicalEntity implements IProcessable, IAffectedByPh
 	@Override
 	public void collidedWith(ICollideable other) {
 		// Do nothing
+	}
+
+
+	@Override
+	public boolean blocksPlatforms() {
+		return false;
 	}
 
 

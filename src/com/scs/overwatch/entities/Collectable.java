@@ -3,6 +3,7 @@ package com.scs.overwatch.entities;
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
+import com.jme3.renderer.queue.RenderQueue.Bucket;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 import com.jme3.texture.Texture;
@@ -54,6 +55,8 @@ public class Collectable extends PhysicalEntity implements ICollideable, IShowOn
 		floor_phy.setRestitution(.5f);
 
 		module.addEntity(this); // need this to target it
+		
+		//main_node.setQueueBucket(Bucket.Translucent);
 	}
 
 
@@ -66,6 +69,12 @@ public class Collectable extends PhysicalEntity implements ICollideable, IShowOn
 	@Override
 	public void collidedWith(ICollideable other) {
 		
+	}
+
+
+	@Override
+	public boolean blocksPlatforms() {
+		return false;
 	}
 
 

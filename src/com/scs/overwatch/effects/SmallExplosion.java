@@ -34,7 +34,7 @@ public class SmallExplosion extends Node implements IEntity, IProcessable {
 		module = _module;
 
 		this.createFlame(assetManager);
-		this.createFlash(assetManager);
+		//todo re- add this.createFlash(assetManager);
 
 		explosionEffect.scale(.2f);
 		explosionEffect.updateModelBound();

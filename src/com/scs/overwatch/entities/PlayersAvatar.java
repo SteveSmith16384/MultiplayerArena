@@ -2,6 +2,8 @@ package com.scs.overwatch.entities;
 
 import java.awt.Point;
 
+import ssmith.lang.NumberFunctions;
+
 import com.jme3.asset.TextureKey;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
@@ -17,10 +19,12 @@ import com.scs.overwatch.abilities.IAbility;
 import com.scs.overwatch.abilities.Invisibility;
 import com.scs.overwatch.abilities.JetPac;
 import com.scs.overwatch.abilities.RunFast;
+import com.scs.overwatch.abilities.ZoomIn;
 import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.IBullet;
 import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.components.ICollideable;
+import com.scs.overwatch.components.IDamagable;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.components.IShowOnHUD;
@@ -30,9 +34,8 @@ import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 import com.scs.overwatch.modules.GameModule;
 import com.scs.overwatch.weapons.LaserRifle;
-import ssmith.lang.NumberFunctions;
 
-public class PlayersAvatar extends PhysicalEntity implements IProcessable, ICollideable, ICanShoot, IShowOnHUD, ITargetByAI, IAffectedByPhysics {
+public class PlayersAvatar extends PhysicalEntity implements IProcessable, ICollideable, ICanShoot, IShowOnHUD, ITargetByAI, IAffectedByPhysics, IDamagable {
 
 	// Player dimensions
 	public static final float PLAYER_HEIGHT = 0.7f;
@@ -51,7 +54,6 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	public HUD hud;
 	public MyBetterCharacterControl playerControl;
 	public final int id;
-	//private float timeSinceLastMove = 0;
 	private IAbility abilityGun, abilityOther;
 	public Geometry playerGeometry;
 	private int score = 20;
@@ -96,7 +98,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		playerControl.getPhysicsRigidBody().setUserObject(this);
 
 		//abilityGun = new RocketLauncher(_game, _module, this);
-		abilityGun = new LaserRifle(_game, _module, this); // 
+		abilityGun = new LaserRifle(_game, _module, this); 
 		this.abilityOther = getRandomAbility(this);
 
 		this.hud.setAbilityGunText(this.abilityGun.getHudText());
@@ -195,7 +197,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 		// Rotate us to point in the direction of the camera
 		Vector3f lookAtPoint = cam.getLocation().add(cam.getDirection().mult(10));
-		lookAtPoint.y = cam.getLocation().y;
+		lookAtPoint.y = cam.getLocation().y; // Look horizontal
 		this.playerGeometry.lookAt(lookAtPoint, Vector3f.UNIT_Y);
 
 		this.input.resetFlags();
@@ -290,7 +292,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			IBullet bullet = (IBullet)other;
 			if (bullet.getShooter() != this) {
 				bullet.remove();
-				this.hitByBullet(1f);// todo bullet.getDamageCaused());
+				this.hitByBullet(bullet.getDamageCaused());
 				bullet.getShooter().hasSuccessfullyHit(this);
 			}
 		} else if (other instanceof Collectable) {
@@ -311,6 +313,23 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	@Override
 	public void applyForce(Vector3f dir) {
 		playerControl.getPhysicsRigidBody().applyImpulse(dir, Vector3f.ZERO);//.applyCentralForce(dir);
+	}
+
+
+	public Camera getCamera() {
+		return this.cam;
+	}
+
+
+	@Override
+	public void damaged(float amt) {
+		// TODO Auto-generated method stub
+	}
+
+
+	@Override
+	public boolean blocksPlatforms() {
+		return false;
 	}
 
 

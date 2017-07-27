@@ -3,14 +3,15 @@ package com.scs.overwatch;
 public class Settings {
 	
 	public static final String VERSION = "0.01";
-	public static final boolean DEBUG_TARGETTER = false;
-	public static final boolean DEBUG_AI = true;
-	public static final boolean DEBUG_EXPLOSIONS = true;
+	public static final boolean DEBUG_TARGETTER = true;
 	public static final boolean SHOW_LOGO = false;
 	public static final boolean ALWAYS_SHOW_4_CAMS = false;
-	public static final boolean DEBUG_HUD = false;
 	public static final boolean RECORD_VID = false;
 	
+	//public static final boolean DEBUG_AI = true;
+	//public static final boolean DEBUG_EXPLOSIONS = true;
+	//public static final boolean DEBUG_HUD = true;
+
 	// Our movement speed
 	public static final float DEFAULT_MOVE_SPEED = 3f;
 	public static final float DEFAULT_STRAFE_SPEED = 3f;

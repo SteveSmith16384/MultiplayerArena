@@ -83,4 +83,16 @@ public class Grenade extends PhysicalEntity implements IBullet {
 	}
 
 
+	@Override
+	public float getDamageCaused() {
+		return 0;
+	}
+
+
+	@Override
+	public boolean blocksPlatforms() {
+		return false;
+	}
+
+
 }

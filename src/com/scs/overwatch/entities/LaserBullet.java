@@ -1,18 +1,15 @@
 package com.scs.overwatch.entities;
 
-import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
-import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.shape.Sphere;
-import com.jme3.scene.shape.Sphere.TextureMode;
-import com.jme3.texture.Texture;
+import com.jme3.scene.Node;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.components.IBullet;
 import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.components.ICollideable;
+import com.scs.overwatch.models.BeamLaserModel;
 import com.scs.overwatch.modules.GameModule;
 
 public class LaserBullet extends PhysicalEntity implements IBullet {
@@ -26,9 +23,8 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 
 		this.shooter = _shooter;
 
-		Sphere sphere = new Sphere(4, 4, 0.1f, true, false); // todo - use long cylinder
+		/*Sphere sphere = new Sphere(4, 4, 0.1f, true, false); // todo - use long cylinder
 		sphere.setTextureMode(TextureMode.Projected);
-		/** Create a cannon ball geometry and attach to scene graph. */
 		Geometry ball_geo = new Geometry("cannon ball", sphere);
 
 		TextureKey key3 = new TextureKey( "Textures/sun.jpg");
@@ -41,8 +37,12 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 			floor_mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
 			floor_mat.setTexture("ColorMap", tex3);
 		}
-		ball_geo.setMaterial(floor_mat);
+		ball_geo.setMaterial(floor_mat);*/
 
+		Vector3f origin = shooter.getLocation().clone();
+
+		Node ball_geo = BeamLaserModel.Factory(game.getAssetManager(), origin, origin.add(shooter.getShootDir().multLocal(1)), ColorRGBA.Pink);
+		
 		this.main_node.attachChild(ball_geo);
 		game.getRootNode().attachChild(this.main_node);
 		/** Position the cannon ball  */
@@ -84,8 +84,21 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 	@Override
 	public void collidedWith(ICollideable other) {
 		if (other != this.shooter) {
-			// No - more fun if bounces!  this.remove();
+			this.remove(); // Don't bounce
 		}
 	}
+
+
+	@Override
+	public float getDamageCaused() {
+		return 1;
+	}
+
+
+	@Override
+	public boolean blocksPlatforms() {
+		return false;
+	}
+
 
 }

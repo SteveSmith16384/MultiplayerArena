@@ -56,7 +56,7 @@ public class SimpleCity implements IPertinentMapData {
 		// Add moving platforms - front-back
 		for (int i=0 ; i<SECTORS*2 ; i++) {
 			float x = NumberFunctions.rndFloat(1, (SECTORS-1)*(SKYSCRAPER_WIDTH+6));
-			float y = NumberFunctions.rndFloat(2, 20);
+			float y = 0.5f;//NumberFunctions.rndFloat(2, 10);
 			Vector3f dir = new Vector3f(0, 0, 1f);
 			MovingPlatform mp = new MovingPlatform(game, module, x, y, 2, dir);
 			game.getRootNode().attachChild(mp.getMainNode());
@@ -66,8 +66,8 @@ public class SimpleCity implements IPertinentMapData {
 		// Add moving platforms - left-right
 		for (int i=0 ; i<SECTORS*2 ; i++) {
 			float z = NumberFunctions.rndFloat(1, (SECTORS-1)*(SKYSCRAPER_WIDTH+6));
-			float y = NumberFunctions.rndFloat(2, 20);
-			Vector3f dir = new Vector3f(0, 1f, 0f);
+			float y = .5f;//NumberFunctions.rndFloat(2, 10);
+			Vector3f dir = new Vector3f(1f, 0f, 0f);
 			MovingPlatform mp = new MovingPlatform(game, module, 0, y, z, dir);
 			game.getRootNode().attachChild(mp.getMainNode());
 		}
@@ -80,7 +80,8 @@ public class SimpleCity implements IPertinentMapData {
 			Overwatch.instance.getRootNode().attachChild(c.getMainNode());
 		}
 
-		if (Settings.DEBUG_AI) {
+		// Add AI roamers
+		for (int i=0 ; i<SECTORS ; i++) {
 			Point p = getRandomCollectablePos();
 			RoamingAI ai = new RoamingAI(game, module, p.x, p.y);
 			game.getRootNode().attachChild(ai.getMainNode());
@@ -138,10 +139,10 @@ public class SimpleCity implements IPertinentMapData {
 			game.getRootNode().attachChild(skyscraper.getMainNode());
 			
 			// Add lift
-			Lift lift1 = new Lift(game, module, x+4, y+2, 0, height);
+			Lift lift1 = new Lift(game, module, x+4, y+2, 0.2f, height);
 			game.getRootNode().attachChild(lift1.getMainNode());
 
-			Lift lift2 = new Lift(game, module, x+5, y+3+SKYSCRAPER_WIDTH, 0, height);
+			Lift lift2 = new Lift(game, module, x+5, y+3+SKYSCRAPER_WIDTH, 0.2f, height);
 			game.getRootNode().attachChild(lift2.getMainNode());
 		}
 

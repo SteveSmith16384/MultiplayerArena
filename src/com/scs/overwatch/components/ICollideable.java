@@ -4,4 +4,6 @@ public interface ICollideable {
 
 	void collidedWith(ICollideable other);
 	
+	boolean blocksPlatforms();
+	
 }
