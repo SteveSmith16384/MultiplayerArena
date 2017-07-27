@@ -13,17 +13,17 @@ SFX: https://opengameart.org/content/4-projectile-launches
 
 
 URGENT
-See enemies through walls
-Rockets bouncing off road
 Make rocket look better
-Moving platforms going half inside buildings
+	Rockets bouncing off road
+Try others like floor_mat.getAdditionalRenderState().setDepthTest(false)
+	lr platforms not moving player - do it manually
+Targetter position not right
+See enemies through walls
+	Moving platforms going half inside buildings
 	stop lift going through floor
-	Platforms move diff speeds
-Try diff values for view2.setClearFlags(true, true, true);
+Platforms move diff speeds
 Find flash.png
 Players get harmed by explosion
-Change tex on platforms
-Search for todos
 Better font - use SF font?
 	Explosion when player dies
 HOME Music
@@ -33,7 +33,8 @@ Platforms on buildings
 
 
 TODO
-Targetter position not right
+Change tex on platforms
+Search for todos
 zoom-in ability
 No HUD on single player
 Cyberpunk skyscraper tex
@@ -104,13 +105,15 @@ Auto-aim
 
 
 GAME MODES
+Who can stay in the "zone" for the longest
 Collect the most collectables
+Shoot the most AI enemies
+2v1 - with 1 being more powerful
 Skirmish
-	What the Box
 Overwatch
 Hide and Seek
 Defend the Base
-Tig
+Tig - who can be it the longest, lose when died
 
 
 TEX

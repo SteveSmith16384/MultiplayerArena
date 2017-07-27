@@ -19,7 +19,6 @@ import com.scs.overwatch.abilities.IAbility;
 import com.scs.overwatch.abilities.Invisibility;
 import com.scs.overwatch.abilities.JetPac;
 import com.scs.overwatch.abilities.RunFast;
-import com.scs.overwatch.abilities.ZoomIn;
 import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.IBullet;
 import com.scs.overwatch.components.ICanShoot;

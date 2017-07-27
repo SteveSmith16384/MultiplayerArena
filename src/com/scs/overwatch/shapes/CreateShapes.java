@@ -19,7 +19,6 @@ public class CreateShapes {
 	// Return RigidBodyControl so we have a reference and can remove it.
 	public static RigidBodyControl CreateFloorTL(AssetManager assetManager, BulletAppState bulletAppState, Node node, float x, float y, float z, float w, float height, float d, String tex) {
 		Box floor = new Box(w/2, height/2, d/2);
-		//floor.scaleTextureCoordinates(new Vector2f(w/3, d/3));
 		floor.scaleTextureCoordinates(new Vector2f(w, d));
 
 		TextureKey key3 = new TextureKey(tex);
@@ -46,9 +45,8 @@ public class CreateShapes {
 		floor_geo.addControl(floor_phy);
 		bulletAppState.getPhysicsSpace().add(floor_phy);
 		floor_phy.setFriction(1f);
-		floor_phy.setRestitution(1f); // scs
+		floor_phy.setRestitution(1f);
 		
-		//return floor_geo;
 		return floor_phy;
 	}
 

@@ -52,7 +52,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 
 		Material floor_mat = null;
 		if (Settings.LIGHTING) {
-			floor_mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
+			floor_mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");
 			floor_mat.setTexture("DiffuseMap", tex3);
 		} else {
 			floor_mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
@@ -63,9 +63,9 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 		//geometry.setQueueBucket(Bucket.Transparent);
 
 		this.main_node.attachChild(geometry);
-		main_node.setLocalTranslation(x+(w/2), h/2, z+(d/2));
+		//main_node.setLocalTranslation(x+(w/2), h/2, z+(d/2));
+		main_node.setLocalTranslation(x+(w/2), 10, z+(d/2));
 
-		//CapsuleCollisionShape shape = new CapsuleCollisionShape(w, h);
 		floor_phy = new RigidBodyControl(1f);
 		main_node.addControl(floor_phy);
 		module.bulletAppState.getPhysicsSpace().add(floor_phy);

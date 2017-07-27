@@ -5,6 +5,7 @@ import ssmith.lang.NumberFunctions;
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
+import com.jme3.material.RenderState.BlendMode;
 import com.jme3.renderer.queue.RenderQueue.Bucket;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
@@ -18,8 +19,6 @@ import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.modules.GameModule;
 
 public class Crate extends PhysicalEntity implements IProcessable, IAffectedByPhysics, ICollideable {
-
-	//private RigidBodyControl floor_phy;
 
 	public Crate(Overwatch _game, GameModule _module, float x, float y, float z, float w, float h, float d, float rotDegrees) {
 		super(_game, _module, "Crate");
@@ -43,6 +42,11 @@ public class Crate extends PhysicalEntity implements IProcessable, IAffectedByPh
 			floor_mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
 			floor_mat.setTexture("ColorMap", tex3);
 		}
+		
+		//floor_mat.getAdditionalRenderState().setWireframe(true); //todo - remove?
+		//floor_mat.getAdditionalRenderState().setDepthTest(false); //todo - remove?
+		floor_mat.getAdditionalRenderState().setBlendMode(BlendMode.Color);
+
 		geometry.setMaterial(floor_mat);
 		//floor_mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
 		//geometry.setQueueBucket(Bucket.Transparent);

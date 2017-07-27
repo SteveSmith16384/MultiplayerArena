@@ -1,4 +1,0 @@
-#Killer Crates
-# If you mess up this file, just move it out the way and another will be created.
-numCrates=35
-numPlanks=10

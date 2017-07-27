@@ -32,7 +32,7 @@ public class ZoomIn extends AbstractAbility {
 			Camera cam = player.getCamera();
 			float aspect = (float) cam.getWidth() / cam.getHeight();
 			float invZoom = 3f;
-			cam.setParallelProjection( true );
+			cam.setParallelProjection(true);
 			//cam.setFrustum( 0, 150, -invZoom * aspect, invZoom * aspect, -invZoom, invZoom );
 			cam.update();
 			isZoomedIn = true;

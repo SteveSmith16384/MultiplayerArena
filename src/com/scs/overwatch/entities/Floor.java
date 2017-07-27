@@ -3,30 +3,25 @@ package com.scs.overwatch.entities;
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
-import com.jme3.renderer.queue.RenderQueue.Bucket;
+import com.jme3.math.Vector2f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
-import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.ICollideable;
-import com.scs.overwatch.components.IShowOnHUD;
 import com.scs.overwatch.modules.GameModule;
 
-public class Collectable extends PhysicalEntity implements ICollideable, IShowOnHUD, IAffectedByPhysics {
+public class Floor extends PhysicalEntity implements ICollideable {
 
-	private static final float SIZE = .1f;
+	public Floor(Overwatch _game, GameModule _module, float x, float y, float z, float w, float h, float d, String tex) {
+		super(_game, _module, "Floor");
 
-	//private Geometry geometry;
-	
-	public Collectable(Overwatch _game, GameModule _module, float x, float z) {
-		super(_game, _module, "Collectable");
-
-		Box box1 = new Box(SIZE, SIZE, SIZE);
-		Geometry geometry = new Geometry("Collectable", box1);
-		TextureKey key3 = new TextureKey("Textures/sun.jpg");
+		Box box1 = new Box(w/2, h/2, d/2);
+		box1.scaleTextureCoordinates(new Vector2f(w, h));
+		Geometry geometry = new Geometry("Crate", box1);
+		TextureKey key3 = new TextureKey(tex);
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);
@@ -42,32 +37,33 @@ public class Collectable extends PhysicalEntity implements ICollideable, IShowOn
 		geometry.setMaterial(floor_mat);
 
 		this.main_node.attachChild(geometry);
-		main_node.setLocalTranslation(x, 5f, z); // Drop from sky
+		geometry.setLocalTranslation(x+(w/2), y+(h/2), z+(d/2)); // Move it into position
 
-		floor_phy = new RigidBodyControl(0.1f);
+		floor_phy = new RigidBodyControl(0f);
 		main_node.addControl(floor_phy);
-
 		module.bulletAppState.getPhysicsSpace().add(floor_phy);
-		
+
 		geometry.setUserData(Settings.ENTITY, this);
+		main_node.setUserData(Settings.ENTITY, this);
 		floor_phy.setUserObject(this);
-
-		floor_phy.setRestitution(.5f);
-
-		module.addEntity(this); // need this to target it
 		
+		floor_phy.setFriction(1f);
+		floor_phy.setRestitution(1f);
+
+		module.addEntity(this);
+
 	}
 
 
 	@Override
 	public void process(float tpf) {
-		// Do nothing
+		//Settings.p("Pos: " + this.getLocation());
 	}
 
 
 	@Override
 	public void collidedWith(ICollideable other) {
-		
+		// Do nothing
 	}
 
 

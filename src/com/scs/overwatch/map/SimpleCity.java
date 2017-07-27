@@ -6,20 +6,19 @@ import ssmith.lang.NumberFunctions;
 
 import com.jme3.math.Vector3f;
 import com.scs.overwatch.Overwatch;
-import com.scs.overwatch.Settings;
 import com.scs.overwatch.entities.Collectable;
 import com.scs.overwatch.entities.Crate;
+import com.scs.overwatch.entities.Floor;
 import com.scs.overwatch.entities.Lift;
 import com.scs.overwatch.entities.MovingPlatform;
 import com.scs.overwatch.entities.RoamingAI;
 import com.scs.overwatch.entities.SkyScraper;
 import com.scs.overwatch.modules.GameModule;
-import com.scs.overwatch.shapes.CreateShapes;
 
 public class SimpleCity implements IPertinentMapData {
 
 	private static final int SKYSCRAPER_WIDTH = 7;
-	private static final int SECTORS = 2;
+	private static final int SECTORS = 3;
 
 	private Overwatch game;
 	private GameModule module;
@@ -150,7 +149,9 @@ public class SimpleCity implements IPertinentMapData {
 
 
 	private void CreateFloor(float x, float z, float w, float h, float d, String tex) {
-		CreateShapes.CreateFloorTL(game.getAssetManager(), module.bulletAppState, game.getRootNode(), x, 0f, z, w, h, d, tex);//, "Textures/road2.png");
+		//CreateShapes.CreateFloorTL(game.getAssetManager(), module.bulletAppState, game.getRootNode(), x, 0f, z, w, h, d, tex);//, "Textures/road2.png");
+		Floor floor = new Floor(game, module, x, 0f, z, w, h, d, tex);
+		game.getRootNode().attachChild(floor.getMainNode());
 	}
 
 

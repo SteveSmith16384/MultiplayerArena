@@ -22,7 +22,7 @@ public class Overwatch extends MySimpleApplication {
 
 	public static final Random rnd = new Random();
 
-	public static Properties properties;
+	//public static Properties properties;
 	private VideoRecorderAppState video_recorder;
 	private IModule currentModule, pendingModule;
 	public static BitmapFont guiFont_small;// = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
@@ -31,7 +31,7 @@ public class Overwatch extends MySimpleApplication {
 	
 	public static void main(String[] args) {
 		try {
-			properties = loadProperties();
+			//properties = loadProperties();
 			AppSettings settings = new AppSettings(true);
 			try {
 				settings.load(Settings.NAME);
@@ -136,10 +136,6 @@ public class Overwatch extends MySimpleApplication {
 			PrintWriter out = new PrintWriter(propsFile.getAbsolutePath());
 			out.println("#" + Settings.NAME + " settings file");
 			out.println("# If you mess up this file, just move it out the way and another will be created.");
-			out.println("mapSize=25");
-			out.println("numInnerWalls=5");
-			out.println("numCrates=35");
-			out.println("numPlanks=10");
 			out.close();
 		}
 
