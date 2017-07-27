@@ -290,7 +290,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		if (other instanceof IBullet) {
 			IBullet bullet = (IBullet)other;
 			if (bullet.getShooter() != this) {
-				bullet.remove();
+				//bullet.remove();
 				this.hitByBullet(bullet.getDamageCaused());
 				bullet.getShooter().hasSuccessfullyHit(this);
 			}

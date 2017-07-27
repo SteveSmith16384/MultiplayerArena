@@ -105,15 +105,12 @@ Auto-aim
 
 
 GAME MODES
-Who can stay in the "zone" for the longest
+Defend the Base - Who can stay in the "zone" for the longest
+Tig - who can be it the longest, lose when killed, killer gets it (floating dot above head)
 Collect the most collectables
 Shoot the most AI enemies
 2v1 - with 1 being more powerful
-Skirmish
-Overwatch
-Hide and Seek
-Defend the Base
-Tig - who can be it the longest, lose when died
+Skirmish - fight each other
 
 
 TEX

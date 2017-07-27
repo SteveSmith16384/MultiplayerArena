@@ -17,7 +17,9 @@ import com.jme3.texture.Texture.WrapMode;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.abilities.IAbility;
+import com.scs.overwatch.components.IBullet;
 import com.scs.overwatch.components.ICanShoot;
+import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IDamagable;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
@@ -26,7 +28,7 @@ import com.scs.overwatch.components.ITargetByAI;
 import com.scs.overwatch.modules.GameModule;
 import com.scs.overwatch.weapons.LaserRifle;
 
-public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot, IShowOnHUD, IDamagable {
+public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot, IShowOnHUD, IDamagable, ICollideable {
 
 	private static final float SPEED = 7;
 
@@ -154,6 +156,26 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 	@Override
 	public void damaged(float amt) {
 		// TODO Auto-generated method stub
+	}
+
+
+	@Override
+	public void collidedWith(ICollideable other) {
+		if (other instanceof IBullet) {
+			IBullet bullet = (IBullet)other;
+			if (bullet.getShooter() != this) {
+				//bullet.remove();
+				//this.hitByBullet(bullet.getDamageCaused());
+				this.remove();
+				bullet.getShooter().hasSuccessfullyHit(this);
+			}
+		}		
+	}
+
+
+	@Override
+	public boolean blocksPlatforms() {
+		return false;
 	}
 
 
