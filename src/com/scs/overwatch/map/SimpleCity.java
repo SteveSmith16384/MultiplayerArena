@@ -1,12 +1,9 @@
 package com.scs.overwatch.map;
 
 import java.awt.Point;
-import java.util.List;
 
 import ssmith.lang.NumberFunctions;
 
-import com.jme3.bullet.collision.PhysicsRayTestResult;
-import com.jme3.math.Vector3f;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.entities.AbstractPlatform;
@@ -14,7 +11,6 @@ import com.scs.overwatch.entities.Collectable;
 import com.scs.overwatch.entities.Crate;
 import com.scs.overwatch.entities.Floor;
 import com.scs.overwatch.entities.Lift;
-import com.scs.overwatch.entities.MovingPlatform;
 import com.scs.overwatch.entities.RoamingAI;
 import com.scs.overwatch.entities.SkyScraper;
 import com.scs.overwatch.entities.StreetLight;

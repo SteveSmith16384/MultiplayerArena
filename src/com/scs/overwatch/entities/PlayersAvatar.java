@@ -157,7 +157,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			//this.getMainNode().getWorldTranslation();
 			//playerGeometry.rotate(0, .1f,  0); // rotate player
 
-			walkDirection.set(0, 0, 0);
+			//walkDirection.set(0, 0, 0);
 
 			if (input.isAbilityOtherPressed()) { // Must be before we set the walkDirection & moveSpeed, as this method may affect it
 				//Settings.p("Using " + this.ability.toString());
@@ -212,6 +212,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			 */
 
 		}
+		
 		Vector3f vec = getMainNode().getWorldTranslation();
 		cam.setLocation(new Vector3f(vec.x, vec.y + (PLAYER_HEIGHT/2), vec.z));
 
@@ -221,6 +222,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		this.playerGeometry.lookAt(lookAtPoint, Vector3f.UNIT_Y);
 
 		this.input.resetFlags();
+		
+		walkDirection.set(0, 0, 0);
 
 	}
 
@@ -292,7 +295,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	@Override
 	public void hasSuccessfullyHit(IEntity e) {
-		this.incScore(10);
+		this.incScore(20);
 		new AbstractHUDImage(game, module, this.hud, "Textures/text/hit.png", this.hud.hud_width, this.hud.hud_height, 2);
 	}
 
@@ -319,7 +322,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		} else if (other instanceof Collectable) {
 			Collectable col = (Collectable)other;
 			col.remove();
-			this.incScore(10);
+			this.incScore(20);
 			this.hud.showCollectBox();
 
 			// Drop new collectable

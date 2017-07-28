@@ -2,8 +2,6 @@ package com.scs.overwatch;
 
 import ssmith.lang.NumberFunctions;
 
-import com.jme3.asset.TextureKey;
-
 public class Settings {
 
 	public static final boolean NEON = true;
@@ -57,7 +55,7 @@ public class Settings {
 	
 	public static String getRoadwayTex() {
 		if (NEON) {
-			return "Textures/neon1.png";
+			return "Textures/neon1.jpg";
 		} else {
 			int i = NumberFunctions.rnd(1, 10);
 			return "Textures/floor0041.png";

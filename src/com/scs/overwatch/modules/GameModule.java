@@ -1,5 +1,8 @@
 package com.scs.overwatch.modules;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import ssmith.util.TSArrayList;
 
 import com.jme3.bullet.BulletAppState;
@@ -46,7 +49,8 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	public TSArrayList<IEntity> entities = new TSArrayList<>();
 	public TSArrayList<PlayersAvatar> avatars = new TSArrayList<>();
 	public IPertinentMapData mapData;
-
+	private List<PhysicsCollisionEvent> collisions = new LinkedList<>();
+	
 	public GameModule(Overwatch _game) {
 		super();
 
@@ -71,9 +75,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		game.getRenderManager().removeMainView(game.getViewPort()); // Since we create new ones for each player
 
 		setUpLight();
-
-		//int i = NumberFunctions.rnd(1, 10);
-		//crateTexKey = new TextureKey("Textures/boxes and crates/" + i + ".png");
 
 		mapData = new SimpleCity(game, this);
 
@@ -197,6 +198,8 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		FilterPostProcessor fpp = new FilterPostProcessor(game.getAssetManager());
 		if (Settings.NEON) {
 			BloomFilter bloom = new BloomFilter();
+			bloom.setEnabled(true);
+			bloom.setBloomIntensity(2f);
 			fpp.addFilter(bloom);
 		} else {
 			RadialBlurFilter bloom = new RadialBlurFilter();
@@ -239,14 +242,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		// Look towards centre
 		player.getMainNode().lookAt(new Vector3f(mapData.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, mapData.getDepth()/2), Vector3f.UNIT_Y);
 
-		/*if (Settings.DEBUG_EXPLOSIONS) {
-			for (int i=0 ; i<1 ; i++) {
-				Vector3f pos = player.getLocation().clone();
-				pos.y = 10f;
-				Crate crate = new Crate(game, this, pos.x, pos.y, pos.z, 1f, 1f, 1f, 0);
-				game.getRootNode().attachChild(crate.getMainNode());
-			}
-		}*/
 	}
 
 
@@ -266,6 +261,8 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		this.entities.refresh();
 		this.avatars.refresh();
 
+		collisions.clear();
+		
 		for(IEntity e : entities) {
 			if (e instanceof IProcessable) {
 				IProcessable ip = (IProcessable)e;
@@ -273,17 +270,25 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			}
 		}
 
-
+		for (PhysicsCollisionEvent c : this.collisions) {
+			processCollision(c);
+		}
 	}
 
 
 	@Override
 	public void collision(PhysicsCollisionEvent event) {
-		String s = event.getObjectA().getUserObject().toString() + " collided with " + event.getObjectB().getUserObject().toString();
+		/*String s = event.getObjectA().getUserObject().toString() + " collided with " + event.getObjectB().getUserObject().toString();
 		//System.out.println(s);
-		if (s.equals("Entity:Player collided with cannon ball (Geometry)")) {
+		/*if (s.equals("Entity:Player collided with cannon ball (Geometry)")) {
 			int f = 3;
-		}
+		}*/
+		
+		this.collisions.add(event);
+	}
+	
+	
+	private void processCollision(PhysicsCollisionEvent event) {
 		PhysicalEntity a=null, b=null;
 		Object oa = event.getObjectA().getUserObject(); 
 		if (oa instanceof Spatial) {
@@ -358,14 +363,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 					break;
 				}
 			}
-
-			/*for(IEntity e : entities) {
-				if (e instanceof PlayersAvatar) {
-					PlayersAvatar ip = (PlayersAvatar)e;
-					ip.hasSuccessfullyHit(e);
-					break;
-				}
-			}*/
 
 		} else if (name.equals(QUIT)) {
 			game.setNextModule(new StartModule(game));

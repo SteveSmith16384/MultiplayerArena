@@ -1,7 +1,5 @@
 package com.scs.overwatch.entities;
 
-import ssmith.lang.NumberFunctions;
-
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
@@ -26,9 +24,7 @@ public class Crate extends PhysicalEntity implements IProcessable, IAffectedByPh
 		Box box1 = new Box(w/2, h/2, d/2);
 		//box1.scaleTextureCoordinates(new Vector2f(WIDTH, HEIGHT));
 		Geometry geometry = new Geometry("Crate", box1);
-		//TextureKey key3 = new TextureKey("Textures/crate.png");
-		//TextureKey key3 = new TextureKey("Textures/boxes and crates/1.jpg");
-		int i = NumberFunctions.rnd(1, 10);
+		//int i = NumberFunctions.rnd(1, 10);
 		TextureKey key3 = new TextureKey(Settings.getCrateTex());//"Textures/boxes and crates/" + i + ".png");
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
@@ -43,8 +39,8 @@ public class Crate extends PhysicalEntity implements IProcessable, IAffectedByPh
 			floor_mat.setTexture("ColorMap", tex3);
 		}
 		
-		floor_mat.getAdditionalRenderState().setWireframe(true); //todo - remove?
-		box1.setLineWidth(5);
+		//floor_mat.getAdditionalRenderState().setWireframe(true); //todo - remove?
+		//box1.setLineWidth(5);
 		//floor_mat.getAdditionalRenderState().setDepthTest(false); //todo - remove?
 		//floor_mat.getAdditionalRenderState().setBlendMode(BlendMode.Additive);
 		//floor_mat.getAdditionalRenderState().setPointSprite(true);
@@ -52,8 +48,8 @@ public class Crate extends PhysicalEntity implements IProcessable, IAffectedByPh
 
 		
 		geometry.setMaterial(floor_mat);
-		//floor_mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
-		//geometry.setQueueBucket(Bucket.Transparent);
+		floor_mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
+		geometry.setQueueBucket(Bucket.Transparent);
 
 		this.main_node.attachChild(geometry);
 		float rads = (float)Math.toRadians(rotDegrees);
