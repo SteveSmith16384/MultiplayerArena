@@ -33,7 +33,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		id = joystick.getJoyId();
 
 		super.setMoveSpeed(1f);
-		super.setRotationSpeed(1.5f);//1.4f); 
+		super.setRotationSpeed(1f);//.5f); SCS 
 
 		this.inputManager.addRawInputListener(this);
 
@@ -76,21 +76,13 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		/*      inputManager.addListener(this, mappings);
         inputManager.setCursorVisible(dragToRotate || !isEnabled());
 		 */
-		/*Joystick[] joysticks = inputManager.getJoysticks();
-		if (joysticks != null && joysticks.length > 0){
-			for (Joystick j : joysticks) {
-				if (j == joystick) {*/
 		mapJoystick(joystick, id);
-		/*}
-			}
-		}*/
 	}
 
 
 	protected void mapJoystick( Joystick joystick, int id ) {
 		// Map it differently if there are Z axis
 		if( joystick.getAxis( JoystickAxis.Z_ROTATION ) != null && joystick.getAxis( JoystickAxis.Z_AXIS ) != null ) {
-
 			// Make the left stick move
 			joystick.getXAxis().assignAxis( "jFLYCAM_StrafeRight"+id, "jFLYCAM_StrafeLeft"+id );
 			joystick.getYAxis().assignAxis( "jFLYCAM_Backward"+id, "jFLYCAM_Forward"+id );
@@ -154,7 +146,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		if (!enabled)
 			return;
 
-		float CUTOFF = 0.0015f;
+		float CUTOFF = 0.0015f; // scs
 		//Settings.p("name=" + name + "  value=" + value);
 
 		if (name.equals("jFLYCAM_Left" + id)) {
@@ -183,16 +175,6 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 			strafeRight = value > CUTOFF;
 			//moveCamera(-value, true);
 		}
-
-		/*else if (name.equals("FLYCAM_Rise")){
-			riseCamera(value);
-		}else if (name.equals("FLYCAM_Lower")){
-			riseCamera(-value);
-		}else if (name.equals("FLYCAM_ZoomIn")){
-			zoomCamera(value);
-		}else if (name.equals("FLYCAM_ZoomOut")){
-			zoomCamera(-value);
-		}*/
 	}
 
 
@@ -210,17 +192,6 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 
 	@Override
 	public void onJoyAxisEvent(JoyAxisEvent evt) {
-		/*Joystick stick = evt.getAxis().getJoystick();
-		if (stick == joystick) {
-			if (evt.getValue() == 0) {
-				JoystickAxis axis = evt.getAxis();
-				if( axis == axis.getJoystick().getXAxis() ) {
-					Settings.p("Xaxis=" + evt.getValue());
-				} else if( axis == axis.getJoystick().getYAxis() ) {
-					//Settings.p("Yaxis=" + evt.getValue()); 
-				}
-			}
-		}*/
 	}
 
 	/*
@@ -235,7 +206,6 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 	public void onJoyButtonEvent(JoyButtonEvent evt) {
 		Joystick stick = evt.getButton().getJoystick();
 		if (stick == joystick) {
-			//setButtonValue( evt.getButton(), evt.isPressed() );
 			JoystickButton button = evt.getButton();
 			Settings.p("button.getButtonId()=" + button.getButtonId());
 			if (button.getButtonId() == 1) {

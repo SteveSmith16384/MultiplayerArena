@@ -19,7 +19,7 @@ public class Floor extends PhysicalEntity implements ICollideable {
 		super(_game, _module, "Floor");
 
 		Box box1 = new Box(w/2, h/2, d/2);
-		box1.scaleTextureCoordinates(new Vector2f(w, h));
+		box1.scaleTextureCoordinates(new Vector2f(w, d));
 		Geometry geometry = new Geometry("Crate", box1);
 		TextureKey key3 = new TextureKey(tex);
 		key3.setGenerateMips(true);

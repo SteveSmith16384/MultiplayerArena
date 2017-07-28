@@ -17,7 +17,7 @@ import com.scs.overwatch.modules.GameModule;
 public class Grenade extends PhysicalEntity implements IBullet {
 
 	public ICanShoot shooter;
-	private float timeLeft = 4;
+	private float timeLeft = 2f;
 	
 	public Grenade(Overwatch _game, GameModule _module, ICanShoot _shooter) {
 		super(_game, _module, "Grenade");
@@ -29,7 +29,7 @@ public class Grenade extends PhysicalEntity implements IBullet {
 		/** Create a cannon ball geometry and attach to scene graph. */
 		Geometry ball_geo = new Geometry("cannon ball", sphere);
 
-		TextureKey key3 = new TextureKey( "Textures/mud.png");
+		TextureKey key3 = new TextureKey( "Textures/grenade.png");
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		Material floor_mat = null;
 		if (Settings.LIGHTING) {
@@ -46,12 +46,12 @@ public class Grenade extends PhysicalEntity implements IBullet {
 		/** Position the cannon ball  */
 		ball_geo.setLocalTranslation(shooter.getLocation().add(shooter.getShootDir().multLocal(PlayersAvatar.PLAYER_RAD*2)));
 		/** Make the ball physical with a mass > 0.0f */
-		floor_phy = new RigidBodyControl(1f);
+		floor_phy = new RigidBodyControl(.2f);
 		/** Add physical ball to physics space. */
 		ball_geo.addControl(floor_phy);
 		module.bulletAppState.getPhysicsSpace().add(floor_phy);
 		/** Accelerate the physical ball to shoot it. */
-		floor_phy.setLinearVelocity(shooter.getShootDir().mult(25));
+		floor_phy.setLinearVelocity(shooter.getShootDir().mult(15));
 		
 		this.getMainNode().setUserData(Settings.ENTITY, this);
 		floor_phy.setUserObject(this);

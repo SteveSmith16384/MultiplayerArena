@@ -45,8 +45,11 @@ public class Crate extends PhysicalEntity implements IProcessable, IAffectedByPh
 		
 		//floor_mat.getAdditionalRenderState().setWireframe(true); //todo - remove?
 		//floor_mat.getAdditionalRenderState().setDepthTest(false); //todo - remove?
-		floor_mat.getAdditionalRenderState().setBlendMode(BlendMode.Color);
+		floor_mat.getAdditionalRenderState().setBlendMode(BlendMode.Additive);
+		//floor_mat.getAdditionalRenderState().setPointSprite(true);
+		//floor_mat.getAdditionalRenderState().setColorWrite(colorWrite)
 
+		
 		geometry.setMaterial(floor_mat);
 		//floor_mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
 		//geometry.setQueueBucket(Bucket.Transparent);

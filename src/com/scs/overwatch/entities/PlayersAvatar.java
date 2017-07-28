@@ -32,6 +32,7 @@ import com.scs.overwatch.hud.AbstractHUDImage;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 import com.scs.overwatch.modules.GameModule;
+import com.scs.overwatch.weapons.GrenadeLauncher;
 import com.scs.overwatch.weapons.LaserRifle;
 
 public class PlayersAvatar extends PhysicalEntity implements IProcessable, ICollideable, ICanShoot, IShowOnHUD, ITargetByAI, IAffectedByPhysics, IDamagable {
@@ -98,7 +99,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 		//abilityGun = new RocketLauncher(_game, _module, this);
 		abilityGun = new LaserRifle(_game, _module, this); 
-		this.abilityOther = new JetPac(this);// getRandomAbility(this);
+		this.abilityOther = new GrenadeLauncher(game, module, this);// JetPac(this);// getRandomAbility(this);
 
 		this.hud.setAbilityGunText(this.abilityGun.getHudText());
 		this.hud.setAbilityOtherText(this.abilityOther.getHudText());

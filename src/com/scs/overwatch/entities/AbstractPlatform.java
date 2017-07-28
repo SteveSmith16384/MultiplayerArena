@@ -15,14 +15,12 @@ import com.scs.overwatch.modules.GameModule;
 
 public abstract class AbstractPlatform extends PhysicalEntity implements IProcessable, ICollideable {
 
-	//protected RigidBodyControl floor_phy;
+	public static final float HEIGHT = 0.3f;
 
 	public AbstractPlatform(Overwatch _game, GameModule _module, float x, float y, float z, float w, float d, float rotDegrees) {
 		super(_game, _module, "AbstractPlatform");
 
-		float h = 0.1f;
-
-		Box box1 = new Box(w/2, h/2, d/2);
+		Box box1 = new Box(w/2, HEIGHT/2, d/2);
 		//box1.scaleTextureCoordinates(new Vector2f(WIDTH, HEIGHT));
 		Geometry geometry = new Geometry("AbstractPlatform", box1);
 		//TextureKey key3 = new TextureKey("Textures/crate.png");
@@ -48,7 +46,7 @@ public abstract class AbstractPlatform extends PhysicalEntity implements IProces
 			float rads = (float)Math.toRadians(rotDegrees);
 			main_node.rotate(0, rads, 0);
 		}
-		main_node.setLocalTranslation(x+(w/2), y+(h/2), z+0.5f);
+		main_node.setLocalTranslation(x+(w/2), y+(HEIGHT/2), z+0.5f);
 
 		floor_phy = new RigidBodyControl(1);
 		main_node.addControl(floor_phy);
