@@ -37,6 +37,8 @@ import com.scs.overwatch.weapons.LaserRifle;
 
 public class PlayersAvatar extends PhysicalEntity implements IProcessable, ICollideable, ICanShoot, IShowOnHUD, ITargetByAI, IAffectedByPhysics, IDamagable {
 
+	private static final long RESTART_DUR = 4000;
+
 	// Player dimensions
 	public static final float PLAYER_HEIGHT = 0.7f;
 	public static final float PLAYER_RAD = 0.2f;
@@ -58,7 +60,10 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	public Geometry playerGeometry;
 	private int score = 20;
 	private float health = 100;
-	
+
+	private boolean restarting = false;
+	private long restartAt;
+
 	public PlayersAvatar(Overwatch _game, GameModule _module, int _id, Camera _cam, IInputDevice _input, HUD _hud) {
 		super(_game, _module, "Player");
 
@@ -124,74 +129,89 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	public void moveToStartPostion() {
 		Point p = module.mapData.getPlayerStartPos(id);
-		playerControl.warp(new Vector3f(p.x, 10f, p.y));
+		playerControl.warp(new Vector3f(p.x, 20f, p.y));
 
 	}
 
 
 	@Override
 	public void process(float tpf) {
-		//timeSinceLastMove += tpf;
-		abilityGun.process(tpf);
-		abilityOther.process(tpf);
-
-		hud.process(tpf);
-		//this.getMainNode().getWorldTranslation();
-		//playerGeometry.rotate(0, .1f,  0); // rotate player
-
-		walkDirection.set(0, 0, 0);
-
-		if (input.isAbilityOtherPressed()) { // Must be before we set the walkDirection & moveSpeed, as this method may affect it
-			//Settings.p("Using " + this.ability.toString());
-			this.abilityOther.activate(tpf);
+		if (this.restarting) {
+			if (this.restartAt < System.currentTimeMillis()) {
+				this.moveToStartPostion();
+				restarting = false;
+			}
 		}
 
-		/*
-		 * The direction of character is determined by the camera angle
-		 * the Y direction is set to zero to keep our character from
-		 * lifting of terrain. For free flying games simply add speed 
-		 * to Y axis
-		 */
-		camDir.set(cam.getDirection()).multLocal(moveSpeed, 0.0f, moveSpeed);
-		camLeft.set(cam.getLeft()).multLocal(Settings.DEFAULT_STRAFE_SPEED);
-		if (input.isStrafeLeftPressed()) {
-			walkDirection.addLocal(camLeft);
-			//timeSinceLastMove = 0;
-		}
-		if (input.isStrafeRightPressed()) {
-			walkDirection.addLocal(camLeft.negate());
-			//timeSinceLastMove = 0;
-		}
-		if (input.isFwdPressed()) {
-			//Settings.p("camDir=" + camDir);
-			walkDirection.addLocal(camDir);
-			//timeSinceLastMove = 0;
-		}
-		if (input.isBackPressed()) {
-			walkDirection.addLocal(camDir.negate());
-			//timeSinceLastMove = 0;
-		}
-		playerControl.setWalkDirection(walkDirection);
+		if (!this.restarting) {
+			// Have we fallen off the edge
+			if (this.getMainNode().getWorldTranslation().y < -5f) {
+				this.moveToStartPostion();
+			}
 
-		if (input.isJumpPressed()){// || timeSinceLastMove > 10) {
-			//Settings.p("timeSinceLastMove=" + timeSinceLastMove);
-			//timeSinceLastMove = 0;
-			this.jump();
+			//timeSinceLastMove += tpf;
+			abilityGun.process(tpf);
+			abilityOther.process(tpf);
+
+			hud.process(tpf);
+			//this.getMainNode().getWorldTranslation();
+			//playerGeometry.rotate(0, .1f,  0); // rotate player
+
+			walkDirection.set(0, 0, 0);
+
+			if (input.isAbilityOtherPressed()) { // Must be before we set the walkDirection & moveSpeed, as this method may affect it
+				//Settings.p("Using " + this.ability.toString());
+				this.abilityOther.activate(tpf);
+			}
+
+			/*
+			 * The direction of character is determined by the camera angle
+			 * the Y direction is set to zero to keep our character from
+			 * lifting of terrain. For free flying games simply add speed 
+			 * to Y axis
+			 */
+			camDir.set(cam.getDirection()).multLocal(moveSpeed, 0.0f, moveSpeed);
+			camLeft.set(cam.getLeft()).multLocal(Settings.DEFAULT_STRAFE_SPEED);
+			if (input.isStrafeLeftPressed()) {
+				walkDirection.addLocal(camLeft);
+				//timeSinceLastMove = 0;
+			}
+			if (input.isStrafeRightPressed()) {
+				walkDirection.addLocal(camLeft.negate());
+				//timeSinceLastMove = 0;
+			}
+			if (input.isFwdPressed()) {
+				//Settings.p("camDir=" + camDir);
+				walkDirection.addLocal(camDir);
+				//timeSinceLastMove = 0;
+			}
+			if (input.isBackPressed()) {
+				walkDirection.addLocal(camDir.negate());
+				//timeSinceLastMove = 0;
+			}
+			playerControl.setWalkDirection(walkDirection);
+
+			if (input.isJumpPressed()){// || timeSinceLastMove > 10) {
+				//Settings.p("timeSinceLastMove=" + timeSinceLastMove);
+				//timeSinceLastMove = 0;
+				this.jump();
+			}
+
+			if (input.isShootPressed()) {
+				//timeSinceLastMove = 0;
+				shoot();
+			}
+
+			// These must be after we might use them, so the hud is correct 
+			this.hud.setAbilityGunText(this.abilityGun.getHudText());
+			this.hud.setAbilityOtherText(this.abilityOther.getHudText());
+
+			/*
+			 * By default the location of the box is on the bottom of the terrain
+			 * we make a slight offset to adjust for head height.
+			 */
+
 		}
-
-		if (input.isShootPressed()) {
-			//timeSinceLastMove = 0;
-			shoot();
-		}
-
-		 // These must be after we might use them, so the hud is correct 
-		this.hud.setAbilityGunText(this.abilityGun.getHudText());
-		this.hud.setAbilityOtherText(this.abilityOther.getHudText());
-
-		/*
-		 * By default the location of the box is on the bottom of the terrain
-		 * we make a slight offset to adjust for head height.
-		 */
 		Vector3f vec = getMainNode().getWorldTranslation();
 		cam.setLocation(new Vector3f(vec.x, vec.y + (PLAYER_HEIGHT/2), vec.z));
 
@@ -202,18 +222,13 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 		this.input.resetFlags();
 
-		// Have we fallen off the edge
-		if (this.getMainNode().getWorldTranslation().y < -5f) {
-			this.moveToStartPostion();
-		}
-		
 	}
 
-	
+
 	public boolean isOnGround() {
 		return playerControl.isOnGround();
 	}
-	
+
 
 	public void shoot() {
 		//if (shotInterval.hitInterval()) {
@@ -265,7 +280,13 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		this.health -= dam;
 		this.hud.setHealth(this.health);
 		this.hud.showDamageBox();
-		this.moveToStartPostion();
+
+		this.restarting = true;
+		this.restartAt = System.currentTimeMillis() + RESTART_DUR;
+		Vector3f pos = this.getMainNode().getWorldTranslation();//.floor_phy.getPhysicsLocation().clone();
+		pos.y = -10;
+		playerControl.warp(pos);
+		//this.moveToStartPostion();
 	}
 
 
@@ -311,8 +332,9 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 
 	@Override
-	public void applyForce(Vector3f dir) {
-		playerControl.getPhysicsRigidBody().applyImpulse(dir, Vector3f.ZERO);//.applyCentralForce(dir);
+	public void applyForce(Vector3f force) {
+		playerControl.getPhysicsRigidBody().applyImpulse(force, Vector3f.ZERO);//.applyCentralForce(dir);
+		playerControl.getPhysicsRigidBody().applyCentralForce(force);
 	}
 
 

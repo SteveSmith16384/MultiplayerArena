@@ -29,7 +29,7 @@ public class Crate extends PhysicalEntity implements IProcessable, IAffectedByPh
 		//TextureKey key3 = new TextureKey("Textures/crate.png");
 		//TextureKey key3 = new TextureKey("Textures/boxes and crates/1.jpg");
 		int i = NumberFunctions.rnd(1, 10);
-		TextureKey key3 = new TextureKey("Textures/boxes and crates/" + i + ".png");
+		TextureKey key3 = new TextureKey(Settings.getCrateTex());//"Textures/boxes and crates/" + i + ".png");
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);
@@ -43,9 +43,10 @@ public class Crate extends PhysicalEntity implements IProcessable, IAffectedByPh
 			floor_mat.setTexture("ColorMap", tex3);
 		}
 		
-		//floor_mat.getAdditionalRenderState().setWireframe(true); //todo - remove?
+		floor_mat.getAdditionalRenderState().setWireframe(true); //todo - remove?
+		box1.setLineWidth(5);
 		//floor_mat.getAdditionalRenderState().setDepthTest(false); //todo - remove?
-		floor_mat.getAdditionalRenderState().setBlendMode(BlendMode.Additive);
+		//floor_mat.getAdditionalRenderState().setBlendMode(BlendMode.Additive);
 		//floor_mat.getAdditionalRenderState().setPointSprite(true);
 		//floor_mat.getAdditionalRenderState().setColorWrite(colorWrite)
 

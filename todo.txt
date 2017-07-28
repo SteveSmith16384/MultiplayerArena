@@ -12,28 +12,28 @@ http://opengameart.org/content/horror-sci-fi-3d-map-kit
 SFX: https://opengameart.org/content/4-projectile-launches
 
 
+FILTERS TRIED
+CartoonEdgeFilter
+LightScatteringFilter
+
+
 URGENT
+Have neon texture mode
+Try other filters like CartoonEdgeFilter
+Bloom
+Change tex of streetlight
+	Delay after being killed
 Player not affected by explosion force
-Do explosion by throwing invis balls
-Make features a boolean
 Red kill only covering top half of screen
-Make rocket look better
-	Lift not going down all the way
-	Platforms between buildings - add f/b
 	Street lights falling over
 Large columns that can fall down
 	Grenade tex
 neon textures
 	Improve skyscraper tex
 HOME Adjust gamepad sensitivity - remove "0.01"?
-	Grass is stretched
-Have higher buildings
-	Rockets bouncing off road
-	Try others like floor_mat.getAdditionalRenderState().setDepthTest(false)
 lr platforms not moving player - do it manually
 Moving platforms going half inside buildings
 Find flash.png
-Players get harmed by explosion
 Better font - use SF font?
 	Explosion when player dies
 HOME Music
@@ -42,6 +42,10 @@ Platforms on buildings
 
 
 TODO
+Try moving texture
+Do explosion by throwing invis balls
+Players get harmed by explosion
+Make rocket look better
 Exploding barrels
 Platforms move diff speeds
 Targetter position not right

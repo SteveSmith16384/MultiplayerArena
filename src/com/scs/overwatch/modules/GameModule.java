@@ -13,6 +13,9 @@ import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
+import com.jme3.post.FilterPostProcessor;
+import com.jme3.post.filters.BloomFilter;
+import com.jme3.post.filters.RadialBlurFilter;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
@@ -24,7 +27,6 @@ import com.scs.overwatch.components.IDamagable;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.effects.SmallExplosion;
-import com.scs.overwatch.entities.Crate;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
 import com.scs.overwatch.hud.HUD;
@@ -121,7 +123,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 		//stateManager.getState(StatsAppState.class).toggleStats(); // Turn off stats
 
-
 	}
 
 
@@ -193,6 +194,19 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		view2.setClearFlags(true, true, true);
 		view2.attachScene(game.getRootNode());
 
+		FilterPostProcessor fpp = new FilterPostProcessor(game.getAssetManager());
+		if (Settings.NEON) {
+			BloomFilter bloom = new BloomFilter();
+			fpp.addFilter(bloom);
+		} else {
+			RadialBlurFilter bloom = new RadialBlurFilter();
+			//bloom.setLightPosition(new Vector3f(10, 10, 10));
+			//bloom.s.setDepthThreshold(.2f);
+			fpp.addFilter(bloom);
+		}
+		view2.addProcessor(fpp);
+
+
 		return newCam;
 	}
 
@@ -224,7 +238,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 		// Look towards centre
 		player.getMainNode().lookAt(new Vector3f(mapData.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, mapData.getDepth()/2), Vector3f.UNIT_Y);
-		
+
 		/*if (Settings.DEBUG_EXPLOSIONS) {
 			for (int i=0 ; i<1 ; i++) {
 				Vector3f pos = player.getLocation().clone();
@@ -334,6 +348,8 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			for(IEntity e : entities) {
 				if (e instanceof PlayersAvatar) {
 					PlayersAvatar ip = (PlayersAvatar)e;
+					ip.hud.showDamageBox();
+
 					Vector3f pos = ip.getLocation().clone();
 					//pos.x--;
 					pos.y = 0;
@@ -379,7 +395,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		expl.setLocalTranslation(pos);
 		this.addEntity(expl);
 	}
-	
+
 
 	@Override
 	public void destroy() {

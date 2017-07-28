@@ -1,14 +1,19 @@
 package com.scs.overwatch;
 
+import ssmith.lang.NumberFunctions;
+
+import com.jme3.asset.TextureKey;
+
 public class Settings {
-	
+
+	public static final boolean NEON = true;
 	public static final String VERSION = "0.01";
 	public static final boolean DEBUG_TARGETTER = false;
 	public static final boolean SHOW_LOGO = false;
 	public static final boolean ALWAYS_SHOW_4_CAMS = false;
 	public static final boolean RECORD_VID = false;
 	
-	//public static final boolean DEBUG_AI = true;
+	public static final boolean HAVE_AI = false;
 	//public static final boolean DEBUG_EXPLOSIONS = true;
 	//public static final boolean DEBUG_HUD = true;
 
@@ -39,5 +44,24 @@ public class Settings {
 		System.out.println(System.currentTimeMillis() + ": " + s);
 	}
 
+	
+	public static String getCrateTex() {
+		if (NEON) {
+			return "Textures/glowingbox.png";
+		} else {
+			int i = NumberFunctions.rnd(1, 10);
+			return "Textures/boxes and crates/" + i + ".png";
+		}
+	}
+	
+	
+	public static String getRoadwayTex() {
+		if (NEON) {
+			return "Textures/neon1.png";
+		} else {
+			int i = NumberFunctions.rnd(1, 10);
+			return "Textures/floor0041.png";
+		}
+	}
 
 }

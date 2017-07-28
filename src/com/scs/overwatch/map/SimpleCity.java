@@ -8,6 +8,7 @@ import ssmith.lang.NumberFunctions;
 import com.jme3.bullet.collision.PhysicsRayTestResult;
 import com.jme3.math.Vector3f;
 import com.scs.overwatch.Overwatch;
+import com.scs.overwatch.Settings;
 import com.scs.overwatch.entities.AbstractPlatform;
 import com.scs.overwatch.entities.Collectable;
 import com.scs.overwatch.entities.Crate;
@@ -87,12 +88,13 @@ public class SimpleCity implements IPertinentMapData {
 		}
 
 		// Add AI roamers
-		/*for (int i=0 ; i<SECTORS ; i++) {
+		if (Settings.HAVE_AI) {
+		for (int i=0 ; i<SECTORS ; i++) {
 			Point p = getRandomCollectablePos();
 			RoamingAI ai = new RoamingAI(game, module, p.x, p.y);
 			game.getRootNode().attachChild(ai.getMainNode());
-		}*/
-
+		}
+		}
 
 		// Sprinkle lots of boxes
 		for (int i=0 ; i<SECTORS*5 ; i++) {
@@ -149,10 +151,10 @@ public class SimpleCity implements IPertinentMapData {
 			game.getRootNode().attachChild(skyscraper.getMainNode());
 
 			// Add lift
-			Lift lift1 = new Lift(game, module, x+4, y+2, 0.0f+AbstractPlatform.HEIGHT, height);
+			Lift lift1 = new Lift(game, module, x+4, y+2, 0.1f+AbstractPlatform.HEIGHT, height);
 			game.getRootNode().attachChild(lift1.getMainNode());
 
-			Lift lift2 = new Lift(game, module, x+5, y+3+SKYSCRAPER_WIDTH, 0.0f+AbstractPlatform.HEIGHT, height);
+			Lift lift2 = new Lift(game, module, x+5, y+3+SKYSCRAPER_WIDTH, 0.1f+AbstractPlatform.HEIGHT, height);
 			game.getRootNode().attachChild(lift2.getMainNode());
 		}
 
@@ -201,23 +203,23 @@ public class SimpleCity implements IPertinentMapData {
 		// Left-right
 		for (int i=0 ; i < SECTORS ; i++) {
 			float x = 0f;
-			float y = NumberFunctions.rndFloat(3,  10);
+			float y = NumberFunctions.rnd(4,  10);
 			float z = NumberFunctions.rnd(0, SECTORS*(SKYSCRAPER_WIDTH+6));
 			float w = SECTORS*(SKYSCRAPER_WIDTH+6);
-			float h = 0.2f;
+			float h = 0.1f;
 			float d = 1f;
-			CreateFloor(x, y, z, w, h, d, "Textures/floor0041.png");
+			CreateFloor(x, y, z, w, h, d, Settings.getRoadwayTex());// "Textures/floor0041.png");
 		}
 
 		// front-back
 		for (int i=0 ; i < SECTORS ; i++) {
 			float x = NumberFunctions.rnd(0, SECTORS*(SKYSCRAPER_WIDTH+6));
-			float y = NumberFunctions.rndFloat(3,  10);
+			float y = NumberFunctions.rnd(4,  10);
 			float z = 0f;
 			float w = 1f;//
-			float h = 0.2f;
+			float h = 0.1f;
 			float d = SECTORS*(SKYSCRAPER_WIDTH+6);
-			CreateFloor(x, y, z, w, h, d, "Textures/floor0041.png");
+			CreateFloor(x, y, z, w, h, d, Settings.getRoadwayTex());//, "Textures/floor0041.png");
 		}
 
 	}
