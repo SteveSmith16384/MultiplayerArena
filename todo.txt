@@ -18,11 +18,11 @@ LightScatteringFilter
 
 
 URGENT
-More neon textures
+Map made up of lots of fallen pillars
+Find simple "box/square" textures
+Scale textures
 	Scale tex on top of box
-	Change skyscraper tex
 Lasers bouncing off floor
-Rotate the whole map
 	Die if fall off map
 	Map with just lots of bars
 Map with area in sky
@@ -37,13 +37,14 @@ Player not affected by explosion force
 
 
 TODO
+Rotate the whole map
 Monorail
 Adjust map in mid game
 Mess about with gravity
 Floor portal
 Red kill only covering top half of screen
 Try other filters like CartoonEdgeFilter
-Bloom - copy from Ares
+	Bloom - copy from Ares
 Make player invulnerable for a short time when respawning
 Show gun protruding onto screen
 Large columns that can fall down

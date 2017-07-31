@@ -22,15 +22,15 @@ public class Floor extends PhysicalEntity implements ICollideable {
 
 		Box box1 = new Box(w/2, h/2, d/2);
 
-		box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
+		/*box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
 				1, 0, 0, 0, 0, 0.25f, 1, 0.25f, // back
 				1, 0, 0, 0, 0, 0.25f, 1, 0.25f, // right
 				1, 0, 0, 0, 0, 0.25f, 1, 0.25f, // front
 				1, 0, 0, 0, 0, 0.25f, 1, 0.25f, // left
 				1, 0, 0, 0, 0, 1, 1, 1, // top
 				1, 0, 0, 0, 0, 1, 1, 1 // bottom
-				}));
-		
+		}));*/
+
 		//box1.scaleTextureCoordinates(new Vector2f(w, d)); // scs check this
 		Geometry geometry = new Geometry("Crate", box1);
 		TextureKey key3 = new TextureKey(tex);
@@ -58,7 +58,7 @@ public class Floor extends PhysicalEntity implements ICollideable {
 		geometry.setUserData(Settings.ENTITY, this);
 		main_node.setUserData(Settings.ENTITY, this);
 		floor_phy.setUserObject(this);
-		
+
 		floor_phy.setFriction(1f);
 		floor_phy.setRestitution(1f);
 

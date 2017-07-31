@@ -19,7 +19,7 @@ import com.scs.overwatch.modules.GameModule;
 public class SimpleCity implements IPertinentMapData {
 
 	private static final int SKYSCRAPER_WIDTH = 7;
-	private static final int SECTORS = 1;
+	private static final int SECTORS = 3;
 
 	private Overwatch game;
 	private GameModule module;
@@ -85,11 +85,11 @@ public class SimpleCity implements IPertinentMapData {
 
 		// Add AI roamers
 		if (Settings.HAVE_AI) {
-		for (int i=0 ; i<SECTORS ; i++) {
-			Point p = getRandomCollectablePos();
-			RoamingAI ai = new RoamingAI(game, module, p.x, p.y);
-			game.getRootNode().attachChild(ai.getMainNode());
-		}
+			for (int i=0 ; i<SECTORS ; i++) {
+				Point p = getRandomCollectablePos();
+				RoamingAI ai = new RoamingAI(game, module, p.x, p.y);
+				game.getRootNode().attachChild(ai.getMainNode());
+			}
 		}
 
 		// Sprinkle lots of boxes
@@ -137,7 +137,7 @@ public class SimpleCity implements IPertinentMapData {
 		// Sidewalk
 		String sidewalktex = null;
 		if (Settings.NEON) {
-			sidewalktex = "Textures/tron1.jpg";
+			sidewalktex = "Textures/bluecross.png";//tron1.jpg";
 		} else {
 			sidewalktex = "Textures/floor015.png";
 		}

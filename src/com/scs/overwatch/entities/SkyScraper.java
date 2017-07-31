@@ -17,8 +17,6 @@ import com.scs.overwatch.modules.GameModule;
 
 public class SkyScraper extends PhysicalEntity implements IProcessable, ICollideable {
 
-	//private RigidBodyControl floor_phy;
-
 	public SkyScraper(Overwatch _game, GameModule _module, float leftX, float backZ, float w, float h, float d) {
 		super(_game, _module, "SkyScraper");
 
