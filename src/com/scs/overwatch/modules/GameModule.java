@@ -77,6 +77,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		setUpLight();
 
 		mapData = new SimpleCity(game, this);
+		//mapData = new OverworldMap(game, this);
 
 		Joystick[] joysticks = game.getInputManager().getJoysticks();
 		int numPlayers = 1+joysticks.length;
@@ -356,14 +357,19 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 					ip.hud.showDamageBox();
 
 					Vector3f pos = ip.getLocation().clone();
-					//pos.x--;
+					pos.x-=2;
 					pos.y = 0;
-					//pos.z--;
+					pos.z-=2;
 					explosion(pos, 5, 10);
 					break;
 				}
 			}
-
+			
+			//game.getRootNode().rotate(0, 0, 0.01f);
+			
+			/*Vector3f tmp = new Vector3f();
+			this.getBulletAppState().getPhysicsSpace().getGravity(tmp);
+			this.getBulletAppState().getPhysicsSpace().setGravity(tmp.mult(-1));*/
 		} else if (name.equals(QUIT)) {
 			game.setNextModule(new StartModule(game));
 		}

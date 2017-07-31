@@ -5,9 +5,11 @@ import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
 import com.jme3.math.Vector2f;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.VertexBuffer.Type;
 import com.jme3.scene.shape.Box;
 import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
+import com.jme3.util.BufferUtils;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.components.ICollideable;
@@ -19,7 +21,17 @@ public class Floor extends PhysicalEntity implements ICollideable {
 		super(_game, _module, "Floor");
 
 		Box box1 = new Box(w/2, h/2, d/2);
-		box1.scaleTextureCoordinates(new Vector2f(w, d)); // scs check this
+
+		box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
+				1, 0, 0, 0, 0, 0.25f, 1, 0.25f, // back
+				1, 0, 0, 0, 0, 0.25f, 1, 0.25f, // right
+				1, 0, 0, 0, 0, 0.25f, 1, 0.25f, // front
+				1, 0, 0, 0, 0, 0.25f, 1, 0.25f, // left
+				1, 0, 0, 0, 0, 1, 1, 1, // top
+				1, 0, 0, 0, 0, 1, 1, 1 // bottom
+				}));
+		
+		//box1.scaleTextureCoordinates(new Vector2f(w, d)); // scs check this
 		Geometry geometry = new Geometry("Crate", box1);
 		TextureKey key3 = new TextureKey(tex);
 		key3.setGenerateMips(true);

@@ -19,7 +19,7 @@ import com.scs.overwatch.modules.GameModule;
 public class SimpleCity implements IPertinentMapData {
 
 	private static final int SKYSCRAPER_WIDTH = 7;
-	private static final int SECTORS = 3;
+	private static final int SECTORS = 1;
 
 	private Overwatch game;
 	private GameModule module;
@@ -123,23 +123,39 @@ public class SimpleCity implements IPertinentMapData {
 		 */
 
 		// Road
-		CreateFloor(x, 0f, y, SKYSCRAPER_WIDTH+6, 0.1f, 2, "Textures/road2.png"); // top x
-		CreateFloor(x+SKYSCRAPER_WIDTH+4, 0f, y+2, 2, 0.1f, SKYSCRAPER_WIDTH+4, "Textures/road2.png"); // right x
-		CreateFloor(x+2, 0f, y+SKYSCRAPER_WIDTH+4, SKYSCRAPER_WIDTH+4, 0.1f, 2, "Textures/road2.png"); // bottom x
-		CreateFloor(x, 0f, y+2, 2, 0.1f, SKYSCRAPER_WIDTH+4, "Textures/road2.png"); // Left
+		String roadtex = null;
+		if (Settings.NEON) {
+			roadtex = "Textures/tron1.jpg";
+		} else {
+			roadtex = "Textures/road2.png";
+		}
+		CreateFloor(x, 0f, y, SKYSCRAPER_WIDTH+6, 0.1f, 2, roadtex); // top x
+		CreateFloor(x+SKYSCRAPER_WIDTH+4, 0f, y+2, 2, 0.1f, SKYSCRAPER_WIDTH+4, roadtex); // right x
+		CreateFloor(x+2, 0f, y+SKYSCRAPER_WIDTH+4, SKYSCRAPER_WIDTH+2, 0.1f, 2, roadtex); // bottom x
+		CreateFloor(x, 0f, y+2, 2, 0.1f, SKYSCRAPER_WIDTH+4, roadtex); // Left
 
 		// Sidewalk
-		CreateFloor(x+2, 0f, y+2, SKYSCRAPER_WIDTH+2, 0.2f, 1, "Textures/floor015.png"); // top x
-		new StreetLight(game, module, x+2.5f, y+2.5f);
-		CreateFloor(x+SKYSCRAPER_WIDTH+3, 0f, y+3, 1, 0.2f, SKYSCRAPER_WIDTH+1, "Textures/floor015.png"); // right x
-		CreateFloor(x+2, 0f, y+SKYSCRAPER_WIDTH+3, SKYSCRAPER_WIDTH+1, 0.2f, 1, "Textures/floor015.png"); // bottom x
-		CreateFloor(x+2, 0f, y+3, 1, 0.2f, SKYSCRAPER_WIDTH, "Textures/floor015.png"); // Left x
+		String sidewalktex = null;
+		if (Settings.NEON) {
+			sidewalktex = "Textures/tron1.jpg";
+		} else {
+			sidewalktex = "Textures/floor015.png";
+		}
+		CreateFloor(x+2, 0f, y+2, SKYSCRAPER_WIDTH+2, 0.2f, 1, sidewalktex); // top x
+		//new StreetLight(game, module, x+2.5f, y+2.5f);
+		CreateFloor(x+SKYSCRAPER_WIDTH+3, 0f, y+3, 1, 0.2f, SKYSCRAPER_WIDTH+1, sidewalktex); // right x
+		CreateFloor(x+2, 0f, y+SKYSCRAPER_WIDTH+3, SKYSCRAPER_WIDTH+1, 0.2f, 1, sidewalktex); // bottom x
+		CreateFloor(x+2, 0f, y+3, 1, 0.2f, SKYSCRAPER_WIDTH, sidewalktex); // Left x
 
 		if (NumberFunctions.rnd(1, 5) == 1) {
+			String grasstex = null;
+			if (Settings.NEON) {
+				grasstex = "Textures/tron1.jpg";
+			} else {
+				grasstex = "Textures/grass.png";
+			}
 			// Grass area
-			CreateFloor(x+3, 0f, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, "Textures/grass.jpg");
-			
-			// 
+			CreateFloor(x+3, 0f, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, grasstex);
 		} else {
 			// Add skyscraper
 			float height = NumberFunctions.rndFloat(4, 10);
@@ -182,7 +198,7 @@ public class SimpleCity implements IPertinentMapData {
 		int sz = NumberFunctions.rnd(0, SECTORS-1);
 		int x = sx*(SKYSCRAPER_WIDTH+6);
 		int z = sz*(SKYSCRAPER_WIDTH+6); 
-		return new Point(x+1, z+1);
+		return new Point(0, 0);//TODO - RE-ADD x+1, z+1);
 	}
 
 

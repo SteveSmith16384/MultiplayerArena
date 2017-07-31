@@ -55,7 +55,7 @@ public class Settings {
 	
 	public static String getRoadwayTex() {
 		if (NEON) {
-			return "Textures/neon1.jpg";
+			return "Textures/tron1.jpg";
 		} else {
 			int i = NumberFunctions.rnd(1, 10);
 			return "Textures/floor0041.png";

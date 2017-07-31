@@ -24,7 +24,14 @@ public abstract class AbstractPlatform extends PhysicalEntity implements IProces
 		//box1.scaleTextureCoordinates(new Vector2f(WIDTH, HEIGHT));
 		Geometry geometry = new Geometry("AbstractPlatform", box1);
 		//TextureKey key3 = new TextureKey("Textures/crate.png");
-		TextureKey key3 = new TextureKey("Textures/boxes and crates/3.png");
+		TextureKey key3 = null;
+		if (Settings.NEON) {
+			key3 = new TextureKey("Textures/tron1.jpg");
+		} else {
+			key3 = new TextureKey("Textures/boxes and crates/3.png");
+			
+		}
+			
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);

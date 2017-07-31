@@ -21,8 +21,13 @@ public class SkyScraper extends PhysicalEntity implements IProcessable, ICollide
 
 	public SkyScraper(Overwatch _game, GameModule _module, float leftX, float backZ, float w, float h, float d) {
 		super(_game, _module, "SkyScraper");
-		
-		String tex = "Textures/skyscraper" + NumberFunctions.rnd(1, 4) + ".jpg";
+
+		String tex = null;
+		if (Settings.NEON) {
+			tex = "Textures/10125-v4.jpg";//tron1.jpg";
+		} else {
+			tex = "Textures/skyscraper" + NumberFunctions.rnd(1, 4) + ".jpg";
+		}
 
 		Box box1 = new Box(w/2, h/2, d/2);
 		//box1.scaleTextureCoordinates(new Vector2f(WIDTH, HEIGHT));
@@ -65,7 +70,7 @@ public class SkyScraper extends PhysicalEntity implements IProcessable, ICollide
 	@Override
 	public void collidedWith(ICollideable other) {
 		// Do nothing
-		
+
 	}
 
 

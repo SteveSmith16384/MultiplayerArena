@@ -104,7 +104,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 		//abilityGun = new RocketLauncher(_game, _module, this);
 		abilityGun = new LaserRifle(_game, _module, this); 
-		this.abilityOther = new GrenadeLauncher(game, module, this);// JetPac(this);// getRandomAbility(this);
+		this.abilityOther = new JetPac(this);// getRandomAbility(this);
 
 		this.hud.setAbilityGunText(this.abilityGun.getHudText());
 		this.hud.setAbilityOtherText(this.abilityOther.getHudText());
@@ -146,7 +146,9 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		if (!this.restarting) {
 			// Have we fallen off the edge
 			if (this.getMainNode().getWorldTranslation().y < -5f) {
-				this.moveToStartPostion();
+				//this.moveToStartPostion();
+				died();
+				return;
 			}
 
 			//timeSinceLastMove += tpf;
@@ -284,14 +286,19 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		this.hud.setHealth(this.health);
 		this.hud.showDamageBox();
 
+		died();
+	}
+
+	
+	private void died() {
 		this.restarting = true;
 		this.restartAt = System.currentTimeMillis() + RESTART_DUR;
 		Vector3f pos = this.getMainNode().getWorldTranslation();//.floor_phy.getPhysicsLocation().clone();
 		pos.y = -10;
 		playerControl.warp(pos);
 		//this.moveToStartPostion();
-	}
 
+	}
 
 	@Override
 	public void hasSuccessfullyHit(IEntity e) {
