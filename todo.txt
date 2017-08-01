@@ -3,6 +3,11 @@ Wall
 Fire
 Shrink
 Tornado
+Invisible
+Heal
+Creatures
+
+
 
 
 Over-Kill
@@ -18,10 +23,12 @@ LightScatteringFilter
 
 
 URGENT
+Find animated monster?
+Shadows
+Scale textures
+Player not affected by explosion force
 Map made up of lots of fallen pillars
 Find simple "box/square" textures
-Scale textures
-	Scale tex on top of box
 Lasers bouncing off floor
 	Die if fall off map
 	Map with just lots of bars
@@ -30,10 +37,7 @@ Maze map
 Pyramid
 Castle map
 	neon1.jpg not showing
-HOME Adjust gamepad sensitivity - remove "0.01"?
-	Store collisions and process at end
-Player not affected by explosion force
-	Street lights falling over
+	HOME Adjust gamepad sensitivity - remove "0.01"?
 
 
 TODO
@@ -48,8 +52,6 @@ Try other filters like CartoonEdgeFilter
 Make player invulnerable for a short time when respawning
 Show gun protruding onto screen
 Large columns that can fall down
-lr platforms not moving player - do it manually
-Moving platforms going half inside buildings
 Find flash.png
 Better font - use SF font?
 HOME Music

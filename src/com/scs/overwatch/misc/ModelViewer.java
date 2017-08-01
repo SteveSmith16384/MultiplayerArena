@@ -24,12 +24,7 @@ public class ModelViewer extends SimpleApplication {
 	@Override
 	public void simpleInitApp() {
 		assetManager.registerLocator("assets/", FileLocator.class); // default
-
-		//assetManager.registerLocator("assets/Models/", FileLocator.class);
-		assetManager.registerLocator("assets/Textures/", FileLocator.class);
-		/*assetManager.registerLocator("assets/Sound/", FileLocator.class);
-		assetManager.registerLocator("assets/Shaders/", FileLocator.class);
-		 */
+		//assetManager.registerLocator("assets/Textures/", FileLocator.class);
 
 		cam.setFrustumPerspective(60, settings.getWidth() / settings.getHeight(), .1f, 100);
 

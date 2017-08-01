@@ -20,14 +20,6 @@ public abstract class PhysicalEntity extends Entity implements IProcessable, IAf
 		name = _name;
 
 		main_node = new Node(name + "_MainNode");
-
-		/*left_node = new Node("left_node");
-		main_node.attachChild(left_node);
-		left_node.setLocalTranslation(-3, 0, 0);
-
-		right_node = new Node("right_node");
-		main_node.attachChild(right_node);
-		right_node.setLocalTranslation(3, 0, 0);*/
 	}
 
 

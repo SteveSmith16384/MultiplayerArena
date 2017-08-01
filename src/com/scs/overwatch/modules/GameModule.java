@@ -280,8 +280,8 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	@Override
 	public void collision(PhysicsCollisionEvent event) {
-		/*String s = event.getObjectA().getUserObject().toString() + " collided with " + event.getObjectB().getUserObject().toString();
-		//System.out.println(s);
+		String s = event.getObjectA().getUserObject().toString() + " collided with " + event.getObjectB().getUserObject().toString();
+		System.out.println(s);
 		/*if (s.equals("Entity:Player collided with cannon ball (Geometry)")) {
 			int f = 3;
 		}*/
