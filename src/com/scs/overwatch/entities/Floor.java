@@ -22,14 +22,14 @@ public class Floor extends PhysicalEntity implements ICollideable {
 
 		Box box1 = new Box(w/2, h/2, d/2);
 
-		/*box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
-				1, 0, 0, 0, 0, 0.25f, 1, 0.25f, // back
-				1, 0, 0, 0, 0, 0.25f, 1, 0.25f, // right
-				1, 0, 0, 0, 0, 0.25f, 1, 0.25f, // front
-				1, 0, 0, 0, 0, 0.25f, 1, 0.25f, // left
-				1, 0, 0, 0, 0, 1, 1, 1, // top
-				1, 0, 0, 0, 0, 1, 1, 1 // bottom
-		}));*/
+		box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
+				0, h, w, h, w, 0, 0, 0, // back
+				0, h, d, h, d, 0, 0, 0, // right
+		        0, h, w, h, w, 0, 0, 0, // front
+		        0, h, d, h, d, 0, 0, 0, // left
+		        w, 0, w, d, 0, d, 0, 0, // top
+		        w, 0, w, d, 0, d, 0, 0  // bottom
+				}));
 
 		//box1.scaleTextureCoordinates(new Vector2f(w, d)); // scs check this
 		Geometry geometry = new Geometry("Crate", box1);

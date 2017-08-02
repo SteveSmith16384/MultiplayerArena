@@ -27,14 +27,16 @@ public class TestCubeTex extends SimpleApplication {
 	public void simpleInitApp() {
 		assetManager.registerLocator("assets/", FileLocator.class); // default
 
-		float w = 10f;
-		float h = 2f;
-		float d = 4f;
+		float w = 5f;
+		float h = 5f;
+		float d = 1f;
 
 		flyCam.setMoveSpeed(40);
 
 		/** just a blue box floating in space */
 		Box box1 = new Box(w/2, h/2, d/2);
+		
+		box1.sett
 		//box1.scaleTextureCoordinates(new Vector2f(10, 10));
 		Geometry geometry = new Geometry("Crate", box1);
 		TextureKey key3 = new TextureKey("Textures/tron1.jpg");

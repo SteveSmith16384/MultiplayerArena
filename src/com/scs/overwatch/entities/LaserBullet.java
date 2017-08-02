@@ -23,22 +23,6 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 
 		this.shooter = _shooter;
 
-		/*Sphere sphere = new Sphere(4, 4, 0.1f, true, false); // todo - use long cylinder
-		sphere.setTextureMode(TextureMode.Projected);
-		Geometry ball_geo = new Geometry("cannon ball", sphere);
-
-		TextureKey key3 = new TextureKey( "Textures/sun.jpg");
-		Texture tex3 = game.getAssetManager().loadTexture(key3);
-		Material floor_mat = null;
-		if (Settings.LIGHTING) {
-			floor_mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
-			floor_mat.setTexture("DiffuseMap", tex3);
-		} else {
-			floor_mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
-			floor_mat.setTexture("ColorMap", tex3);
-		}
-		ball_geo.setMaterial(floor_mat);*/
-
 		Vector3f origin = shooter.getLocation().clone();
 
 		Node ball_geo = BeamLaserModel.Factory(game.getAssetManager(), origin, origin.add(shooter.getShootDir().multLocal(1)), ColorRGBA.Pink);

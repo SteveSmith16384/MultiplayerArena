@@ -5,10 +5,13 @@ import ssmith.lang.NumberFunctions;
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
+import com.jme3.math.Vector2f;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.VertexBuffer.Type;
 import com.jme3.scene.shape.Box;
 import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
+import com.jme3.util.BufferUtils;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.components.ICollideable;
@@ -22,13 +25,23 @@ public class SkyScraper extends PhysicalEntity implements IProcessable, ICollide
 
 		String tex = null;
 		if (Settings.NEON) {
-			tex = "Textures/10125-v4.jpg";//tron1.jpg";
+			tex = "Textures/neon1.jpg";//10125-v4.jpg";//tron1.jpg";
 		} else {
 			tex = "Textures/skyscraper" + NumberFunctions.rnd(1, 4) + ".jpg";
 		}
 
 		Box box1 = new Box(w/2, h/2, d/2);
-		//box1.scaleTextureCoordinates(new Vector2f(WIDTH, HEIGHT));
+
+		box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
+				0, h, w, h, w, 0, 0, 0, // back
+				0, h, d, h, d, 0, 0, 0, // right
+		        0, h, w, h, w, 0, 0, 0, // front
+		        0, h, d, h, d, 0, 0, 0, // left
+		        w, 0, w, d, 0, d, 0, 0, // top
+		        w, 0, w, d, 0, d, 0, 0  // bottom
+				}));
+
+		//box1.scaleTextureCoordinates(new Vector2f(w, h));
 		Geometry geometry = new Geometry("SkyScraper", box1);
 		TextureKey key3 = new TextureKey(tex);
 		key3.setGenerateMips(true);

@@ -137,7 +137,7 @@ public class SimpleCity implements IPertinentMapData {
 		// Sidewalk
 		String sidewalktex = null;
 		if (Settings.NEON) {
-			sidewalktex = "Textures/bluecross.png";//tron1.jpg";
+			sidewalktex = "Textures/neon1.jpg";//bluecross.png";//tron1.jpg";
 		} else {
 			sidewalktex = "Textures/floor015.png";
 		}
@@ -147,7 +147,8 @@ public class SimpleCity implements IPertinentMapData {
 		CreateFloor(x+2, 0f, y+SKYSCRAPER_WIDTH+3, SKYSCRAPER_WIDTH+1, 0.2f, 1, sidewalktex); // bottom x
 		CreateFloor(x+2, 0f, y+3, 1, 0.2f, SKYSCRAPER_WIDTH, sidewalktex); // Left x
 
-		if (NumberFunctions.rnd(1, 5) == 1) {
+		int i = 2 ;;// todo -re-add NumberFunctions.rnd(1, 5);  
+		if (i == 1) {
 			String grasstex = null;
 			if (Settings.NEON) {
 				grasstex = "Textures/tron1.jpg";
@@ -156,6 +157,8 @@ public class SimpleCity implements IPertinentMapData {
 			}
 			// Grass area
 			CreateFloor(x+3, 0f, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, grasstex);
+		} else if (i == 2) {
+			pyramid(x, y, sidewalktex);
 		} else {
 			// Add skyscraper
 			float height = NumberFunctions.rndFloat(4, 10);
@@ -173,8 +176,16 @@ public class SimpleCity implements IPertinentMapData {
 	}
 
 
+	private void pyramid(float sx, float sz, String tex) {
+		for (int i=0 ; i<4 ; i++) {
+			float size = 4-i;
+			Floor floor = new Floor(game, module, sx+i, i+1, sz+i, size, 1, size, tex);
+			game.getRootNode().attachChild(floor.getMainNode());
+		}
+
+	}
+
 	private void CreateFloor(float x, float y, float z, float w, float h, float d, String tex) {
-		//CreateShapes.CreateFloorTL(game.getAssetManager(), module.bulletAppState, game.getRootNode(), x, 0f, z, w, h, d, tex);//, "Textures/road2.png");
 		Floor floor = new Floor(game, module, x, y, z, w, h, d, tex);
 		game.getRootNode().attachChild(floor.getMainNode());
 	}
@@ -198,7 +209,7 @@ public class SimpleCity implements IPertinentMapData {
 		int sz = NumberFunctions.rnd(0, SECTORS-1);
 		int x = sx*(SKYSCRAPER_WIDTH+6);
 		int z = sz*(SKYSCRAPER_WIDTH+6); 
-		return new Point(0, 0);//TODO - RE-ADD x+1, z+1);
+		return new Point(x+1, z+1);
 	}
 
 

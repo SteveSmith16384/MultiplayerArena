@@ -23,20 +23,22 @@ LightScatteringFilter
 
 
 URGENT
+Animate/scroll texture
+	Text not stretched correctly on ege skyscrapers
+Sfx
+Change colour of tron tex and use it
 Find animated monster?
 Shadows
-Scale textures
+	Scale textures
 Player not affected by explosion force
 Map made up of lots of fallen pillars
-Find simple "box/square" textures
 Lasers bouncing off floor
 	Die if fall off map
 	Map with just lots of bars
 Map with area in sky
 Maze map
-Pyramid
+	Pyramid
 Castle map
-	neon1.jpg not showing
 	HOME Adjust gamepad sensitivity - remove "0.01"?
 
 
