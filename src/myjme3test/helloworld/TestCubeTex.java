@@ -31,11 +31,6 @@ public class TestCubeTex extends SimpleApplication {
 		float h = 2f;
 		float d = 4f;
 
-		float tileW = 2;
-		float tileH = 2;
-		float tileD = 2;
-		
-		
 		flyCam.setMoveSpeed(40);
 
 		/** just a blue box floating in space */
@@ -64,10 +59,10 @@ public class TestCubeTex extends SimpleApplication {
 		this.rootNode.attachChild(geometry);
 		
 		box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
-				w, 0, w, h, 0, h, 0, 0, // back
-		        d, 0, d, h, h, 0, 0, 0, // right
-		        w, 0, w, h, 0, h, 0, 0, // front
-		        0, 0, 1, 1, 0, 1, 0, 0, // left
+				0, h, w, h, w, 0, 0, 0, // back
+				0, h, d, h, d, 0, 0, 0, // right
+		        0, h, w, h, w, 0, 0, 0, // front
+		        0, h, d, h, d, 0, 0, 0, // left
 		        w, 0, w, d, 0, d, 0, 0, // top
 		        w, 0, w, d, 0, d, 0, 0  // bottom
 				}));
