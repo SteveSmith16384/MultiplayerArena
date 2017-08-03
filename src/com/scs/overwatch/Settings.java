@@ -45,7 +45,7 @@ public class Settings {
 	
 	public static String getCrateTex() {
 		if (NEON) {
-			return "Textures/glowingbox.png";
+			return "Textures/10125-v4.jpg";//glowingbox.png";
 		} else {
 			int i = NumberFunctions.rnd(1, 10);
 			return "Textures/boxes and crates/" + i + ".png";

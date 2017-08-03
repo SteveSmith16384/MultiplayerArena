@@ -15,6 +15,13 @@ import com.jme3.util.BufferUtils;
 
 public class TestCubeTex extends SimpleApplication {
 
+	private Box box1;
+	private float offx = 0;
+	float w = 5f;
+	float h = 5f;
+	float d = 1f;
+
+
 	public static void main(String[] args) {
 		TestCubeTex app = new TestCubeTex();
 		//app.settings = new AppSettings(true);
@@ -27,16 +34,12 @@ public class TestCubeTex extends SimpleApplication {
 	public void simpleInitApp() {
 		assetManager.registerLocator("assets/", FileLocator.class); // default
 
-		float w = 5f;
-		float h = 5f;
-		float d = 1f;
-
 		flyCam.setMoveSpeed(40);
 
 		/** just a blue box floating in space */
-		Box box1 = new Box(w/2, h/2, d/2);
+		box1 = new Box(w/2, h/2, d/2);
 		
-		box1.sett
+		//box1.sett
 		//box1.scaleTextureCoordinates(new Vector2f(10, 10));
 		Geometry geometry = new Geometry("Crate", box1);
 		TextureKey key3 = new TextureKey("Textures/tron1.jpg");
@@ -63,7 +66,7 @@ public class TestCubeTex extends SimpleApplication {
 		box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
 				0, h, w, h, w, 0, 0, 0, // back
 				0, h, d, h, d, 0, 0, 0, // right
-		        0, h, w, h, w, 0, 0, 0, // front
+		        .5f, h+.5f, w, h+.5f, w, .5f, .5f, .5f, // front
 		        0, h, d, h, d, 0, 0, 0, // left
 		        w, 0, w, d, 0, d, 0, 0, // top
 		        w, 0, w, d, 0, d, 0, 0  // bottom
@@ -109,6 +112,18 @@ public class TestCubeTex extends SimpleApplication {
 	/** Move the listener with the a camera - for 3D audio. */
 	@Override
 	public void simpleUpdate(float tpf) {
+		
+		offx += 0.0001f;
+		
+		box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
+				0, h, w, h, w, 0, 0, 0, // back
+				0, h, d, h, d, 0, 0, 0, // right
+				offx, h, w+offx, h, w+offx, 0, offx, 0, // front
+		        0, h, d, h, d, 0, 0, 0, // left
+		        w, 0, w, d, 0, d, 0, 0, // top
+		        w, 0, w, d, 0, d, 0, 0  // bottom
+				}));
+
 	}
 
 }
