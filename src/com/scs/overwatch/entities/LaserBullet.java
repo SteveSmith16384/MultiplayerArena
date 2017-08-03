@@ -42,6 +42,7 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 		floor_phy.setGravity(Vector3f.ZERO);
 
 		this.getMainNode().setUserData(Settings.ENTITY, this);
+		ball_geo.setUserData(Settings.ENTITY, this);
 		floor_phy.setUserObject(this);
 		module.addEntity(this);
 

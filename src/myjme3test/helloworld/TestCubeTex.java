@@ -5,13 +5,18 @@ import com.jme3.asset.TextureKey;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.material.Material;
-import com.jme3.math.Vector2f;
+import com.jme3.math.Vector3f;
+import com.jme3.post.FilterPostProcessor;
+import com.jme3.post.filters.BloomFilter;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.VertexBuffer.Type;
 import com.jme3.scene.shape.Box;
+import com.jme3.texture.Image;
 import com.jme3.texture.Texture;
+import com.jme3.texture.TextureCubeMap;
 import com.jme3.texture.Texture.WrapMode;
 import com.jme3.util.BufferUtils;
+import com.jme3.util.SkyFactory;
 
 public class TestCubeTex extends SimpleApplication {
 
@@ -91,29 +96,37 @@ public class TestCubeTex extends SimpleApplication {
 				}));
 */
 
-		/** custom init methods, see below */
-		initKeys();
+
+		/*if (Settings.RECORD_VID) {
+			Settings.p("Recording video");
+			VideoRecorderAppState video_recorder = new VideoRecorderAppState();
+			stateManager.attach(video_recorder);
+		}*/
+		
+		TextureKey cmkey = new TextureKey("Textures/map.png");//testcubemap.jpg");
+		Texture cmtex = getAssetManager().loadTexture(cmkey);
+        Image img = cmtex.getImage();
+        TextureCubeMap cubemap = new TextureCubeMap();
+        cubemap.setImage(img);
+	
+		//getRootNode().attachChild(SkyFactory.createSky(getAssetManager(), "Textures/map.png", false));
+		
+		
+        FilterPostProcessor fpp = new FilterPostProcessor(assetManager);
+		BloomFilter laser_bloom = new BloomFilter(BloomFilter.GlowMode.Scene);
+		//bloom2.setDownSamplingFactor(2f);
+		laser_bloom.setBlurScale(5f);
+		laser_bloom.setBloomIntensity(50);
+		fpp.addFilter(laser_bloom);
+		this.viewPort.addProcessor(fpp);
+	
 	}
 
 
-	/** Declaring "Shoot" action, mapping it to a trigger (mouse left click). */
-	private void initKeys() {
-	}
-
-	
-	/** Defining the "Shoot" action: Play a gun sound. */
-	private ActionListener actionListener = new ActionListener() {
-		@Override
-		public void onAction(String name, boolean keyPressed, float tpf) {
-		}
-	};
-
-	
 	/** Move the listener with the a camera - for 3D audio. */
 	@Override
 	public void simpleUpdate(float tpf) {
-		
-		offx += 0.0001f;
+		offx += 0.1f * tpf;
 		
 		box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
 				0, h, w, h, w, 0, 0, 0, // back

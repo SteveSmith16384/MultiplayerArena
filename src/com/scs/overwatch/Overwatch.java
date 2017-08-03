@@ -22,8 +22,7 @@ public class Overwatch extends MySimpleApplication {
 
 	public static final Random rnd = new Random();
 
-	//public static Properties properties;
-	private VideoRecorderAppState video_recorder;
+	//private VideoRecorderAppState video_recorder;
 	private IModule currentModule, pendingModule;
 	public static BitmapFont guiFont_small;// = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
 	
@@ -97,7 +96,7 @@ public class Overwatch extends MySimpleApplication {
 		
 		if (Settings.RECORD_VID) {
 			Settings.p("Recording video");
-			video_recorder = new VideoRecorderAppState();
+			VideoRecorderAppState video_recorder = new VideoRecorderAppState();
 			stateManager.attach(video_recorder);
 		}
 	}

@@ -198,11 +198,12 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 		FilterPostProcessor fpp = new FilterPostProcessor(game.getAssetManager());
 		if (Settings.NEON) {
-			BloomFilter bloom = new BloomFilter();
+			BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Scene);
 			bloom.setEnabled(true);
-			bloom.setBloomIntensity(5f);
-			bloom.setBlurScale(5f);
+			bloom.setBloomIntensity(50f);
+			bloom.setBlurScale(10f);
 			fpp.addFilter(bloom);
+
 		} else {
 			RadialBlurFilter bloom = new RadialBlurFilter();
 			//bloom.setLightPosition(new Vector3f(10, 10, 10));

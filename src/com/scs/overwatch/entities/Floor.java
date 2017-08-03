@@ -3,7 +3,7 @@ package com.scs.overwatch.entities;
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
-import com.jme3.math.Vector2f;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.VertexBuffer.Type;
 import com.jme3.scene.shape.Box;
@@ -17,10 +17,15 @@ import com.scs.overwatch.modules.GameModule;
 
 public class Floor extends PhysicalEntity implements ICollideable {
 
-	public Floor(Overwatch _game, GameModule _module, float x, float y, float z, float w, float h, float d, String tex) {
+	private Box box1;
+	private Vector3f texScroll;
+	
+	public Floor(Overwatch _game, GameModule _module, float x, float y, float z, float w, float h, float d, String tex, Vector3f _texScroll) {
 		super(_game, _module, "Floor");
 
-		Box box1 = new Box(w/2, h/2, d/2);
+		this.texScroll = _texScroll;
+		
+		box1 = new Box(w/2, h/2, d/2);
 
 		box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
 				0, h, w, h, w, 0, 0, 0, // back

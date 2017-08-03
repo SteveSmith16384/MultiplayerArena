@@ -12,8 +12,6 @@ public class Settings {
 	public static final boolean RECORD_VID = false;
 	
 	public static final boolean HAVE_AI = false;
-	//public static final boolean DEBUG_EXPLOSIONS = true;
-	//public static final boolean DEBUG_HUD = true;
 
 	// Our movement speed
 	public static final float DEFAULT_MOVE_SPEED = 3f;

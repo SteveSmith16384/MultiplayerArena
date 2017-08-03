@@ -74,7 +74,7 @@ public class SimpleCity implements IPertinentMapData {
 
 
 		// Floating walkway
-		addFloatingWalkway();
+		addFloatingWalkways();
 
 		// Drop new collectable
 		{
@@ -147,7 +147,7 @@ public class SimpleCity implements IPertinentMapData {
 		CreateFloor(x+2, 0f, y+SKYSCRAPER_WIDTH+3, SKYSCRAPER_WIDTH+1, 0.2f, 1, sidewalktex); // bottom x
 		CreateFloor(x+2, 0f, y+3, 1, 0.2f, SKYSCRAPER_WIDTH, sidewalktex); // Left x
 
-		int i = 2 ;;// todo -re-add NumberFunctions.rnd(1, 5);  
+		int i = NumberFunctions.rnd(1, 5);  
 		if (i == 1) {
 			String grasstex = null;
 			if (Settings.NEON) {
@@ -158,7 +158,7 @@ public class SimpleCity implements IPertinentMapData {
 			// Grass area
 			CreateFloor(x+3, 0f, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, grasstex);
 		} else if (i == 2) {
-			pyramid(x, y, sidewalktex);
+			pyramid(x+2, y+2, sidewalktex);
 		} else {
 			// Add skyscraper
 			float height = NumberFunctions.rndFloat(4, 10);
@@ -178,12 +178,13 @@ public class SimpleCity implements IPertinentMapData {
 
 	private void pyramid(float sx, float sz, String tex) {
 		for (int i=0 ; i<4 ; i++) {
-			float size = 4-i;
-			Floor floor = new Floor(game, module, sx+i, i+1, sz+i, size, 1, size, tex);
+			float size = 8-(i*2);
+			Floor floor = new Floor(game, module, sx+i, i, sz+i, size, 1, size, tex);
 			game.getRootNode().attachChild(floor.getMainNode());
 		}
 
 	}
+	
 
 	private void CreateFloor(float x, float y, float z, float w, float h, float d, String tex) {
 		Floor floor = new Floor(game, module, x, y, z, w, h, d, tex);
@@ -222,7 +223,7 @@ public class SimpleCity implements IPertinentMapData {
 	}
 
 
-	private void addFloatingWalkway() {
+	private void addFloatingWalkways() {
 		// Left-right
 		for (int i=0 ; i < SECTORS ; i++) {
 			float x = 0f;

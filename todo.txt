@@ -23,16 +23,13 @@ LightScatteringFilter
 
 
 URGENT
-Animate/scroll texture
-	Text not stretched correctly on ege skyscrapers
-Sfx
+Use scrolling tex on walkways
 Change colour of tron tex and use it
-Find animated monster?
-Shadows
+Sfx
 	Scale textures
 Player not affected by explosion force
 Map made up of lots of fallen pillars
-Lasers bouncing off floor
+	Lasers bouncing off floor
 	Die if fall off map
 	Map with just lots of bars
 Map with area in sky
@@ -43,6 +40,8 @@ Castle map
 
 
 TODO
+Find animated monster?
+Shadows
 Rotate the whole map
 Monorail
 Adjust map in mid game
@@ -138,6 +137,7 @@ Auto-aim
 
 
 GAME MODES
+Try and knock other players off the edge
 Defend the Base - Who can stay in the "zone" for the longest
 Tig - who can be it the longest, lose when killed, killer gets it (floating dot above head)
 Collect the most collectables
