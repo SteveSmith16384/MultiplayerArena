@@ -20,6 +20,7 @@ public class Floor extends PhysicalEntity implements ICollideable {
 	private Box box1;
 	private Vector3f texScroll, thisScroll;
 	private float w, h, d;
+	private float offx = 0;
 
 	public Floor(Overwatch _game, GameModule _module, float x, float y, float z, float w, float h, float d, String tex, Vector3f _texScroll) {
 		super(_game, _module, "Floor");
@@ -81,14 +82,27 @@ public class Floor extends PhysicalEntity implements ICollideable {
 	@Override
 	public void process(float tpf) {
 		if (texScroll != null) {
-
-			float diff = tpf*2;
-			thisScroll.set(diff, diff, diff);
+			float diff = tpf*1f;
+			thisScroll.addLocal(diff, diff, diff);
 			thisScroll.multLocal(this.texScroll);
+			
+			while (this.thisScroll.x > 1) {
+				this.thisScroll.x--;
+			}
+
+			while (this.thisScroll.y > 1) {
+				this.thisScroll.y--;
+			}
+
+			while (this.thisScroll.z > 1) {
+				this.thisScroll.z--;
+			}
 
 			float offx = this.thisScroll.x;
 			float offy = this.thisScroll.y;
 			float offz = this.thisScroll.z;
+			
+			//Settings.p("thisScroll=" + thisScroll);
 
 			box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
 					offx, h+offy, w+offx, h+offy, w+offx, offy, offx, offy, // back
@@ -98,6 +112,18 @@ public class Floor extends PhysicalEntity implements ICollideable {
 					w+offx, offz, w+offx, d+offz, offx, d+offz, offx, offz, // top
 					w+offx, offz, w+offx, d+offz, offx, d+offz, offx, offz  // bottom
 			}));
+			
+			/*offx += 0.1f * tpf;
+			
+			box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
+					0, h, w, h, w, 0, 0, 0, // back
+					0, h, d, h, d, 0, 0, 0, // right
+					offx, h, w+offx, h, w+offx, 0, offx, 0, // front
+			        0, h, d, h, d, 0, 0, 0, // left
+			        w, 0, w, d, 0, d, 0, 0, // top
+			        w, 0, w, d, 0, d, 0, 0  // bottom
+					}));*/
+
 		}
 	}
 

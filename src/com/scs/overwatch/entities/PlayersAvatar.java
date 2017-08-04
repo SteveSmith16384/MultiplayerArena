@@ -37,7 +37,7 @@ import com.scs.overwatch.weapons.LaserRifle;
 
 public class PlayersAvatar extends PhysicalEntity implements IProcessable, ICollideable, ICanShoot, IShowOnHUD, ITargetByAI, IAffectedByPhysics, IDamagable {
 
-	private static final long RESTART_DUR = 4000;
+	private static final long RESTART_DUR = 3000;
 
 	// Player dimensions
 	public static final float PLAYER_HEIGHT = 0.7f;
@@ -62,8 +62,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	private float health = 100;
 
 	private boolean restarting = false;
-	private long restartAt;
-	
+	private long restartAt, invulnerableUntil;
+
 	private Geometry gun;
 
 	public PlayersAvatar(Overwatch _game, GameModule _module, int _id, Camera _cam, IInputDevice _input, HUD _hud) {
@@ -114,7 +114,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			}
 			gun.setMaterial(floor_mat);
 			//gun.setLocalTranslation(new Vector3f(0, (PLAYER_HEIGHT/2)-.075f, 0)); // Need this to ensure the crate is on the floor
-			this.getMainNode().attachChild(gun);
+			//this.getMainNode().attachChild(gun);
 		}
 
 		// create character control parameters (Radius,Height,Weight)
@@ -249,9 +249,10 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		lookAtPoint.y = cam.getLocation().y; // Look horizontal
 		//this.playerGeometry.lookAt(lookAtPoint, Vector3f.UNIT_Y);
 		this.getMainNode().lookAt(lookAtPoint.clone(), Vector3f.UNIT_Y);
-		
+
 		//Settings.p("Lookat=" + lookAtPoint);
 		//gun.lookAt(lookAtPoint.mult(-1), Vector3f.UNIT_Y);
+		gun.lookAt(cam.getDirection().clone(), Vector3f.UNIT_Y);
 
 		this.input.resetFlags();
 
@@ -305,24 +306,27 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 
 	public void hitByBullet(float dam) {
-		module.explosion(this.main_node.getWorldTranslation(), 5, 20);
-		this.health -= dam;
-		this.hud.setHealth(this.health);
-		this.hud.showDamageBox();
+		if (System.currentTimeMillis() > this.invulnerableUntil) {
+			module.explosion(this.main_node.getWorldTranslation(), 5, 20);
+			this.health -= dam;
+			this.hud.setHealth(this.health);
+			this.hud.showDamageBox();
 
-		died();
+			died();
+		}
 	}
 
 
 	private void died() {
 		this.restarting = true;
 		this.restartAt = System.currentTimeMillis() + RESTART_DUR;
+		invulnerableUntil = System.currentTimeMillis() + (RESTART_DUR*2);
 		Vector3f pos = this.getMainNode().getWorldTranslation();//.floor_phy.getPhysicsLocation().clone();
 		pos.y = -10;
 		playerControl.warp(pos);
 	}
 
-	
+
 	@Override
 	public void hasSuccessfullyHit(IEntity e) {
 		this.incScore(20);

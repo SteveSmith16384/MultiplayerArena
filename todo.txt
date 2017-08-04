@@ -10,32 +10,27 @@ Creatures
 
 Over-Kill
 
-https://opengameart.org/content/urban-skyboxes
-http://opengameart.org/content/horror-sci-fi-3d-map-kit
-SFX: https://opengameart.org/content/4-projectile-launches
-
-
-FILTERS TRIED
-CartoonEdgeFilter
-LightScatteringFilter
-
 
 URGENT
+	Make AI jump into sky
+	Make JetPac less powerful but last longer
 Show gun protruding onto screen
 Player not affected by explosion force
-	Use scrolling tex on walkways
+Use scrolling tex on walkways
 	Regen baddies on death
 	Player not restarting at start
-	Choose num baddies
 	Players can't shoot each other
 HOME Adjust gamepad sensitivity - remove "0.01"?
 HOME Change colour of tron tex and use it
 Sfx
-Make AI jump into sky
 Large columns that can fall down
+	Make player invulnerable for a short time when respawning
+No HUD on single player
+
 
 
 TODO
+Check all entities for falling off edge
 Map made up of lots of fallen pillars
 Map with area in sky
 Maze map
@@ -47,7 +42,6 @@ Monorail
 Adjust map in mid game - pyramids come through floors
 Mess about with gravity
 Red kill only covering top half of screen
-Make player invulnerable for a short time when respawning
 Find flash.png
 Better font - use SF font?
 HOME Music
@@ -63,8 +57,6 @@ See enemies through walls
 Change tex on platforms
 Search for todos
 zoom-in ability
-No HUD on single player
-Cyberpunk skyscraper tex
 Cylinder not working
 Use ICanCollect
 Change avatar - rotating cylinder?

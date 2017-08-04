@@ -34,7 +34,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 	private static final float SPEED = 7;
 
 	//private Vector3f currDir = new Vector3f(0, 0, 1);
-	private Vector3f currDir = new Vector3f(0, 1f, 1);
+	private Vector3f currDir = new Vector3f(0, 3f, 1);
 	private Vector3f shotDir = new Vector3f(0, 0, 0);
 	protected RealtimeInterval targetCheck = new RealtimeInterval(1000);
 	private Vector3f lastPos;
@@ -96,7 +96,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 				if (dist < 0.03f) {
 					//this.currDir.multLocal(-1);
 					setRandomDir(currDir);
-					Settings.p("ai New dir " + this.currDir);
+					//Settings.p("ai New dir " + this.currDir);
 				}
 				lastPos.set(this.getMainNode().getWorldTranslation());
 			}
