@@ -18,23 +18,29 @@ import com.scs.overwatch.modules.GameModule;
 public class Floor extends PhysicalEntity implements ICollideable {
 
 	private Box box1;
-	private Vector3f texScroll;
-	
+	private Vector3f texScroll, thisScroll;
+	private float w, h, d;
+
 	public Floor(Overwatch _game, GameModule _module, float x, float y, float z, float w, float h, float d, String tex, Vector3f _texScroll) {
 		super(_game, _module, "Floor");
 
+		this.w = w;
+		this.h = h;
+		this.d = d;
+
 		this.texScroll = _texScroll;
-		
+		thisScroll = new Vector3f();
+
 		box1 = new Box(w/2, h/2, d/2);
 
 		box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
 				0, h, w, h, w, 0, 0, 0, // back
 				0, h, d, h, d, 0, 0, 0, // right
-		        0, h, w, h, w, 0, 0, 0, // front
-		        0, h, d, h, d, 0, 0, 0, // left
-		        w, 0, w, d, 0, d, 0, 0, // top
-		        w, 0, w, d, 0, d, 0, 0  // bottom
-				}));
+				0, h, w, h, w, 0, 0, 0, // front
+				0, h, d, h, d, 0, 0, 0, // left
+				w, 0, w, d, 0, d, 0, 0, // top
+				w, 0, w, d, 0, d, 0, 0  // bottom
+		}));
 
 		//box1.scaleTextureCoordinates(new Vector2f(w, d)); // scs check this
 		Geometry geometry = new Geometry("Crate", box1);
@@ -74,7 +80,25 @@ public class Floor extends PhysicalEntity implements ICollideable {
 
 	@Override
 	public void process(float tpf) {
-		//Settings.p("Pos: " + this.getLocation());
+		if (texScroll != null) {
+
+			float diff = tpf*2;
+			thisScroll.set(diff, diff, diff);
+			thisScroll.multLocal(this.texScroll);
+
+			float offx = this.thisScroll.x;
+			float offy = this.thisScroll.y;
+			float offz = this.thisScroll.z;
+
+			box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
+					offx, h+offy, w+offx, h+offy, w+offx, offy, offx, offy, // back
+					offz, h+offy, d+offz, h+offy, d+offz, offy, offz, offy, // right
+					offx, h+offy, w+offx, h+offy, w+offx, offy, offx, offy, // front
+					offz, h+offy, d+offz, h+offy, d+offz, offy, offz, offy, // left
+					w+offx, offz, w+offx, d+offz, offx, d+offz, offx, offz, // top
+					w+offx, offz, w+offx, d+offz, offx, d+offz, offx, offz  // bottom
+			}));
+		}
 	}
 
 

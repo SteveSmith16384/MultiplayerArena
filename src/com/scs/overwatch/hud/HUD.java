@@ -119,6 +119,8 @@ public class HUD extends Node implements IEntity, IProcessable {
 
 		this.setModelBound(new BoundingBox());
 		this.updateModelBound();
+		
+		module.addEntity(this);
 
 	}
 

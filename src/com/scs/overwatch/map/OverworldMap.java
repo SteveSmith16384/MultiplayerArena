@@ -6,6 +6,7 @@ import java.util.List;
 
 import ssmith.lang.NumberFunctions;
 
+import com.jme3.math.Vector3f;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.entities.Collectable;
@@ -23,7 +24,10 @@ public class OverworldMap implements IPertinentMapData {
 	public OverworldMap(Overwatch _game, GameModule _module) {
 		game = _game;
 		module = _module;
-
+	}
+	
+	
+	public void setup() {
 		// Floating walkway
 		addFloatingWalkway();
 
@@ -39,7 +43,7 @@ public class OverworldMap implements IPertinentMapData {
 
 	private void CreateFloor(float x, float y, float z, float w, float h, float d, String tex) {
 		//CreateShapes.CreateFloorTL(game.getAssetManager(), module.bulletAppState, game.getRootNode(), x, 0f, z, w, h, d, tex);//, "Textures/road2.png");
-		Floor floor = new Floor(game, module, x, y, z, w, h, d, tex);
+		Floor floor = new Floor(game, module, x, y, z, w, h, d, tex, null);
 		game.getRootNode().attachChild(floor.getMainNode());
 	}
 

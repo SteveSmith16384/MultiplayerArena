@@ -4,6 +4,7 @@ import java.awt.Point;
 
 import ssmith.lang.NumberFunctions;
 
+import com.jme3.math.Vector3f;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.entities.AbstractPlatform;
@@ -11,9 +12,7 @@ import com.scs.overwatch.entities.Collectable;
 import com.scs.overwatch.entities.Crate;
 import com.scs.overwatch.entities.Floor;
 import com.scs.overwatch.entities.Lift;
-import com.scs.overwatch.entities.RoamingAI;
 import com.scs.overwatch.entities.SkyScraper;
-import com.scs.overwatch.entities.StreetLight;
 import com.scs.overwatch.modules.GameModule;
 
 public class SimpleCity implements IPertinentMapData {
@@ -27,7 +26,10 @@ public class SimpleCity implements IPertinentMapData {
 	public SimpleCity(Overwatch _game, GameModule _module) {
 		game = _game;
 		module = _module;
-
+	}
+	
+	
+	public void setup() {
 		for (int y=0 ; y<SECTORS ; y++) {
 			for (int x=0 ; x<SECTORS ; x++) {
 				createSector(x*(SKYSCRAPER_WIDTH+6), y*(SKYSCRAPER_WIDTH+6));
@@ -84,12 +86,11 @@ public class SimpleCity implements IPertinentMapData {
 		}
 
 		// Add AI roamers
-		if (Settings.HAVE_AI) {
-			for (int i=0 ; i<SECTORS ; i++) {
-				Point p = getRandomCollectablePos();
-				RoamingAI ai = new RoamingAI(game, module, p.x, p.y);
-				game.getRootNode().attachChild(ai.getMainNode());
-			}
+		for (int i=0 ; i<Settings.NUM_AI*SECTORS ; i++) {
+			/*Point p = getRandomCollectablePos();
+			RoamingAI ai = new RoamingAI(game, module, p.x, p.y);
+			game.getRootNode().attachChild(ai.getMainNode());*/
+			module.addAI();
 		}
 
 		// Sprinkle lots of boxes
@@ -129,10 +130,10 @@ public class SimpleCity implements IPertinentMapData {
 		} else {
 			roadtex = "Textures/road2.png";
 		}
-		CreateFloor(x, 0f, y, SKYSCRAPER_WIDTH+6, 0.1f, 2, roadtex); // top x
-		CreateFloor(x+SKYSCRAPER_WIDTH+4, 0f, y+2, 2, 0.1f, SKYSCRAPER_WIDTH+4, roadtex); // right x
-		CreateFloor(x+2, 0f, y+SKYSCRAPER_WIDTH+4, SKYSCRAPER_WIDTH+2, 0.1f, 2, roadtex); // bottom x
-		CreateFloor(x, 0f, y+2, 2, 0.1f, SKYSCRAPER_WIDTH+4, roadtex); // Left
+		CreateFloor(x, 0f, y, SKYSCRAPER_WIDTH+6, 0.1f, 2, roadtex, null); // top x
+		CreateFloor(x+SKYSCRAPER_WIDTH+4, 0f, y+2, 2, 0.1f, SKYSCRAPER_WIDTH+4, roadtex, null); // right x
+		CreateFloor(x+2, 0f, y+SKYSCRAPER_WIDTH+4, SKYSCRAPER_WIDTH+2, 0.1f, 2, roadtex, null); // bottom x
+		CreateFloor(x, 0f, y+2, 2, 0.1f, SKYSCRAPER_WIDTH+4, roadtex, null); // Left
 
 		// Sidewalk
 		String sidewalktex = null;
@@ -141,11 +142,11 @@ public class SimpleCity implements IPertinentMapData {
 		} else {
 			sidewalktex = "Textures/floor015.png";
 		}
-		CreateFloor(x+2, 0f, y+2, SKYSCRAPER_WIDTH+2, 0.2f, 1, sidewalktex); // top x
+		CreateFloor(x+2, 0f, y+2, SKYSCRAPER_WIDTH+2, 0.2f, 1, sidewalktex, null); // top x
 		//new StreetLight(game, module, x+2.5f, y+2.5f);
-		CreateFloor(x+SKYSCRAPER_WIDTH+3, 0f, y+3, 1, 0.2f, SKYSCRAPER_WIDTH+1, sidewalktex); // right x
-		CreateFloor(x+2, 0f, y+SKYSCRAPER_WIDTH+3, SKYSCRAPER_WIDTH+1, 0.2f, 1, sidewalktex); // bottom x
-		CreateFloor(x+2, 0f, y+3, 1, 0.2f, SKYSCRAPER_WIDTH, sidewalktex); // Left x
+		CreateFloor(x+SKYSCRAPER_WIDTH+3, 0f, y+3, 1, 0.2f, SKYSCRAPER_WIDTH+1, sidewalktex, null); // right x
+		CreateFloor(x+2, 0f, y+SKYSCRAPER_WIDTH+3, SKYSCRAPER_WIDTH+1, 0.2f, 1, sidewalktex, null); // bottom x
+		CreateFloor(x+2, 0f, y+3, 1, 0.2f, SKYSCRAPER_WIDTH, sidewalktex, null); // Left x
 
 		int i = NumberFunctions.rnd(1, 5);  
 		if (i == 1) {
@@ -156,9 +157,11 @@ public class SimpleCity implements IPertinentMapData {
 				grasstex = "Textures/grass.png";
 			}
 			// Grass area
-			CreateFloor(x+3, 0f, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, grasstex);
+			CreateFloor(x+3, 0f, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, grasstex, null);
 		} else if (i == 2) {
 			pyramid(x+2, y+2, sidewalktex);
+			//} else if (i == 3) {
+			// Columns - todo
 		} else {
 			// Add skyscraper
 			float height = NumberFunctions.rndFloat(4, 10);
@@ -179,15 +182,15 @@ public class SimpleCity implements IPertinentMapData {
 	private void pyramid(float sx, float sz, String tex) {
 		for (int i=0 ; i<4 ; i++) {
 			float size = 8-(i*2);
-			Floor floor = new Floor(game, module, sx+i, i, sz+i, size, 1, size, tex);
+			Floor floor = new Floor(game, module, sx+i, i, sz+i, size, 1, size, tex, null);
 			game.getRootNode().attachChild(floor.getMainNode());
 		}
 
 	}
-	
 
-	private void CreateFloor(float x, float y, float z, float w, float h, float d, String tex) {
-		Floor floor = new Floor(game, module, x, y, z, w, h, d, tex);
+
+	private void CreateFloor(float x, float y, float z, float w, float h, float d, String tex, Vector3f scroll) {
+		Floor floor = new Floor(game, module, x, y, z, w, h, d, tex, scroll);
 		game.getRootNode().attachChild(floor.getMainNode());
 	}
 
@@ -224,6 +227,9 @@ public class SimpleCity implements IPertinentMapData {
 
 
 	private void addFloatingWalkways() {
+		Vector3f scrolllr = new Vector3f(1, 0, 0);
+		Vector3f scrollfb = new Vector3f(0, 0, 1);
+
 		// Left-right
 		for (int i=0 ; i < SECTORS ; i++) {
 			float x = 0f;
@@ -232,7 +238,7 @@ public class SimpleCity implements IPertinentMapData {
 			float w = SECTORS*(SKYSCRAPER_WIDTH+6);
 			float h = 0.1f;
 			float d = 1f;
-			CreateFloor(x, y, z, w, h, d, Settings.getRoadwayTex());// "Textures/floor0041.png");
+			CreateFloor(x, y, z, w, h, d, Settings.getRoadwayTex(), scrolllr);// "Textures/floor0041.png");
 		}
 
 		// front-back
@@ -243,7 +249,7 @@ public class SimpleCity implements IPertinentMapData {
 			float w = 1f;//
 			float h = 0.1f;
 			float d = SECTORS*(SKYSCRAPER_WIDTH+6);
-			CreateFloor(x, y, z, w, h, d, Settings.getRoadwayTex());//, "Textures/floor0041.png");
+			CreateFloor(x, y, z, w, h, d, Settings.getRoadwayTex(), scrollfb);//, "Textures/floor0041.png");
 		}
 
 	}

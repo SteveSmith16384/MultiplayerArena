@@ -36,6 +36,10 @@ public class EmptyMap implements ISimpleMapData, IPertinentMapData {
 	public EmptyMap(Overwatch _game) {
 		game = _game;
 	}
+	
+	
+	public void setup() {
+	}
 
 
 	@Override

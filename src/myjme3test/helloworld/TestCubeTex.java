@@ -3,9 +3,7 @@ package myjme3test.helloworld;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.TextureKey;
 import com.jme3.asset.plugins.FileLocator;
-import com.jme3.input.controls.ActionListener;
 import com.jme3.material.Material;
-import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.BloomFilter;
 import com.jme3.scene.Geometry;
@@ -13,10 +11,9 @@ import com.jme3.scene.VertexBuffer.Type;
 import com.jme3.scene.shape.Box;
 import com.jme3.texture.Image;
 import com.jme3.texture.Texture;
-import com.jme3.texture.TextureCubeMap;
 import com.jme3.texture.Texture.WrapMode;
+import com.jme3.texture.TextureCubeMap;
 import com.jme3.util.BufferUtils;
-import com.jme3.util.SkyFactory;
 
 public class TestCubeTex extends SimpleApplication {
 

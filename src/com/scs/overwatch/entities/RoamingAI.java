@@ -33,7 +33,8 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 
 	private static final float SPEED = 7;
 
-	private Vector3f currDir = new Vector3f(0, 0, 1);
+	//private Vector3f currDir = new Vector3f(0, 0, 1);
+	private Vector3f currDir = new Vector3f(0, 1f, 1);
 	private Vector3f shotDir = new Vector3f(0, 0, 0);
 	protected RealtimeInterval targetCheck = new RealtimeInterval(1000);
 	private Vector3f lastPos;
@@ -62,8 +63,6 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 			floor_mat.setTexture("ColorMap", tex3);
 		}
 		geometry.setMaterial(floor_mat);
-		//floor_mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
-		//geometry.setQueueBucket(Bucket.Transparent);
 
 		this.main_node.attachChild(geometry);
 		//main_node.setLocalTranslation(x+(w/2), h/2, z+(d/2));
@@ -142,13 +141,13 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 	private static void setRandomDir(Vector3f vec) {
 		int i = NumberFunctions.rnd(1,  4);
 		switch (i) {
-		case 1: vec.set(1,  0,  0);
+		case 1: vec.set(1,  vec.y,  0);
 		break;
-		case 2: vec.set(-1,  0,  0);
+		case 2: vec.set(-1,  vec.y,  0);
 		break;
-		case 3: vec.set(0,  0,  1);
+		case 3: vec.set(0,  vec.y,  1);
 		break;
-		case 4: vec.set(0,  0,  -1);
+		case 4: vec.set(0,  vec.y,  -1);
 		break;
 		}
 	}
@@ -165,10 +164,9 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 		if (other instanceof IBullet) {
 			IBullet bullet = (IBullet)other;
 			if (bullet.getShooter() != this) {
-				//bullet.remove();
-				//this.hitByBullet(bullet.getDamageCaused());
 				this.remove();
 				bullet.getShooter().hasSuccessfullyHit(this);
+				module.addAI(); // Add another
 			}
 		}		
 	}

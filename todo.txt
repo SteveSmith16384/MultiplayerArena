@@ -8,8 +8,6 @@ Heal
 Creatures
 
 
-
-
 Over-Kill
 
 https://opengameart.org/content/urban-skyboxes
@@ -23,42 +21,38 @@ LightScatteringFilter
 
 
 URGENT
-Use scrolling tex on walkways
-Change colour of tron tex and use it
-Sfx
-	Scale textures
+Show gun protruding onto screen
 Player not affected by explosion force
-Map made up of lots of fallen pillars
-	Lasers bouncing off floor
-	Die if fall off map
-	Map with just lots of bars
-Map with area in sky
-Maze map
-	Pyramid
-Castle map
-	HOME Adjust gamepad sensitivity - remove "0.01"?
+	Use scrolling tex on walkways
+	Regen baddies on death
+	Player not restarting at start
+	Choose num baddies
+	Players can't shoot each other
+HOME Adjust gamepad sensitivity - remove "0.01"?
+HOME Change colour of tron tex and use it
+Sfx
+Make AI jump into sky
+Large columns that can fall down
 
 
 TODO
+Map made up of lots of fallen pillars
+Map with area in sky
+Maze map
+Castle map
 Find animated monster?
 Shadows
 Rotate the whole map
 Monorail
-Adjust map in mid game
+Adjust map in mid game - pyramids come through floors
 Mess about with gravity
-Floor portal
 Red kill only covering top half of screen
-Try other filters like CartoonEdgeFilter
-	Bloom - copy from Ares
 Make player invulnerable for a short time when respawning
-Show gun protruding onto screen
-Large columns that can fall down
 Find flash.png
 Better font - use SF font?
 HOME Music
 HOME Add SFX - from Ares
 Platforms on buildings
-Try moving texture
 Do explosion by throwing invis balls
 Players get harmed by explosion
 Make rocket look better
@@ -83,7 +77,6 @@ Guns - magazine size, reload mag time
 HOME - Need 3D model for players
 Targetting HUD
 Select character class at start
-Create vestibules
 Cars that drive down roads
 	Explosions
 Create diff types of guns

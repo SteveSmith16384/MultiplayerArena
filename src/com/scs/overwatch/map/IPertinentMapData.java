@@ -3,6 +3,8 @@ package com.scs.overwatch.map;
 import java.awt.Point;
 
 public interface IPertinentMapData {
+	
+	void setup();
 
 	int getWidth();
 	

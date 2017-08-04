@@ -1,7 +1,6 @@
 package com.scs.overwatch.modules;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.awt.Point;
 
 import ssmith.util.TSArrayList;
 
@@ -32,6 +31,7 @@ import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.effects.SmallExplosion;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
+import com.scs.overwatch.entities.RoamingAI;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 import com.scs.overwatch.input.JoystickCamera;
@@ -49,7 +49,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	public TSArrayList<IEntity> entities = new TSArrayList<>();
 	public TSArrayList<PlayersAvatar> avatars = new TSArrayList<>();
 	public IPertinentMapData mapData;
-	private List<PhysicsCollisionEvent> collisions = new LinkedList<>();
+	//private List<PhysicsCollisionEvent> collisions = new LinkedList<>();
 	
 	public GameModule(Overwatch _game) {
 		super();
@@ -77,6 +77,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		setUpLight();
 
 		mapData = new SimpleCity(game, this);
+		mapData.setup();
 		//mapData = new OverworldMap(game, this);
 
 		Joystick[] joysticks = game.getInputManager().getJoysticks();
@@ -264,8 +265,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		this.entities.refresh();
 		this.avatars.refresh();
 
-		collisions.clear();
-		
 		for(IEntity e : entities) {
 			if (e instanceof IProcessable) {
 				IProcessable ip = (IProcessable)e;
@@ -273,9 +272,12 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			}
 		}
 
-		for (PhysicsCollisionEvent c : this.collisions) {
+		/*for (PhysicsCollisionEvent c : this.collisions) {
 			processCollision(c);
 		}
+
+		collisions.clear();*/
+		
 	}
 
 
@@ -287,11 +289,17 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			int f = 3;
 		}*/
 	
-		this.collisions.add(event);
+/*		this.collisions.add(event);
 	}
 	
 	
-	private void processCollision(PhysicsCollisionEvent event) {
+	private void processCollision(PhysicsCollisionEvent event) {*/
+		//String s = event.getObjectA().getUserObject().toString() + " collided with " + event.getObjectB().getUserObject().toString();
+		//System.out.println(s);
+		/*if (s.equals("Entity:Player collided with cannon ball (Geometry)")) {
+			int f = 3;
+		}*/
+	
 		PhysicalEntity a=null, b=null;
 		Object oa = event.getObjectA().getUserObject(); 
 		if (oa instanceof Spatial) {
@@ -316,6 +324,13 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				ICollideable icb = (ICollideable)b;
 				ica.collidedWith(icb);
 				icb.collidedWith(ica);
+			}
+		} else {
+			if (a == null) {
+				Settings.p(oa + " has no entity data!");
+			}
+			if (b == null) {
+				Settings.p(ob + " has no entity data!");
 			}
 		}
 	}
@@ -409,4 +424,10 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	}
 
 
+	public void addAI() {
+		Point p = mapData.getRandomCollectablePos();
+		RoamingAI ai = new RoamingAI(game, this, p.x, p.y);
+		game.getRootNode().attachChild(ai.getMainNode());
+
+	}
 }
