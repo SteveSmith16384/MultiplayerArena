@@ -49,7 +49,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	public TSArrayList<IEntity> entities = new TSArrayList<>();
 	public TSArrayList<PlayersAvatar> avatars = new TSArrayList<>();
 	public IPertinentMapData mapData;
-	//private List<PhysicsCollisionEvent> collisions = new LinkedList<>();
+
 	
 	public GameModule(Overwatch _game) {
 		super();
@@ -371,7 +371,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			for(IEntity e : entities) {
 				if (e instanceof PlayersAvatar) {
 					PlayersAvatar ip = (PlayersAvatar)e;
-					ip.hud.showDamageBox();
+					//ip.hud.showDamageBox();
 
 					Vector3f pos = ip.getLocation().clone();
 					pos.x-=2;
@@ -401,6 +401,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				IAffectedByPhysics pe = (IAffectedByPhysics)e;
 				float dist = pe.getLocation().subtract(pos).length();
 				if (dist <= range) {
+					Settings.p("Applying explosion force to " + e);
 					Vector3f force = pe.getLocation().subtract(pos).normalizeLocal().multLocal(power);
 					pe.applyForce(force);
 					if (e instanceof IDamagable) {

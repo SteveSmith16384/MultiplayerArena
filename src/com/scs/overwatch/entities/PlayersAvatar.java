@@ -370,8 +370,10 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	@Override
 	public void applyForce(Vector3f force) {
-		playerControl.getPhysicsRigidBody().applyImpulse(force, Vector3f.ZERO);//.applyCentralForce(dir);
-		playerControl.getPhysicsRigidBody().applyCentralForce(force);
+		//playerControl.getPhysicsRigidBody().applyImpulse(force, Vector3f.ZERO);//.applyCentralForce(dir);
+		//playerControl.getPhysicsRigidBody().applyCentralForce(force);
+		
+		this.walkDirection.addLocal(force);
 	}
 
 

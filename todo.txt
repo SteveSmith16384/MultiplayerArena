@@ -12,16 +12,17 @@ Over-Kill
 
 
 URGENT
+Try crashing something non-kinematic into player to see if they move
 	Make AI jump into sky
 	Make JetPac less powerful but last longer
 Show gun protruding onto screen
-Player not affected by explosion force
-Use scrolling tex on walkways
+	TEST Player not affected by explosion force
 	Regen baddies on death
 	Player not restarting at start
 	Players can't shoot each other
 HOME Adjust gamepad sensitivity - remove "0.01"?
 HOME Change colour of tron tex and use it
+HOME Change player tex to something more tron-y and diff colour for each player
 Sfx
 Large columns that can fall down
 	Make player invulnerable for a short time when respawning
@@ -54,7 +55,6 @@ Exploding barrels
 Platforms move diff speeds
 Targetter position not right
 See enemies through walls
-Change tex on platforms
 Search for todos
 zoom-in ability
 Cylinder not working
