@@ -12,6 +12,10 @@ Over-Kill
 
 
 URGENT
+Not restoring screen when going back to start
+Show collectable through walls
+Don't show crate through wall
+Joypad always moving same speed - adjust by power
 Try crashing something non-kinematic into player to see if they move
 	Make AI jump into sky
 	Make JetPac less powerful but last longer

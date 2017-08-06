@@ -22,7 +22,6 @@ public class Overwatch extends MySimpleApplication {
 
 	public static final Random rnd = new Random();
 
-	//private VideoRecorderAppState video_recorder;
 	private IModule currentModule, pendingModule;
 	public static BitmapFont guiFont_small;// = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
 	

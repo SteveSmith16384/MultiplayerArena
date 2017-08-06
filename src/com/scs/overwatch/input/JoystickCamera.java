@@ -32,7 +32,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		this.joystick = _joystick;
 		id = joystick.getJoyId();
 
-		super.setMoveSpeed(1f);
+		super.setMoveSpeed(.7f);//1f);
 		super.setRotationSpeed(1f);//.5f); SCS 
 
 		this.inputManager.addRawInputListener(this);
@@ -147,7 +147,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 			return;
 
 		float CUTOFF = 0.0015f; // scs
-		//Settings.p("name=" + name + "  value=" + value);
+		Settings.p("name=" + name + "  value=" + value);
 
 		if (name.equals("jFLYCAM_Left" + id)) {
 			rotateCamera(value, initialUpVec);
