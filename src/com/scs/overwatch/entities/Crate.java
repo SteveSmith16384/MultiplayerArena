@@ -39,8 +39,6 @@ public class Crate extends PhysicalEntity implements IProcessable, IAffectedByPh
 			floor_mat.setTexture("ColorMap", tex3);
 		}
 		
-		floor_mat.getAdditionalRenderState().setDepthTest(false); // scs
-		
 		geometry.setMaterial(floor_mat);
 		floor_mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
 		geometry.setQueueBucket(Bucket.Transparent);

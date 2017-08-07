@@ -17,7 +17,6 @@ import com.scs.overwatch.modules.GameModule;
 public class KillerCrateBullet extends PhysicalEntity implements IBullet {
 
 	public ICanShoot shooter;
-	//private RigidBodyControl ball_phy;
 	private float timeLeft = 10;
 	
 	public KillerCrateBullet(Overwatch _game, GameModule _module, ICanShoot _shooter) {
@@ -86,7 +85,7 @@ public class KillerCrateBullet extends PhysicalEntity implements IBullet {
 
 	@Override
 	public float getDamageCaused() {
-		return 1;
+		return 0;
 	}
 
 
@@ -95,5 +94,9 @@ public class KillerCrateBullet extends PhysicalEntity implements IBullet {
 		return false;
 	}
 
+
+	public boolean affectsPlayersPhysics() {
+		return true;
+	}
 
 }

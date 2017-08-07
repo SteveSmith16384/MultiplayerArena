@@ -44,14 +44,14 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	public static final float PLAYER_RAD = 0.2f;
 	private static final float WEIGHT = 3f;
 
-	public Vector3f walkDirection = new Vector3f();
+	public final Vector3f walkDirection = new Vector3f();
 	public float moveSpeed = Settings.DEFAULT_MOVE_SPEED;
 	private IInputDevice input;
 
 	//Temporary vectors used on each frame.
 	private Camera cam;
-	private Vector3f camDir = new Vector3f();
-	private Vector3f camLeft = new Vector3f();
+	private final Vector3f camDir = new Vector3f();
+	private final Vector3f camLeft = new Vector3f();
 
 	public HUD hud;
 	public MyBetterCharacterControl playerControl;
@@ -63,7 +63,6 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	private boolean restarting = false;
 	private long restartAt, invulnerableUntil;
-
 	private Geometry gun;
 
 	public PlayersAvatar(Overwatch _game, GameModule _module, int _id, Camera _cam, IInputDevice _input, HUD _hud) {
@@ -99,7 +98,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 		// Add gun
 		{
-			Box box1 = new Box(.1f, .1f, 1f);
+			Box box1 = new Box(.1f, .1f, .3f);
 			gun = new Geometry("Gun", box1);
 			TextureKey key3 = new TextureKey("Textures/computerconsole2.jpg");
 			key3.setGenerateMips(true);
@@ -113,8 +112,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 				floor_mat.setTexture("ColorMap", tex3);
 			}
 			gun.setMaterial(floor_mat);
-			//gun.setLocalTranslation(new Vector3f(0, (PLAYER_HEIGHT/2)-.075f, 0)); // Need this to ensure the crate is on the floor
-			//this.getMainNode().attachChild(gun);
+			gun.setLocalTranslation(0, 0, .3f);
+			this.getMainNode().attachChild(gun);
 		}
 
 		// create character control parameters (Radius,Height,Weight)
@@ -153,9 +152,10 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 
 	public void moveToStartPostion() {
+		Settings.p("Restarting player");
 		Point p = module.mapData.getPlayerStartPos(id);
 		playerControl.warp(new Vector3f(p.x, 20f, p.y));
-		this.getMainNode().setLocalTranslation(new Vector3f(p.x, 20f, p.y));
+		//this.getMainNode().setLocalTranslation(new Vector3f(p.x, 20f, p.y));
 	}
 
 
@@ -176,15 +176,10 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 				return;
 			}
 
-			//timeSinceLastMove += tpf;
 			abilityGun.process(tpf);
 			abilityOther.process(tpf);
 
 			hud.process(tpf);
-			//this.getMainNode().getWorldTranslation();
-			//playerGeometry.rotate(0, .1f,  0); // rotate player
-
-			//walkDirection.set(0, 0, 0);
 
 			if (input.isAbilityOtherPressed()) { // Must be before we set the walkDirection & moveSpeed, as this method may affect it
 				//Settings.p("Using " + this.ability.toString());
@@ -198,45 +193,36 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			 * to Y axis
 			 */
 			camDir.set(cam.getDirection()).multLocal(moveSpeed, 0.0f, moveSpeed);
-			camLeft.set(cam.getLeft()).multLocal(Settings.DEFAULT_STRAFE_SPEED);
+			camLeft.set(cam.getLeft()).multLocal(moveSpeed);
 			if (input.isStrafeLeftPressed()) {
 				walkDirection.addLocal(camLeft);
-				//timeSinceLastMove = 0;
 			}
 			if (input.isStrafeRightPressed()) {
 				walkDirection.addLocal(camLeft.negate());
-				//timeSinceLastMove = 0;
 			}
 			if (input.isFwdPressed()) {
-				//Settings.p("camDir=" + camDir);
 				walkDirection.addLocal(camDir);
-				//timeSinceLastMove = 0;
 			}
 			if (input.isBackPressed()) {
 				walkDirection.addLocal(camDir.negate());
-				//timeSinceLastMove = 0;
+			}
+
+			if (walkDirection.length() != 0) {
+				Settings.p("walkDirection=" + walkDirection);
 			}
 			playerControl.setWalkDirection(walkDirection);
 
-			if (input.isJumpPressed()){// || timeSinceLastMove > 10) {
-				//Settings.p("timeSinceLastMove=" + timeSinceLastMove);
-				//timeSinceLastMove = 0;
+			if (input.isJumpPressed()){
 				this.jump();
 			}
 
 			if (input.isShootPressed()) {
-				//timeSinceLastMove = 0;
 				shoot();
 			}
 
 			// These must be after we might use them, so the hud is correct 
 			this.hud.setAbilityGunText(this.abilityGun.getHudText());
 			this.hud.setAbilityOtherText(this.abilityOther.getHudText());
-
-			/*
-			 * By default the location of the box is on the bottom of the terrain
-			 * we make a slight offset to adjust for head height.
-			 */
 
 		}
 
@@ -246,18 +232,14 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 		// Rotate us to point in the direction of the camera
 		Vector3f lookAtPoint = cam.getLocation().add(cam.getDirection().mult(10));
+		gun.lookAt(lookAtPoint.clone(), Vector3f.UNIT_Y);
 		lookAtPoint.y = cam.getLocation().y; // Look horizontal
-		//this.playerGeometry.lookAt(lookAtPoint, Vector3f.UNIT_Y);
-		this.getMainNode().lookAt(lookAtPoint.clone(), Vector3f.UNIT_Y);
-
-		//Settings.p("Lookat=" + lookAtPoint);
-		//gun.lookAt(lookAtPoint.mult(-1), Vector3f.UNIT_Y);
-		gun.lookAt(cam.getDirection().clone(), Vector3f.UNIT_Y);
+		this.playerGeometry.lookAt(lookAtPoint, Vector3f.UNIT_Y);
+		//this.getMainNode().lookAt(lookAtPoint.clone(), Vector3f.UNIT_Y);  This won't rotate the model since it's locked to the physics controller
 
 		this.input.resetFlags();
 
 		walkDirection.set(0, 0, 0);
-
 	}
 
 
@@ -307,12 +289,14 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	public void hitByBullet(float dam) {
 		if (System.currentTimeMillis() > this.invulnerableUntil) {
-			module.explosion(this.main_node.getWorldTranslation(), 5, 20);
-			this.health -= dam;
-			this.hud.setHealth(this.health);
-			this.hud.showDamageBox();
+			if (dam > 0) {
+				module.doExplosion(this.main_node.getWorldTranslation(), 5, 20);
+				this.health -= dam;
+				this.hud.setHealth(this.health);
+				this.hud.showDamageBox();
 
-			died();
+				died();
+			}
 		}
 	}
 
@@ -321,8 +305,10 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		this.restarting = true;
 		this.restartAt = System.currentTimeMillis() + RESTART_DUR;
 		invulnerableUntil = System.currentTimeMillis() + (RESTART_DUR*2);
-		Vector3f pos = this.getMainNode().getWorldTranslation();//.floor_phy.getPhysicsLocation().clone();
-		pos.y = -10;
+
+		// Move us below the map
+		Vector3f pos = this.getMainNode().getWorldTranslation().clone();//.floor_phy.getPhysicsLocation().clone();
+		pos.y = -3;
 		playerControl.warp(pos);
 	}
 
@@ -349,7 +335,6 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		if (other instanceof IBullet) {
 			IBullet bullet = (IBullet)other;
 			if (bullet.getShooter() != this) {
-				//bullet.remove();
 				this.hitByBullet(bullet.getDamageCaused());
 				bullet.getShooter().hasSuccessfullyHit(this);
 			}
@@ -363,7 +348,6 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			Point p = module.mapData.getRandomCollectablePos();
 			Collectable c = new Collectable(Overwatch.instance, module, p.x, p.y);
 			Overwatch.instance.getRootNode().attachChild(c.getMainNode());
-
 		}
 	}
 
@@ -372,8 +356,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	public void applyForce(Vector3f force) {
 		//playerControl.getPhysicsRigidBody().applyImpulse(force, Vector3f.ZERO);//.applyCentralForce(dir);
 		//playerControl.getPhysicsRigidBody().applyCentralForce(force);
-		
-		this.walkDirection.addLocal(force);
+		//Settings.p("Applying force to player:" + force);
+		//this.addWalkDirection.addLocal(force);
 	}
 
 
@@ -392,6 +376,5 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	public boolean blocksPlatforms() {
 		return false;
 	}
-
 
 }

@@ -3,6 +3,7 @@ package com.scs.overwatch.entities;
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
+import com.jme3.renderer.queue.RenderQueue.Bucket;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 import com.jme3.texture.Texture;
@@ -39,6 +40,8 @@ public class Collectable extends PhysicalEntity implements ICollideable, IShowOn
 			floor_mat.setTexture("ColorMap", tex3);
 		}
 		geometry.setMaterial(floor_mat);
+		floor_mat.getAdditionalRenderState().setDepthTest(false);
+		geometry.setQueueBucket(Bucket.Transparent);
 
 		this.main_node.attachChild(geometry);
 		main_node.setLocalTranslation(x, 5f, z); // Drop from sky

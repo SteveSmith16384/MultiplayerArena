@@ -5,6 +5,8 @@ import java.awt.Point;
 import ssmith.util.TSArrayList;
 
 import com.jme3.bullet.BulletAppState;
+import com.jme3.bullet.PhysicsSpace;
+import com.jme3.bullet.PhysicsTickListener;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.font.BitmapFont;
@@ -25,10 +27,8 @@ import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.ICollideable;
-import com.scs.overwatch.components.IDamagable;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
-import com.scs.overwatch.effects.SmallExplosion;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
 import com.scs.overwatch.entities.RoamingAI;
@@ -50,7 +50,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	public TSArrayList<PlayersAvatar> avatars = new TSArrayList<>();
 	public IPertinentMapData mapData;
 
-	
 	public GameModule(Overwatch _game) {
 		super();
 
@@ -94,7 +93,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		// Create players for each joystick
 		int nextid=1;
 		if (joysticks == null || joysticks.length == 0) {
-			Settings.p("NO JOYSTICKS/GAMEPADS");
+			//Settings.p("NO JOYSTICKS/GAMEPADS");
 		} else {
 			for (Joystick j : joysticks) {
 				int id = nextid++;
@@ -181,7 +180,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			}
 		} else if (numPlayers == 1) {
 			newCam.setFrustumPerspective(45f, (float) newCam.getWidth() / newCam.getHeight(), 0.01f, Settings.CAM_DIST);
-			Settings.p("Creating full-screen camera");
+			//Settings.p("Creating full-screen camera");
 			newCam.setViewPort(0f, 1f, 0f, 1f);
 			newCam.setName("Cam_FullScreen");
 
@@ -235,8 +234,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 
 	private void addPlayersAvatar(int id, Camera cam, IInputDevice input, HUD hud) {
-		Settings.p("Creating player " + id);
-
 		PlayersAvatar player = new PlayersAvatar(game, this, id, cam, input, hud);
 		game.getRootNode().attachChild(player.getMainNode());
 		this.entities.add(player);
@@ -272,12 +269,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			}
 		}
 
-		/*for (PhysicsCollisionEvent c : this.collisions) {
-			processCollision(c);
-		}
-
-		collisions.clear();*/
-		
 	}
 
 
@@ -289,11 +280,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			int f = 3;
 		}*/
 	
-/*		this.collisions.add(event);
-	}
-	
-	
-	private void processCollision(PhysicsCollisionEvent event) {*/
 		//String s = event.getObjectA().getUserObject().toString() + " collided with " + event.getObjectB().getUserObject().toString();
 		//System.out.println(s);
 		/*if (s.equals("Entity:Player collided with cannon ball (Geometry)")) {
@@ -320,6 +306,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		if (a != null && b != null) {
 			//CollisionLogic.collision(this, a, b);
 			if (a instanceof ICollideable && b instanceof ICollideable) {
+				//Settings.p(a + " has collided with " + b);
 				ICollideable ica = (ICollideable)a;
 				ICollideable icb = (ICollideable)b;
 				ica.collidedWith(icb);
@@ -368,6 +355,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		}
 
 		if (name.equals(TEST)) {
+			Settings.p("Showing explosion");
 			for(IEntity e : entities) {
 				if (e instanceof PlayersAvatar) {
 					PlayersAvatar ip = (PlayersAvatar)e;
@@ -377,12 +365,10 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 					pos.x-=2;
 					pos.y = 0;
 					pos.z-=2;
-					explosion(pos, 5, 10);
+					doExplosion(pos, 5, 10);
 					break;
 				}
 			}
-			
-			//game.getRootNode().rotate(0, 0, 0.01f);
 			
 			/*Vector3f tmp = new Vector3f();
 			this.getBulletAppState().getPhysicsSpace().getGravity(tmp);
@@ -394,9 +380,11 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	}
 
 
-
-	public void explosion(Vector3f pos, float range, float power) {
+	public void doExplosion(Vector3f pos, float range, float power) {
 		for(IEntity e : entities) {
+			/*if (e instanceof PlayersAvatar) {
+				int fff = 55;
+			}*/
 			if (e instanceof IAffectedByPhysics) {
 				IAffectedByPhysics pe = (IAffectedByPhysics)e;
 				float dist = pe.getLocation().subtract(pos).length();
@@ -404,17 +392,18 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 					Settings.p("Applying explosion force to " + e);
 					Vector3f force = pe.getLocation().subtract(pos).normalizeLocal().multLocal(power);
 					pe.applyForce(force);
-					if (e instanceof IDamagable) {
+					/*if (e instanceof IDamagable) {
 						IDamagable id = (IDamagable)e;
 						id.damaged(1 * (range-dist)); // todo
-					}
+					}*/
 				}
 			}
 		}
-		// explosion
-		SmallExplosion expl = new SmallExplosion(this, game.getRootNode(), game.getAssetManager(), game.getRenderManager());
+		
+		// show explosion effect
+		/*todo SmallExplosion expl = new SmallExplosion(this, game.getRootNode(), game.getAssetManager(), game.getRenderManager());
 		expl.setLocalTranslation(pos);
-		this.addEntity(expl);
+		this.addEntity(expl);*/
 	}
 
 
@@ -431,4 +420,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		game.getRootNode().attachChild(ai.getMainNode());
 
 	}
+
+
 }

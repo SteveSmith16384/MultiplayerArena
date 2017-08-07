@@ -27,14 +27,14 @@ import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.components.IShowOnHUD;
 import com.scs.overwatch.components.ITargetByAI;
 import com.scs.overwatch.modules.GameModule;
-import com.scs.overwatch.weapons.LaserRifle;
+import com.scs.overwatch.weapons.KillerCrateGun;
 
 public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot, IShowOnHUD, IDamagable, ICollideable {
 
 	private static final float SPEED = 7;
 
 	//private Vector3f currDir = new Vector3f(0, 0, 1);
-	private Vector3f currDir = new Vector3f(0, 3f, 1);
+	private Vector3f currDir = new Vector3f(0, 1f, 1);
 	private Vector3f shotDir = new Vector3f(0, 0, 0);
 	protected RealtimeInterval targetCheck = new RealtimeInterval(1000);
 	private Vector3f lastPos;
@@ -47,7 +47,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 		float h = 1f;//0.5f;
 		float d = 1f;//0.5f;
 
-		Box box1 = new Box(w/2, h/2, d/2); // todo - make cyl
+		Box box1 = new Box(w/2, h/2, d/2);
 		Geometry geometry = new Geometry("Crate", box1);
 		TextureKey key3 = new TextureKey("Textures/computerconsole2.jpg");
 		key3.setGenerateMips(true);
@@ -77,7 +77,8 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 
 		module.addEntity(this);
 
-		weapon = new LaserRifle(_game, _module, this);
+		//weapon = new LaserRifle(_game, _module, this);
+		weapon = new KillerCrateGun(_game, _module, this); // todo - to test collision force
 
 	}
 
@@ -133,7 +134,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 
 	@Override
 	public void hasSuccessfullyHit(IEntity e) {
-		Settings.p("AI has hit " + e.toString());
+		Settings.p("AI has shot " + e.toString());
 
 	}
 

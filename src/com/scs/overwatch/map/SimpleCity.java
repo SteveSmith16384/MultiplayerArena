@@ -79,7 +79,7 @@ public class SimpleCity implements IPertinentMapData {
 		addFloatingWalkways();
 
 		// Drop new collectable
-		{
+		for (int i=0 ; i<SECTORS ; i++) {
 			Point p = getRandomCollectablePos();
 			Collectable c = new Collectable(Overwatch.instance, module, p.x, p.y);
 			Overwatch.instance.getRootNode().attachChild(c.getMainNode());
@@ -160,8 +160,6 @@ public class SimpleCity implements IPertinentMapData {
 			CreateFloor(x+3, 0f, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, grasstex, null);
 		} else if (i == 2) {
 			pyramid(x+2, y+2, sidewalktex);
-			//} else if (i == 3) {
-			// Columns - todo
 		} else {
 			// Add skyscraper
 			float height = NumberFunctions.rndFloat(4, 10);

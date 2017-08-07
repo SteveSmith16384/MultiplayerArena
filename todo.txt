@@ -1,40 +1,26 @@
-Sorcerers2 spells
-Wall
-Fire
-Shrink
-Tornado
-Invisible
-Heal
-Creatures
-
-
-Over-Kill
+OVER-KILL
 
 
 URGENT
+Move gun, it's like a see-saw
 Not restoring screen when going back to start
-Show collectable through walls
-Don't show crate through wall
-Joypad always moving same speed - adjust by power
-Try crashing something non-kinematic into player to see if they move
-	Make AI jump into sky
+Player not restarting properly
+Joypad always moving same speed - adjust by power - wait for KC test
 	Make JetPac less powerful but last longer
-Show gun protruding onto screen
-	TEST Player not affected by explosion force
-	Regen baddies on death
-	Player not restarting at start
-	Players can't shoot each other
 HOME Adjust gamepad sensitivity - remove "0.01"?
-HOME Change colour of tron tex and use it
-HOME Change player tex to something more tron-y and diff colour for each player
-Sfx
-Large columns that can fall down
 	Make player invulnerable for a short time when respawning
-No HUD on single player
-
+	Make AI jump into sky
+	Regen baddies on death
 
 
 TODO
+No HUD on single player
+HOME Change colour of tron tex and use it
+HOME Change player tex to something more tron-y and diff colour for each player
+Targetter position not right
+Sfx
+Adjust map in mid game - pyramids come through floors
+Large columns that can fall down
 Check all entities for falling off edge
 Map made up of lots of fallen pillars
 Map with area in sky
@@ -44,7 +30,6 @@ Find animated monster?
 Shadows
 Rotate the whole map
 Monorail
-Adjust map in mid game - pyramids come through floors
 Mess about with gravity
 Red kill only covering top half of screen
 Find flash.png
@@ -55,9 +40,6 @@ Platforms on buildings
 Do explosion by throwing invis balls
 Players get harmed by explosion
 Make rocket look better
-Exploding barrels
-Platforms move diff speeds
-Targetter position not right
 See enemies through walls
 Search for todos
 zoom-in ability
@@ -67,21 +49,16 @@ Change avatar - rotating cylinder?
 Crosshairs
 Use IDamagable
 Health
-More scenery
-Add some low-poly models
 Guns - magazine size, reload mag time
 HOME - Need 3D model for players
 Targetting HUD
 Select character class at start
 Cars that drive down roads
 	Explosions
-Create diff types of guns
 Better skybox
 Shrink ray
-Raised platforms
 Search for todos
 	moving platforms
-Different environments (textures)
 Create multi-level map files
 
 
@@ -126,14 +103,14 @@ Auto-aim
 
 
 GAME MODES
-Try and knock other players off the edge
+Knock each other off the edge
 Defend the Base - Who can stay in the "zone" for the longest
 Tig - who can be it the longest, lose when killed, killer gets it (floating dot above head)
 Collect the most collectables
-Shoot the most AI enemies
+Hunt the most AI enemies
 2v1 - with 1 being more powerful
 Skirmish - fight each other
-
+Defend the base Co-op - fight off AI
 
 TEX
 https://opengameart.org/content/hand-painted-mountain-texture
@@ -157,5 +134,25 @@ Cholo remake
 Overwatch
 Goldeneye N64
 Quazatron
+
+
+ORDER:
+1502101237319: update()
+1502101237319: Process player
+1502101237319: Finished process player
+1502101237319: Finished update()
+1502101237324: Player collision
+1502101237324: Player collision
+1502101237324: ...update()
+
+
+Sorcerers2 spells
+Wall
+Fire
+Shrink
+Tornado
+Invisible
+Heal
+Creatures
 
 

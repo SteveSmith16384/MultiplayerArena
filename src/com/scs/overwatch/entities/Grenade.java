@@ -64,7 +64,7 @@ public class Grenade extends PhysicalEntity implements IBullet {
 	public void process(float tpf) {
 		this.timeLeft -= tpf;
 		if (this.timeLeft < 0) {
-			module.explosion(this.getLocation(), 3, 10);
+			module.doExplosion(this.getLocation(), 3, 10);
 			this.remove();
 		}
 		

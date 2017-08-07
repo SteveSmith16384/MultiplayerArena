@@ -76,7 +76,7 @@ public class SimpleMapLoader implements IMapLoader {
 					break;
 
 				default:
-					Settings.p("Ignoring map code " + code);
+					//Settings.p("Ignoring map code " + code);
 					//throw new RuntimeException("Unknown type:" + code);
 				}
 			}

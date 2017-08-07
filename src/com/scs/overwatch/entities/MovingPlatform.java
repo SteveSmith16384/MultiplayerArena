@@ -2,7 +2,6 @@ package com.scs.overwatch.entities;
 
 import com.jme3.math.Vector3f;
 import com.scs.overwatch.Overwatch;
-import com.scs.overwatch.Settings;
 import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.modules.GameModule;
 
@@ -56,7 +55,7 @@ public class MovingPlatform extends AbstractPlatform implements ICollideable {
 			this.main_node.getLocalTranslation().y += 0.1f; // move out the way
 		} else {// todo - moveback*/
 		if (other.blocksPlatforms()) {
-			Settings.p("MovingPlatform " + this.toString() + " hit " + other);
+			//Settings.p("MovingPlatform " + this.toString() + " hit " + other);
 			this.offset.multLocal(-1);
 			//move(0.1f);
 		}

@@ -13,7 +13,6 @@ import com.jme3.input.event.MouseMotionEvent;
 import com.jme3.input.event.TouchEvent;
 import com.jme3.renderer.Camera;
 import com.scs.overwatch.MyFlyByCamera;
-import com.scs.overwatch.Settings;
 
 /**
  * Class to control the direction of the camera with a joystick
@@ -147,7 +146,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 			return;
 
 		float CUTOFF = 0.0015f; // scs
-		Settings.p("name=" + name + "  value=" + value);
+		//Settings.p("name=" + name + "  value=" + value);
 
 		if (name.equals("jFLYCAM_Left" + id)) {
 			rotateCamera(value, initialUpVec);
@@ -162,11 +161,11 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		} else if (name.equals("jFLYCAM_Forward" + id)) {
 			fwd = value > CUTOFF;
 			//if (fwd) 
-			Settings.p("fwd:" + value);
+			//Settings.p("fwd:" + value);
 			//moveCamera(value, false);
 		} else if (name.equals("jFLYCAM_Backward" + id)) {
 			backward = value > CUTOFF;
-			if (backward) Settings.p("backward:" + value);
+			//if (backward) Settings.p("backward:" + value);
 			//moveCamera(-value, false);
 		} else if (name.equals("jFLYCAM_StrafeLeft" + id)) {
 			strafeLeft = value > CUTOFF;
@@ -207,7 +206,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 		Joystick stick = evt.getButton().getJoystick();
 		if (stick == joystick) {
 			JoystickButton button = evt.getButton();
-			Settings.p("button.getButtonId()=" + button.getButtonId());
+			//Settings.p("button.getButtonId()=" + button.getButtonId());
 			if (button.getButtonId() == 1) {
 				this.jump = evt.isPressed();
 			} else if (button.getButtonId() == 5 || button.getButtonId() == 7) {
