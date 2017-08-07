@@ -95,8 +95,4 @@ public class KillerCrateBullet extends PhysicalEntity implements IBullet {
 	}
 
 
-	public boolean affectsPlayersPhysics() {
-		return true;
-	}
-
 }

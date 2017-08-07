@@ -2,7 +2,7 @@ OVER-KILL
 
 
 URGENT
-Move gun, it's like a see-saw
+	Move gun, it's like a see-saw
 Not restoring screen when going back to start
 Player not restarting properly
 Joypad always moving same speed - adjust by power - wait for KC test
