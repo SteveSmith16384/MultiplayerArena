@@ -155,7 +155,9 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		Settings.p("Restarting player");
 		Point p = module.mapData.getPlayerStartPos(id);
 		playerControl.warp(new Vector3f(p.x, 20f, p.y));
-		//this.getMainNode().setLocalTranslation(new Vector3f(p.x, 20f, p.y));
+		this.getMainNode().setLocalTranslation(new Vector3f(p.x, 20f, p.y));
+		this.getMainNode().updateGeometricState();
+		Settings.p("Player starting at:" + this.getMainNode().getWorldTranslation());
 	}
 
 
@@ -194,22 +196,23 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			 */
 			camDir.set(cam.getDirection()).multLocal(moveSpeed, 0.0f, moveSpeed);
 			camLeft.set(cam.getLeft()).multLocal(moveSpeed);
-			if (input.isStrafeLeftPressed()) {
-				walkDirection.addLocal(camLeft);
+			if (input.getFwdValue() > 0) {		
+				//Settings.p("fwd=" + input.getFwdValue());
+				walkDirection.addLocal(camDir.mult(input.getFwdValue()));
 			}
-			if (input.isStrafeRightPressed()) {
-				walkDirection.addLocal(camLeft.negate());
+			if (input.getBackValue() > 0) {
+				walkDirection.addLocal(camDir.negate().mult(input.getBackValue()));
 			}
-			if (input.isFwdPressed()) {
-				walkDirection.addLocal(camDir);
+			if (input.getStrafeLeftValue() > 0) {		
+				walkDirection.addLocal(camLeft.mult(input.getStrafeLeftValue()));
 			}
-			if (input.isBackPressed()) {
-				walkDirection.addLocal(camDir.negate());
+			if (input.getStrafeRightValue() > 0) {		
+				walkDirection.addLocal(camLeft.negate().mult(input.getStrafeRightValue()));
 			}
 
-			if (walkDirection.length() != 0) {
+			/*if (walkDirection.length() != 0) {
 				Settings.p("walkDirection=" + walkDirection);
-			}
+			}*/
 			playerControl.setWalkDirection(walkDirection);
 
 			if (input.isJumpPressed()){
@@ -290,13 +293,15 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	public void hitByBullet(float dam) {
 		if (System.currentTimeMillis() > this.invulnerableUntil) {
 			if (dam > 0) {
-				module.doExplosion(this.main_node.getWorldTranslation(), 5, 20);
+				module.doExplosion(this.main_node.getWorldTranslation());//, 5, 20);
 				this.health -= dam;
 				this.hud.setHealth(this.health);
 				this.hud.showDamageBox();
 
 				died();
 			}
+		} else {
+			Settings.p("Player hit but is currently invulnrable");
 		}
 	}
 
@@ -316,7 +321,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	@Override
 	public void hasSuccessfullyHit(IEntity e) {
 		this.incScore(20);
-		new AbstractHUDImage(game, module, this.hud, "Textures/text/hit.png", this.hud.hud_width, this.hud.hud_height, 2);
+		//new AbstractHUDImage(game, module, this.hud, "Textures/text/hit.png", this.hud.hud_width, this.hud.hud_height, 2);
 	}
 
 

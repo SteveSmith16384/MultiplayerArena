@@ -5,8 +5,6 @@ import java.awt.Point;
 import ssmith.util.TSArrayList;
 
 import com.jme3.bullet.BulletAppState;
-import com.jme3.bullet.PhysicsSpace;
-import com.jme3.bullet.PhysicsTickListener;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.font.BitmapFont;
@@ -29,6 +27,7 @@ import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
+import com.scs.overwatch.effects.SmallExplosion;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
 import com.scs.overwatch.entities.RoamingAI;
@@ -365,7 +364,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 					pos.x-=2;
 					pos.y = 0;
 					pos.z-=2;
-					doExplosion(pos, 5, 10);
+					doExplosion(pos);//, 5, 10);
 					break;
 				}
 			}
@@ -380,7 +379,10 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	}
 
 
-	public void doExplosion(Vector3f pos, float range, float power) {
+	public void doExplosion(Vector3f pos) {//, float range, float power) {
+		float range = 5;
+		float power = 20f;
+		
 		for(IEntity e : entities) {
 			/*if (e instanceof PlayersAvatar) {
 				int fff = 55;
@@ -389,7 +391,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				IAffectedByPhysics pe = (IAffectedByPhysics)e;
 				float dist = pe.getLocation().subtract(pos).length();
 				if (dist <= range) {
-					Settings.p("Applying explosion force to " + e);
+					//Settings.p("Applying explosion force to " + e);
 					Vector3f force = pe.getLocation().subtract(pos).normalizeLocal().multLocal(power);
 					pe.applyForce(force);
 					/*if (e instanceof IDamagable) {
@@ -401,9 +403,9 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		}
 		
 		// show explosion effect
-		/*todo SmallExplosion expl = new SmallExplosion(this, game.getRootNode(), game.getAssetManager(), game.getRenderManager());
+		SmallExplosion expl = new SmallExplosion(this, game.getRootNode(), game.getAssetManager(), game.getRenderManager());
 		expl.setLocalTranslation(pos);
-		this.addEntity(expl);*/
+		this.addEntity(expl);
 	}
 
 

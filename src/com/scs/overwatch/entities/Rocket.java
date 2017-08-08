@@ -71,7 +71,7 @@ public class Rocket extends PhysicalEntity implements IBullet {
 	@Override
 	public void collidedWith(ICollideable other) {
 		if (other != this.shooter) {
-			module.doExplosion(this.getLocation(), 3, 10);
+			module.doExplosion(this.getLocation());//, 3, 10);
 			this.remove();
 		}
 	}

@@ -142,15 +142,27 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 
 
 	@Override
-	public boolean isFwdPressed() {
-		return up;
+	public float getFwdValue() {
+		return up ? 1f : 0f;//this.fwdVal;
 	}
 
 
 	@Override
-	public boolean isBackPressed() {
-		return down;
+	public float getBackValue() {
+		return down ? 1f : 0f;
 	}
+
+
+	@Override
+	public float getStrafeLeftValue() {
+		return left ? 1f : 0f;
+	}
+
+
+	@Override
+	public float getStrafeRightValue() {
+		return right ? 1f : 0f;
+	}        
 
 
 	@Override
@@ -162,18 +174,6 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 	@Override
 	public boolean isShootPressed() {
 		return shoot;
-	}
-
-
-	@Override
-	public boolean isStrafeLeftPressed() {
-		return left;
-	}
-
-
-	@Override
-	public boolean isStrafeRightPressed() {
-		return right;
 	}
 
 

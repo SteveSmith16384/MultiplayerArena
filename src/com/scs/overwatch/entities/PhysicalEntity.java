@@ -8,7 +8,7 @@ import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.modules.GameModule;
 
-public abstract class PhysicalEntity extends Entity implements IProcessable, IAffectedByPhysics {
+public abstract class PhysicalEntity extends Entity implements IProcessable {//, IAffectedByPhysics {
 
 	protected Node main_node;//, left_node, right_node;
 	public String name;

@@ -27,14 +27,14 @@ import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.components.IShowOnHUD;
 import com.scs.overwatch.components.ITargetByAI;
 import com.scs.overwatch.modules.GameModule;
-import com.scs.overwatch.weapons.KillerCrateGun;
+import com.scs.overwatch.weapons.LaserRifle;
 
 public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot, IShowOnHUD, IDamagable, ICollideable {
 
 	private static final float SPEED = 7;
 
 	//private Vector3f currDir = new Vector3f(0, 0, 1);
-	private Vector3f currDir = new Vector3f(0, 1f, 1);
+	private Vector3f currDir = new Vector3f(0, 1.2f, 1);
 	private Vector3f shotDir = new Vector3f(0, 0, 0);
 	protected RealtimeInterval targetCheck = new RealtimeInterval(1000);
 	private Vector3f lastPos;
@@ -77,15 +77,16 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 
 		module.addEntity(this);
 
-		//weapon = new LaserRifle(_game, _module, this);
-		weapon = new KillerCrateGun(_game, _module, this); // todo - to test collision force
+		weapon = new LaserRifle(_game, _module, this);
+		//weapon = new KillerCrateGun(_game, _module, this); // todo - to test collision force
 
+		Settings.p("Created new AI");
 	}
 
 
 	@Override
 	public void process(float tpf) {
-		this.floor_phy.applyCentralForce(currDir.mult(SPEED)); // todo - change to applyImpulse?
+		this.floor_phy.applyCentralForce(currDir.mult(SPEED));
 
 		if (targetCheck.hitInterval()) {
 			// Check position
@@ -165,6 +166,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 		if (other instanceof IBullet) {
 			IBullet bullet = (IBullet)other;
 			if (bullet.getShooter() != this) {
+				module.doExplosion(this.getLocation());//, 5, 5);
 				this.remove();
 				bullet.getShooter().hasSuccessfullyHit(this);
 				module.addAI(); // Add another

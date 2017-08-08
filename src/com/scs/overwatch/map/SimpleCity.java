@@ -86,7 +86,7 @@ public class SimpleCity implements IPertinentMapData {
 		}
 
 		// Add AI roamers
-		for (int i=0 ; i<Settings.NUM_AI*SECTORS ; i++) {
+		for (int i=0 ; i<Settings.NUM_AI ; i++) {
 			/*Point p = getRandomCollectablePos();
 			RoamingAI ai = new RoamingAI(game, module, p.x, p.y);
 			game.getRootNode().attachChild(ai.getMainNode());*/

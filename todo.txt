@@ -1,16 +1,33 @@
+OTHER GAME IDEAS
+Dodgeball (Disco dodgeball)
+Crossy Road 3D
+
+
 OVER-KILL
 
 
 URGENT
-	Move gun, it's like a see-saw
+Call player.warp() in physics tick
+	Reduce size of HIT! - show explosion instead
+Apply diff game modes
+Search for todos
+	Joypad always moving same speed - adjust by power
+Move gun, it's like a see-saw
 Not restoring screen when going back to start
-Player not restarting properly
-Joypad always moving same speed - adjust by power - wait for KC test
-	Make JetPac less powerful but last longer
-HOME Adjust gamepad sensitivity - remove "0.01"?
+	Player not restarting properly
+Make JetPac less powerful but last longer
 	Make player invulnerable for a short time when respawning
-	Make AI jump into sky
 	Regen baddies on death
+
+
+GAME MODES
+Skirmish - fight each other
+Defend the base Co-op - fight off AI
+Defend the Base - Who can stay in the "zone" for the longest
+Collect the most collectables
+Tig - who can be it the longest, lose when killed, killer gets it (floating dot above head)
+Hunt the most AI enemies
+2v1 - with 1 being more powerful
 
 
 TODO
@@ -101,16 +118,6 @@ Force Field
 	Run fast
 Auto-aim
 
-
-GAME MODES
-Knock each other off the edge
-Defend the Base - Who can stay in the "zone" for the longest
-Tig - who can be it the longest, lose when killed, killer gets it (floating dot above head)
-Collect the most collectables
-Hunt the most AI enemies
-2v1 - with 1 being more powerful
-Skirmish - fight each other
-Defend the base Co-op - fight off AI
 
 TEX
 https://opengameart.org/content/hand-painted-mountain-texture
