@@ -7,6 +7,7 @@ OVER-KILL
 
 
 URGENT
+Use CUTOFF for movement
 Call player.warp() in physics tick
 	Reduce size of HIT! - show explosion instead
 Apply diff game modes

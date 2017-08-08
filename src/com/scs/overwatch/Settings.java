@@ -11,7 +11,7 @@ public class Settings {
 	public static final boolean ALWAYS_SHOW_4_CAMS = true;
 	public static final boolean RECORD_VID = false;
 	
-	public static final int NUM_AI = 3;
+	public static final int NUM_AI = 0;
 
 	// Our movement speed
 	public static final float DEFAULT_MOVE_SPEED = 3f;

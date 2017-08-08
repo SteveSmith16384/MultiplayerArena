@@ -196,7 +196,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			 */
 			camDir.set(cam.getDirection()).multLocal(moveSpeed, 0.0f, moveSpeed);
 			camLeft.set(cam.getLeft()).multLocal(moveSpeed);
-			if (input.getFwdValue() > 0) {		
+			if (input.getFwdValue() > 0) {	
 				//Settings.p("fwd=" + input.getFwdValue());
 				walkDirection.addLocal(camDir.mult(input.getFwdValue()));
 			}

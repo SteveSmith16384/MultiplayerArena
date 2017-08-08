@@ -13,6 +13,7 @@ import com.jme3.input.event.MouseMotionEvent;
 import com.jme3.input.event.TouchEvent;
 import com.jme3.renderer.Camera;
 import com.scs.overwatch.MyFlyByCamera;
+import com.scs.overwatch.Settings;
 
 /**
  * Class to control the direction of the camera with a joystick
@@ -24,7 +25,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 	private float fwdVal, backVal, strafeLeftVal, strafeRightVal;
 	private boolean jump = false, shoot = false, ability1 = false;
 	private int id;
-	private float maxVal = 0.1f;
+	private float maxVal = 0.001f;
 
 	public JoystickCamera(Camera _cam, Joystick _joystick, InputManager _inputManager) {
 		super(_cam);
@@ -146,12 +147,14 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 	public void onAnalog(String name, float value, float tpf) {
 		if (!enabled)
 			return;
+		
+		maxVal -= 0.001f;
 
 		float CUTOFF = 0.0015f; // scs
 		if (value > maxVal) {
 			maxVal = value;
+			Settings.p("maxVal now " + maxVal);
 		}
-		//Settings.p("name=" + name + "  value=" + value);
 
 		if (name.equals("jFLYCAM_Left" + id)) {
 			rotateCamera(value, initialUpVec);
@@ -165,6 +168,8 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 			}
 		} else if (name.equals("jFLYCAM_Forward" + id)) {
 			//fwd = value > CUTOFF;
+			//Settings.p("value=" + value);
+			//Settings.p("maxVal=" + maxVal);
 			fwdVal = value/maxVal;
 			//Settings.p("fwdVal:" + value);
 		} else if (name.equals("jFLYCAM_Backward" + id)) {
