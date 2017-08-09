@@ -11,7 +11,13 @@ public class Settings {
 	public static final boolean ALWAYS_SHOW_4_CAMS = true;
 	public static final boolean RECORD_VID = false;
 	
+	// Game settings
+	public static final boolean HAVE_BASE = true;
+	public static final boolean PVP = true;
 	public static final int NUM_AI = 0;
+	public static final int NUM_COLLECTABLES_PER_SECTOR = 0;
+	public static final boolean TIG = false; // todo
+	public static final boolean DODGEBALL = true;
 
 	// Our movement speed
 	public static final float DEFAULT_MOVE_SPEED = 3f;
@@ -20,7 +26,7 @@ public class Settings {
 	public static final float CAM_DIST = 50f;
 	public static final int FLOOR_SECTION_SIZE = 12;
 	public static final boolean LIGHTING = true;
-	public static final String NAME = "Overkill";
+	public static final String NAME = "OverKill";
 	
 	// User Data
 	public static final String ENTITY = "Entity";
@@ -28,7 +34,6 @@ public class Settings {
 	// Map codes
 	public static final int MAP_NOTHING = 0;
 	public static final int MAP_TREE = 1;
-	//public static final int MAP_PLAYER = 2;
 	public static final int MAP_FENCE_LR_HIGH = 4;
 	public static final int MAP_FENCE_FB_HIGH = 5;
 	public static final int MAP_SIMPLE_PILLAR = 7;

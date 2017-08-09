@@ -51,11 +51,13 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 
 		// Create viewport
 		Camera newCam = game.getCamera();
+		//newCam.setFrustumRight(frustumRight)
 		newCam.setFrustumPerspective(45f, (float) newCam.getWidth() / newCam.getHeight(), 0.01f, Settings.CAM_DIST);
 		newCam.setViewPort(0f, 1f, 0f, 1f);
+		
+		
 
 		final ViewPort view2 = game.getRenderManager().createMainView("viewport_" + newCam.toString(), newCam);
-		//view2.setBackgroundColor(new ColorRGBA(0f, 0.9f, .9f, 0f)); // 148 187 242
 		view2.setBackgroundColor(new ColorRGBA(0, 0, 0, 0f));
 		view2.setClearFlags(true, true, true);
 		view2.attachScene(game.getRootNode());
@@ -150,7 +152,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 	public void onJoyButtonEvent(JoyButtonEvent evt) {
 		JoystickButton button = evt.getButton();
 		//Settings.p("button.getButtonId()=" + button.getButtonId());
-		if (button.getButtonId() == 1) {
+		if (button.getButtonId() > 0) {
 			startGame();
 		}
 	}

@@ -32,7 +32,7 @@ import com.scs.overwatch.hud.AbstractHUDImage;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 import com.scs.overwatch.modules.GameModule;
-import com.scs.overwatch.weapons.GrenadeLauncher;
+import com.scs.overwatch.weapons.DodgeballGun;
 import com.scs.overwatch.weapons.LaserRifle;
 
 public class PlayersAvatar extends PhysicalEntity implements IProcessable, ICollideable, ICanShoot, IShowOnHUD, ITargetByAI, IAffectedByPhysics, IDamagable {
@@ -64,6 +64,9 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	private boolean restarting = false;
 	private long restartAt, invulnerableUntil;
 	private Geometry gun;
+	public Vector3f warpPos;
+
+	private boolean hasBall = false;
 
 	public PlayersAvatar(Overwatch _game, GameModule _module, int _id, Camera _cam, IInputDevice _input, HUD _hud) {
 		super(_game, _module, "Player");
@@ -112,8 +115,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 				floor_mat.setTexture("ColorMap", tex3);
 			}
 			gun.setMaterial(floor_mat);
-			gun.setLocalTranslation(0, 0, .3f);
-			this.getMainNode().attachChild(gun);
+			gun.setLocalTranslation(0, 0, .15f);
+			//this.getMainNode().attachChild(gun);
 		}
 
 		// create character control parameters (Radius,Height,Weight)
@@ -126,8 +129,11 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		this.getMainNode().setUserData(Settings.ENTITY, this);
 		playerControl.getPhysicsRigidBody().setUserObject(this);
 
-		//abilityGun = new RocketLauncher(_game, _module, this);
-		abilityGun = new LaserRifle(_game, _module, this); 
+		if (Settings.DODGEBALL) {
+			abilityGun = new DodgeballGun(_game, _module, this);
+		} else {
+			abilityGun = new LaserRifle(_game, _module, this);
+		}
 		this.abilityOther = new JetPac(this);// getRandomAbility(this);
 
 		this.hud.setAbilityGunText(this.abilityGun.getHudText());
@@ -154,11 +160,15 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	public void moveToStartPostion() {
 		Settings.p("Restarting player");
 		Point p = module.mapData.getPlayerStartPos(id);
-		playerControl.warp(new Vector3f(p.x, 20f, p.y));
-		this.getMainNode().setLocalTranslation(new Vector3f(p.x, 20f, p.y));
-		this.getMainNode().updateGeometricState();
-		Settings.p("Player starting at:" + this.getMainNode().getWorldTranslation());
+		//playerControl.warp(new Vector3f(p.x, 20f, p.y));
+		warpPos = new Vector3f(p.x, 20f, p.y);
+		module.toWarp.add(this);
+		//this.getMainNode().setLocalTranslation(new Vector3f(p.x, 20f, p.y));
+		//this.getMainNode().updateGeometricState();
+		//Settings.p("Player starting at:" + this.getMainNode().getWorldTranslation());
 	}
+
+
 
 
 	@Override
@@ -322,6 +332,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	public void hasSuccessfullyHit(IEntity e) {
 		this.incScore(20);
 		//new AbstractHUDImage(game, module, this.hud, "Textures/text/hit.png", this.hud.hud_width, this.hud.hud_height, 2);
+		this.hud.showCollectBox();
 	}
 
 
@@ -337,11 +348,15 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	@Override
 	public void collidedWith(ICollideable other) {
-		if (other instanceof IBullet) {
+		if (!Settings.DODGEBALL && other instanceof IBullet) {
 			IBullet bullet = (IBullet)other;
-			if (bullet.getShooter() != this) {
-				this.hitByBullet(bullet.getDamageCaused());
-				bullet.getShooter().hasSuccessfullyHit(this);
+			if (bullet.getShooter() != null) {
+				if (bullet.getShooter() != this) {
+					if (Settings.PVP || !(bullet.getShooter() instanceof PlayersAvatar)) {
+						this.hitByBullet(bullet.getDamageCaused());
+						bullet.getShooter().hasSuccessfullyHit(this);
+					}
+				}
 			}
 		} else if (other instanceof Collectable) {
 			Collectable col = (Collectable)other;
@@ -353,6 +368,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			Point p = module.mapData.getRandomCollectablePos();
 			Collectable c = new Collectable(Overwatch.instance, module, p.x, p.y);
 			Overwatch.instance.getRootNode().attachChild(c.getMainNode());
+		} else if (other instanceof Base) {
+			this.score++;
 		}
 	}
 
@@ -382,4 +399,14 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		return false;
 	}
 
+
+	public boolean getHasBall() {
+		return this.hasBall;
+	}
+
+
+	public void setHasBall(boolean a) {
+		this.hasBall = a;
+		this.hud.updateHasBall(a);
+	}
 }

@@ -19,7 +19,7 @@ import com.scs.overwatch.Settings;
  * Class to control the direction of the camera with a joystick
  *
  */
-public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawInputListener {
+public class JoystickCamera_ORIG extends MyFlyByCamera implements IInputDevice, RawInputListener {
 
 	protected Joystick joystick;
 	private float fwdVal, backVal, strafeLeftVal, strafeRightVal;
@@ -27,7 +27,7 @@ public class JoystickCamera extends MyFlyByCamera implements IInputDevice, RawIn
 	private int id;
 	private float maxVal = 0.001f;
 
-	public JoystickCamera(Camera _cam, Joystick _joystick, InputManager _inputManager) {
+	public JoystickCamera_ORIG(Camera _cam, Joystick _joystick, InputManager _inputManager) {
 		super(_cam);
 
 		this.inputManager = _inputManager;

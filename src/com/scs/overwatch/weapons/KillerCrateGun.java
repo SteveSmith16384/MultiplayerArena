@@ -16,7 +16,7 @@ public class KillerCrateGun extends AbstractGun implements IAbility {
 	@Override
 	public boolean activate(float interpol) {
 		if (shotInterval.hitInterval()) {
-			KillerCrateBullet b = new KillerCrateBullet(game, module, shooter);
+			new KillerCrateBullet(game, module, shooter);
 			return true;
 		}
 		return false;

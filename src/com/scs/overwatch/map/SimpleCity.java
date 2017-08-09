@@ -8,8 +8,10 @@ import com.jme3.math.Vector3f;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.entities.AbstractPlatform;
+import com.scs.overwatch.entities.Base;
 import com.scs.overwatch.entities.Collectable;
 import com.scs.overwatch.entities.Crate;
+import com.scs.overwatch.entities.DodgeballBall;
 import com.scs.overwatch.entities.Floor;
 import com.scs.overwatch.entities.Lift;
 import com.scs.overwatch.entities.SkyScraper;
@@ -27,12 +29,13 @@ public class SimpleCity implements IPertinentMapData {
 		game = _game;
 		module = _module;
 	}
-	
-	
+
+
 	public void setup() {
 		for (int y=0 ; y<SECTORS ; y++) {
 			for (int x=0 ; x<SECTORS ; x++) {
-				createSector(x*(SKYSCRAPER_WIDTH+6), y*(SKYSCRAPER_WIDTH+6));
+				boolean createBase = Settings.HAVE_BASE && x == 1 && y == 1;
+				createSector(createBase, x*(SKYSCRAPER_WIDTH+6), y*(SKYSCRAPER_WIDTH+6));
 			}			
 		}
 
@@ -79,7 +82,7 @@ public class SimpleCity implements IPertinentMapData {
 		addFloatingWalkways();
 
 		// Drop new collectable
-		for (int i=0 ; i<SECTORS ; i++) {
+		for (int i=0 ; i<Settings.NUM_COLLECTABLES_PER_SECTOR * SECTORS ; i++) {
 			Point p = getRandomCollectablePos();
 			Collectable c = new Collectable(Overwatch.instance, module, p.x, p.y);
 			Overwatch.instance.getRootNode().attachChild(c.getMainNode());
@@ -103,10 +106,20 @@ public class SimpleCity implements IPertinentMapData {
 			game.getRootNode().attachChild(crate.getMainNode());
 		}
 
+		if (Settings.DODGEBALL) {
+			for (int i=0 ; i<SECTORS ; i++) { // todo - one for each player
+				// Add the ball
+				Point p = getRandomCollectablePos();
+				DodgeballBall c = new DodgeballBall(Overwatch.instance, module, null);
+				c.getMainNode().setLocalTranslation(p.x,  10f,  p.y);
+				c.floor_phy.setPhysicsLocation(new Vector3f(p.x,  10f,  p.y));
+				Overwatch.instance.getRootNode().attachChild(c.getMainNode());
+			}
+		}
 	}
 
 
-	private void createSector(float x, float y) {
+	private void createSector(boolean createBase, float x, float y) {
 		/* 123456789012
 		 * XRRRRRRRRRRR
 		 * RRRRRRRRRRRR
@@ -148,32 +161,36 @@ public class SimpleCity implements IPertinentMapData {
 		CreateFloor(x+2, 0f, y+SKYSCRAPER_WIDTH+3, SKYSCRAPER_WIDTH+1, 0.2f, 1, sidewalktex, null); // bottom x
 		CreateFloor(x+2, 0f, y+3, 1, 0.2f, SKYSCRAPER_WIDTH, sidewalktex, null); // Left x
 
-		int i = NumberFunctions.rnd(1, 5);  
-		if (i == 1) {
-			String grasstex = null;
-			if (Settings.NEON) {
-				grasstex = "Textures/tron1.jpg";
-			} else {
-				grasstex = "Textures/grass.png";
-			}
-			// Grass area
-			CreateFloor(x+3, 0f, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, grasstex, null);
-		} else if (i == 2) {
-			pyramid(x+2, y+2, sidewalktex);
+		if (createBase) {//x == 1 && y == 1 && Settings.HAVE_BASE) {
+			Base base = new Base(game, module, x+3, 0f, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, "Textures/grass.png", null); // todo - change tex
+			game.getRootNode().attachChild(base.getMainNode());
 		} else {
-			// Add skyscraper
-			float height = NumberFunctions.rndFloat(4, 10);
-			SkyScraper skyscraper = new SkyScraper(game, module, x+3, y+3, SKYSCRAPER_WIDTH, height, SKYSCRAPER_WIDTH);
-			game.getRootNode().attachChild(skyscraper.getMainNode());
+			int i = NumberFunctions.rnd(1, 4);
+			if (i == 1) {
+				// Grass area
+				String grasstex = null;
+				if (Settings.NEON) {
+					grasstex = "Textures/tron1.jpg";
+				} else {
+					grasstex = "Textures/grass.png";
+				}
+				CreateFloor(x+3, 0f, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, grasstex, null);
+			} else if (i == 2) {
+				pyramid(x+2, y+2, sidewalktex);
+			} else {
+				// Add skyscraper
+				float height = NumberFunctions.rndFloat(4, 10);
+				SkyScraper skyscraper = new SkyScraper(game, module, x+3, y+3, SKYSCRAPER_WIDTH, height, SKYSCRAPER_WIDTH);
+				game.getRootNode().attachChild(skyscraper.getMainNode());
 
-			// Add lift
-			Lift lift1 = new Lift(game, module, x+4, y+2, 0.1f+AbstractPlatform.HEIGHT, height);
-			game.getRootNode().attachChild(lift1.getMainNode());
+				// Add lift
+				Lift lift1 = new Lift(game, module, x+4, y+2, 0.1f+AbstractPlatform.HEIGHT, height);
+				game.getRootNode().attachChild(lift1.getMainNode());
 
-			Lift lift2 = new Lift(game, module, x+5, y+3+SKYSCRAPER_WIDTH, 0.1f+AbstractPlatform.HEIGHT, height);
-			game.getRootNode().attachChild(lift2.getMainNode());
+				Lift lift2 = new Lift(game, module, x+5, y+3+SKYSCRAPER_WIDTH, 0.1f+AbstractPlatform.HEIGHT, height);
+				game.getRootNode().attachChild(lift2.getMainNode());
+			}
 		}
-
 	}
 
 
@@ -187,9 +204,10 @@ public class SimpleCity implements IPertinentMapData {
 	}
 
 
-	private void CreateFloor(float x, float y, float z, float w, float h, float d, String tex, Vector3f scroll) {
+	private Floor CreateFloor(float x, float y, float z, float w, float h, float d, String tex, Vector3f scroll) {
 		Floor floor = new Floor(game, module, x, y, z, w, h, d, tex, scroll);
 		game.getRootNode().attachChild(floor.getMainNode());
+		return floor;
 	}
 
 

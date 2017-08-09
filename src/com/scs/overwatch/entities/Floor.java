@@ -20,7 +20,6 @@ public class Floor extends PhysicalEntity implements ICollideable {
 	private Box box1;
 	private Vector3f texScroll, thisScroll;
 	private float w, h, d;
-	private float offx = 0;
 
 	public Floor(Overwatch _game, GameModule _module, float x, float y, float z, float w, float h, float d, String tex, Vector3f _texScroll) {
 		super(_game, _module, "Floor");

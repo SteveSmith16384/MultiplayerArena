@@ -87,8 +87,8 @@ public class TestJoystick extends SimpleApplication {
         }
     }
 
-    protected void addInfo( String info, int column ) {
     
+    protected void addInfo( String info, int column ) {    
         BitmapText t = new BitmapText(guiFont);
         t.setText( info );
         t.setLocalTranslation( column * 200, yInfo, 0 );
@@ -96,6 +96,7 @@ public class TestJoystick extends SimpleApplication {
         yInfo -= t.getHeight();
     }
 
+    
     protected void setViewedJoystick( Joystick stick ) {
         if( this.viewedJoystick == stick )
             return;

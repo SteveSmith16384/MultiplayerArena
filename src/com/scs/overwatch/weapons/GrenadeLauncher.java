@@ -16,7 +16,7 @@ public class GrenadeLauncher extends AbstractGun implements IAbility {
 	@Override
 	public boolean activate(float interpol) {
 		if (shotInterval.hitInterval()) {
-			Grenade b = new Grenade(game, module, shooter);
+			new Grenade(game, module, shooter);
 			return true;
 		}
 		return false;

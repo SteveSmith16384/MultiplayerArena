@@ -16,7 +16,7 @@ public class LaserRifle extends AbstractGun implements IAbility {
 	@Override
 	public boolean activate(float interpol) {
 		if (shotInterval.hitInterval()) {
-			LaserBullet b = new LaserBullet(game, module, shooter);
+			new LaserBullet(game, module, shooter);
 			return true;
 		}
 		return false;

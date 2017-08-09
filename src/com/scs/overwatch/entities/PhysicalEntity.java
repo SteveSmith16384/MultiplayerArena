@@ -4,7 +4,6 @@ import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.scs.overwatch.Overwatch;
-import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.modules.GameModule;
 
@@ -12,7 +11,7 @@ public abstract class PhysicalEntity extends Entity implements IProcessable {//,
 
 	protected Node main_node;//, left_node, right_node;
 	public String name;
-	protected RigidBodyControl floor_phy;
+	public RigidBodyControl floor_phy;
 
 	public PhysicalEntity(Overwatch _game, GameModule _module, String _name) {
 		super(_game, _module);
@@ -106,6 +105,7 @@ public abstract class PhysicalEntity extends Entity implements IProcessable {//,
 	public Vector3f getLocation() {
 		//return this.main_node.getWorldTranslation(); 000?
 		return this.floor_phy.getPhysicsLocation();
+		
 	}
 
 

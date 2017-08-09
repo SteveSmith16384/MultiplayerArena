@@ -7,28 +7,35 @@ OVER-KILL
 
 
 URGENT
-Use CUTOFF for movement
-Call player.warp() in physics tick
+TEST Points for being on base
+	Dodgeball
+	Dodgeball - change texture of bal if not live
+Better tex for base
+DEBUG Not restoring screen when going back to start
+	Call player.warp() in physics tick
+Apply diff game modes - select num at start
+	Flash white if player hits another
+	HOME How does TestJoytsick guage values?
+	Use CUTOFF for movement
 	Reduce size of HIT! - show explosion instead
-Apply diff game modes
 Search for todos
-	Joypad always moving same speed - adjust by power
-Move gun, it's like a see-saw
-Not restoring screen when going back to start
 	Player not restarting properly
-Make JetPac less powerful but last longer
+	Make JetPac less powerful but last longer
 	Make player invulnerable for a short time when respawning
 	Regen baddies on death
+Find simple model for players
 
 
 GAME MODES
-Skirmish - fight each other
+	Skirmish - fight each other
 Defend the base Co-op - fight off AI
-Defend the Base - Who can stay in the "zone" for the longest
+	Defend the Base - Who can stay in the "zone" for the longest
 Collect the most collectables
 Tig - who can be it the longest, lose when killed, killer gets it (floating dot above head)
 Hunt the most AI enemies
 2v1 - with 1 being more powerful
+	Dodgeball
+Lots of identical player-sized boxes
 
 
 TODO

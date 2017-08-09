@@ -25,7 +25,6 @@ public class StreetLight extends PhysicalEntity {
 		Box box1 = new Box(diam/2, h/2, diam/2);
 		box1.scaleTextureCoordinates(new Vector2f(1, h));
 		Geometry geometry = new Geometry("Crate", box1);
-		int i = NumberFunctions.rnd(1,  5);
 		TextureKey key3 = new TextureKey("Textures/floor0041.png");
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);

@@ -1,10 +1,14 @@
 package com.scs.overwatch.modules;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 import ssmith.util.TSArrayList;
 
 import com.jme3.bullet.BulletAppState;
+import com.jme3.bullet.PhysicsSpace;
+import com.jme3.bullet.PhysicsTickListener;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.font.BitmapFont;
@@ -33,12 +37,12 @@ import com.scs.overwatch.entities.PlayersAvatar;
 import com.scs.overwatch.entities.RoamingAI;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
-import com.scs.overwatch.input.JoystickCamera;
+import com.scs.overwatch.input.JoystickCamera2;
 import com.scs.overwatch.input.MouseAndKeyboardCamera;
 import com.scs.overwatch.map.IPertinentMapData;
 import com.scs.overwatch.map.SimpleCity;
 
-public class GameModule implements IModule, PhysicsCollisionListener, ActionListener {
+public class GameModule implements IModule, PhysicsCollisionListener, ActionListener, PhysicsTickListener {
 
 	private static final String QUIT = "Quit";
 	private static final String TEST = "Test";
@@ -48,6 +52,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	public TSArrayList<IEntity> entities = new TSArrayList<>();
 	public TSArrayList<PlayersAvatar> avatars = new TSArrayList<>();
 	public IPertinentMapData mapData;
+	public List<PlayersAvatar> toWarp = new ArrayList<>();
 
 	public GameModule(Overwatch _game) {
 		super();
@@ -68,6 +73,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		bulletAppState = new BulletAppState();
 		game.getStateManager().attach(bulletAppState);
 		bulletAppState.getPhysicsSpace().addCollisionListener(this);
+		bulletAppState.getPhysicsSpace().addTickListener(this);
 		//bulletAppState.getPhysicsSpace().enableDebug(game.getAssetManager());
 
 		game.getRenderManager().removeMainView(game.getViewPort()); // Since we create new ones for each player
@@ -98,7 +104,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				int id = nextid++;
 				Camera newCam = this.createCamera(id, numPlayers);
 				HUD hud = this.createHUD(newCam, id);
-				JoystickCamera joyCam = new JoystickCamera(newCam, j, game.getInputManager());
+				JoystickCamera2 joyCam = new JoystickCamera2(newCam, j, game.getInputManager());
 				this.addPlayersAvatar(id, newCam, joyCam, hud);
 			}
 		}
@@ -139,22 +145,18 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			newCam.setFrustumPerspective(45f, (float) newCam.getWidth() / newCam.getHeight(), 0.01f, Settings.CAM_DIST);
 			switch (id) { // left/right/bottom/top, from bottom-left!
 			case 0: // TL
-				//Settings.p("Creating camera top-left");
 				newCam.setViewPort(0f, 0.5f, 0.5f, 1f);
 				newCam.setName("Cam_TL");
 				break;
 			case 1: // TR
-				//Settings.p("Creating camera top-right");
 				newCam.setViewPort(0.5f, 1f, 0.5f, 1f);
 				newCam.setName("Cam_TR");
 				break;
 			case 2: // BL
-				//Settings.p("Creating camera bottom-left");
 				newCam.setViewPort(0f, 0.5f, 0f, .5f);
 				newCam.setName("Cam_BL");
 				break;
 			case 3: // BR
-				//Settings.p("Creating camera bottom-right");
 				newCam.setViewPort(0.5f, 1f, 0f, .5f);
 				newCam.setName("Cam_BR");
 				break;
@@ -187,8 +189,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			throw new RuntimeException("Unknown number of players");
 
 		}
-		// Look at the centre by default
-		//c.lookAt(new Vector3f(map.getWidth()/2, 2f, map.getDepth()/2), Vector3f.UNIT_Y);
 
 		final ViewPort view2 = game.getRenderManager().createMainView("viewport_"+newCam.toString(), newCam);
 		view2.setBackgroundColor(new ColorRGBA(0, 0, 0, 0f));
@@ -210,7 +210,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			fpp.addFilter(bloom);
 		}
 		view2.addProcessor(fpp);
-
 
 		return newCam;
 	}
@@ -421,6 +420,22 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		RoamingAI ai = new RoamingAI(game, this, p.x, p.y);
 		game.getRootNode().attachChild(ai.getMainNode());
 
+	}
+
+
+	@Override
+	public void physicsTick(PhysicsSpace arg0, float arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void prePhysicsTick(PhysicsSpace arg0, float arg1) {
+		while (this.toWarp.size() > 0) {
+			PlayersAvatar a = this.toWarp.remove(0);
+			a.playerControl.warp(a.warpPos);
+		}
 	}
 
 
