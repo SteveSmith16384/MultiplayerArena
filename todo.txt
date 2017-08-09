@@ -8,24 +8,19 @@ OVER-KILL
 
 URGENT
 	Check for dodgeball falling off edge
-Game option - have edge walls
-	Points for being on base
-	Dodgeball
-	Dodgeball - change texture of bal if not live
-	Better tex for base
-DEBUG Not restoring screen when going back to start
-	Call player.warp() in physics tick
-Apply diff game modes - select num at start
+	TEST Not restoring screen when going back to start
+	TEST T - Player not restarting properly
+	TEST T - Call player.warp() in physics tick
+	Apply diff game modes - select num at start
 	Flash white if player hits another
 	HOME How does TestJoytsick guage values?
 	Use CUTOFF for movement
 	Reduce size of HIT! - show explosion instead
-Search for todos
-	Player not restarting properly
-	Make JetPac less powerful but last longer
 	Make player invulnerable for a short time when respawning
 	Regen baddies on death
+Game option - have edge walls
 Find simple model for players
+Search for todos
 
 
 GAME MODES
@@ -33,11 +28,11 @@ GAME MODES
 	2 - King of the Hill - Who can stay in the "zone" for the longest
 	3 - Dodgeball
 	4 - Hunt the most AI enemies
-	Collect the most collectables
+Lots of identical player-sized boxes - What the Box
+Collect the most collectables
 Tig - who can be it the longest, lose when killed, killer gets it (floating dot above head)
 2v1 - with 1 being more powerful
 Defend the base Co-op - fight off AI
-Lots of identical player-sized boxes - What the Box
 Rocket League
 
 

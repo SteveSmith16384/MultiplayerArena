@@ -385,9 +385,10 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		float power = 20f;
 		
 		for(IEntity e : entities) {
-			/*if (e instanceof PlayersAvatar) {
-				int fff = 55;
-			}*/
+			if (e instanceof PlayersAvatar) {
+				PlayersAvatar avatar = (PlayersAvatar)e;
+				avatar.hitByBullet(999);
+			}
 			if (e instanceof IAffectedByPhysics) {
 				IAffectedByPhysics pe = (IAffectedByPhysics)e;
 				float dist = pe.getLocation().subtract(pos).length();

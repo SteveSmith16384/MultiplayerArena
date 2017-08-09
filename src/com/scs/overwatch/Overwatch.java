@@ -26,11 +26,12 @@ public class Overwatch extends MySimpleApplication {
 	public static BitmapFont guiFont_small;// = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
 	
 	public static Overwatch instance;
+	public static AppSettings settings;
 	
 	public static void main(String[] args) {
 		try {
 			//properties = loadProperties();
-			AppSettings settings = new AppSettings(true);
+			settings = new AppSettings(true);
 			try {
 				settings.load(Settings.NAME);
 			} catch (BackingStoreException e) {

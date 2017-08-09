@@ -51,11 +51,10 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 
 		// Create viewport
 		Camera newCam = game.getCamera();
-		//newCam.setFrustumRight(frustumRight)
+		//newCam.setFrustum(0.01f, Settings.CAM_DIST, 0, 640, 480, 0); // scs todo - remove?
+		newCam.resize(Overwatch.settings.getWidth(), Overwatch.settings.getHeight(), true);
 		newCam.setFrustumPerspective(45f, (float) newCam.getWidth() / newCam.getHeight(), 0.01f, Settings.CAM_DIST);
 		newCam.setViewPort(0f, 1f, 0f, 1f);
-		
-		
 
 		final ViewPort view2 = game.getRenderManager().createMainView("viewport_" + newCam.toString(), newCam);
 		view2.setBackgroundColor(new ColorRGBA(0, 0, 0, 0f));
@@ -63,22 +62,18 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		view2.attachScene(game.getRootNode());
 
 		game.getInputManager().addMapping(QUIT, new KeyTrigger(KeyInput.KEY_ESCAPE));
-		game.getInputManager().addListener(this, QUIT);            
+		game.getInputManager().addListener(this, QUIT);
+		//game.getInputManager().addMapping(START, new MouseButtonTrigger(MouseInput.BUTTON_LEFT), new KeyTrigger(KeyInput.KEY_SPACE));
+		//game.getInputManager().addListener(this, START);            
 		for (int i=1 ; i<=9 ; i++) {
 			game.getInputManager().addMapping(""+i, new KeyTrigger(KeyInput.KEY_0+i));
+			game.getInputManager().addListener(this, ""+i);
 		}
-		game.getInputManager().addMapping(QUIT, new KeyTrigger(KeyInput.KEY_ESCAPE));
 
 		// Lights
 		AmbientLight al = new AmbientLight();
 		al.setColor(ColorRGBA.White);//.mult(3));
 		game.getRootNode().addLight(al);
-
-		// Auto-Create player 0 - keyboard and mouse
-		{
-			game.getInputManager().addMapping(START, new MouseButtonTrigger(MouseInput.BUTTON_LEFT), new KeyTrigger(KeyInput.KEY_SPACE));
-			game.getInputManager().addListener(this, START);            
-		}
 
 		game.getInputManager().addRawInputListener(this);
 
@@ -91,7 +86,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		}
 
 		BitmapText score = new BitmapText(Overwatch.guiFont_small, false);
-		score.setText("Version " + Settings.VERSION + "\n\nThe winner is the first player to score 100.\n\nSelect Game Mode:\n1 - Skirmish\n2 - King of the Hill\n3 - Bladerunner\n4 - Dodgeball");
+		score.setText("Version " + Settings.VERSION + "\n\nThe winner is the first player to score 100.\n\nSelect Game Mode:\n1 - Skirmish\n2 - King of the Hill\n3 - Dodgeball\n4 - Bladerunner");
 		score.setLocalTranslation(20, game.getCamera().getHeight()-40, 0);
 		game.getGuiNode().attachChild(score);
 
