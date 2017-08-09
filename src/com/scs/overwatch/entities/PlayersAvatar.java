@@ -58,7 +58,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	public final int id;
 	private IAbility abilityGun, abilityOther;
 	public Geometry playerGeometry;
-	private int score = 20;
+	private float score = 0;
 	private float health = 100;
 
 	private boolean restarting = false;
@@ -336,7 +336,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	}
 
 
-	public void incScore(int amt) {
+	public void incScore(float amt) {
 		this.score += amt;
 		this.hud.setScore(this.score);
 
@@ -365,11 +365,13 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			this.hud.showCollectBox();
 
 			// Drop new collectable
-			Point p = module.mapData.getRandomCollectablePos();
+			/*Point p = module.mapData.getRandomCollectablePos();
 			Collectable c = new Collectable(Overwatch.instance, module, p.x, p.y);
-			Overwatch.instance.getRootNode().attachChild(c.getMainNode());
+			Overwatch.instance.getRootNode().attachChild(c.getMainNode());*/
+			module.createCollectable();
+
 		} else if (other instanceof Base) {
-			this.score++;
+			incScore(0.01f);
 		}
 	}
 
@@ -390,7 +392,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	@Override
 	public void damaged(float amt) {
-		// TODO Auto-generated method stub
+
 	}
 
 

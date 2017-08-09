@@ -83,37 +83,28 @@ public class SimpleCity implements IPertinentMapData {
 
 		// Drop new collectable
 		for (int i=0 ; i<Settings.NUM_COLLECTABLES_PER_SECTOR * SECTORS ; i++) {
-			Point p = getRandomCollectablePos();
-			Collectable c = new Collectable(Overwatch.instance, module, p.x, p.y);
-			Overwatch.instance.getRootNode().attachChild(c.getMainNode());
+			module.createCollectable();
 		}
 
 		// Add AI roamers
 		for (int i=0 ; i<Settings.NUM_AI ; i++) {
-			/*Point p = getRandomCollectablePos();
-			RoamingAI ai = new RoamingAI(game, module, p.x, p.y);
-			game.getRootNode().attachChild(ai.getMainNode());*/
 			module.addAI();
 		}
 
 		// Sprinkle lots of boxes
-		for (int i=0 ; i<SECTORS*5 ; i++) {
+		for (int i=0 ; i<SECTORS*6 ; i++) {
 			int x = NumberFunctions.rnd(4, getWidth()-5);
 			int z = NumberFunctions.rnd(4, getDepth()-5);
-			float w = NumberFunctions.rndFloat(.2f, 1f);
+			float w = NumberFunctions.rndFloat(.2f, 2f);
 			float d = NumberFunctions.rndFloat(w, w+0.3f);
 			Crate crate = new Crate(game, module, x, 2f, z, w, w, d, NumberFunctions.rnd(0, 359));
 			game.getRootNode().attachChild(crate.getMainNode());
 		}
 
 		if (Settings.DODGEBALL) {
-			for (int i=0 ; i<SECTORS ; i++) { // todo - one for each player
+			for (int i=0 ; i<game.getInputManager().getJoysticks().length+1 ; i++) { // one for each player
 				// Add the ball
-				Point p = getRandomCollectablePos();
-				DodgeballBall c = new DodgeballBall(Overwatch.instance, module, null);
-				c.getMainNode().setLocalTranslation(p.x,  10f,  p.y);
-				c.floor_phy.setPhysicsLocation(new Vector3f(p.x,  10f,  p.y));
-				Overwatch.instance.getRootNode().attachChild(c.getMainNode());
+				module.createDodgeballBall();
 			}
 		}
 	}
@@ -162,7 +153,7 @@ public class SimpleCity implements IPertinentMapData {
 		CreateFloor(x+2, 0f, y+3, 1, 0.2f, SKYSCRAPER_WIDTH, sidewalktex, null); // Left x
 
 		if (createBase) {//x == 1 && y == 1 && Settings.HAVE_BASE) {
-			Base base = new Base(game, module, x+3, 0f, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, "Textures/grass.png", null); // todo - change tex
+			Base base = new Base(game, module, x+3, 0f, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, "Textures/sun.jpg", null); // todo - change tex
 			game.getRootNode().attachChild(base.getMainNode());
 		} else {
 			int i = NumberFunctions.rnd(1, 4);

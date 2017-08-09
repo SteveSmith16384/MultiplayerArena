@@ -12,12 +12,11 @@ public class Settings {
 	public static final boolean RECORD_VID = false;
 	
 	// Game settings
-	public static final boolean HAVE_BASE = true;
-	public static final boolean PVP = true;
-	public static final int NUM_AI = 0;
-	public static final int NUM_COLLECTABLES_PER_SECTOR = 0;
-	public static final boolean TIG = false; // todo
-	public static final boolean DODGEBALL = true;
+	public static boolean HAVE_BASE = true;
+	public static boolean PVP = true;
+	public static int NUM_AI = 0;
+	public static int NUM_COLLECTABLES_PER_SECTOR = 0;
+	public static boolean DODGEBALL = true;
 
 	// Our movement speed
 	public static final float DEFAULT_MOVE_SPEED = 3f;

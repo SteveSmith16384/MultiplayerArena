@@ -5,7 +5,7 @@ import com.scs.overwatch.entities.PlayersAvatar;
 
 public class JetPac extends AbstractAbility {
 
-	private static final Vector3f FORCE = new Vector3f(0, .35f, 0);
+	private static final Vector3f FORCE = new Vector3f(0, .38f, 0);
 	private static final float MAX_FUEL = 10;
 
 	private float fuel;

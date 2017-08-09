@@ -66,6 +66,12 @@ public class DodgeballBall extends PhysicalEntity implements IBullet {
 
 	@Override
 	public void process(float tpf) {
+		// Check if fallen off edge
+		if (this.getMainNode().getWorldTranslation().y < -1f) {
+			this.remove();
+			module.createDodgeballBall();
+		}
+
 
 	}
 

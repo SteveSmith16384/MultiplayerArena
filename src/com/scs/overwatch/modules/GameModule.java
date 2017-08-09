@@ -32,6 +32,8 @@ import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.effects.SmallExplosion;
+import com.scs.overwatch.entities.Collectable;
+import com.scs.overwatch.entities.DodgeballBall;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
 import com.scs.overwatch.entities.RoamingAI;
@@ -425,7 +427,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	@Override
 	public void physicsTick(PhysicsSpace arg0, float arg1) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -437,6 +438,23 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			a.playerControl.warp(a.warpPos);
 		}
 	}
+	
+	
+	public void createDodgeballBall() {
+		Point p = mapData.getRandomCollectablePos();
+		DodgeballBall c = new DodgeballBall(game, this, null);
+		c.getMainNode().setLocalTranslation(p.x,  10f,  p.y);
+		c.floor_phy.setPhysicsLocation(new Vector3f(p.x,  10f,  p.y));
+		Overwatch.instance.getRootNode().attachChild(c.getMainNode());
 
+	}
+
+	
+	public void createCollectable() {
+		Point p = mapData.getRandomCollectablePos();
+		Collectable c = new Collectable(game, this, p.x, p.y);
+		Overwatch.instance.getRootNode().attachChild(c.getMainNode());
+
+	}
 
 }

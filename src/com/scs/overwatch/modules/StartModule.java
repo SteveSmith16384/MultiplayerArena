@@ -64,6 +64,10 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 
 		game.getInputManager().addMapping(QUIT, new KeyTrigger(KeyInput.KEY_ESCAPE));
 		game.getInputManager().addListener(this, QUIT);            
+		for (int i=1 ; i<=9 ; i++) {
+			game.getInputManager().addMapping(""+i, new KeyTrigger(KeyInput.KEY_0+i));
+		}
+		game.getInputManager().addMapping(QUIT, new KeyTrigger(KeyInput.KEY_ESCAPE));
 
 		// Lights
 		AmbientLight al = new AmbientLight();
@@ -87,7 +91,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		}
 
 		BitmapText score = new BitmapText(Overwatch.guiFont_small, false);
-		score.setText("Version " + Settings.VERSION + "\n\nThe winner is the first player to score 100.\n\nPress FIRE to start!");
+		score.setText("Version " + Settings.VERSION + "\n\nThe winner is the first player to score 100.\n\nSelect Game Mode:\n1 - Skirmish\n2 - King of the Hill\n3 - Bladerunner\n4 - Dodgeball");
 		score.setLocalTranslation(20, game.getCamera().getHeight()-40, 0);
 		game.getGuiNode().attachChild(score);
 
@@ -122,6 +126,38 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		}
 
 		if (name.equals(START)) {
+			startGame();
+		} else if (name.equals("1")) {
+			// Skirmish
+			Settings.HAVE_BASE = false;
+			Settings.PVP = true;
+			Settings.NUM_AI = 0;
+			Settings.NUM_COLLECTABLES_PER_SECTOR = 1;
+			Settings.DODGEBALL = false;
+			startGame();
+		} else if (name.equals("2")) {
+			// King of the Hill
+			Settings.HAVE_BASE = true;
+			Settings.PVP = true;
+			Settings.NUM_AI = 0;
+			Settings.NUM_COLLECTABLES_PER_SECTOR = 0;
+			Settings.DODGEBALL = false;
+			startGame();
+		} else if (name.equals("3")) {
+			// Dodgeball
+			Settings.HAVE_BASE = false;
+			Settings.PVP = true;
+			Settings.NUM_AI = 0;
+			Settings.NUM_COLLECTABLES_PER_SECTOR = 0;
+			Settings.DODGEBALL = true;
+			startGame();
+		} else if (name.equals("4")) {
+			// Bladerunner
+			Settings.HAVE_BASE = false;
+			Settings.PVP = true;
+			Settings.NUM_AI = 3;
+			Settings.NUM_COLLECTABLES_PER_SECTOR = 1;
+			Settings.DODGEBALL = false;
 			startGame();
 		} else if (name.equals(QUIT)) {
 			game.stop();

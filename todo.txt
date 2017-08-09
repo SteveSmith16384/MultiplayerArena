@@ -7,10 +7,12 @@ OVER-KILL
 
 
 URGENT
-TEST Points for being on base
+	Check for dodgeball falling off edge
+Game option - have edge walls
+	Points for being on base
 	Dodgeball
 	Dodgeball - change texture of bal if not live
-Better tex for base
+	Better tex for base
 DEBUG Not restoring screen when going back to start
 	Call player.warp() in physics tick
 Apply diff game modes - select num at start
@@ -27,15 +29,17 @@ Find simple model for players
 
 
 GAME MODES
-	Skirmish - fight each other
-Defend the base Co-op - fight off AI
-	Defend the Base - Who can stay in the "zone" for the longest
-Collect the most collectables
+	1 - Skirmish - fight each other
+	2 - King of the Hill - Who can stay in the "zone" for the longest
+	3 - Dodgeball
+	4 - Hunt the most AI enemies
+	Collect the most collectables
 Tig - who can be it the longest, lose when killed, killer gets it (floating dot above head)
-Hunt the most AI enemies
 2v1 - with 1 being more powerful
-	Dodgeball
-Lots of identical player-sized boxes
+Defend the base Co-op - fight off AI
+Lots of identical player-sized boxes - What the Box
+Rocket League
+
 
 
 TODO
@@ -43,15 +47,15 @@ No HUD on single player
 HOME Change colour of tron tex and use it
 HOME Change player tex to something more tron-y and diff colour for each player
 Targetter position not right
+Check all entities for falling off edge
 Sfx
+large columns that come up through floor
 Adjust map in mid game - pyramids come through floors
 Large columns that can fall down
-Check all entities for falling off edge
 Map made up of lots of fallen pillars
 Map with area in sky
 Maze map
 Castle map
-Find animated monster?
 Shadows
 Rotate the whole map
 Monorail
@@ -75,7 +79,6 @@ Crosshairs
 Use IDamagable
 Health
 Guns - magazine size, reload mag time
-HOME - Need 3D model for players
 Targetting HUD
 Select character class at start
 Cars that drive down roads

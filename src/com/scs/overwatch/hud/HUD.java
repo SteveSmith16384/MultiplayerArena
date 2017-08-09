@@ -178,8 +178,8 @@ public class HUD extends Node implements IEntity, IProcessable {
 	}
 
 
-	public void setScore(int s) {
-		this.score.setText("SCORE: " + s);
+	public void setScore(float s) {
+		this.score.setText("SCORE: " + (int)s);
 	}
 
 

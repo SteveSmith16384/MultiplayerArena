@@ -78,7 +78,6 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 		module.addEntity(this);
 
 		weapon = new LaserRifle(_game, _module, this);
-		//weapon = new KillerCrateGun(_game, _module, this); // todo - to test collision force
 
 		Settings.p("Created new AI");
 	}
@@ -157,7 +156,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 
 	@Override
 	public void damaged(float amt) {
-		// TODO Auto-generated method stub
+
 	}
 
 
