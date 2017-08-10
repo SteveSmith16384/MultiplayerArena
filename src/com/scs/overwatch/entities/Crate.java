@@ -16,7 +16,7 @@ import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.modules.GameModule;
 
-public class Crate extends PhysicalEntity implements IProcessable, IAffectedByPhysics, ICollideable {
+public class Crate extends PhysicalEntity implements IAffectedByPhysics {//, ICollideable { // IProcessable, 
 
 	public Crate(Overwatch _game, GameModule _module, float x, float y, float z, float w, float h, float d, float rotDegrees) {
 		super(_game, _module, "Crate");
@@ -67,7 +67,7 @@ public class Crate extends PhysicalEntity implements IProcessable, IAffectedByPh
 		//Settings.p("Pos: " + this.getLocation());
 	}
 
-
+/*
 	@Override
 	public void collidedWith(ICollideable other) {
 		// Do nothing
@@ -79,5 +79,5 @@ public class Crate extends PhysicalEntity implements IProcessable, IAffectedByPh
 		return false;
 	}
 
-
+*/
 }

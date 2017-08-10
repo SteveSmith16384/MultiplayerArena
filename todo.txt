@@ -7,18 +7,17 @@ OVER-KILL
 
 
 URGENT
-adjust gamepad up/down speed
-What is max move fwd
-Add extra key listeners for menu
+Diff texture for AI
+Create config file like Killer Crates
 Crash after hit by bullet
+Try using camera zoom
+	HOME adjust gamepad up/down speed
+	Add extra key listeners for menu
 	Check for dodgeball falling off edge
 	TEST Not restoring screen when going back to start
 	TEST T - Player not restarting properly
 	TEST T - Call player.warp() in physics tick
-	Apply diff game modes - select num at start
 	Flash white if player hits another
-	HOME How does TestJoytsick guage values?
-	Use CUTOFF for movement
 	Reduce size of HIT! - show explosion instead
 	Make player invulnerable for a short time when respawning
 	Regen baddies on death
@@ -32,7 +31,7 @@ GAME MODES
 	2 - King of the Hill - Who can stay in the "zone" for the longest
 	3 - Dodgeball
 	4 - Hunt the most AI enemies
-Lots of identical player-sized boxes - What the Box
+	5 - Clone Wars (Lots of identical player-sized boxes - What the Box)
 Collect the most collectables
 Tig - who can be it the longest, lose when killed, killer gets it (floating dot above head)
 2v1 - with 1 being more powerful

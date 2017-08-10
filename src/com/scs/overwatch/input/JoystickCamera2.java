@@ -35,8 +35,8 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 		this.joystick = _joystick;
 		id = joystick.getJoyId();
 
-		super.setMoveSpeed(.7f);//1f);
-		super.setRotationSpeed(1f);//.5f); SCS 
+		//super.setMoveSpeed(.7f);//1f);
+		//super.setRotationSpeed(1f);//.5f); SCS 
 
 		this.inputManager.addRawInputListener(this);
 
@@ -177,16 +177,16 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 		rightVal = 0;
 
 		if (x > 0) {
-			fwdVal = x *SPEED;
+			fwdVal = Math.min(1, x *SPEED);
 			Settings.p("fwdVal=" + fwdVal);
 		} else {
-			backVal = -x *SPEED;
+			backVal = Math.min(1, -x *SPEED);
 			Settings.p("backVal=" + backVal);
 		}
 		if (y > 0) {
-			rightVal = y *SPEED;
+			rightVal = Math.min(1, y *SPEED);
 		} else {
-			leftVal = -y *SPEED;
+			leftVal = Math.min(1, -y *SPEED);
 		}
 	}
 

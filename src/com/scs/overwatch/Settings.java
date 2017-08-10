@@ -16,8 +16,10 @@ public class Settings {
 	public static boolean PVP = true;
 	public static int NUM_AI = 0;
 	public static int NUM_COLLECTABLES_PER_SECTOR = 0;
-	public static boolean DODGEBALL = true;
-
+	public static boolean DODGEBALL = false;
+	public static boolean CLONE_WARS = true;
+	public static int NUM_SECTORS = 3;
+	
 	// Our movement speed
 	public static final float DEFAULT_MOVE_SPEED = 3f;
 	public static final float DEFAULT_STRAFE_SPEED = 3f;

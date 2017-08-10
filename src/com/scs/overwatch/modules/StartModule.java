@@ -64,11 +64,17 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		game.getInputManager().addMapping(QUIT, new KeyTrigger(KeyInput.KEY_ESCAPE));
 		game.getInputManager().addListener(this, QUIT);
 		//game.getInputManager().addMapping(START, new MouseButtonTrigger(MouseInput.BUTTON_LEFT), new KeyTrigger(KeyInput.KEY_SPACE));
-		//game.getInputManager().addListener(this, START);            
-		game.getInputManager().addMapping("1", new KeyTrigger(KeyInput.KEY_1));
+		//game.getInputManager().addListener(this, START);
+		/*game.getInputManager().addMapping("1", new KeyTrigger(KeyInput.KEY_1));
 		game.getInputManager().addListener(this, "1");
-		for (int i=1 ; i<=9 ; i++) {
-			game.getInputManager().addMapping(""+i, new KeyTrigger(KeyInput.KEY_0+i));
+		game.getInputManager().addMapping("2", new KeyTrigger(KeyInput.KEY_1));
+		game.getInputManager().addListener(this, "1");
+		game.getInputManager().addMapping("2", new KeyTrigger(KeyInput.KEY_1));
+		game.getInputManager().addListener(this, "1");
+		game.getInputManager().addMapping("2", new KeyTrigger(KeyInput.KEY_1));
+		game.getInputManager().addListener(this, "1");*/
+		for (int i=1 ; i<=6 ; i++) {
+			game.getInputManager().addMapping(""+i, new KeyTrigger(KeyInput.KEY_1+i-1));
 			game.getInputManager().addListener(this, ""+i);
 		}
 
@@ -88,7 +94,12 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		}
 
 		BitmapText score = new BitmapText(Overwatch.guiFont_small, false);
-		score.setText("Version " + Settings.VERSION + "\n\nThe winner is the first player to score 100.\n\nSelect Game Mode:\n1 - Skirmish\n2 - King of the Hill\n3 - Dodgeball\n4 - Bladerunner");
+		score.setText("Version " + Settings.VERSION + "\n\nThe winner is the first player to score 100.\n\nSelect Game Mode:\n" +
+				"1 - Skirmish\n" +
+				"2 - King of the Hill\n" +
+				"3 - Dodgeball\n" +
+				"4 - Bladerunner\n" +
+				"5 - Clone Wars");
 		score.setLocalTranslation(20, game.getCamera().getHeight()-40, 0);
 		game.getGuiNode().attachChild(score);
 
@@ -123,38 +134,56 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		}
 
 		if (name.equals(START)) {
-			startGame();
+			//startGame();
 		} else if (name.equals("1")) {
 			// Skirmish
+			Settings.NUM_SECTORS = 3;
 			Settings.HAVE_BASE = false;
 			Settings.PVP = true;
 			Settings.NUM_AI = 0;
 			Settings.NUM_COLLECTABLES_PER_SECTOR = 1;
 			Settings.DODGEBALL = false;
+			Settings.CLONE_WARS = false;
 			startGame();
 		} else if (name.equals("2")) {
 			// King of the Hill
+			Settings.NUM_SECTORS = 3;
 			Settings.HAVE_BASE = true;
 			Settings.PVP = true;
 			Settings.NUM_AI = 0;
 			Settings.NUM_COLLECTABLES_PER_SECTOR = 0;
 			Settings.DODGEBALL = false;
+			Settings.CLONE_WARS = false;
 			startGame();
 		} else if (name.equals("3")) {
 			// Dodgeball
+			Settings.NUM_SECTORS = 2;
 			Settings.HAVE_BASE = false;
 			Settings.PVP = true;
 			Settings.NUM_AI = 0;
 			Settings.NUM_COLLECTABLES_PER_SECTOR = 0;
 			Settings.DODGEBALL = true;
+			Settings.CLONE_WARS = false;
 			startGame();
 		} else if (name.equals("4")) {
 			// Bladerunner
+			Settings.NUM_SECTORS = 3;
 			Settings.HAVE_BASE = false;
 			Settings.PVP = true;
 			Settings.NUM_AI = 3;
 			Settings.NUM_COLLECTABLES_PER_SECTOR = 1;
 			Settings.DODGEBALL = false;
+			Settings.CLONE_WARS = false;
+			startGame();
+		} else if (name.equals("5")) {
+			// Clone Wars
+			Settings.NUM_SECTORS = 2;
+			Settings.HAVE_BASE = false;
+			Settings.PVP = true;
+			Settings.NUM_AI = 0;
+			Settings.NUM_COLLECTABLES_PER_SECTOR = 1;
+			Settings.DODGEBALL = false;
+			Settings.CLONE_WARS = true;
 			startGame();
 		} else if (name.equals(QUIT)) {
 			game.stop();

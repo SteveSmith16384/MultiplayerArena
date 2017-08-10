@@ -9,38 +9,40 @@ import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.entities.AbstractPlatform;
 import com.scs.overwatch.entities.Base;
-import com.scs.overwatch.entities.Collectable;
 import com.scs.overwatch.entities.Crate;
-import com.scs.overwatch.entities.DodgeballBall;
 import com.scs.overwatch.entities.Floor;
 import com.scs.overwatch.entities.Lift;
+import com.scs.overwatch.entities.PlayersClone;
 import com.scs.overwatch.entities.SkyScraper;
 import com.scs.overwatch.modules.GameModule;
 
 public class SimpleCity implements IPertinentMapData {
 
 	private static final int SKYSCRAPER_WIDTH = 7;
-	private static final int SECTORS = 3;
 
 	private Overwatch game;
 	private GameModule module;
+	private int numSectors;
 
 	public SimpleCity(Overwatch _game, GameModule _module) {
 		game = _game;
 		module = _module;
+
+		numSectors = Settings.NUM_SECTORS;
 	}
 
 
 	public void setup() {
-		for (int y=0 ; y<SECTORS ; y++) {
-			for (int x=0 ; x<SECTORS ; x++) {
+
+		for (int y=0 ; y<numSectors ; y++) {
+			for (int x=0 ; x<numSectors ; x++) {
 				boolean createBase = Settings.HAVE_BASE && x == 1 && y == 1;
 				createSector(createBase, x*(SKYSCRAPER_WIDTH+6), y*(SKYSCRAPER_WIDTH+6));
 			}			
 		}
 
 		// Add outer walls
-		for (int x=0 ; x<SECTORS ; x++) {
+		for (int x=0 ; x<numSectors ; x++) {
 			float height = NumberFunctions.rndFloat(10, 20);
 			SkyScraper skyscraperBack = new SkyScraper(game, module, x*(SKYSCRAPER_WIDTH+6), -1, SKYSCRAPER_WIDTH+6, height, 1);
 			game.getRootNode().attachChild(skyscraperBack.getMainNode());
@@ -50,11 +52,11 @@ public class SimpleCity implements IPertinentMapData {
 			game.getRootNode().attachChild(skyscraperLeft.getMainNode());
 
 			height = NumberFunctions.rndFloat(10, 20);
-			SkyScraper skyscraperFront = new SkyScraper(game, module, x*(SKYSCRAPER_WIDTH+6), SECTORS*(SKYSCRAPER_WIDTH+6), SKYSCRAPER_WIDTH+6, height, 1);
+			SkyScraper skyscraperFront = new SkyScraper(game, module, x*(SKYSCRAPER_WIDTH+6), numSectors*(SKYSCRAPER_WIDTH+6), SKYSCRAPER_WIDTH+6, height, 1);
 			game.getRootNode().attachChild(skyscraperFront.getMainNode());
 
 			height = NumberFunctions.rndFloat(10, 20);
-			SkyScraper skyscraperRight = new SkyScraper(game, module, SECTORS*(SKYSCRAPER_WIDTH+6), x*(SKYSCRAPER_WIDTH+6), 1, height, SKYSCRAPER_WIDTH+6);
+			SkyScraper skyscraperRight = new SkyScraper(game, module, numSectors*(SKYSCRAPER_WIDTH+6), x*(SKYSCRAPER_WIDTH+6), 1, height, SKYSCRAPER_WIDTH+6);
 			game.getRootNode().attachChild(skyscraperRight.getMainNode());
 		}
 
@@ -82,7 +84,7 @@ public class SimpleCity implements IPertinentMapData {
 		addFloatingWalkways();
 
 		// Drop new collectable
-		for (int i=0 ; i<Settings.NUM_COLLECTABLES_PER_SECTOR * SECTORS ; i++) {
+		for (int i=0 ; i<Settings.NUM_COLLECTABLES_PER_SECTOR * numSectors ; i++) {
 			module.createCollectable();
 		}
 
@@ -91,14 +93,24 @@ public class SimpleCity implements IPertinentMapData {
 			module.addAI();
 		}
 
-		// Sprinkle lots of boxes
-		for (int i=0 ; i<SECTORS*6 ; i++) {
-			int x = NumberFunctions.rnd(4, getWidth()-5);
-			int z = NumberFunctions.rnd(4, getDepth()-5);
-			float w = NumberFunctions.rndFloat(.2f, 2f);
-			float d = NumberFunctions.rndFloat(w, w+0.3f);
-			Crate crate = new Crate(game, module, x, 2f, z, w, w, d, NumberFunctions.rnd(0, 359));
-			game.getRootNode().attachChild(crate.getMainNode());
+		if (Settings.CLONE_WARS == false) {
+			// Sprinkle lots of boxes
+			for (int i=0 ; i<numSectors*6 ; i++) {
+				int x = NumberFunctions.rnd(4, getWidth()-5);
+				int z = NumberFunctions.rnd(4, getDepth()-5);
+				float w = NumberFunctions.rndFloat(.2f, 2f);
+				float d = NumberFunctions.rndFloat(w, w+0.3f);
+				Crate crate = new Crate(game, module, x, 20f, z, w, w, d, NumberFunctions.rnd(0, 359));
+				game.getRootNode().attachChild(crate.getMainNode());
+			}
+		} else {
+			// Sprinkle lots of identicals
+			for (int i=0 ; i<numSectors*6 ; i++) {
+				int x = NumberFunctions.rnd(4, getWidth()-5);
+				int z = NumberFunctions.rnd(4, getDepth()-5);
+				PlayersClone box = new PlayersClone(game, module, x, 20f, z, NumberFunctions.rnd(0, 359));
+				game.getRootNode().attachChild(box.getMainNode());
+			}
 		}
 
 		if (Settings.DODGEBALL) {
@@ -204,20 +216,20 @@ public class SimpleCity implements IPertinentMapData {
 
 	@Override
 	public int getWidth() {
-		return SECTORS*(SKYSCRAPER_WIDTH+6);
+		return numSectors*(SKYSCRAPER_WIDTH+6);
 	}
 
 
 	@Override
 	public int getDepth() {
-		return SECTORS*(SKYSCRAPER_WIDTH+6);
+		return numSectors*(SKYSCRAPER_WIDTH+6);
 	}
 
 
 	@Override
 	public Point getPlayerStartPos(int id) {
-		int sx = NumberFunctions.rnd(0, SECTORS-1);
-		int sz = NumberFunctions.rnd(0, SECTORS-1);
+		int sx = NumberFunctions.rnd(0, numSectors-1);
+		int sz = NumberFunctions.rnd(0, numSectors-1);
 		int x = sx*(SKYSCRAPER_WIDTH+6);
 		int z = sz*(SKYSCRAPER_WIDTH+6); 
 		return new Point(x+1, z+1);
@@ -238,24 +250,24 @@ public class SimpleCity implements IPertinentMapData {
 		Vector3f scrollfb = new Vector3f(0, 0, 1);
 
 		// Left-right
-		for (int i=0 ; i < SECTORS ; i++) {
+		for (int i=0 ; i < numSectors ; i++) {
 			float x = 0f;
 			float y = NumberFunctions.rnd(4,  10);
-			float z = NumberFunctions.rnd(0, SECTORS*(SKYSCRAPER_WIDTH+6));
-			float w = SECTORS*(SKYSCRAPER_WIDTH+6);
+			float z = NumberFunctions.rnd(0, numSectors*(SKYSCRAPER_WIDTH+6));
+			float w = numSectors*(SKYSCRAPER_WIDTH+6);
 			float h = 0.1f;
 			float d = 1f;
 			CreateFloor(x, y, z, w, h, d, Settings.getRoadwayTex(), scrolllr);// "Textures/floor0041.png");
 		}
 
 		// front-back
-		for (int i=0 ; i < SECTORS ; i++) {
-			float x = NumberFunctions.rnd(0, SECTORS*(SKYSCRAPER_WIDTH+6));
+		for (int i=0 ; i < numSectors ; i++) {
+			float x = NumberFunctions.rnd(0, numSectors*(SKYSCRAPER_WIDTH+6));
 			float y = NumberFunctions.rnd(4,  10);
 			float z = 0f;
 			float w = 1f;//
 			float h = 0.1f;
-			float d = SECTORS*(SKYSCRAPER_WIDTH+6);
+			float d = numSectors*(SKYSCRAPER_WIDTH+6);
 			CreateFloor(x, y, z, w, h, d, Settings.getRoadwayTex(), scrollfb);//, "Textures/floor0041.png");
 		}
 

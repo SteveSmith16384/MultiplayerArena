@@ -21,11 +21,13 @@ import com.scs.overwatch.Settings;
  */
 public class JoystickCamera_ORIG extends MyFlyByCamera implements IInputDevice, RawInputListener {
 
+	private static final float SPEED = 5;
+	private static final float LOOK_UD_ADJ = .7f;
+
 	protected Joystick joystick;
 	private float fwdVal, backVal, strafeLeftVal, strafeRightVal;
 	private boolean jump = false, shoot = false, ability1 = false;
 	private int id;
-	private float maxVal = 0.001f;
 
 	public JoystickCamera_ORIG(Camera _cam, Joystick _joystick, InputManager _inputManager) {
 		super(_cam);
@@ -34,50 +36,21 @@ public class JoystickCamera_ORIG extends MyFlyByCamera implements IInputDevice, 
 		this.joystick = _joystick;
 		id = joystick.getJoyId();
 
-		super.setMoveSpeed(.7f);//1f);
-		super.setRotationSpeed(1f);//.5f); SCS 
+		//super.setMoveSpeed(.7f);//1f);
+		//super.setRotationSpeed(1f);//.5f); SCS 
 
 		this.inputManager.addRawInputListener(this);
 
-		// both mouse and button - rotation of cam
-		//inputManager.addMapping("jFLYCAM_Left", new MouseAxisTrigger(MouseInput.AXIS_X, true),
-		//		new KeyTrigger(KeyInput.KEY_LEFT));
 		inputManager.addListener(this, "jFLYCAM_Left"+id);
-
-		//inputManager.addMapping("jFLYCAM_Right", new MouseAxisTrigger(MouseInput.AXIS_X, false),
-		//		new KeyTrigger(KeyInput.KEY_RIGHT));
 		inputManager.addListener(this, "jFLYCAM_Right"+id);
-
-		/*inputManager.addMapping("jFLYCAM_Up", new MouseAxisTrigger(MouseInput.AXIS_Y, false),
-				new KeyTrigger(KeyInput.KEY_UP));*/
 		inputManager.addListener(this, "jFLYCAM_Up"+id);
-
-		/*inputManager.addMapping("jFLYCAM_Down", new MouseAxisTrigger(MouseInput.AXIS_Y, true),
-				new KeyTrigger(KeyInput.KEY_DOWN));*/
 		inputManager.addListener(this, "jFLYCAM_Down"+id);
 
-		/*
-        // mouse only - zoom in/out with wheel, and rotate drag
-        inputManager.addMapping("FLYCAM_ZoomIn", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false));
-        inputManager.addMapping("FLYCAM_ZoomOut", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, true));
-        inputManager.addMapping("FLYCAM_RotateDrag", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
-
-        // keyboard only WASD for movement and WZ for rise/lower height
-        inputManager.addMapping("FLYCAM_StrafeLeft", new KeyTrigger(KeyInput.KEY_A));
-        inputManager.addMapping("FLYCAM_StrafeRight", new KeyTrigger(KeyInput.KEY_D));
-        inputManager.addMapping("FLYCAM_Forward", new KeyTrigger(KeyInput.KEY_W));
-        inputManager.addMapping("FLYCAM_Backward", new KeyTrigger(KeyInput.KEY_S));
-        inputManager.addMapping("FLYCAM_Rise", new KeyTrigger(KeyInput.KEY_Q));
-        inputManager.addMapping("FLYCAM_Lower", new KeyTrigger(KeyInput.KEY_Z));
-		 */
 		inputManager.addListener(this, "jFLYCAM_StrafeLeft" + id);
 		inputManager.addListener(this, "jFLYCAM_StrafeRight" + id);
 		inputManager.addListener(this, "jFLYCAM_Forward" + id);
 		inputManager.addListener(this, "jFLYCAM_Backward" + id);
 
-		/*      inputManager.addListener(this, mappings);
-        inputManager.setCursorVisible(dragToRotate || !isEnabled());
-		 */
 		mapJoystick(joystick, id);
 	}
 
@@ -147,37 +120,45 @@ public class JoystickCamera_ORIG extends MyFlyByCamera implements IInputDevice, 
 	public void onAnalog(String name, float value, float tpf) {
 		if (!enabled)
 			return;
-		
-		maxVal -= 0.001f;
 
 		float CUTOFF = 0.0015f; // scs
-		if (value > maxVal) {
-			maxVal = value;
-			Settings.p("maxVal now " + maxVal);
-		}
 
 		if (name.equals("jFLYCAM_Left" + id)) {
-			rotateCamera(value, initialUpVec);
+			if (value > CUTOFF) {
+				rotateCamera(value, initialUpVec);
+			}
 		} else if (name.equals("jFLYCAM_Right" + id)) {
-			rotateCamera(-value, initialUpVec);
+			if (value > CUTOFF) {
+				rotateCamera(-value, initialUpVec);
+			}
 		} else if (name.equals("jFLYCAM_Up" + id)) {
-			rotateCamera(-value * (invertY ? -1 : 1), cam.getLeft());
+			if (value > CUTOFF) {
+				rotateCamera(-value * LOOK_UD_ADJ * (invertY ? -1 : 1), cam.getLeft());
+			}
 		} else if (name.equals("jFLYCAM_Down" + id)) {
-			if (value > CUTOFF) { // SCS
-				rotateCamera(value * (invertY ? -1 : 1), cam.getLeft());
+			if (value > CUTOFF) {
+				rotateCamera(value * LOOK_UD_ADJ * (invertY ? -1 : 1), cam.getLeft());
 			}
 		} else if (name.equals("jFLYCAM_Forward" + id)) {
-			//fwd = value > CUTOFF;
-			//Settings.p("value=" + value);
-			//Settings.p("maxVal=" + maxVal);
-			fwdVal = value/maxVal;
-			//Settings.p("fwdVal:" + value);
+			if (value > CUTOFF) {
+				//fwd = value > CUTOFF;
+				//Settings.p("value=" + value);
+				//Settings.p("maxVal=" + maxVal);
+				fwdVal = Math.min(1, value * SPEED);
+				//Settings.p("fwdVal:" + value);
+			}
 		} else if (name.equals("jFLYCAM_Backward" + id)) {
-			backVal = value/maxVal;
+			if (value > CUTOFF) {
+				backVal = Math.min(1, value * SPEED);
+			}
 		} else if (name.equals("jFLYCAM_StrafeLeft" + id)) {
-			strafeLeftVal = value/maxVal;
+			if (value > CUTOFF) {
+				strafeLeftVal = Math.min(1, value * SPEED);
+			}
 		} else if (name.equals("jFLYCAM_StrafeRight" + id)) {
-			strafeRightVal = value/maxVal;
+			if (value > CUTOFF) {
+				strafeRightVal = Math.min(1, value * SPEED);
+			}
 		}
 	}
 

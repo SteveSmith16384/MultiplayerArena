@@ -19,8 +19,6 @@ public class Collectable extends PhysicalEntity implements ICollideable, IShowOn
 
 	private static final float SIZE = .1f;
 
-	//private Geometry geometry;
-	
 	public Collectable(Overwatch _game, GameModule _module, float x, float z) {
 		super(_game, _module, "Collectable");
 

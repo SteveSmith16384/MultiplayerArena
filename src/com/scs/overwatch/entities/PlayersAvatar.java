@@ -77,24 +77,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		hud = _hud;
 
 		{
-			// Add player's box
-			Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
-			//Cylinder box1 = new Cylinder(1, 8, PLAYER_RAD, PLAYER_HEIGHT, true);
-			playerGeometry = new Geometry("Player", box1);
-			TextureKey key3 = new TextureKey("Textures/computerconsole2.jpg");
-			key3.setGenerateMips(true);
-			Texture tex3 = game.getAssetManager().loadTexture(key3);
-			Material floor_mat = null;
-			if (Settings.LIGHTING) {
-				floor_mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
-				floor_mat.setTexture("DiffuseMap", tex3);
-			} else {
-				floor_mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
-				floor_mat.setTexture("ColorMap", tex3);
-			}
-			playerGeometry.setMaterial(floor_mat);
-			//playerGeometry.setLocalTranslation(new Vector3f(0, PLAYER_HEIGHT/2, 0)); // Need this to ensure the crate is on the floor
-			playerGeometry.setLocalTranslation(new Vector3f(0, (PLAYER_HEIGHT/2)-.075f, 0)); // Need this to ensure the crate is on the floor
+			playerGeometry = getPlayersModel(game);
 			this.getMainNode().attachChild(playerGeometry);
 			//this.getMainNode().setLocalTranslation(new Vector3f(0,PLAYER_HEIGHT,0)); // Need this to ensure the crate is on the floor
 		}
@@ -140,6 +123,28 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		this.hud.setAbilityOtherText(this.abilityOther.getHudText());
 	}
 
+	
+	public static Geometry getPlayersModel(Overwatch game) {
+		// Add player's box
+		Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
+		//Cylinder box1 = new Cylinder(1, 8, PLAYER_RAD, PLAYER_HEIGHT, true);
+		Geometry playerGeometry = new Geometry("Player", box1);
+		TextureKey key3 = new TextureKey("Textures/computerconsole2.jpg");
+		key3.setGenerateMips(true);
+		Texture tex3 = game.getAssetManager().loadTexture(key3);
+		Material floor_mat = null;
+		if (Settings.LIGHTING) {
+			floor_mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
+			floor_mat.setTexture("DiffuseMap", tex3);
+		} else {
+			floor_mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+			floor_mat.setTexture("ColorMap", tex3);
+		}
+		playerGeometry.setMaterial(floor_mat);
+		//playerGeometry.setLocalTranslation(new Vector3f(0, PLAYER_HEIGHT/2, 0)); // Need this to ensure the crate is on the floor
+		playerGeometry.setLocalTranslation(new Vector3f(0, (PLAYER_HEIGHT/2)-.075f, 0)); // Need this to ensure the crate is on the floor
+		return playerGeometry;
+	}
 
 	private static IAbility getRandomAbility(PlayersAvatar _player) {
 		int i = NumberFunctions.rnd(1, 3);

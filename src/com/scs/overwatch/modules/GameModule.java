@@ -40,6 +40,7 @@ import com.scs.overwatch.entities.RoamingAI;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 import com.scs.overwatch.input.JoystickCamera2;
+import com.scs.overwatch.input.JoystickCamera_ORIG;
 import com.scs.overwatch.input.MouseAndKeyboardCamera;
 import com.scs.overwatch.map.IPertinentMapData;
 import com.scs.overwatch.map.SimpleCity;
@@ -106,7 +107,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				int id = nextid++;
 				Camera newCam = this.createCamera(id, numPlayers);
 				HUD hud = this.createHUD(newCam, id);
-				JoystickCamera2 joyCam = new JoystickCamera2(newCam, j, game.getInputManager());
+				JoystickCamera_ORIG joyCam = new JoystickCamera_ORIG(newCam, j, game.getInputManager());
 				this.addPlayersAvatar(id, newCam, joyCam, hud);
 			}
 		}
@@ -359,13 +360,15 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			for(IEntity e : entities) {
 				if (e instanceof PlayersAvatar) {
 					PlayersAvatar ip = (PlayersAvatar)e;
+					
+					ip.hitByBullet(999);
 					//ip.hud.showDamageBox();
 
-					Vector3f pos = ip.getLocation().clone();
+					/*Vector3f pos = ip.getLocation().clone();
 					pos.x-=2;
 					pos.y = 0;
 					pos.z-=2;
-					doExplosion(pos);//, 5, 10);
+					doExplosion(pos);//, 5, 10);*/
 					break;
 				}
 			}
