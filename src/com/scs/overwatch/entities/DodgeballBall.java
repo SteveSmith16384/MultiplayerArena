@@ -48,7 +48,7 @@ public class DodgeballBall extends PhysicalEntity implements IBullet {
 		if (shooter != null) {
 			ball_geo.setLocalTranslation(shooter.getLocation().add(shooter.getShootDir().multLocal(PlayersAvatar.PLAYER_RAD*2)));
 		}
-		floor_phy = new RigidBodyControl(1.2f);
+		floor_phy = new RigidBodyControl(.3f);
 		ball_geo.addControl(floor_phy);
 		module.bulletAppState.getPhysicsSpace().add(floor_phy);
 		/** Accelerate the physical ball to shoot it. */

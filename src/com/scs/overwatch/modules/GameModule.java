@@ -280,13 +280,13 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		/*if (s.equals("Entity:Player collided with cannon ball (Geometry)")) {
 			int f = 3;
 		}*/
-	
+
 		//String s = event.getObjectA().getUserObject().toString() + " collided with " + event.getObjectB().getUserObject().toString();
 		//System.out.println(s);
 		/*if (s.equals("Entity:Player collided with cannon ball (Geometry)")) {
 			int f = 3;
 		}*/
-	
+
 		PhysicalEntity a=null, b=null;
 		Object oa = event.getObjectA().getUserObject(); 
 		if (oa instanceof Spatial) {
@@ -356,14 +356,12 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		}
 
 		if (name.equals(TEST)) {
-			Settings.p("Showing explosion");
 			for(IEntity e : entities) {
 				if (e instanceof PlayersAvatar) {
 					PlayersAvatar ip = (PlayersAvatar)e;
-					
-					ip.hitByBullet(999);
-					//ip.hud.showDamageBox();
 
+					ip.hitByBullet(999);
+					
 					/*Vector3f pos = ip.getLocation().clone();
 					pos.x-=2;
 					pos.y = 0;
@@ -372,7 +370,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 					break;
 				}
 			}
-			
+
 			/*Vector3f tmp = new Vector3f();
 			this.getBulletAppState().getPhysicsSpace().getGravity(tmp);
 			this.getBulletAppState().getPhysicsSpace().setGravity(tmp.mult(-1));*/
@@ -383,30 +381,29 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	}
 
 
-	public void doExplosion(Vector3f pos) {//, float range, float power) {
+	public void doExplosion(Vector3f pos, IEntity ignore) {//, float range, float power) {
+		Settings.p("Showing explosion");
 		float range = 5;
 		float power = 20f;
-		
+
 		for(IEntity e : entities) {
-			if (e instanceof PlayersAvatar) {
-				PlayersAvatar avatar = (PlayersAvatar)e;
-				avatar.hitByBullet(999);
-			}
-			if (e instanceof IAffectedByPhysics) {
-				IAffectedByPhysics pe = (IAffectedByPhysics)e;
-				float dist = pe.getLocation().subtract(pos).length();
-				if (dist <= range) {
-					//Settings.p("Applying explosion force to " + e);
-					Vector3f force = pe.getLocation().subtract(pos).normalizeLocal().multLocal(power);
-					pe.applyForce(force);
-					/*if (e instanceof IDamagable) {
+			if (e != ignore) { // Stop infinite loop
+				if (e instanceof IAffectedByPhysics) {
+					IAffectedByPhysics pe = (IAffectedByPhysics)e;
+					float dist = pe.getLocation().subtract(pos).length();
+					if (dist <= range) {
+						//Settings.p("Applying explosion force to " + e);
+						Vector3f force = pe.getLocation().subtract(pos).normalizeLocal().multLocal(power);
+						pe.applyForce(force);
+						/*if (e instanceof IDamagable) {
 						IDamagable id = (IDamagable)e;
 						id.damaged(1 * (range-dist)); // todo
 					}*/
+					}
 				}
 			}
 		}
-		
+
 		// show explosion effect
 		SmallExplosion expl = new SmallExplosion(this, game.getRootNode(), game.getAssetManager(), game.getRenderManager());
 		expl.setLocalTranslation(pos);
@@ -431,7 +428,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	@Override
 	public void physicsTick(PhysicsSpace arg0, float arg1) {
-		
+
 	}
 
 
@@ -442,8 +439,8 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			a.playerControl.warp(a.warpPos);
 		}
 	}
-	
-	
+
+
 	public void createDodgeballBall() {
 		Point p = mapData.getRandomCollectablePos();
 		DodgeballBall c = new DodgeballBall(game, this, null);
@@ -453,7 +450,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	}
 
-	
+
 	public void createCollectable() {
 		Point p = mapData.getRandomCollectablePos();
 		Collectable c = new Collectable(game, this, p.x, p.y);

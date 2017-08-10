@@ -6,11 +6,9 @@ import com.jme3.font.BitmapText;
 import com.jme3.input.Joystick;
 import com.jme3.input.JoystickButton;
 import com.jme3.input.KeyInput;
-import com.jme3.input.MouseInput;
 import com.jme3.input.RawInputListener;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
-import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.input.event.JoyAxisEvent;
 import com.jme3.input.event.JoyButtonEvent;
 import com.jme3.input.event.KeyInputEvent;
@@ -106,6 +104,16 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		numPlayerText = new BitmapText(Overwatch.guiFont_small, false);
 		numPlayerText.setLocalTranslation(20, game.getCamera().getHeight()-20, 0);
 		game.getGuiNode().attachChild(numPlayerText);
+
+		// Audio
+		/*todo - re-add AudioNode audio_nature = new AudioNode(game.getAssetManager(), "sfx/independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood25.mp3.flac", true, false);
+		//AudioNode audio_nature = new AudioNode(game.getAssetManager(), "sfx/megasong.mp3", true, false);
+	    audio_nature.setLooping(true);  // activate continuous playing
+	    audio_nature.setPositional(false);
+	    audio_nature.setVolume(3);
+	    game.getRootNode().attachChild(audio_nature);
+	    audio_nature.play(); // play continuously!*/
+		
 	}
 
 

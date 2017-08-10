@@ -5,6 +5,7 @@ import java.awt.Point;
 import ssmith.lang.NumberFunctions;
 
 import com.jme3.asset.TextureKey;
+import com.jme3.audio.AudioNode;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
@@ -65,8 +66,9 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	private long restartAt, invulnerableUntil;
 	private Geometry gun;
 	public Vector3f warpPos;
-
 	private boolean hasBall = false;
+	
+	protected AudioNode audio_gun;
 
 	public PlayersAvatar(Overwatch _game, GameModule _module, int _id, Camera _cam, IInputDevice _input, HUD _hud) {
 		super(_game, _module, "Player");
@@ -121,6 +123,14 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 		this.hud.setAbilityGunText(this.abilityGun.getHudText());
 		this.hud.setAbilityOtherText(this.abilityOther.getHudText());
+		
+		audio_gun = new AudioNode(game.getAssetManager(), "Sound/Effects/Gun.wav", false); // todo
+		audio_gun.setPositional(false);
+		audio_gun.setLooping(false);
+		audio_gun.setVolume(2);
+		this.getMainNode().attachChild(audio_gun);
+
+
 	}
 
 	
@@ -145,6 +155,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		playerGeometry.setLocalTranslation(new Vector3f(0, (PLAYER_HEIGHT/2)-.075f, 0)); // Need this to ensure the crate is on the floor
 		return playerGeometry;
 	}
+	
 
 	private static IAbility getRandomAbility(PlayersAvatar _player) {
 		int i = NumberFunctions.rnd(1, 3);
@@ -166,7 +177,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		Settings.p("Restarting player");
 		Point p = module.mapData.getPlayerStartPos(id);
 		//playerControl.warp(new Vector3f(p.x, 20f, p.y));
-		warpPos = new Vector3f(p.x, 20f, p.y);
+		warpPos = new Vector3f(p.x, 10f, p.y);
 		module.toWarp.add(this);
 		//this.getMainNode().setLocalTranslation(new Vector3f(p.x, 20f, p.y));
 		//this.getMainNode().updateGeometricState();
@@ -182,6 +193,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			if (this.restartAt < System.currentTimeMillis()) {
 				this.moveToStartPostion();
 				restarting = false;
+				return;
 			}
 		}
 
@@ -268,6 +280,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	public void shoot() {
 		if (this.abilityGun.activate(0)) {
+			this.audio_gun.play();
 			this.score--;
 			this.hud.setScore(this.score);
 		}
@@ -308,7 +321,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	public void hitByBullet(float dam) {
 		if (System.currentTimeMillis() > this.invulnerableUntil) {
 			if (dam > 0) {
-				module.doExplosion(this.main_node.getWorldTranslation());//, 5, 20);
+				module.doExplosion(this.main_node.getWorldTranslation(), this);//, 5, 20);
 				this.health -= dam;
 				this.hud.setHealth(this.health);
 				this.hud.showDamageBox();
@@ -316,7 +329,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 				died();
 			}
 		} else {
-			Settings.p("Player hit but is currently invulnrable");
+			Settings.p("Player hit but is currently invulnerable");
 		}
 	}
 
@@ -376,7 +389,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			module.createCollectable();
 
 		} else if (other instanceof Base) {
-			incScore(0.01f);
+			incScore(0.005f);
 		}
 	}
 

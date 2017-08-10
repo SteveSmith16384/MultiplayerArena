@@ -136,7 +136,8 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 		} else if (binding.equals("Shoot")) {
 			shoot = isPressed;
 		} else if (binding.equals("Ability1")) {
-			ability1 = isPressed;
+			//ability1 = isPressed; todo - re-add
+			this.zoomCamera(1);
 		}		
 	}
 

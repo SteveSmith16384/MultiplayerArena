@@ -34,7 +34,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 	private static final float SPEED = 7;
 
 	//private Vector3f currDir = new Vector3f(0, 0, 1);
-	private Vector3f currDir = new Vector3f(0, 1.2f, 1);
+	private Vector3f currDir = new Vector3f(0, 1.3f, 1); // was 1.2f
 	private Vector3f shotDir = new Vector3f(0, 0, 0);
 	protected RealtimeInterval targetCheck = new RealtimeInterval(1000);
 	private Vector3f lastPos;
@@ -49,7 +49,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 
 		Box box1 = new Box(w/2, h/2, d/2);
 		Geometry geometry = new Geometry("Crate", box1);
-		TextureKey key3 = new TextureKey("Textures/computerconsole2.jpg");
+		TextureKey key3 = new TextureKey("Textures/sun.jpg");//computerconsole2.jpg");
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);
@@ -165,7 +165,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 		if (other instanceof IBullet) {
 			IBullet bullet = (IBullet)other;
 			if (bullet.getShooter() != this) {
-				module.doExplosion(this.getLocation());//, 5, 5);
+				module.doExplosion(this.getLocation(), this);//, 5, 5);
 				this.remove();
 				bullet.getShooter().hasSuccessfullyHit(this);
 				module.addAI(); // Add another

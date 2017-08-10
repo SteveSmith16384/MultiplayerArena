@@ -293,7 +293,7 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 	}
 
 	
-	protected void zoomCamera(float value){
+	protected void zoomCamera(float value) {
 		// derive fovY value
 		float h = cam.getFrustumTop();
 		float w = cam.getFrustumRight();

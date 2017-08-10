@@ -2,6 +2,7 @@ package com.scs.overwatch.weapons;
 
 import ssmith.util.RealtimeInterval;
 
+import com.jme3.audio.AudioNode;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.abilities.IAbility;
 import com.scs.overwatch.components.ICanShoot;
@@ -21,6 +22,7 @@ public abstract class AbstractGun implements IAbility {
 		name = _name;
 		shooter = _shooter;
 		shotInterval = new RealtimeInterval(shotIntervalMS);
+		
 	}
 
 
