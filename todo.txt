@@ -1,5 +1,4 @@
 OTHER GAME IDEAS
-Dodgeball (Disco dodgeball)
 Crossy Road 3D
 
 
@@ -7,37 +6,21 @@ OVER-KILL
 
 
 URGENT
-Player not restarting properly
-Diff texture for AI
-TEST Try using camera zoom
+Use robot model
+Player not restarting properly - make floor thicker?
+SCORE text not refreshing
+HOME Diff texture for AI
 HOME Change colour of tron tex and use it
 HOME Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
 	HOME adjust gamepad up/down speed
-	Check for dodgeball falling off edge
-	TEST T - Call player.warp() in physics tick
 	Flash white if player hits another
 	Make player invulnerable for a short time when respawning
-Find simple model for players
-Create config file like Killer Crates
 Search for todos
 HOME create logo - Multiplayer Arena
 
 
-GAME MODES
-	1 - Skirmish - fight each other
-	2 - King of the Hill - Who can stay in the "zone" for the longest
-	3 - Dodgeball
-	4 - Hunt the most AI enemies
-	5 - Clone Wars (Lots of identical player-sized boxes - What the Box)
-Collect the most collectables
-Tig - who can be it the longest, lose when killed, killer gets it (floating dot above head)
-2v1 - with 1 being more powerful
-Defend the base Co-op - fight off AI
-Rocket League
-
-
-
 TODO
+Create config file like Killer Crates
 Game option - have edge walls
 No HUD on single player
 Targetter position not right
@@ -63,7 +46,6 @@ Platforms on buildings
 Do explosion by throwing invis balls
 Players get harmed by explosion
 Make rocket look better
-See enemies through walls
 Search for todos
 zoom-in ability
 Cylinder not working
@@ -82,6 +64,20 @@ Shrink ray
 Show shot accuracy
 Headshots - have small box at top
 AI comrades & enemy
+
+
+GAME MODES
+	1 - Skirmish - fight each other
+	2 - King of the Hill - Who can stay in the "zone" for the longest
+	3 - Dodgeball
+	4 - Hunt the most AI enemies
+	5 - Clone Wars (Lots of identical player-sized boxes - What the Box)
+Collect the most collectables
+Tig - who can be it the longest, lose when killed, killer gets it (floating dot above head)
+2v1 - with 1 being more powerful
+Defend the base Co-op - fight off AI
+Rocket League
+
 
 
 STATS
@@ -119,20 +115,8 @@ Auto-aim
 
 
 TEX
-https://opengameart.org/content/hand-painted-mountain-texture
-https://opengameart.org/content/kiira-texture-collection
-https://opengameart.org/content/cartonny-tree-leaves-and-flowers
-https://opengameart.org/content/mayan-stone-ornament
-https://opengameart.org/content/handpainted-tileable-wall
 https://opengameart.org/content/scifi-metal-texture
-https://opengameart.org/content/hand-painted-texture-iceberg
-https://opengameart.org/content/stone-wall-with-cracks
-https://opengameart.org/content/3-crate-textures-w-bump-normal
 
-USED:
-CREDITED: https://opengameart.org/content/hand-painted-texture-sandstone - KIIRA
-CREDITED: https://opengameart.org/content/seamless-bricks - CC0
-CREDITED: https://opengameart.org/content/tileable-crates - credit http://borysses.deviantart.com/
 
 
 INSPIRATION

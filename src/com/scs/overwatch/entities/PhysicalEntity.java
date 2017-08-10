@@ -52,12 +52,14 @@ public abstract class PhysicalEntity extends Entity implements IProcessable {//,
 
 
 	public float distance(PhysicalEntity o) {
-		return distance(o.getMainNode().getWorldTranslation());
+		//return distance(o.getMainNode().getWorldTranslation());
+		return distance(o.floor_phy.getPhysicsLocation());
 	}
 
 
 	public float distance(Vector3f pos) {
-		float dist = this.getMainNode().getWorldTranslation().distance(pos);
+		//float dist = this.getMainNode().getWorldTranslation().distance(pos);
+		float dist = this.floor_phy.getPhysicsLocation().distance(pos);
 		return dist;
 	}
 

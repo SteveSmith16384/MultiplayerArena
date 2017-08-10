@@ -145,6 +145,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		}
 
 		if (Settings.ALWAYS_SHOW_4_CAMS || numPlayers > 2) {
+			//newCam.resize(Overwatch.settings.getWidth()/2, Overwatch.settings.getHeight()/2, true);
 			newCam.setFrustumPerspective(45f, (float) newCam.getWidth() / newCam.getHeight(), 0.01f, Settings.CAM_DIST);
 			switch (id) { // left/right/bottom/top, from bottom-left!
 			case 0: // TL
@@ -167,6 +168,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				throw new RuntimeException("Unknown player id: " + id);
 			}
 		} else if (numPlayers == 2) {
+			//newCam.resize(Overwatch.settings.getWidth(), Overwatch.settings.getHeight()/2, true);
 			newCam.setFrustumPerspective(45f, (float) (newCam.getWidth()*2) / newCam.getHeight(), 0.01f, Settings.CAM_DIST);
 			switch (id) { // left/right/bottom/top, from bottom-left!
 			case 0: // TL
@@ -183,11 +185,11 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				throw new RuntimeException("Unknown player id: " + id);
 			}
 		} else if (numPlayers == 1) {
+			//newCam.resize(Overwatch.settings.getWidth(), Overwatch.settings.getHeight(), true);
 			newCam.setFrustumPerspective(45f, (float) newCam.getWidth() / newCam.getHeight(), 0.01f, Settings.CAM_DIST);
 			//Settings.p("Creating full-screen camera");
 			newCam.setViewPort(0f, 1f, 0f, 1f);
 			newCam.setName("Cam_FullScreen");
-
 		} else {
 			throw new RuntimeException("Unknown number of players");
 
@@ -202,15 +204,13 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		if (Settings.NEON) {
 			BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Scene);
 			bloom.setEnabled(true);
-			bloom.setBloomIntensity(50f);
+			bloom.setBloomIntensity(40f);//50f);
 			bloom.setBlurScale(10f);
 			fpp.addFilter(bloom);
 
-		} else {
-			RadialBlurFilter bloom = new RadialBlurFilter();
-			//bloom.setLightPosition(new Vector3f(10, 10, 10));
-			//bloom.s.setDepthThreshold(.2f);
-			fpp.addFilter(bloom);
+			// test filter
+			//RadialBlurFilter blur = new RadialBlurFilter(); // todo - remove?
+			//fpp.addFilter(blur);
 		}
 		view2.addProcessor(fpp);
 
@@ -218,16 +218,36 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	}
 
 
-	private HUD createHUD(Camera _cam, int id) {
+	private HUD createHUD_ORIG(Camera c, int id) {
 		BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
 
 		// cam.getWidth() = 640x480, cam.getViewPortLeft() = 0.5f
-		float x = _cam.getWidth() * _cam.getViewPortLeft();
+		float x = c.getWidth() * c.getViewPortLeft();
 		//float y = (_cam.getHeight() * _cam.getViewPortTop())-(_cam.getHeight()/2);
-		float y = (_cam.getHeight() * _cam.getViewPortTop())-(_cam.getHeight()/2);
-		float w = _cam.getWidth() * (_cam.getViewPortRight()-_cam.getViewPortLeft());
-		float h = _cam.getHeight() * (_cam.getViewPortTop()-_cam.getViewPortBottom());
-		HUD hud = new HUD(game, this, x, y, w, h, guiFont_small, id, _cam);
+		float y = (c.getHeight() * c.getViewPortTop())-(c.getHeight()/2);
+		Settings.p("Created HUD for " + id + ": " + x + "," +y);
+		float w = c.getWidth() * (c.getViewPortRight()-c.getViewPortLeft());
+		float h = c.getHeight() * (c.getViewPortTop()-c.getViewPortBottom());
+		HUD hud = new HUD(game, this, x, y, w, h, guiFont_small, id, c);
+		game.getGuiNode().attachChild(hud);
+		return hud;
+
+	}
+
+
+	private HUD createHUD(Camera c, int id) {
+		BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
+		// HUD coords are full screen co-ords!
+		// cam.getWidth() = 640x480, cam.getViewPortLeft() = 0.5f
+		float xBL = c.getWidth() * c.getViewPortLeft();
+		//float y = (c.getHeight() * c.getViewPortTop())-(c.getHeight()/2);
+		float yBL = c.getHeight() * c.getViewPortBottom();
+		
+		Settings.p("Created HUD for " + id + ": " + xBL + "," +yBL);
+
+		float w = c.getWidth() * (c.getViewPortRight()-c.getViewPortLeft());
+		float h = c.getHeight() * (c.getViewPortTop()-c.getViewPortBottom());
+		HUD hud = new HUD(game, this, xBL, yBL, w, h, guiFont_small, id, c);
 		game.getGuiNode().attachChild(hud);
 		return hud;
 
@@ -360,7 +380,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				if (e instanceof PlayersAvatar) {
 					PlayersAvatar ip = (PlayersAvatar)e;
 
-					ip.hitByBullet(999);
+					ip.damaged(999);
 					
 					/*Vector3f pos = ip.getLocation().clone();
 					pos.x-=2;

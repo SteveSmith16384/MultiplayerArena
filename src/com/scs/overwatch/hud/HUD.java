@@ -32,6 +32,7 @@ public class HUD extends Node implements IEntity, IProcessable {
 	public TextArea log_ta;
 	public float hud_width, hud_height;
 
+	private int playerId;
 	private Camera cam;
 	private Geometry damage_box;
 	private ColorRGBA dam_box_col = new ColorRGBA(1, 0, 0, 0.0f);
@@ -41,37 +42,38 @@ public class HUD extends Node implements IEntity, IProcessable {
 	private GameModule module;
 	private BitmapText abilityGun, abilityOther, score, health, haveBall; 
 
-	public HUD(Overwatch _game, GameModule _module, float x, float y, float w, float h, BitmapFont font_small, int id, Camera _cam) {
+	public HUD(Overwatch _game, GameModule _module, float xBL, float yBL, float w, float h, BitmapFont font_small, int id, Camera _cam) {
 		super("HUD");
 
 		game = _game;
 		module =_module;
 		hud_width = w;
 		hud_height = h;
+		playerId = id;
 		cam = _cam;
 
-		super.setLocalTranslation(x, y, 0);
+		super.setLocalTranslation(xBL, yBL, 0);
 
 		health = new BitmapText(font_small, false);
-		health.setLocalTranslation(0, hud_height-20, 0);
+		health.setLocalTranslation(10, hud_height-20, 0);
 		this.attachChild(health);
 		this.setHealth(100);
 
 		score = new BitmapText(font_small, false);
-		score.setLocalTranslation(0, hud_height-35, 0);
+		score.setLocalTranslation(10, hud_height-35, 0);
 		this.attachChild(score);
 		this.setScore(0);
 
 		abilityGun = new BitmapText(font_small, false);
-		abilityGun.setLocalTranslation(0, hud_height-50, 0);
+		abilityGun.setLocalTranslation(10, hud_height-50, 0);
 		this.attachChild(abilityGun);
 
 		abilityOther = new BitmapText(font_small, false);
-		abilityOther.setLocalTranslation(0, hud_height-65, 0);
+		abilityOther.setLocalTranslation(10, hud_height-65, 0);
 		this.attachChild(abilityOther);
 
 		haveBall = new BitmapText(font_small, false);
-		haveBall.setLocalTranslation(0, hud_height-80, 0);
+		haveBall.setLocalTranslation(10, hud_height-80, 0);
 		this.attachChild(haveBall);
 
 		// Damage box
@@ -184,7 +186,11 @@ public class HUD extends Node implements IEntity, IProcessable {
 
 
 	public void setHealth(float h) {
-		this.health.setText("HEALTH: " + (int)h);
+		if (!Settings.DEBUG_HUD) {
+			this.health.setText("HEALTH: " + (int)h);
+		} else {
+			this.health.setText("THIS IS PLAYER " + playerId);
+		}
 	}
 
 

@@ -124,12 +124,12 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		this.hud.setAbilityGunText(this.abilityGun.getHudText());
 		this.hud.setAbilityOtherText(this.abilityOther.getHudText());
 		
-		audio_gun = new AudioNode(game.getAssetManager(), "Sound/Effects/Gun.wav", false); // todo
+		/*todo - add audio_gun = new AudioNode(game.getAssetManager(), "Sound/Effects/Gun.wav", false); // todo
 		audio_gun.setPositional(false);
 		audio_gun.setLooping(false);
 		audio_gun.setVolume(2);
 		this.getMainNode().attachChild(audio_gun);
-
+*/
 
 	}
 
@@ -174,7 +174,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 
 	public void moveToStartPostion() {
-		Settings.p("Restarting player");
+		Settings.p("Moving player to start position");
 		Point p = module.mapData.getPlayerStartPos(id);
 		//playerControl.warp(new Vector3f(p.x, 20f, p.y));
 		warpPos = new Vector3f(p.x, 10f, p.y);
@@ -199,7 +199,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 		if (!this.restarting) {
 			// Have we fallen off the edge
-			if (this.getMainNode().getWorldTranslation().y < -5f) {
+			if (this.playerControl.getPhysicsRigidBody().getPhysicsLocation().y < -5f) {
+				//if (this.getMainNode().getWorldTranslation().y < -5f) {
 				//this.moveToStartPostion();
 				died();
 				return;
@@ -280,7 +281,9 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	public void shoot() {
 		if (this.abilityGun.activate(0)) {
-			this.audio_gun.play();
+			if (audio_gun != null) {
+				this.audio_gun.play();
+			}
 			this.score--;
 			this.hud.setScore(this.score);
 		}
@@ -318,9 +321,11 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	}
 
 
-	public void hitByBullet(float dam) {
+	public void hitByBullet(IBullet bullet) {
 		if (System.currentTimeMillis() > this.invulnerableUntil) {
+			float dam = bullet.getDamageCaused();
 			if (dam > 0) {
+				Settings.p("Player hit by bullet!");
 				module.doExplosion(this.main_node.getWorldTranslation(), this);//, 5, 20);
 				this.health -= dam;
 				this.hud.setHealth(this.health);
@@ -335,10 +340,11 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 
 	private void died() {
+		Settings.p("Player died");
 		this.restarting = true;
 		this.restartAt = System.currentTimeMillis() + RESTART_DUR;
 		invulnerableUntil = System.currentTimeMillis() + (RESTART_DUR*2);
-
+		//this.getMainNode().getWorldTranslation();
 		// Move us below the map
 		Vector3f pos = this.getMainNode().getWorldTranslation().clone();//.floor_phy.getPhysicsLocation().clone();
 		pos.y = -3;
@@ -371,7 +377,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			if (bullet.getShooter() != null) {
 				if (bullet.getShooter() != this) {
 					if (Settings.PVP || !(bullet.getShooter() instanceof PlayersAvatar)) {
-						this.hitByBullet(bullet.getDamageCaused());
+						this.hitByBullet(bullet);
 						bullet.getShooter().hasSuccessfullyHit(this);
 					}
 				}
@@ -410,7 +416,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	@Override
 	public void damaged(float amt) {
-
+		died();
 	}
 
 

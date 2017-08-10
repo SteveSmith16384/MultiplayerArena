@@ -66,8 +66,11 @@ public class DodgeballBall extends PhysicalEntity implements IBullet {
 
 	@Override
 	public void process(float tpf) {
+		//Settings.p("Dodgeball pos=" + this.getMainNode().getWorldTranslation()); // wrong?!
+		Settings.p("Dodgeball pos=" + this.floor_phy.getPhysicsLocation());
 		// Check if fallen off edge
-		if (this.getMainNode().getWorldTranslation().y < -1f) {
+		//this.getMainNode().updateGeometricState();
+		if (this.floor_phy.getPhysicsLocation().y < -1f) {
 			Settings.p("Dodgeball has fallen off the edge");
 			this.remove();
 			module.createDodgeballBall();
@@ -90,7 +93,7 @@ public class DodgeballBall extends PhysicalEntity implements IBullet {
 			PlayersAvatar av = (PlayersAvatar) other;
 			if (live) {
 				if (other != this.shooter) {
-					av.hitByBullet(1);
+					av.hitByBullet(this);
 					if (getShooter() != null) {
 						getShooter().hasSuccessfullyHit(av);
 					}
