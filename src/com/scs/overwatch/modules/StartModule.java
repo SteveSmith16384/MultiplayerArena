@@ -65,6 +65,8 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		game.getInputManager().addListener(this, QUIT);
 		//game.getInputManager().addMapping(START, new MouseButtonTrigger(MouseInput.BUTTON_LEFT), new KeyTrigger(KeyInput.KEY_SPACE));
 		//game.getInputManager().addListener(this, START);            
+		game.getInputManager().addMapping("1", new KeyTrigger(KeyInput.KEY_1));
+		game.getInputManager().addListener(this, "1");
 		for (int i=1 ; i<=9 ; i++) {
 			game.getInputManager().addMapping(""+i, new KeyTrigger(KeyInput.KEY_0+i));
 			game.getInputManager().addListener(this, ""+i);

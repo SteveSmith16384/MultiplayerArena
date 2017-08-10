@@ -15,8 +15,11 @@ import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
 import com.jme3.renderer.Camera;
 import com.scs.overwatch.MyFlyByCamera;
+import com.scs.overwatch.Settings;
 
 public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawInputListener {
+	
+	private static final float SPEED = 5;
 
 	protected Joystick joystick;
 	private float fwdVal, backVal, leftVal, rightVal;
@@ -131,6 +134,7 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 			}
 		} else if (name.equals("jFLYCAM_Forward" + id)) {
 			if (value > CUTOFF) {
+				Settings.p("value=" + value);
 				joyPos.x = value;
 			} else {
 				joyPos.x = 0;
@@ -173,24 +177,26 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 		rightVal = 0;
 
 		if (x > 0) {
-			fwdVal = x;
+			fwdVal = x *SPEED;
+			Settings.p("fwdVal=" + fwdVal);
 		} else {
-			backVal = x;
+			backVal = -x *SPEED;
+			Settings.p("backVal=" + backVal);
 		}
 		if (y > 0) {
-			rightVal = y;
+			rightVal = y *SPEED;
 		} else {
-			rightVal = y;
+			leftVal = -y *SPEED;
 		}
 	}
 
 
 	@Override
 	public void resetFlags() {
-		fwdVal = 0; // todo - remove this?
-		backVal = 0;
-		leftVal = 0;
-		rightVal = 0;
+		//fwdVal = 0; // todo - remove this?
+		//backVal = 0;
+		//leftVal = 0;
+		//rightVal = 0;
 
 	}        
 
