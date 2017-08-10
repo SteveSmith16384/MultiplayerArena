@@ -3,6 +3,8 @@ package com.scs.overwatch.hud;
 import java.util.ArrayList;
 import java.util.List;
 
+import ssmith.lang.NumberFunctions;
+
 import com.jme3.bounding.BoundingBox;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
@@ -133,6 +135,11 @@ public class HUD extends Node implements IEntity, IProcessable {
 
 	@Override
 	public void process(float tpf) {
+		if (Settings.DEBUG_HUD) {
+			this.abilityGun.setText("" + NumberFunctions.rnd(1000,  9999));
+			this.score.setText("" + NumberFunctions.rnd(1000,  9999));
+		}
+		
 		// Test reticle
 		int id = 0;
 		if (Settings.DEBUG_TARGETTER) {

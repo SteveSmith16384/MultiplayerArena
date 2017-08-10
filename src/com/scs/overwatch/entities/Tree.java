@@ -9,13 +9,10 @@ import com.scs.overwatch.modules.GameModule;
 
 public class Tree extends PhysicalEntity {
 	
-	private Spatial floor_geo;
-	//private RigidBodyControl floor_phy;
-	
 	public Tree(Overwatch _game, GameModule _module, float x, float z) {
 		super(_game, _module, "Tree");
 		
-		floor_geo = new Tree_arbol_seco_Model(game.getAssetManager());
+		Tree_arbol_seco_Model floor_geo = new Tree_arbol_seco_Model(game.getAssetManager());
 		JMEFunctions.SetTextureOnSpatial(game.getAssetManager(), floor_geo, "Textures/scarybark.jpg");
 		floor_geo.setLocalTranslation(x, 0, z);
 		floor_geo.scale(1f + (Overwatch.rnd.nextFloat()));

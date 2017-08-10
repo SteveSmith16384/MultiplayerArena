@@ -11,6 +11,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.Camera.FrustumIntersect;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 import com.jme3.texture.Texture;
 import com.scs.overwatch.MyBetterCharacterControl;
@@ -32,6 +33,7 @@ import com.scs.overwatch.components.ITargetByAI;
 import com.scs.overwatch.hud.AbstractHUDImage;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
+import com.scs.overwatch.models.RobotModel;
 import com.scs.overwatch.modules.GameModule;
 import com.scs.overwatch.weapons.DodgeballGun;
 import com.scs.overwatch.weapons.LaserRifle;
@@ -58,7 +60,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	public MyBetterCharacterControl playerControl;
 	public final int id;
 	private IAbility abilityGun, abilityOther;
-	public Geometry playerGeometry;
+	public Spatial playerGeometry;
 	private float score = 0;
 	private float health = 100;
 
@@ -118,8 +120,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			abilityGun = new DodgeballGun(_game, _module, this);
 		} else {
 			abilityGun = new LaserRifle(_game, _module, this);
+			this.abilityOther = new JetPac(this);// getRandomAbility(this);
 		}
-		this.abilityOther = new JetPac(this);// getRandomAbility(this);
 
 		this.hud.setAbilityGunText(this.abilityGun.getHudText());
 		this.hud.setAbilityOtherText(this.abilityOther.getHudText());
@@ -130,11 +132,14 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		audio_gun.setVolume(2);
 		this.getMainNode().attachChild(audio_gun);
 */
+		playerControl.getPhysicsRigidBody().setCcdMotionThreshold(1f);
 
 	}
 
 	
-	public static Geometry getPlayersModel(Overwatch game) {
+	public static Spatial getPlayersModel(Overwatch game) {
+		//return new RobotModel(game.getAssetManager());
+
 		// Add player's box
 		Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
 		//Cylinder box1 = new Cylinder(1, 8, PLAYER_RAD, PLAYER_HEIGHT, true);

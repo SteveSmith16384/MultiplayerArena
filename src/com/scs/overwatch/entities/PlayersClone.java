@@ -1,7 +1,7 @@
 package com.scs.overwatch.entities;
 
 import com.jme3.bullet.control.RigidBodyControl;
-import com.jme3.scene.Geometry;
+import com.jme3.scene.Spatial;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.components.IAffectedByPhysics;
@@ -12,7 +12,7 @@ public class PlayersClone extends PhysicalEntity implements IAffectedByPhysics {
 	public PlayersClone(Overwatch _game, GameModule _module, float x, float y, float z, float rotDegrees) {
 		super(_game, _module, "PlayersClone");
 
-		Geometry geometry = PlayersAvatar.getPlayersModel(game);
+		Spatial geometry = PlayersAvatar.getPlayersModel(game);
 		this.main_node.attachChild(geometry);
 		
 		float rads = (float)Math.toRadians(rotDegrees);

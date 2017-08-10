@@ -60,6 +60,7 @@ public class DodgeballBall extends PhysicalEntity implements IBullet {
 		module.addEntity(this);
 
 		floor_phy.setRestitution(.8f); // Bouncy
+		floor_phy.setCcdMotionThreshold(1f);
 
 	}
 

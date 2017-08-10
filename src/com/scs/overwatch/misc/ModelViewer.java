@@ -30,34 +30,15 @@ public class ModelViewer extends SimpleApplication {
 
 		setupLight();
 
-		//Spatial model = assetManager.loadModel("Models/big_wood_barrel.obj");
-		//model.scale(.01f);
-
-		//Spatial model = assetManager.loadModel("Models/arbol_seco.blend");
-
-		/*Spatial model = assetManager.loadModel("Models/Tree_Creature.blend");
-		model.scale(0.1f);*/
-
-		/*Spatial model = assetManager.loadModel("Models/InnansorraStatueUpload.blend");
-		model.scale(1.3f);
-		model.setLocalTranslation(0, 1f, 0);*/
-
-		/*Spatial model = assetManager.loadModel("Models/Stone_coffin.obj");
+		Spatial model = assetManager.loadModel("Models/ROBOT_V1.blend");
 		model.scale(0.1f);
-		JMEFunctions.SetTextureOnSpatial(assetManager, model, "stonecoffin.tga");*/
-
-		//Spatial model = assetManager.loadModel("Models/skull2/skull/skull.obj");
-		//JMEFunctions.SetTextureOnSpatial(assetManager, model, "skull.tga");
-
-		Spatial model = assetManager.loadModel("Models/Scientist.blend");
-		model.scale(0.01f);
 
 		model.setModelBound(new BoundingBox());
 		model.updateModelBound();
 
 		rootNode.attachChild(model);
 
-		this.rootNode.attachChild(JMEFunctions.GetGrid(assetManager, 10));
+		//this.rootNode.attachChild(JMEFunctions.GetGrid(assetManager, 10));
 
 		this.flyCam.setMoveSpeed(12f);
 

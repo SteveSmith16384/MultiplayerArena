@@ -6,9 +6,12 @@ OVER-KILL
 
 
 URGENT
-Use robot model
+TEST Map not right for Dodgeball - WALL_THICKNESS
+TEST Made road thicker
+Get robot model
 Player not restarting properly - make floor thicker?
-SCORE text not refreshing
+TEST SCORE text not refreshing
+
 HOME Diff texture for AI
 HOME Change colour of tron tex and use it
 HOME Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
@@ -17,6 +20,7 @@ HOME Change player tex to something more tron-y and diff colour for each player 
 	Make player invulnerable for a short time when respawning
 Search for todos
 HOME create logo - Multiplayer Arena
+Set max physics speed to avoid going through walls?
 
 
 TODO

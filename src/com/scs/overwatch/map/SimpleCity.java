@@ -21,6 +21,7 @@ public class SimpleCity implements IPertinentMapData {
 	private static final int SKYSCRAPER_WIDTH = 7;
 
 	private static final float WALL_THICKNESS = 5;
+	private static final float FLOOR_THICKNESS = 5f;
 
 	private Overwatch game;
 	private GameModule module;
@@ -44,21 +45,25 @@ public class SimpleCity implements IPertinentMapData {
 		}
 
 		// Add outer walls
-		for (int x=0 ; x<numSectors ; x++) {
+		for (int j=0 ; j<numSectors ; j++) {
+			// Front
 			float height = NumberFunctions.rndFloat(10, 20);
-			SkyScraper skyscraperBack = new SkyScraper(game, module, x*(SKYSCRAPER_WIDTH+6), -1, SKYSCRAPER_WIDTH+6, height, WALL_THICKNESS);
+			SkyScraper skyscraperBack = new SkyScraper(game, module, j*(SKYSCRAPER_WIDTH+6), 0, SKYSCRAPER_WIDTH+6, height, WALL_THICKNESS);
 			game.getRootNode().attachChild(skyscraperBack.getMainNode());
 
+			// Left
 			height = NumberFunctions.rndFloat(10, 20);
-			SkyScraper skyscraperLeft = new SkyScraper(game, module, -1, x*(SKYSCRAPER_WIDTH+6), WALL_THICKNESS, height, SKYSCRAPER_WIDTH+6);
+			SkyScraper skyscraperLeft = new SkyScraper(game, module, -WALL_THICKNESS, j*(SKYSCRAPER_WIDTH+6), WALL_THICKNESS, height, SKYSCRAPER_WIDTH+6);
 			game.getRootNode().attachChild(skyscraperLeft.getMainNode());
-
+			
+			// Back
 			height = NumberFunctions.rndFloat(10, 20);
-			SkyScraper skyscraperFront = new SkyScraper(game, module, x*(SKYSCRAPER_WIDTH+6), numSectors*(SKYSCRAPER_WIDTH+6), SKYSCRAPER_WIDTH+6, height, WALL_THICKNESS);
+			SkyScraper skyscraperFront = new SkyScraper(game, module, j*(SKYSCRAPER_WIDTH+6), (numSectors*(SKYSCRAPER_WIDTH+6))-WALL_THICKNESS, SKYSCRAPER_WIDTH+6, height, WALL_THICKNESS);
 			game.getRootNode().attachChild(skyscraperFront.getMainNode());
 
+			// Right
 			height = NumberFunctions.rndFloat(10, 20);
-			SkyScraper skyscraperRight = new SkyScraper(game, module, numSectors*(SKYSCRAPER_WIDTH+6), x*(SKYSCRAPER_WIDTH+6), WALL_THICKNESS, height, SKYSCRAPER_WIDTH+6);
+			SkyScraper skyscraperRight = new SkyScraper(game, module, numSectors*(SKYSCRAPER_WIDTH+6), j*(SKYSCRAPER_WIDTH+6), WALL_THICKNESS, height, SKYSCRAPER_WIDTH+6);
 			game.getRootNode().attachChild(skyscraperRight.getMainNode());
 		}
 
@@ -148,10 +153,10 @@ public class SimpleCity implements IPertinentMapData {
 		} else {
 			roadtex = "Textures/road2.png";
 		}
-		CreateFloor(x, 0f, y, SKYSCRAPER_WIDTH+6, 0.1f, 2, roadtex, null); // top x
-		CreateFloor(x+SKYSCRAPER_WIDTH+4, 0f, y+2, 2, 0.1f, SKYSCRAPER_WIDTH+4, roadtex, null); // right x
-		CreateFloor(x+2, 0f, y+SKYSCRAPER_WIDTH+4, SKYSCRAPER_WIDTH+2, 0.1f, 2, roadtex, null); // bottom x
-		CreateFloor(x, 0f, y+2, 2, 0.1f, SKYSCRAPER_WIDTH+4, roadtex, null); // Left
+		CreateFloor(x, -FLOOR_THICKNESS, y, SKYSCRAPER_WIDTH+6, FLOOR_THICKNESS, 2, roadtex, null); // top x
+		CreateFloor(x+SKYSCRAPER_WIDTH+4,-FLOOR_THICKNESS, y+2, 2, FLOOR_THICKNESS, SKYSCRAPER_WIDTH+4, roadtex, null); // right x
+		CreateFloor(x+2, -FLOOR_THICKNESS, y+SKYSCRAPER_WIDTH+4, SKYSCRAPER_WIDTH+2, FLOOR_THICKNESS, 2, roadtex, null); // bottom x
+		CreateFloor(x, -FLOOR_THICKNESS, y+2, 2, FLOOR_THICKNESS, SKYSCRAPER_WIDTH+4, roadtex, null); // Left
 
 		// Sidewalk
 		String sidewalktex = null;
