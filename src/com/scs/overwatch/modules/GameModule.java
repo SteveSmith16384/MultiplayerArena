@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import ssmith.util.RealtimeInterval;
 import ssmith.util.TSArrayList;
 
 import com.jme3.bullet.BulletAppState;
@@ -21,7 +22,6 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.BloomFilter;
-import com.jme3.post.filters.RadialBlurFilter;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
@@ -30,6 +30,7 @@ import com.scs.overwatch.Settings;
 import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IEntity;
+import com.scs.overwatch.components.IMustRemainInArena;
 import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.effects.SmallExplosion;
 import com.scs.overwatch.entities.Collectable;
@@ -40,7 +41,6 @@ import com.scs.overwatch.entities.RoamingAI;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 import com.scs.overwatch.input.JoystickCamera2;
-import com.scs.overwatch.input.JoystickCamera_ORIG;
 import com.scs.overwatch.input.MouseAndKeyboardCamera;
 import com.scs.overwatch.map.IPertinentMapData;
 import com.scs.overwatch.map.SimpleCity;
@@ -53,9 +53,10 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	protected Overwatch game;
 	public BulletAppState bulletAppState;
 	public TSArrayList<IEntity> entities = new TSArrayList<>();
-	public TSArrayList<PlayersAvatar> avatars = new TSArrayList<>();
+	//private TSArrayList<PlayersAvatar> avatars = new TSArrayList<>();
 	public IPertinentMapData mapData;
 	public List<PlayersAvatar> toWarp = new ArrayList<>();
+	private RealtimeInterval checkMR = new RealtimeInterval(1000);
 
 	public GameModule(Overwatch _game) {
 		super();
@@ -244,7 +245,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		float xBL = c.getWidth() * c.getViewPortLeft();
 		//float y = (c.getHeight() * c.getViewPortTop())-(c.getHeight()/2);
 		float yBL = c.getHeight() * c.getViewPortBottom();
-		
+
 		Settings.p("Created HUD for " + id + ": " + xBL + "," +yBL);
 
 		float w = c.getWidth() * (c.getViewPortRight()-c.getViewPortLeft());
@@ -284,12 +285,25 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			tpf = 1;
 		}
 		this.entities.refresh();
-		this.avatars.refresh();
+		//this.avatars.refresh();
+
+		boolean check = checkMR.hitInterval();
 
 		for(IEntity e : entities) {
 			if (e instanceof IProcessable) {
 				IProcessable ip = (IProcessable)e;
 				ip.process(tpf);
+			}
+			if (check) {
+				if (e instanceof IMustRemainInArena) { 
+					IMustRemainInArena mr = (IMustRemainInArena)e;
+					Vector3f pos = mr.getLocation();
+					if (pos.x < 0 || pos.z < 0 || pos.x > mapData.getWidth() || pos.z > mapData.getDepth()) {
+						Settings.p("Respawning " + mr);
+						mr.remove();
+						mr.respawn();
+					}
+				}
 			}
 		}
 
@@ -350,20 +364,20 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	public void addEntity(IEntity e) {
 		this.entities.add(e);
 
-		if (e instanceof PlayersAvatar) {
+		/*if (e instanceof PlayersAvatar) {
 			PlayersAvatar a = (PlayersAvatar)e;
 			this.avatars.add(a);
-		}
+		}*/
 	}
 
 
 	public void removeEntity(IEntity e) {
 		this.entities.remove(e);
 
-		if (e instanceof PlayersAvatar) {
+		/*if (e instanceof PlayersAvatar) {
 			PlayersAvatar a = (PlayersAvatar)e;
 			this.avatars.remove(a);
-		}
+		}*/
 	}
 
 
@@ -384,7 +398,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 					PlayersAvatar ip = (PlayersAvatar)e;
 
 					ip.damaged(999);
-					
+
 					/*Vector3f pos = ip.getLocation().clone();
 					pos.x-=2;
 					pos.y = 0;

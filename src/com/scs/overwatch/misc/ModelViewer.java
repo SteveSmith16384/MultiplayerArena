@@ -7,11 +7,8 @@ import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.light.Light;
 import com.jme3.light.LightList;
-import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
-import com.jme3.texture.Texture;
 import com.scs.overwatch.JMEFunctions;
 
 public class ModelViewer extends SimpleApplication {

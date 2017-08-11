@@ -13,9 +13,10 @@ import com.scs.overwatch.Settings;
 import com.scs.overwatch.components.IBullet;
 import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.components.ICollideable;
+import com.scs.overwatch.components.IMustRemainInArena;
 import com.scs.overwatch.modules.GameModule;
 
-public class DodgeballBall extends PhysicalEntity implements IBullet {
+public class DodgeballBall extends PhysicalEntity implements IBullet, IMustRemainInArena {
 
 	private static final float RAD = 0.2f;
 
@@ -57,7 +58,7 @@ public class DodgeballBall extends PhysicalEntity implements IBullet {
 		}
 		floor_phy = new RigidBodyControl(.3f);
 		ball_geo.addControl(floor_phy);
-		module.bulletAppState.getPhysicsSpace().add(floor_phy);
+		module.getBulletAppState().getPhysicsSpace().add(floor_phy);
 		/** Accelerate the physical ball to shoot it. */
 		if (shooter != null) {
 			floor_phy.setLinearVelocity(shooter.getShootDir().mult(25));
@@ -133,6 +134,12 @@ public class DodgeballBall extends PhysicalEntity implements IBullet {
 	@Override
 	public float getDamageCaused() {
 		return live ? 1 : 0;
+	}
+
+
+	@Override
+	public void respawn() {
+		module.createDodgeballBall();
 	}
 
 

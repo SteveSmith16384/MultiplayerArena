@@ -49,7 +49,7 @@ public class GenericBullet extends PhysicalEntity {
 		floor_phy = new RigidBodyControl(mass);
 		/** Add physical ball to physics space. */
 		ball_geo.addControl(floor_phy);
-		module.bulletAppState.getPhysicsSpace().add(floor_phy);
+		module.getBulletAppState().getPhysicsSpace().add(floor_phy);
 		/** Accelerate the physical ball to shoot it. */
 		floor_phy.setLinearVelocity(shooter.getShootDir().mult(speed));
 		

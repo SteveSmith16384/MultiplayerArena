@@ -411,10 +411,6 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			this.incScore(20);
 			this.hud.showCollectBox();
 
-			// Drop new collectable
-			/*Point p = module.mapData.getRandomCollectablePos();
-			Collectable c = new Collectable(Overwatch.instance, module, p.x, p.y);
-			Overwatch.instance.getRootNode().attachChild(c.getMainNode());*/
 			module.createCollectable();
 
 		} else if (other instanceof Base) {

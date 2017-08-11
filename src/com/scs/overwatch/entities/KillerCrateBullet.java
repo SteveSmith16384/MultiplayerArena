@@ -49,7 +49,7 @@ public class KillerCrateBullet extends PhysicalEntity implements IBullet {
 		floor_phy = new RigidBodyControl(1f);
 		/** Add physical ball to physics space. */
 		ball_geo.addControl(floor_phy);
-		module.bulletAppState.getPhysicsSpace().add(floor_phy);
+		module.getBulletAppState().getPhysicsSpace().add(floor_phy);
 		/** Accelerate the physical ball to shoot it. */
 		floor_phy.setLinearVelocity(shooter.getShootDir().mult(25));
 		

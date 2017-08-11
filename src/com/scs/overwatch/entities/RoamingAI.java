@@ -23,13 +23,14 @@ import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IDamagable;
 import com.scs.overwatch.components.IEntity;
+import com.scs.overwatch.components.IMustRemainInArena;
 import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.components.IShowOnHUD;
 import com.scs.overwatch.components.ITargetByAI;
 import com.scs.overwatch.modules.GameModule;
 import com.scs.overwatch.weapons.LaserRifle;
 
-public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot, IShowOnHUD, IDamagable, ICollideable {
+public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot, IShowOnHUD, IDamagable, ICollideable, IMustRemainInArena {
 
 	private static final float SPEED = 7;
 
@@ -174,6 +175,12 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 				module.addAI(); // Add another
 			}
 		}		
+	}
+
+
+	@Override
+	public void respawn() {
+		module.addAI();
 	}
 
 

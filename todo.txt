@@ -2,25 +2,22 @@ MULTIPLAYER ARENA
 
 
 URGENT
-Create HEIGHT const and use for respwaning
-WorldOfInception
+	Check if objects are outside of arena - ai, dodgeball
+Starting on edge of arena
+HOME Test Gamepad turning jumps
+HOME - Test gamepad myself
 HOME Get tex for new robot model
-	Get robot model
 Show game mode on screen
 	Dodgeball - Kill player if hit by ball
 	Dodgeball going through wall
-HOME Test Gamepad turning jumps
-HOME - Test gamepad myself
 HOME Diff texture for AI
 HOME Change colour of tron tex and use it
-HOME Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
 Search for todos
 HOME create logo - Multiplayer Arena
 
 
 TODO
-Check if objects are outside of arena
-Custom mesh?
+Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
 Create config file like Killer Crates
 Game option - have edge walls
 No HUD on single player
