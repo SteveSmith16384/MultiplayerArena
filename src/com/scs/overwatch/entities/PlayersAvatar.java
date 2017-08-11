@@ -191,10 +191,10 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 
 	public void moveToStartPostion() {
-		Settings.p("Moving player to start position");
 		Point p = module.mapData.getPlayerStartPos(id);
 		//playerControl.warp(new Vector3f(p.x, 20f, p.y));
 		warpPos = new Vector3f(p.x, module.mapData.getRespawnHeight(), p.y);
+		Settings.p("Moving player to start position: " + warpPos.x + "," + warpPos.z);
 		module.toWarp.add(this);
 		//this.getMainNode().setLocalTranslation(new Vector3f(p.x, 20f, p.y));
 		//this.getMainNode().updateGeometricState();
