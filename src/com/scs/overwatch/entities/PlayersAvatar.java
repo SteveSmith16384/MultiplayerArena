@@ -34,6 +34,7 @@ import com.scs.overwatch.components.ITargetByAI;
 import com.scs.overwatch.hud.AbstractHUDImage;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
+import com.scs.overwatch.models.RobotModel;
 import com.scs.overwatch.modules.GameModule;
 import com.scs.overwatch.weapons.DodgeballGun;
 import com.scs.overwatch.weapons.LaserRifle;
@@ -147,27 +148,29 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 
 	public static Spatial getPlayersModel(Overwatch game) {
-		//return new RobotModel(game.getAssetManager());
-
-		// Add player's box
-		Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
-		//Cylinder box1 = new Cylinder(1, 8, PLAYER_RAD, PLAYER_HEIGHT, true);
-		Geometry playerGeometry = new Geometry("Player", box1);
-		TextureKey key3 = new TextureKey("Textures/computerconsole2.jpg");
-		key3.setGenerateMips(true);
-		Texture tex3 = game.getAssetManager().loadTexture(key3);
-		Material floor_mat = null;
-		if (Settings.LIGHTING) {
-			floor_mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
-			floor_mat.setTexture("DiffuseMap", tex3);
+		if (Settings.USE_MODEL_FOR_PLAYERS) {
+			return new RobotModel(game.getAssetManager());
 		} else {
-			floor_mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
-			floor_mat.setTexture("ColorMap", tex3);
+			// Add player's box
+			Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
+			//Cylinder box1 = new Cylinder(1, 8, PLAYER_RAD, PLAYER_HEIGHT, true);
+			Geometry playerGeometry = new Geometry("Player", box1);
+			TextureKey key3 = new TextureKey("Textures/computerconsole2.jpg");
+			key3.setGenerateMips(true);
+			Texture tex3 = game.getAssetManager().loadTexture(key3);
+			Material floor_mat = null;
+			if (Settings.LIGHTING) {
+				floor_mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
+				floor_mat.setTexture("DiffuseMap", tex3);
+			} else {
+				floor_mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+				floor_mat.setTexture("ColorMap", tex3);
+			}
+			playerGeometry.setMaterial(floor_mat);
+			//playerGeometry.setLocalTranslation(new Vector3f(0, PLAYER_HEIGHT/2, 0)); // Need this to ensure the crate is on the floor
+			playerGeometry.setLocalTranslation(new Vector3f(0, (PLAYER_HEIGHT/2)-.075f, 0)); // Need this to ensure the crate is on the floor
+			return playerGeometry;
 		}
-		playerGeometry.setMaterial(floor_mat);
-		//playerGeometry.setLocalTranslation(new Vector3f(0, PLAYER_HEIGHT/2, 0)); // Need this to ensure the crate is on the floor
-		playerGeometry.setLocalTranslation(new Vector3f(0, (PLAYER_HEIGHT/2)-.075f, 0)); // Need this to ensure the crate is on the floor
-		return playerGeometry;
 	}
 
 
@@ -191,7 +194,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		Settings.p("Moving player to start position");
 		Point p = module.mapData.getPlayerStartPos(id);
 		//playerControl.warp(new Vector3f(p.x, 20f, p.y));
-		warpPos = new Vector3f(p.x, 10f, p.y);
+		warpPos = new Vector3f(p.x, module.mapData.getRespawnHeight(), p.y);
 		module.toWarp.add(this);
 		//this.getMainNode().setLocalTranslation(new Vector3f(p.x, 20f, p.y));
 		//this.getMainNode().updateGeometricState();

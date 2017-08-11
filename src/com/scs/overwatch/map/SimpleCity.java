@@ -282,4 +282,10 @@ public class SimpleCity implements IPertinentMapData {
 
 	}
 
+
+	@Override
+	public float getRespawnHeight() {
+		return 20f;
+	}
+
 }

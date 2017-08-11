@@ -34,7 +34,7 @@ public class OverworldMap implements IPertinentMapData {
 		// Drop new collectable
 		{
 			Point p = getRandomCollectablePos();
-			Collectable c = new Collectable(Overwatch.instance, module, p.x, p.y);
+			Collectable c = new Collectable(Overwatch.instance, module, p.x, 20f, p.y);
 			Overwatch.instance.getRootNode().attachChild(c.getMainNode());
 		}
 
@@ -100,6 +100,12 @@ public class OverworldMap implements IPertinentMapData {
 			startPositions.add(new Point((int)x, (int)z));
 		}
 
+	}
+
+
+	@Override
+	public float getRespawnHeight() {
+		return 20f;
 	}
 
 }

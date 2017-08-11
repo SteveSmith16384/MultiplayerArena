@@ -19,7 +19,7 @@ public class Collectable extends PhysicalEntity implements ICollideable, IShowOn
 
 	private static final float SIZE = .1f;
 
-	public Collectable(Overwatch _game, GameModule _module, float x, float z) {
+	public Collectable(Overwatch _game, GameModule _module, float x, float y, float z) {
 		super(_game, _module, "Collectable");
 
 		Box box1 = new Box(SIZE, SIZE, SIZE);
@@ -42,7 +42,7 @@ public class Collectable extends PhysicalEntity implements ICollideable, IShowOn
 		//geometry.setQueueBucket(Bucket.Transparent);
 
 		this.main_node.attachChild(geometry);
-		main_node.setLocalTranslation(x, 5f, z); // Drop from sky
+		main_node.setLocalTranslation(x, y, z); // Drop from sky
 
 		floor_phy = new RigidBodyControl(0.1f);
 		main_node.addControl(floor_phy);

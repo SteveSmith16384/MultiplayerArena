@@ -468,7 +468,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		Point p = mapData.getRandomCollectablePos();
 		DodgeballBall c = new DodgeballBall(game, this, null);
 		c.getMainNode().setLocalTranslation(p.x,  10f,  p.y);
-		c.floor_phy.setPhysicsLocation(new Vector3f(p.x,  10f,  p.y));
+		c.floor_phy.setPhysicsLocation(new Vector3f(p.x,  mapData.getRespawnHeight(),  p.y));
 		Overwatch.instance.getRootNode().attachChild(c.getMainNode());
 
 	}
@@ -476,7 +476,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	public void createCollectable() {
 		Point p = mapData.getRandomCollectablePos();
-		Collectable c = new Collectable(game, this, p.x, p.y);
+		Collectable c = new Collectable(game, this, p.x, mapData.getRespawnHeight(), p.y);
 		Overwatch.instance.getRootNode().attachChild(c.getMainNode());
 
 	}

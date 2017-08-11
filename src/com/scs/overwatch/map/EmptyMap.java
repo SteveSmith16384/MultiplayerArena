@@ -81,4 +81,10 @@ public class EmptyMap implements ISimpleMapData, IPertinentMapData {
 		return new Point(x, z);
 	}
 
+
+	@Override
+	public float getRespawnHeight() {
+		return 20f;
+	}
+
 }

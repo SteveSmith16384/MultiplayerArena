@@ -14,4 +14,6 @@ public interface IPertinentMapData {
 	
 	Point getRandomCollectablePos();
 	
+	float getRespawnHeight();
+	
 }

@@ -7,8 +7,11 @@ import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.light.Light;
 import com.jme3.light.LightList;
+import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import com.jme3.texture.Texture;
 import com.scs.overwatch.JMEFunctions;
 
 public class ModelViewer extends SimpleApplication {
@@ -30,9 +33,14 @@ public class ModelViewer extends SimpleApplication {
 
 		setupLight();
 
-		Spatial model = assetManager.loadModel("Models/ROBOT_V1.blend");
-		model.scale(0.1f);
-
+		Spatial model = assetManager.loadModel("Models/AbstractRTSModels/Player.obj");
+		/*Node n = (Node)model;
+		n.getChild(5).removeFromParent();
+		n.getChild(5).removeFromParent();
+		model.scale(0.1f);*/
+		
+		JMEFunctions.SetTextureOnSpatial(assetManager, model, "Textures/sun.jpg");
+		
 		model.setModelBound(new BoundingBox());
 		model.updateModelBound();
 
