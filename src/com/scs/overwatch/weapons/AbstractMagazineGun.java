@@ -38,18 +38,20 @@ public abstract class AbstractMagazineGun implements IAbility {
 
 	@Override
 	public final boolean activate(float interpol) {
-		if (this.timeUntilShoot < 0 && bulletsLeftInMag > 0) {
+		if (this.timeUntilShoot <= 0 && bulletsLeftInMag > 0) {
 			this.launchBullet(game, module, shooter);
 			timeUntilShoot += this.shotInterval;
 			bulletsLeftInMag--;
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	
 	@Override
 	public boolean process(float interpol) {
 		if (this.bulletsLeftInMag <= 0) {
+			// Reload
 			this.bulletsLeftInMag = this.magazineSize;
 			this.timeUntilShoot += this.reloadInterval;
 		}

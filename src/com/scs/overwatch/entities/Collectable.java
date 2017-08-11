@@ -38,8 +38,8 @@ public class Collectable extends PhysicalEntity implements ICollideable, IShowOn
 			floor_mat.setTexture("ColorMap", tex3);
 		}
 		geometry.setMaterial(floor_mat);
-		floor_mat.getAdditionalRenderState().setDepthTest(false);
-		geometry.setQueueBucket(Bucket.Transparent);
+		//floor_mat.getAdditionalRenderState().setDepthTest(false);
+		//geometry.setQueueBucket(Bucket.Transparent);
 
 		this.main_node.attachChild(geometry);
 		main_node.setLocalTranslation(x, 5f, z); // Drop from sky

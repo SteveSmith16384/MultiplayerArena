@@ -1,22 +1,20 @@
-OTHER GAME IDEAS
-Crossy Road 3D
+TEX
+https://opengameart.org/content/mobile-turret
+https://opengameart.org/content/mcu-43-gryphon-mech
+https://opengameart.org/content/abstract-rts-model-pack
 
 
-OVER-KILL
+MULTIPLAYER ARENA
 
 
 URGENT
-AI not shooting
+Create HEIGHT const and use for respwaning
+WorldOfInception
 Get robot model
 Look at tron vector gfx screenshots for inspiration
-	Raise sidewalk slightly
-	Remove floating platforms on dodgeball!
 Show game mode on screen
-TEST Cant walk up sidewalk
-TEST SCORE text not refreshing
 	Dodgeball - Kill player if hit by ball
 	Dodgeball going through wall
-	Player not restarting properly - make floor thicker?
 HOME Test Gamepad turning jumps
 HOME - Test gamepad myself
 HOME Diff texture for AI
@@ -27,6 +25,8 @@ HOME create logo - Multiplayer Arena
 
 
 TODO
+Check if objects are outside of arena
+Custom mesh?
 Create config file like Killer Crates
 Game option - have edge walls
 No HUD on single player
@@ -133,6 +133,7 @@ Quazatron
 
 
 Sorcerers2 spells
+https://opengameart.org/content/wizard-4
 Wall
 Fire
 Shrink

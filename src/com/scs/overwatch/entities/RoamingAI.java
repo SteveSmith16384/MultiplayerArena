@@ -74,7 +74,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 
 		geometry.setUserData(Settings.ENTITY, this);
 		floor_phy.setUserObject(this);
-
+		floor_phy.setCcdMotionThreshold(w);
 		module.addEntity(this);
 
 		weapon = new LaserRifle(_game, _module, this);
@@ -85,6 +85,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 
 	@Override
 	public void process(float tpf) {
+		weapon.process(tpf);
 		this.floor_phy.applyCentralForce(currDir.mult(SPEED));
 
 		if (targetCheck.hitInterval()) {
@@ -110,7 +111,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 						Vector3f dir = enemy.getLocation().subtract(this.getLocation()).normalize();
 						this.shotDir.set(dir);
 						Settings.p("AI shooting at " + enemy);
-						this.weapon.activate(1);//.shoot();
+						this.weapon.activate(tpf);//.shoot();
 					} else {
 						Settings.p("AI cannot see anyone to shoot at");
 					}
