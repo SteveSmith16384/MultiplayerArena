@@ -13,15 +13,19 @@ import com.jme3.input.event.MouseMotionEvent;
 import com.jme3.input.event.TouchEvent;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.scs.overwatch.MyFlyByCamera;
 import com.scs.overwatch.Settings;
+import com.scs.overwatch.entities.PlayersAvatar;
 
 public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawInputListener {
-	
-	private static final float LOOK_UD_ADJ = .8f;
-	private static final float SPEED = 5;
 
+	private static final float LOOK_UD_ADJ = .8f; // todo - add to config
+	private static final float SPEED = 5; // todo - add to config
+	private static final float DEADZONE = 0.0015f; // todo - add to config
+
+	public PlayersAvatar avatar;
 	protected Joystick joystick;
 	private float fwdVal, backVal, leftVal, rightVal;
 	private Vector2f joyPos = new Vector2f();
@@ -37,7 +41,7 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 		id = joystick.getJoyId();
 
 		//super.setMoveSpeed(.7f);//1f);
-		super.setRotationSpeed(.85f);//.5f); SCS 
+		super.setRotationSpeed(.85f);//.5f); SCS  // todo - add to config
 
 		this.inputManager.addRawInputListener(this);
 
@@ -121,39 +125,52 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 		if (!enabled)
 			return;
 
-		float CUTOFF = 0.0015f; // scs
-
 		if (name.equals("jFLYCAM_Left" + id)) {
+			if (Settings.DEBUG_GAMEPAD_TURNING) {
+				Vector3f pos = this.avatar.gamepadTest.getLocalTranslation();
+				float newX = value * 100;
+				this.avatar.gamepadTest.setPosition(100f + newX, pos.y);
+			}
 			rotateCamera(value, initialUpVec);
 		} else if (name.equals("jFLYCAM_Right" + id)) {
+			if (Settings.DEBUG_GAMEPAD_TURNING) {
+				Vector3f pos = this.avatar.gamepadTest.getLocalTranslation();
+				float newX = value * 100;
+				this.avatar.gamepadTest.setPosition(100f + newX, pos.y);
+			}
 			rotateCamera(-value, initialUpVec);
 		} else if (name.equals("jFLYCAM_Up" + id)) {
 			rotateCamera(-value * LOOK_UD_ADJ * (invertY ? -1 : 1), cam.getLeft());
 		} else if (name.equals("jFLYCAM_Down" + id)) {
-			if (value > CUTOFF) { // SCS
-				rotateCamera(value * LOOK_UD_ADJ * (invertY ? -1 : 1), cam.getLeft());
-			}
+			//value -= DEADZONE;
+			//if (value > 0) {
+			rotateCamera(value * LOOK_UD_ADJ * (invertY ? -1 : 1), cam.getLeft());
+			//}
 		} else if (name.equals("jFLYCAM_Forward" + id)) {
-			if (value > CUTOFF) {
+			value -= DEADZONE;
+			if (value > 0) {
 				Settings.p("value=" + value);
 				joyPos.x = value;
 			} else {
 				joyPos.x = 0;
 			}
 		} else if (name.equals("jFLYCAM_Backward" + id)) {
-			if (value > CUTOFF) {
+			value -= DEADZONE;
+			if (value > 0) {
 				joyPos.x = -value;
 			} else {
 				joyPos.x = 0;
 			}
 		} else if (name.equals("jFLYCAM_StrafeLeft" + id)) {
-			if (value > CUTOFF) {
+			value -= DEADZONE;
+			if (value > 0) {
 				joyPos.y = -value;
 			} else {
 				joyPos.y = 0;
 			}
 		} else if (name.equals("jFLYCAM_StrafeRight" + id)) {
-			if (value > CUTOFF) {
+			value -= DEADZONE;
+			if (value > 0) {
 				joyPos.y = value;
 			} else {
 				joyPos.y = 0;
@@ -194,7 +211,7 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 
 	@Override
 	public void resetFlags() {
-		//fwdVal = 0; // todo - remove this?
+		//fwdVal = 0;
 		//backVal = 0;
 		//leftVal = 0;
 		//rightVal = 0;

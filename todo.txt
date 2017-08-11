@@ -6,27 +6,24 @@ OVER-KILL
 
 
 URGENT
-Jump higher
-Dodgeball going through wall
-Adjust num AI by num players
-Show game mode on screen
-Dodgeball be live for a few seconds
-Make sidewalk thicker
-Cant walk up sidewalk
-TEST Made road thicker
+AI not shooting
 Get robot model
-Player not restarting properly - make floor thicker?
+Look at tron vector gfx screenshots for inspiration
+	Raise sidewalk slightly
+	Remove floating platforms on dodgeball!
+Show game mode on screen
+TEST Cant walk up sidewalk
 TEST SCORE text not refreshing
-
+	Dodgeball - Kill player if hit by ball
+	Dodgeball going through wall
+	Player not restarting properly - make floor thicker?
+HOME Test Gamepad turning jumps
+HOME - Test gamepad myself
 HOME Diff texture for AI
 HOME Change colour of tron tex and use it
 HOME Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
-	HOME adjust gamepad up/down speed
-	Flash white if player hits another
-	Make player invulnerable for a short time when respawning
 Search for todos
 HOME create logo - Multiplayer Arena
-Set max physics speed to avoid going through walls?
 
 
 TODO
@@ -64,7 +61,6 @@ Change avatar - rotating cylinder?
 Crosshairs
 Use IDamagable
 Health
-Guns - magazine size, reload mag time
 Targetting HUD
 Select character class at start
 Cars that drive down roads
@@ -134,16 +130,6 @@ Cholo remake
 Overwatch
 Goldeneye N64
 Quazatron
-
-
-ORDER:
-1502101237319: update()
-1502101237319: Process player
-1502101237319: Finished process player
-1502101237319: Finished update()
-1502101237324: Player collision
-1502101237324: Player collision
-1502101237324: ...update()
 
 
 Sorcerers2 spells

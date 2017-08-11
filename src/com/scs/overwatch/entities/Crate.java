@@ -73,10 +73,5 @@ public class Crate extends PhysicalEntity implements IAffectedByPhysics, ICollid
 	}
 
 
-	@Override
-	public boolean blocksPlatforms() {
-		return false;
-	}
-
 
 }

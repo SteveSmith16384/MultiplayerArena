@@ -11,16 +11,20 @@ public class Settings {
 	public static final boolean RECORD_VID = false;
 
 	// DEBUG
+	public static final boolean DEBUG_GAMEPAD_TURNING = true;
 	public static final boolean DEBUG_HUD = false;
 	public static final boolean DEBUG_TARGETTER = false;
 
 	// Game settings
-	public static boolean HAVE_BASE = true;
+	public enum GameMode {Skirmish, KingOfTheHill, Dodgeball, Bladerunner, CloneWars }
+	
+	public static GameMode GAME_MODE;
+	//public static boolean HAVE_BASE = true;
 	public static boolean PVP = true;
 	public static int NUM_AI = 0;
 	public static int NUM_COLLECTABLES_PER_SECTOR = 0;
-	public static boolean DODGEBALL = false;
-	public static boolean CLONE_WARS = true;
+	//public static boolean DODGEBALL = false;
+	//public static boolean CLONE_WARS = true;
 	public static int NUM_SECTORS = 3;
 	
 	// Our movement speed

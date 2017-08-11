@@ -54,11 +54,11 @@ public class MovingPlatform extends AbstractPlatform implements ICollideable {
 			//Settings.p("MovingPlatform hit " + other + " and going up");
 			this.main_node.getLocalTranslation().y += 0.1f; // move out the way
 		} else {// todo - moveback*/
-		if (other.blocksPlatforms()) {
+		/*if (other.blocksPlatforms()) {
 			//Settings.p("MovingPlatform " + this.toString() + " hit " + other);
 			this.offset.multLocal(-1);
 			//move(0.1f);
-		}
+		}*/
 		if (other instanceof PlayersAvatar) {
 			PlayersAvatar avatar = (PlayersAvatar)other;
 			// scs this is probabnly wrong
@@ -69,11 +69,6 @@ public class MovingPlatform extends AbstractPlatform implements ICollideable {
 		//}
 	}
 
-
-	@Override
-	public boolean blocksPlatforms() {
-		return true;
-	}
 
 
 }

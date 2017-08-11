@@ -17,6 +17,7 @@ import com.jme3.texture.Texture;
 import com.scs.overwatch.MyBetterCharacterControl;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
+import com.scs.overwatch.Settings.GameMode;
 import com.scs.overwatch.abilities.IAbility;
 import com.scs.overwatch.abilities.Invisibility;
 import com.scs.overwatch.abilities.JetPac;
@@ -33,7 +34,6 @@ import com.scs.overwatch.components.ITargetByAI;
 import com.scs.overwatch.hud.AbstractHUDImage;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
-import com.scs.overwatch.models.RobotModel;
 import com.scs.overwatch.modules.GameModule;
 import com.scs.overwatch.weapons.DodgeballGun;
 import com.scs.overwatch.weapons.LaserRifle;
@@ -69,6 +69,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	private Geometry gun;
 	public Vector3f warpPos;
 	private boolean hasBall = false;
+
+	public AbstractHUDImage gamepadTest;
 
 	protected AudioNode audio_gun;
 
@@ -116,7 +118,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		this.getMainNode().setUserData(Settings.ENTITY, this);
 		playerControl.getPhysicsRigidBody().setUserObject(this);
 
-		if (Settings.DODGEBALL) {
+		if (Settings.GAME_MODE == GameMode.Dodgeball) {
 			abilityGun = new DodgeballGun(_game, _module, this);
 		} else {
 			abilityGun = new LaserRifle(_game, _module, this);
@@ -134,7 +136,12 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		audio_gun.setVolume(2);
 		this.getMainNode().attachChild(audio_gun);
 		 */
-		playerControl.getPhysicsRigidBody().setCcdMotionThreshold(1f);
+		playerControl.getPhysicsRigidBody().setCcdMotionThreshold(PLAYER_RAD*2);
+
+		if (Settings.DEBUG_GAMEPAD_TURNING) {
+			gamepadTest = new AbstractHUDImage(game, module, this.hud, "Textures/text/hit.png", 10, 10, -1);
+			gamepadTest.setPosition(100, 50);
+		}
 
 	}
 
@@ -384,7 +391,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	@Override
 	public void collidedWith(ICollideable other) {
-		if (!Settings.DODGEBALL && other instanceof IBullet) {
+		//if (Settings.GAME_MODE != GameMode.Dodgeball && other instanceof IBullet) { // Dodgeball handles bullets differently
+		if (other instanceof IBullet) {
 			IBullet bullet = (IBullet)other;
 			if (bullet.getShooter() != null) {
 				if (bullet.getShooter() != this) {
@@ -407,7 +415,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			module.createCollectable();
 
 		} else if (other instanceof Base) {
-			incScore(0.005f);
+			incScore(0.005f); // todo - add to config
 		}
 	}
 
@@ -431,11 +439,6 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		died();
 	}
 
-
-	@Override
-	public boolean blocksPlatforms() {
-		return false;
-	}
 
 
 	public boolean getHasBall() {

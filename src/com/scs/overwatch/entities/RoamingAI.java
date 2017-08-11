@@ -109,8 +109,10 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 						this.getMainNode().lookAt(enemy.getLocation(), Vector3f.UNIT_Y);
 						Vector3f dir = enemy.getLocation().subtract(this.getLocation()).normalize();
 						this.shotDir.set(dir);
-						//Settings.p("AI shooting at " + enemy);
+						Settings.p("AI shooting at " + enemy);
 						this.weapon.activate(1);//.shoot();
+					} else {
+						Settings.p("AI cannot see anyone to shoot at");
 					}
 				}
 			}
@@ -173,11 +175,6 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 		}		
 	}
 
-
-	@Override
-	public boolean blocksPlatforms() {
-		return false;
-	}
 
 
 }

@@ -42,7 +42,8 @@ public class HUD extends Node implements IEntity, IProcessable {
 	private List<Picture> targetting_reticules = new ArrayList<>();
 	private Overwatch game;
 	private GameModule module;
-	private BitmapText abilityGun, abilityOther, score, health, haveBall; 
+	private BitmapText abilityGun, abilityOther, score, health, haveBall;
+	//public BitmapText gamepadPos
 
 	public HUD(Overwatch _game, GameModule _module, float xBL, float yBL, float w, float h, BitmapFont font_small, int id, Camera _cam) {
 		super("HUD");

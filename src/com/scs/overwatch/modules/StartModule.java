@@ -22,6 +22,7 @@ import com.jme3.renderer.ViewPort;
 import com.jme3.ui.Picture;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
+import com.scs.overwatch.Settings.GameMode;
 
 
 public class StartModule implements IModule, ActionListener, RawInputListener {
@@ -49,7 +50,6 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 
 		// Create viewport
 		Camera newCam = game.getCamera();
-		//newCam.setFrustum(0.01f, Settings.CAM_DIST, 0, 640, 480, 0); // scs todo - remove?
 		newCam.resize(Overwatch.settings.getWidth(), Overwatch.settings.getHeight(), true);
 		newCam.setFrustumPerspective(45f, (float) newCam.getWidth() / newCam.getHeight(), 0.01f, Settings.CAM_DIST);
 		newCam.setViewPort(0f, 1f, 0f, 1f);
@@ -141,57 +141,62 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 			return;
 		}
 
-		if (name.equals(START)) {
+		/*if (name.equals(START)) {
 			//startGame();
-		} else if (name.equals("1")) {
+		} else */if (name.equals("1")) {
 			// Skirmish
+			Settings.GAME_MODE = GameMode.Skirmish;
 			Settings.NUM_SECTORS = 3;
-			Settings.HAVE_BASE = false;
+			//Settings.HAVE_BASE = false;
 			Settings.PVP = true;
 			Settings.NUM_AI = 0;
 			Settings.NUM_COLLECTABLES_PER_SECTOR = 1;
-			Settings.DODGEBALL = false;
-			Settings.CLONE_WARS = false;
+			//Settings.DODGEBALL = false;
+			//Settings.CLONE_WARS = false;
 			startGame();
 		} else if (name.equals("2")) {
 			// King of the Hill
+			Settings.GAME_MODE = GameMode.KingOfTheHill;
 			Settings.NUM_SECTORS = 3;
-			Settings.HAVE_BASE = true;
+			//Settings.HAVE_BASE = true;
 			Settings.PVP = true;
 			Settings.NUM_AI = 0;
 			Settings.NUM_COLLECTABLES_PER_SECTOR = 0;
-			Settings.DODGEBALL = false;
-			Settings.CLONE_WARS = false;
+			//Settings.DODGEBALL = false;
+			//Settings.CLONE_WARS = false;
 			startGame();
 		} else if (name.equals("3")) {
 			// Dodgeball
+			Settings.GAME_MODE = GameMode.Dodgeball;
 			Settings.NUM_SECTORS = 2;
-			Settings.HAVE_BASE = false;
+			//Settings.HAVE_BASE = false;
 			Settings.PVP = true;
 			Settings.NUM_AI = 0;
 			Settings.NUM_COLLECTABLES_PER_SECTOR = 0;
-			Settings.DODGEBALL = true;
-			Settings.CLONE_WARS = false;
+			//Settings.DODGEBALL = true;
+			//Settings.CLONE_WARS = false;
 			startGame();
 		} else if (name.equals("4")) {
 			// Bladerunner
+			Settings.GAME_MODE = GameMode.Bladerunner;
 			Settings.NUM_SECTORS = 3;
-			Settings.HAVE_BASE = false;
+			//Settings.HAVE_BASE = false;
 			Settings.PVP = false;
-			Settings.NUM_AI = 2;
+			Settings.NUM_AI = Math.max(1, game.getInputManager().getJoysticks().length); // One less than num players, min of 1
 			Settings.NUM_COLLECTABLES_PER_SECTOR = 1;
-			Settings.DODGEBALL = false;
-			Settings.CLONE_WARS = false;
+			//Settings.DODGEBALL = false;
+			//Settings.CLONE_WARS = false;
 			startGame();
 		} else if (name.equals("5")) {
 			// Clone Wars
+			Settings.GAME_MODE = GameMode.CloneWars;
 			Settings.NUM_SECTORS = 2;
-			Settings.HAVE_BASE = false;
+			//Settings.HAVE_BASE = false;
 			Settings.PVP = true;
 			Settings.NUM_AI = 0;
 			Settings.NUM_COLLECTABLES_PER_SECTOR = 1;
-			Settings.DODGEBALL = false;
-			Settings.CLONE_WARS = true;
+			//Settings.DODGEBALL = false;
+			//Settings.CLONE_WARS = true;
 			startGame();
 		} else if (name.equals(QUIT)) {
 			game.stop();

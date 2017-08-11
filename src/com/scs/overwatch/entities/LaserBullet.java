@@ -81,10 +81,5 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 	}
 
 
-	@Override
-	public boolean blocksPlatforms() {
-		return false;
-	}
-
 
 }

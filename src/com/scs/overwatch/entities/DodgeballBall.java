@@ -17,16 +17,19 @@ import com.scs.overwatch.modules.GameModule;
 
 public class DodgeballBall extends PhysicalEntity implements IBullet {
 
+	private static final float RAD = 0.2f;
+
 	public ICanShoot shooter;
 	public boolean live = true;
+	private float timeLeft = 2f;
 	private Geometry ball_geo;
-	
+
 	public DodgeballBall(Overwatch _game, GameModule _module, ICanShoot _shooter) {
 		super(_game, _module, "DodgeballBall");
 
 		this.shooter = _shooter;
 
-		Sphere sphere = new Sphere(16, 16, 0.2f, true, false);
+		Sphere sphere = new Sphere(16, 16, RAD, true, false);
 		sphere.setTextureMode(TextureMode.Projected);
 		/** Create a cannon ball geometry and attach to scene graph. */
 		ball_geo = new Geometry("cannon ball", sphere);
@@ -64,17 +67,31 @@ public class DodgeballBall extends PhysicalEntity implements IBullet {
 		module.addEntity(this);
 
 		floor_phy.setRestitution(.8f); // Bouncy
-		floor_phy.setCcdMotionThreshold(1f);
+		floor_phy.setCcdMotionThreshold(RAD*2);
 
 	}
 
 
 	@Override
 	public void process(float tpf) {
+		if (live) {
+			this.timeLeft -= tpf;
+			if (this.timeLeft < 0) {
+				// Set tex to dark
+				TextureKey key3 = new TextureKey( "Textures/mud.png");
+				Texture tex3 = game.getAssetManager().loadTexture(key3);
+				this.ball_geo.getMaterial().setTexture("DiffuseMap", tex3);
+
+				live = false;
+			}
+		}
+
 		//Settings.p("Dodgeball pos=" + this.floor_phy.getPhysicsLocation());
 		// Check if fallen off edge
 		if (this.floor_phy.getPhysicsLocation().y < -1f) {
 			Settings.p("Dodgeball has fallen off the edge");
+			
+			// Relaunch
 			this.remove();
 			module.createDodgeballBall();
 		}
@@ -100,32 +117,22 @@ public class DodgeballBall extends PhysicalEntity implements IBullet {
 					if (getShooter() != null) {
 						getShooter().hasSuccessfullyHit(av);
 					}
+					
+					// Relaunch
+					this.remove();
+					module.createDodgeballBall();
 				}
 			} else if (av.getHasBall() == false) {
 				av.setHasBall(true);
 				this.remove();
 			}
-		} else {
-			this.live = false;
-			
-			// Set tex to dark
-			TextureKey key3 = new TextureKey( "Textures/mud.png");
-			Texture tex3 = game.getAssetManager().loadTexture(key3);
-			this.ball_geo.getMaterial().setTexture("DiffuseMap", tex3);
-
 		}
 	}
 
 
 	@Override
 	public float getDamageCaused() {
-		return 0;
-	}
-
-
-	@Override
-	public boolean blocksPlatforms() {
-		return false;
+		return live ? 1 : 0;
 	}
 
 

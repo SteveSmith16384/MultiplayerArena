@@ -15,28 +15,30 @@ public class AbstractHUDImage extends Picture implements IEntity, IProcessable {
 
 	public AbstractHUDImage(Overwatch _game, GameModule _module, Node guiNode, String tex, float w, float h, float dur) {
 		super("AbstractHUDImage");
-		
+
 		game = _game;
 		module = _module;
 		this.timeLeft = dur;
-		
+
 		setImage(game.getAssetManager(), tex, true);
 		setWidth(w);
 		setHeight(h);
 		//this.setPosition(w/2, h/2);
-		
+
 		guiNode.attachChild(this);
 		module.addEntity(this);
-		
+
 	}
 
-	
+
 	@Override
 	public void process(float tpf) {
-		this.timeLeft -= tpf;
-		if (this.timeLeft <= 0) {
-			this.removeFromParent();
-			module.removeEntity(this);
+		if (timeLeft > 0) {
+			this.timeLeft -= tpf;
+			if (this.timeLeft <= 0) {
+				this.removeFromParent();
+				module.removeEntity(this);
+			}
 		}
 	}
 

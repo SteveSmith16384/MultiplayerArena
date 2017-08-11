@@ -48,10 +48,4 @@ public class Lift extends AbstractPlatform {
 	}
 
 
-	@Override
-	public boolean blocksPlatforms() {
-		return true;
-	}
-
-
 }

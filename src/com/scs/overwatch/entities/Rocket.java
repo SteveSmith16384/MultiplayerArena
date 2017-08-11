@@ -83,10 +83,5 @@ public class Rocket extends PhysicalEntity implements IBullet {
 	}
 
 
-	@Override
-	public boolean blocksPlatforms() {
-		return false;
-	}
-
 
 }

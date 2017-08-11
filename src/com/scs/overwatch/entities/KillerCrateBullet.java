@@ -89,10 +89,5 @@ public class KillerCrateBullet extends PhysicalEntity implements IBullet {
 	}
 
 
-	@Override
-	public boolean blocksPlatforms() {
-		return false;
-	}
-
 
 }

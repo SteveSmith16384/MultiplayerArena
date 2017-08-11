@@ -7,6 +7,7 @@ import ssmith.lang.NumberFunctions;
 import com.jme3.math.Vector3f;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
+import com.scs.overwatch.Settings.GameMode;
 import com.scs.overwatch.entities.AbstractPlatform;
 import com.scs.overwatch.entities.Base;
 import com.scs.overwatch.entities.Crate;
@@ -22,6 +23,7 @@ public class SimpleCity implements IPertinentMapData {
 
 	private static final float WALL_THICKNESS = 5;
 	private static final float FLOOR_THICKNESS = 5f;
+	private static final float PATH_THICKNESS = .1f;
 
 	private Overwatch game;
 	private GameModule module;
@@ -36,10 +38,9 @@ public class SimpleCity implements IPertinentMapData {
 
 
 	public void setup() {
-
 		for (int y=0 ; y<numSectors ; y++) {
 			for (int x=0 ; x<numSectors ; x++) {
-				boolean createBase = Settings.HAVE_BASE && x == 1 && y == 1;
+				boolean createBase = Settings.GAME_MODE == GameMode.KingOfTheHill && x == 1 && y == 1;
 				createSector(createBase, x*(SKYSCRAPER_WIDTH+6), y*(SKYSCRAPER_WIDTH+6));
 			}			
 		}
@@ -88,7 +89,9 @@ public class SimpleCity implements IPertinentMapData {
 
 
 		// Floating walkway
-		addFloatingWalkways();
+		if (Settings.GAME_MODE != GameMode.Dodgeball) {
+			addFloatingWalkways();
+		}
 
 		// Drop new collectable
 		for (int i=0 ; i<Settings.NUM_COLLECTABLES_PER_SECTOR * numSectors ; i++) {
@@ -100,7 +103,7 @@ public class SimpleCity implements IPertinentMapData {
 			module.addAI();
 		}
 
-		if (Settings.CLONE_WARS == false) {
+		if (Settings.GAME_MODE != GameMode.CloneWars) {
 			// Sprinkle lots of boxes
 			for (int i=0 ; i<numSectors*6 ; i++) {
 				int x = NumberFunctions.rnd(4, getWidth()-5);
@@ -120,7 +123,7 @@ public class SimpleCity implements IPertinentMapData {
 			}
 		}
 
-		if (Settings.DODGEBALL) {
+		if (Settings.GAME_MODE == GameMode.Dodgeball) {
 			for (int i=0 ; i<game.getInputManager().getJoysticks().length+1 ; i++) { // one for each player
 				// Add the ball
 				module.createDodgeballBall();
@@ -154,7 +157,7 @@ public class SimpleCity implements IPertinentMapData {
 			roadtex = "Textures/road2.png";
 		}
 		CreateFloor(x, -FLOOR_THICKNESS, y, SKYSCRAPER_WIDTH+6, FLOOR_THICKNESS, 2, roadtex, null); // top x
-		CreateFloor(x+SKYSCRAPER_WIDTH+4,-FLOOR_THICKNESS, y+2, 2, FLOOR_THICKNESS, SKYSCRAPER_WIDTH+4, roadtex, null); // right x
+		CreateFloor(x+SKYSCRAPER_WIDTH+4, -FLOOR_THICKNESS, y+2, 2, FLOOR_THICKNESS, SKYSCRAPER_WIDTH+4, roadtex, null); // right x
 		CreateFloor(x+2, -FLOOR_THICKNESS, y+SKYSCRAPER_WIDTH+4, SKYSCRAPER_WIDTH+2, FLOOR_THICKNESS, 2, roadtex, null); // bottom x
 		CreateFloor(x, -FLOOR_THICKNESS, y+2, 2, FLOOR_THICKNESS, SKYSCRAPER_WIDTH+4, roadtex, null); // Left
 
@@ -165,11 +168,10 @@ public class SimpleCity implements IPertinentMapData {
 		} else {
 			sidewalktex = "Textures/floor015.png";
 		}
-		CreateFloor(x+2, 0f, y+2, SKYSCRAPER_WIDTH+2, 0.2f, 1, sidewalktex, null); // top x
-		//new StreetLight(game, module, x+2.5f, y+2.5f);
-		CreateFloor(x+SKYSCRAPER_WIDTH+3, 0f, y+3, 1, 0.2f, SKYSCRAPER_WIDTH+1, sidewalktex, null); // right x
-		CreateFloor(x+2, 0f, y+SKYSCRAPER_WIDTH+3, SKYSCRAPER_WIDTH+1, 0.2f, 1, sidewalktex, null); // bottom x
-		CreateFloor(x+2, 0f, y+3, 1, 0.2f, SKYSCRAPER_WIDTH, sidewalktex, null); // Left x
+		CreateFloor(x+2, -FLOOR_THICKNESS+PATH_THICKNESS, y+2, SKYSCRAPER_WIDTH+2, FLOOR_THICKNESS, 1, sidewalktex, null); // top x
+		CreateFloor(x+SKYSCRAPER_WIDTH+3, -FLOOR_THICKNESS+PATH_THICKNESS, y+3, 1, FLOOR_THICKNESS, SKYSCRAPER_WIDTH+1, sidewalktex, null); // right x
+		CreateFloor(x+2, -FLOOR_THICKNESS+PATH_THICKNESS, y+SKYSCRAPER_WIDTH+3, SKYSCRAPER_WIDTH+1, FLOOR_THICKNESS, 1, sidewalktex, null); // bottom x
+		CreateFloor(x+2, -FLOOR_THICKNESS+PATH_THICKNESS, y+3, 1, FLOOR_THICKNESS, SKYSCRAPER_WIDTH, sidewalktex, null); // Left x
 
 		if (createBase) {//x == 1 && y == 1 && Settings.HAVE_BASE) {
 			Base base = new Base(game, module, x+3, 0f, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, "Textures/sun.jpg", null); // todo - change tex

@@ -109,7 +109,8 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				HUD hud = this.createHUD(newCam, id);
 				//JoystickCamera_ORIG joyCam = new JoystickCamera_ORIG(newCam, j, game.getInputManager());
 				JoystickCamera2 joyCam = new JoystickCamera2(newCam, j, game.getInputManager());
-				this.addPlayersAvatar(id, newCam, joyCam, hud);
+				PlayersAvatar avatar = this.addPlayersAvatar(id, newCam, joyCam, hud);
+				joyCam.avatar = avatar;
 			}
 		}
 		if (Settings.ALWAYS_SHOW_4_CAMS) {
@@ -255,7 +256,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	}
 
 
-	private void addPlayersAvatar(int id, Camera cam, IInputDevice input, HUD hud) {
+	private PlayersAvatar addPlayersAvatar(int id, Camera cam, IInputDevice input, HUD hud) {
 		PlayersAvatar player = new PlayersAvatar(game, this, id, cam, input, hud);
 		game.getRootNode().attachChild(player.getMainNode());
 		this.entities.add(player);
@@ -265,6 +266,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		// Look towards centre
 		player.getMainNode().lookAt(new Vector3f(mapData.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, mapData.getDepth()/2), Vector3f.UNIT_Y);
 
+		return player;
 	}
 
 

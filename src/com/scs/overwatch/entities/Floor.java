@@ -133,10 +133,5 @@ public class Floor extends PhysicalEntity implements ICollideable {
 	}
 
 
-	@Override
-	public boolean blocksPlatforms() {
-		return false;
-	}
-
 
 }

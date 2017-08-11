@@ -71,10 +71,4 @@ public class Collectable extends PhysicalEntity implements ICollideable, IShowOn
 	}
 
 
-	@Override
-	public boolean blocksPlatforms() {
-		return false;
-	}
-
-
 }
