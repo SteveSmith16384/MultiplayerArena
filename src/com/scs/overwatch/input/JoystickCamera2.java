@@ -19,6 +19,7 @@ import com.scs.overwatch.Settings;
 
 public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawInputListener {
 	
+	private static final float LOOK_UD_ADJ = .8f;
 	private static final float SPEED = 5;
 
 	protected Joystick joystick;
@@ -36,7 +37,7 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 		id = joystick.getJoyId();
 
 		//super.setMoveSpeed(.7f);//1f);
-		//super.setRotationSpeed(1f);//.5f); SCS 
+		super.setRotationSpeed(.85f);//.5f); SCS 
 
 		this.inputManager.addRawInputListener(this);
 
@@ -127,10 +128,10 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 		} else if (name.equals("jFLYCAM_Right" + id)) {
 			rotateCamera(-value, initialUpVec);
 		} else if (name.equals("jFLYCAM_Up" + id)) {
-			rotateCamera(-value * (invertY ? -1 : 1), cam.getLeft());
+			rotateCamera(-value * LOOK_UD_ADJ * (invertY ? -1 : 1), cam.getLeft());
 		} else if (name.equals("jFLYCAM_Down" + id)) {
 			if (value > CUTOFF) { // SCS
-				rotateCamera(value * (invertY ? -1 : 1), cam.getLeft());
+				rotateCamera(value * LOOK_UD_ADJ * (invertY ? -1 : 1), cam.getLeft());
 			}
 		} else if (name.equals("jFLYCAM_Forward" + id)) {
 			if (value > CUTOFF) {

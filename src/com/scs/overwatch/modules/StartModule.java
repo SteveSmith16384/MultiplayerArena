@@ -177,8 +177,8 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 			// Bladerunner
 			Settings.NUM_SECTORS = 3;
 			Settings.HAVE_BASE = false;
-			Settings.PVP = true;
-			Settings.NUM_AI = 3;
+			Settings.PVP = false;
+			Settings.NUM_AI = 2;
 			Settings.NUM_COLLECTABLES_PER_SECTOR = 1;
 			Settings.DODGEBALL = false;
 			Settings.CLONE_WARS = false;

@@ -107,7 +107,8 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				int id = nextid++;
 				Camera newCam = this.createCamera(id, numPlayers);
 				HUD hud = this.createHUD(newCam, id);
-				JoystickCamera_ORIG joyCam = new JoystickCamera_ORIG(newCam, j, game.getInputManager());
+				//JoystickCamera_ORIG joyCam = new JoystickCamera_ORIG(newCam, j, game.getInputManager());
+				JoystickCamera2 joyCam = new JoystickCamera2(newCam, j, game.getInputManager());
 				this.addPlayersAvatar(id, newCam, joyCam, hud);
 			}
 		}

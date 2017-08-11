@@ -21,8 +21,8 @@ import com.scs.overwatch.Settings;
  */
 public class JoystickCamera_ORIG extends MyFlyByCamera implements IInputDevice, RawInputListener {
 
-	private static final float SPEED = 5;
-	private static final float LOOK_UD_ADJ = .7f;
+	private static final float SPEED = 50;
+	private static final float LOOK_UD_ADJ = .8f;
 
 	protected Joystick joystick;
 	private float fwdVal, backVal, strafeLeftVal, strafeRightVal;
@@ -145,7 +145,7 @@ public class JoystickCamera_ORIG extends MyFlyByCamera implements IInputDevice, 
 				//Settings.p("value=" + value);
 				//Settings.p("maxVal=" + maxVal);
 				fwdVal = Math.min(1, value * SPEED);
-				//Settings.p("fwdVal:" + value);
+				Settings.p("fwdVal:" + value);
 			}
 		} else if (name.equals("jFLYCAM_Backward" + id)) {
 			if (value > CUTOFF) {

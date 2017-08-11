@@ -3,6 +3,7 @@ package com.scs.overwatch.entities;
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
+import com.jme3.renderer.queue.RenderQueue.Bucket;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.scene.shape.Sphere.TextureMode;
@@ -42,6 +43,9 @@ public class DodgeballBall extends PhysicalEntity implements IBullet {
 		}
 		ball_geo.setMaterial(floor_mat);
 
+		floor_mat.getAdditionalRenderState().setDepthTest(false);
+		ball_geo.setQueueBucket(Bucket.Transparent);
+
 		this.main_node.attachChild(ball_geo);
 		game.getRootNode().attachChild(this.main_node);
 		/** Position the cannon ball  */
@@ -67,10 +71,8 @@ public class DodgeballBall extends PhysicalEntity implements IBullet {
 
 	@Override
 	public void process(float tpf) {
-		//Settings.p("Dodgeball pos=" + this.getMainNode().getWorldTranslation()); // wrong?!
-		Settings.p("Dodgeball pos=" + this.floor_phy.getPhysicsLocation());
+		//Settings.p("Dodgeball pos=" + this.floor_phy.getPhysicsLocation());
 		// Check if fallen off edge
-		//this.getMainNode().updateGeometricState();
 		if (this.floor_phy.getPhysicsLocation().y < -1f) {
 			Settings.p("Dodgeball has fallen off the edge");
 			this.remove();

@@ -46,9 +46,9 @@ public class SimpleCity implements IPertinentMapData {
 
 		// Add outer walls
 		for (int j=0 ; j<numSectors ; j++) {
-			// Front
+			// Back
 			float height = NumberFunctions.rndFloat(10, 20);
-			SkyScraper skyscraperBack = new SkyScraper(game, module, j*(SKYSCRAPER_WIDTH+6), 0, SKYSCRAPER_WIDTH+6, height, WALL_THICKNESS);
+			SkyScraper skyscraperBack = new SkyScraper(game, module, j*(SKYSCRAPER_WIDTH+6), -WALL_THICKNESS, SKYSCRAPER_WIDTH+6, height, WALL_THICKNESS);
 			game.getRootNode().attachChild(skyscraperBack.getMainNode());
 
 			// Left
@@ -56,9 +56,9 @@ public class SimpleCity implements IPertinentMapData {
 			SkyScraper skyscraperLeft = new SkyScraper(game, module, -WALL_THICKNESS, j*(SKYSCRAPER_WIDTH+6), WALL_THICKNESS, height, SKYSCRAPER_WIDTH+6);
 			game.getRootNode().attachChild(skyscraperLeft.getMainNode());
 			
-			// Back
+			// Front
 			height = NumberFunctions.rndFloat(10, 20);
-			SkyScraper skyscraperFront = new SkyScraper(game, module, j*(SKYSCRAPER_WIDTH+6), (numSectors*(SKYSCRAPER_WIDTH+6))-WALL_THICKNESS, SKYSCRAPER_WIDTH+6, height, WALL_THICKNESS);
+			SkyScraper skyscraperFront = new SkyScraper(game, module, j*(SKYSCRAPER_WIDTH+6), (numSectors*(SKYSCRAPER_WIDTH+6)), SKYSCRAPER_WIDTH+6, height, WALL_THICKNESS);
 			game.getRootNode().attachChild(skyscraperFront.getMainNode());
 
 			// Right

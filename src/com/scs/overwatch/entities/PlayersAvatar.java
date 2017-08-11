@@ -69,7 +69,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	private Geometry gun;
 	public Vector3f warpPos;
 	private boolean hasBall = false;
-	
+
 	protected AudioNode audio_gun;
 
 	public PlayersAvatar(Overwatch _game, GameModule _module, int _id, Camera _cam, IInputDevice _input, HUD _hud) {
@@ -108,7 +108,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 		// create character control parameters (Radius,Height,Weight)
 		playerControl = new MyBetterCharacterControl(PLAYER_RAD, PLAYER_HEIGHT, WEIGHT);
-		playerControl.setJumpForce(new Vector3f(0, 6f, 0)); 
+		playerControl.setJumpForce(new Vector3f(0, 7f, 0)); 
 		this.getMainNode().addControl(playerControl);
 
 		module.bulletAppState.getPhysicsSpace().add(playerControl);
@@ -124,19 +124,21 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		}
 
 		this.hud.setAbilityGunText(this.abilityGun.getHudText());
-		this.hud.setAbilityOtherText(this.abilityOther.getHudText());
-		
+		if (abilityOther != null) {
+			this.hud.setAbilityOtherText(this.abilityOther.getHudText());
+		}
+
 		/*todo - add audio_gun = new AudioNode(game.getAssetManager(), "Sound/Effects/Gun.wav", false); // todo
 		audio_gun.setPositional(false);
 		audio_gun.setLooping(false);
 		audio_gun.setVolume(2);
 		this.getMainNode().attachChild(audio_gun);
-*/
+		 */
 		playerControl.getPhysicsRigidBody().setCcdMotionThreshold(1f);
 
 	}
 
-	
+
 	public static Spatial getPlayersModel(Overwatch game) {
 		//return new RobotModel(game.getAssetManager());
 
@@ -160,7 +162,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		playerGeometry.setLocalTranslation(new Vector3f(0, (PLAYER_HEIGHT/2)-.075f, 0)); // Need this to ensure the crate is on the floor
 		return playerGeometry;
 	}
-	
+
 
 	private static IAbility getRandomAbility(PlayersAvatar _player) {
 		int i = NumberFunctions.rnd(1, 3);
@@ -212,13 +214,17 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			}
 
 			abilityGun.process(tpf);
-			abilityOther.process(tpf);
+			if (this.abilityOther != null) {
+				abilityOther.process(tpf);
+			}
 
 			hud.process(tpf);
 
-			if (input.isAbilityOtherPressed()) { // Must be before we set the walkDirection & moveSpeed, as this method may affect it
-				//Settings.p("Using " + this.ability.toString());
-				this.abilityOther.activate(tpf);
+			if (this.abilityOther != null) {
+				if (input.isAbilityOtherPressed()) { // Must be before we set the walkDirection & moveSpeed, as this method may affect it
+					//Settings.p("Using " + this.ability.toString());
+					this.abilityOther.activate(tpf);
+				}
 			}
 
 			/*
@@ -258,8 +264,9 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 			// These must be after we might use them, so the hud is correct 
 			this.hud.setAbilityGunText(this.abilityGun.getHudText());
-			this.hud.setAbilityOtherText(this.abilityOther.getHudText());
-
+			if (abilityOther != null) {
+				this.hud.setAbilityOtherText(this.abilityOther.getHudText());
+			}
 		}
 
 		// Position camera at node

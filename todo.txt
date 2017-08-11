@@ -6,7 +6,13 @@ OVER-KILL
 
 
 URGENT
-TEST Map not right for Dodgeball - WALL_THICKNESS
+Jump higher
+Dodgeball going through wall
+Adjust num AI by num players
+Show game mode on screen
+Dodgeball be live for a few seconds
+Make sidewalk thicker
+Cant walk up sidewalk
 TEST Made road thicker
 Get robot model
 Player not restarting properly - make floor thicker?
