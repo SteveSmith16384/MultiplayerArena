@@ -61,7 +61,7 @@ public abstract class AbstractMagazineGun implements IAbility {
 
 	@Override
 	public String getHudText() {
-		if (this.bulletsLeftInMag == this.magazineSize && this.timeUntilShoot > 0) {
+		if (this.bulletsLeftInMag == this.magazineSize && this.timeUntilShoot > shotInterval) {
 			return name + " RELOADING";
 		} else {
 			return name + " (" + this.bulletsLeftInMag + "/" + this.magazineSize  +")";

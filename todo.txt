@@ -2,32 +2,26 @@ MULTIPLAYER ARENA
 
 
 URGENT
-Game goes mad when player dies
-Show on start if recording vid
-Create vid
-Only change physics settings if dodgeball
-Show game mode on screen
-TEST robot model
-	Dodgeballs inside skyscrapers
-Inc physics fps?
-Loads of dodgeballs!
-	Players dying immed in Dodgeball
+Player still gets stuck sometime when dying
+	Show small explosion when bullet hits wall
+	Show reason why score increased
+	Dodgeball not grey at start
+Sometimes win immediately - collectables?
+	Show game mode on screen
 	Show "reloading gun"
-Reduce pts for collectables
 	Check if objects are outside of arena - ai, dodgeball
-Starting on edge of arena
-HOME Get tex for new robot model
-HOME Diff texture for AI
+Sometimes starting on edge of arena
 HOME Change colour of tron tex and use it
 Search for todos
 HOME create logo - Multiplayer Arena
+Collectables inc jetpac fuel?
 
 
 TODO
+Only change physics settings if dodgeball
 Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
 Create config file like Killer Crates
 Game option - have edge walls
-No HUD on single player
 Targetter position not right
 Check all entities for falling off edge
 Sfx

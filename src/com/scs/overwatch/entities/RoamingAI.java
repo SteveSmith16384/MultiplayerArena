@@ -50,7 +50,8 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 
 		Box box1 = new Box(w/2, h/2, d/2);
 		Geometry geometry = new Geometry("Crate", box1);
-		TextureKey key3 = new TextureKey("Textures/sun.jpg");//computerconsole2.jpg");
+		//TextureKey key3 = new TextureKey("Textures/sun.jpg");//computerconsole2.jpg");
+		TextureKey key3 = new TextureKey("Textures/computerconsole2.jpg");
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);
@@ -111,10 +112,10 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 						this.getMainNode().lookAt(enemy.getLocation(), Vector3f.UNIT_Y);
 						Vector3f dir = enemy.getLocation().subtract(this.getLocation()).normalize();
 						this.shotDir.set(dir);
-						Settings.p("AI shooting at " + enemy);
+						//Settings.p("AI shooting at " + enemy);
 						this.weapon.activate(tpf);//.shoot();
 					} else {
-						Settings.p("AI cannot see anyone to shoot at");
+						//Settings.p("AI cannot see anyone to shoot at");
 					}
 				}
 			}
@@ -138,7 +139,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 
 	@Override
 	public void hasSuccessfullyHit(IEntity e) {
-		Settings.p("AI has shot " + e.toString());
+		//Settings.p("AI has shot " + e.toString());
 
 	}
 
@@ -159,7 +160,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 
 
 	@Override
-	public void damaged(float amt) {
+	public void damaged(float amt, String reason) {
 
 	}
 

@@ -68,7 +68,6 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	private boolean restarting = false;
 	private long restartAt, invulnerableUntil;
-	private Geometry gun;
 	public Vector3f warpPos;
 	private boolean hasBall = false;
 
@@ -92,7 +91,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 		// Add gun
 		{
-			Box box1 = new Box(.1f, .1f, .3f);
+			/*Box box1 = new Box(.1f, .1f, .3f);
 			gun = new Geometry("Gun", box1);
 			TextureKey key3 = new TextureKey("Textures/computerconsole2.jpg");
 			key3.setGenerateMips(true);
@@ -107,7 +106,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			}
 			gun.setMaterial(floor_mat);
 			gun.setLocalTranslation(0, 0, .15f);
-			//this.getMainNode().attachChild(gun);
+			//this.getMainNode().attachChild(gun);*/
 		}
 
 		// create character control parameters (Radius,Height,Weight)
@@ -195,8 +194,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		Point p = module.mapData.getPlayerStartPos(id);
 		//playerControl.warp(new Vector3f(p.x, 20f, p.y));
 		warpPos = new Vector3f(p.x, module.mapData.getRespawnHeight(), p.y);
-		Settings.p("Moving player to start position: " + warpPos.x + "," + warpPos.z);
-		module.toWarp.add(this);
+		Settings.p("Scheduling player to start position: " + warpPos);
+		module.addToWarpList(this);
 		//this.getMainNode().setLocalTranslation(new Vector3f(p.x, 20f, p.y));
 		//this.getMainNode().updateGeometricState();
 		//Settings.p("Player starting at:" + this.getMainNode().getWorldTranslation());
@@ -220,7 +219,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			if (this.playerControl.getPhysicsRigidBody().getPhysicsLocation().y < -5f) {
 				//if (this.getMainNode().getWorldTranslation().y < -5f) {
 				//this.moveToStartPostion();
-				died();
+				died("Too low");
 				return;
 			}
 
@@ -286,11 +285,14 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 		// Rotate us to point in the direction of the camera
 		Vector3f lookAtPoint = cam.getLocation().add(cam.getDirection().mult(10));
-		gun.lookAt(lookAtPoint.clone(), Vector3f.UNIT_Y);
+		//gun.lookAt(lookAtPoint.clone(), Vector3f.UNIT_Y);
 		lookAtPoint.y = cam.getLocation().y; // Look horizontal
 		this.playerGeometry.lookAt(lookAtPoint, Vector3f.UNIT_Y);
 		//this.getMainNode().lookAt(lookAtPoint.clone(), Vector3f.UNIT_Y);  This won't rotate the model since it's locked to the physics controller
 
+		// Move cam fwd so we don't see ourselves
+		cam.setLocation(cam.getLocation().add(cam.getDirection().mult(PLAYER_RAD)));
+	
 		this.input.resetFlags();
 
 		walkDirection.set(0, 0, 0);
@@ -348,13 +350,13 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		if (System.currentTimeMillis() > this.invulnerableUntil) {
 			float dam = bullet.getDamageCaused();
 			if (dam > 0) {
-				Settings.p("Player hit by bullet!");
-				module.doExplosion(this.main_node.getWorldTranslation(), this);//, 5, 20);
+				Settings.p("Player hit by bullet");
+				module.doExplosion(this.main_node.getWorldTranslation(), this);
 				this.health -= dam;
-				this.hud.setHealth(this.health);
+				//this.hud.setHealth(this.health);
 				this.hud.showDamageBox();
 
-				died();
+				died("hit by " + bullet.toString());
 			}
 		} else {
 			Settings.p("Player hit but is currently invulnerable");
@@ -362,8 +364,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	}
 
 
-	private void died() {
-		Settings.p("Player died");
+	private void died(String reason) {
+		Settings.p("Player died: " + reason);
 		this.restarting = true;
 		this.restartAt = System.currentTimeMillis() + RESTART_DUR;
 		invulnerableUntil = System.currentTimeMillis() + (RESTART_DUR*2);
@@ -373,18 +375,20 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		Vector3f pos = this.getMainNode().getWorldTranslation().clone();//.floor_phy.getPhysicsLocation().clone();
 		pos.y = -SimpleCity.FLOOR_THICKNESS * 2;
 		playerControl.warp(pos);
+		Settings.p("Warped player to Hell");
 	}
 
 
 	@Override
 	public void hasSuccessfullyHit(IEntity e) {
-		this.incScore(20);
+		this.incScore(20, "shot " + e.toString());
 		//new AbstractHUDImage(game, module, this.hud, "Textures/text/hit.png", this.hud.hud_width, this.hud.hud_height, 2);
 		this.hud.showCollectBox();
 	}
 
 
-	public void incScore(float amt) {
+	public void incScore(float amt, String reason) {
+		Settings.p("Inc score: +" + amt + ", " + reason);
 		this.score += amt;
 		this.hud.setScore(this.score);
 
@@ -410,13 +414,13 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		} else if (other instanceof Collectable) {
 			Collectable col = (Collectable)other;
 			col.remove();
-			this.incScore(20);
+			this.incScore(10, "Collectable");
 			this.hud.showCollectBox();
 
 			module.createCollectable();
 
 		} else if (other instanceof Base) {
-			incScore(0.005f); // todo - add to config
+			incScore(0.005f, " on base "); // todo - add to config
 		}
 	}
 
@@ -436,8 +440,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 
 	@Override
-	public void damaged(float amt) {
-		died();
+	public void damaged(float amt, String reason) {
+		died(reason);
 	}
 
 

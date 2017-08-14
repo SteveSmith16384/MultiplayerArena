@@ -9,6 +9,7 @@ import com.scs.overwatch.Settings;
 import com.scs.overwatch.components.IBullet;
 import com.scs.overwatch.components.ICanShoot;
 import com.scs.overwatch.components.ICollideable;
+import com.scs.overwatch.effects.SmallExplosion;
 import com.scs.overwatch.models.BeamLaserModel;
 import com.scs.overwatch.modules.GameModule;
 
@@ -70,6 +71,11 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 	public void collidedWith(ICollideable other) {
 		if (other != this.shooter) {
 			//Settings.p("Laser collided with " + other);
+
+			SmallExplosion expl = new SmallExplosion(module, game.getRootNode(), game.getAssetManager(), game.getRenderManager(), .05f);
+			expl.setLocalTranslation(this.getLocation());
+			module.addEntity(expl);
+
 			this.remove(); // Don't bounce
 		}
 	}

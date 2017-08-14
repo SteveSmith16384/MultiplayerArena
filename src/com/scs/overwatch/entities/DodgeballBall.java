@@ -21,7 +21,7 @@ public class DodgeballBall extends PhysicalEntity implements IBullet, IMustRemai
 	private static final float RAD = 0.2f;
 
 	public ICanShoot shooter;
-	public boolean live = true;
+	private boolean live = true;
 	private float timeLeft = 2f;
 	private Geometry ball_geo;
 
@@ -78,12 +78,7 @@ public class DodgeballBall extends PhysicalEntity implements IBullet, IMustRemai
 		if (live) {
 			this.timeLeft -= tpf;
 			if (this.timeLeft < 0) {
-				// Set tex to dark
-				TextureKey key3 = new TextureKey( "Textures/mud.png");
-				Texture tex3 = game.getAssetManager().loadTexture(key3);
-				this.ball_geo.getMaterial().setTexture("DiffuseMap", tex3);
-
-				live = false;
+				this.setUnlive();
 			}
 		}
 
@@ -100,7 +95,18 @@ public class DodgeballBall extends PhysicalEntity implements IBullet, IMustRemai
 
 	}
 
+	
+	public void setUnlive() {
+		// Set tex to dark
+		TextureKey key3 = new TextureKey( "Textures/mud.png");
+		Texture tex3 = game.getAssetManager().loadTexture(key3);
+		this.ball_geo.getMaterial().setTexture("DiffuseMap", tex3);
 
+		live = false;
+
+	}
+
+	
 	@Override
 	public ICanShoot getShooter() {
 		return shooter;

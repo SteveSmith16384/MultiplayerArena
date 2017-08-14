@@ -28,7 +28,7 @@ public class SmallExplosion extends Node implements IEntity, IProcessable {
 	private GameModule module;
 	private RealtimeInterval expire = new RealtimeInterval(1000, false);
 
-	public SmallExplosion(GameModule _module, Node mainNode, AssetManager assetManager, RenderManager renderManager) {
+	public SmallExplosion(GameModule _module, Node mainNode, AssetManager assetManager, RenderManager renderManager, float size) {
 		super("SmallExplosionModel");
 
 		module = _module;
@@ -36,7 +36,7 @@ public class SmallExplosion extends Node implements IEntity, IProcessable {
 		this.createFlame(assetManager);
 		//todo re- add this.createFlash(assetManager);
 
-		explosionEffect.scale(.2f);
+		explosionEffect.scale(size);//.2f);
 		explosionEffect.updateModelBound();
 
 		this.attachChild(explosionEffect);

@@ -50,11 +50,13 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	private static final String QUIT = "Quit";
 	private static final String TEST = "Test";
 
+	public static String HELP_TEXT = "";
+	
 	protected Overwatch game;
 	public BulletAppState bulletAppState;
 	public TSArrayList<IEntity> entities = new TSArrayList<>();
 	public IPertinentMapData mapData;
-	public List<PlayersAvatar> toWarp = new ArrayList<>();
+	private List<PlayersAvatar> toWarp = new ArrayList<>();
 	private RealtimeInterval checkMR = new RealtimeInterval(1000);
 
 
@@ -399,7 +401,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				if (e instanceof PlayersAvatar) {
 					PlayersAvatar ip = (PlayersAvatar)e;
 
-					ip.damaged(999);
+					ip.damaged(999, "Test");
 
 					/*Vector3f pos = ip.getLocation().clone();
 					pos.x-=2;
@@ -446,7 +448,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		}
 
 		// show explosion effect
-		SmallExplosion expl = new SmallExplosion(this, game.getRootNode(), game.getAssetManager(), game.getRenderManager());
+		SmallExplosion expl = new SmallExplosion(this, game.getRootNode(), game.getAssetManager(), game.getRenderManager(), .2f);
 		expl.setLocalTranslation(pos);
 		this.addEntity(expl);
 	}
@@ -479,17 +481,26 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	@Override
 	public void prePhysicsTick(PhysicsSpace arg0, float arg1) {
-		while (this.toWarp.size() > 0) {
-			PlayersAvatar a = this.toWarp.remove(0);
-			a.playerControl.warp(a.warpPos);
+		synchronized (toWarp) {
+			while (this.toWarp.size() > 0) {
+				PlayersAvatar a = this.toWarp.remove(0);
+				Settings.p("Actually warping player to start position: " + a.warpPos);
+				a.playerControl.warp(a.warpPos);
+			}
 		}
 	}
 
 
+	public void addToWarpList(PlayersAvatar a) {
+		synchronized (toWarp) {
+			this.toWarp.add(a);
+		}		
+	}
+
 	public void createDodgeballBall() {
 		Point p = mapData.getRandomCollectablePos();
 		DodgeballBall c = new DodgeballBall(game, this, null);
-		c.live = false; // Prevent player being killed immed
+		c.setUnlive();//.live = false; // Prevent player being killed immed
 		c.getMainNode().setLocalTranslation(p.x,  10f,  p.y);
 		c.floor_phy.setPhysicsLocation(new Vector3f(p.x,  mapData.getRespawnHeight(),  p.y));
 		Overwatch.instance.getRootNode().attachChild(c.getMainNode());

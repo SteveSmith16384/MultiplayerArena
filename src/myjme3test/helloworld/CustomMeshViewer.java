@@ -66,6 +66,11 @@ public class CustomMeshViewer extends SimpleApplication {
 		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(vertices));
 		mesh.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(texCoord));
 		mesh.setBuffer(Type.Index,    3, BufferUtils.createIntBuffer(indexes));
+
+		float[] normals = new float[12];
+		normals = new float[]{0,0,1, 0,0,1, 0,0,1, 0,0,1};
+		mesh.setBuffer(Type.Normal, 3, BufferUtils.createFloatBuffer(normals));
+
 		mesh.updateBound();
 		
 		

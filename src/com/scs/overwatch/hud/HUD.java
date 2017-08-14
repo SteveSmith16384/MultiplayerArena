@@ -42,8 +42,9 @@ public class HUD extends Node implements IEntity, IProcessable {
 	private List<Picture> targetting_reticules = new ArrayList<>();
 	private Overwatch game;
 	private GameModule module;
-	private BitmapText abilityGun, abilityOther, score, health, haveBall;
-	//public BitmapText gamepadPos
+	private BitmapText abilityGun, abilityOther, score, haveBall;
+	public BitmapText helpText;
+	private float showHelpUntil = 5;
 
 	public HUD(Overwatch _game, GameModule _module, float xBL, float yBL, float w, float h, BitmapFont font_small, int id, Camera _cam) {
 		super("HUD");
@@ -57,27 +58,32 @@ public class HUD extends Node implements IEntity, IProcessable {
 
 		super.setLocalTranslation(xBL, yBL, 0);
 
-		health = new BitmapText(font_small, false);
+		/*health = new BitmapText(font_small, false);
 		health.setLocalTranslation(10, hud_height-20, 0);
 		this.attachChild(health);
-		this.setHealth(100);
+		this.setHealth(100);*/
 
 		score = new BitmapText(font_small, false);
-		score.setLocalTranslation(10, hud_height-35, 0);
+		score.setLocalTranslation(10, hud_height-15, 0);
 		this.attachChild(score);
 		this.setScore(0);
 
 		abilityGun = new BitmapText(font_small, false);
-		abilityGun.setLocalTranslation(10, hud_height-50, 0);
+		abilityGun.setLocalTranslation(10, hud_height-30, 0);
 		this.attachChild(abilityGun);
 
 		abilityOther = new BitmapText(font_small, false);
-		abilityOther.setLocalTranslation(10, hud_height-65, 0);
+		abilityOther.setLocalTranslation(10, hud_height-45, 0);
 		this.attachChild(abilityOther);
 
 		haveBall = new BitmapText(font_small, false);
-		haveBall.setLocalTranslation(10, hud_height-80, 0);
+		haveBall.setLocalTranslation(10, hud_height-60, 0);
 		this.attachChild(haveBall);
+
+		helpText = new BitmapText(font_small, false);
+		helpText.setText(GameModule.HELP_TEXT);
+		helpText.setLocalTranslation(10, hud_height-75, 0);
+		this.attachChild(helpText);
 
 		// Damage box
 		{
@@ -114,7 +120,7 @@ public class HUD extends Node implements IEntity, IProcessable {
 			//geom.setQueueBucket(Bucket.Transparent);
 			//geom.setLocalTranslation(-w/2, -h/2, 0);
 			this.attachChild(geom);*/
-/*
+		/*
 			Picture pic = new Picture("HUD Picture");
 			pic.setImage(game.getAssetManager(), "Textures/text/hit.png", true);
 			pic.setWidth(w);
@@ -128,7 +134,7 @@ public class HUD extends Node implements IEntity, IProcessable {
 
 		this.setModelBound(new BoundingBox());
 		this.updateModelBound();
-		
+
 		module.addEntity(this);
 
 	}
@@ -136,14 +142,21 @@ public class HUD extends Node implements IEntity, IProcessable {
 
 	@Override
 	public void process(float tpf) {
+		if (showHelpUntil > 0) {
+			showHelpUntil -= tpf;
+			if (showHelpUntil <= 0) {
+				this.helpText.removeFromParent();
+			}
+		}
+		
 		if (Settings.DEBUG_HUD) {
 			this.abilityGun.setText("" + NumberFunctions.rnd(1000,  9999));
 			this.score.setText("" + NumberFunctions.rnd(1000,  9999));
 		}
-		
+
 		// Test reticle
-		int id = 0;
 		if (Settings.DEBUG_TARGETTER) {
+			int id = 0;
 			for (IEntity entity : module.entities) {
 				//if (entity != this) { // todo - not right!
 				if (entity instanceof IShowOnHUD) {
@@ -193,13 +206,13 @@ public class HUD extends Node implements IEntity, IProcessable {
 	}
 
 
-	public void setHealth(float h) {
+	/*public void setHealth(float h) {
 		if (!Settings.DEBUG_HUD) {
 			this.health.setText("HEALTH: " + (int)h);
 		} else {
 			this.health.setText("THIS IS PLAYER " + playerId);
 		}
-	}
+	}*/
 
 
 	public void setAbilityGunText(String s) {

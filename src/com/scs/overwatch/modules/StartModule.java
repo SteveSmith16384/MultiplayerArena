@@ -147,23 +147,19 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 			// Skirmish
 			Settings.GAME_MODE = GameMode.Skirmish;
 			Settings.NUM_SECTORS = 3;
-			//Settings.HAVE_BASE = false;
 			Settings.PVP = true;
 			Settings.NUM_AI = 0;
 			Settings.NUM_COLLECTABLES_PER_SECTOR = 1;
-			//Settings.DODGEBALL = false;
-			//Settings.CLONE_WARS = false;
+			GameModule.HELP_TEXT = "Skirmish: Hunt the other players";
 			startGame();
 		} else if (name.equals("2")) {
 			// King of the Hill
 			Settings.GAME_MODE = GameMode.KingOfTheHill;
 			Settings.NUM_SECTORS = 3;
-			//Settings.HAVE_BASE = true;
 			Settings.PVP = true;
 			Settings.NUM_AI = 0;
 			Settings.NUM_COLLECTABLES_PER_SECTOR = 0;
-			//Settings.DODGEBALL = false;
-			//Settings.CLONE_WARS = false;
+			GameModule.HELP_TEXT = "King of the Hill: Dominate the base";
 			startGame();
 		} else if (name.equals("3")) {
 			// Dodgeball
@@ -173,8 +169,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 			Settings.PVP = true;
 			Settings.NUM_AI = 0;
 			Settings.NUM_COLLECTABLES_PER_SECTOR = 0;
-			//Settings.DODGEBALL = true;
-			//Settings.CLONE_WARS = false;
+			GameModule.HELP_TEXT = "Dodgeball: Hit other players with the ball";
 			startGame();
 		} else if (name.equals("4")) {
 			// Bladerunner
@@ -182,21 +177,18 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 			Settings.NUM_SECTORS = 3;
 			//Settings.HAVE_BASE = false;
 			Settings.PVP = false;
-			Settings.NUM_AI = Math.max(1, game.getInputManager().getJoysticks().length); // One less than num players, min of 1
+			Settings.NUM_AI = Math.max(1, game.getInputManager().getJoysticks().length) + (Settings.DEBUG_DEATH?4:0); // One less than num players, min of 1 
 			Settings.NUM_COLLECTABLES_PER_SECTOR = 1;
-			//Settings.DODGEBALL = false;
-			//Settings.CLONE_WARS = false;
+			GameModule.HELP_TEXT = "Hunt the rogue AI";
 			startGame();
 		} else if (name.equals("5")) {
 			// Clone Wars
 			Settings.GAME_MODE = GameMode.CloneWars;
 			Settings.NUM_SECTORS = 2;
-			//Settings.HAVE_BASE = false;
 			Settings.PVP = true;
 			Settings.NUM_AI = 0;
 			Settings.NUM_COLLECTABLES_PER_SECTOR = 1;
-			//Settings.DODGEBALL = false;
-			//Settings.CLONE_WARS = true;
+			GameModule.HELP_TEXT = "Clone Wars: Hunt the other players";
 			startGame();
 		} else if (name.equals(QUIT)) {
 			game.stop();
