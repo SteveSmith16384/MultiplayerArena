@@ -12,7 +12,7 @@ public class Settings {
 	public static final boolean USE_MODEL_FOR_PLAYERS = true;
 
 	// DEBUG
-	public static final boolean DEBUG_DEATH = true;
+	public static final boolean DEBUG_DEATH = false;
 	public static final boolean DEBUG_GAMEPAD_TURNING = false;
 	public static final boolean DEBUG_HUD = false;
 	public static final boolean DEBUG_TARGETTER = false;
@@ -58,7 +58,7 @@ public class Settings {
 	
 	public static String getCrateTex() {
 		if (NEON) {
-			return "Textures/10125-v4.jpg";//glowingbox.png";
+			return "Textures/10125-v4.jpg"; //glowingbox.png";
 		} else {
 			int i = NumberFunctions.rnd(1, 10);
 			return "Textures/boxes and crates/" + i + ".png";

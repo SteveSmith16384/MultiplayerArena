@@ -10,13 +10,10 @@ import com.scs.overwatch.modules.GameModule;
 public abstract class PhysicalEntity extends Entity implements IProcessable {//, IAffectedByPhysics {
 
 	protected Node main_node;//, left_node, right_node;
-	public String name;
 	public RigidBodyControl floor_phy;
 
 	public PhysicalEntity(Overwatch _game, GameModule _module, String _name) {
-		super(_game, _module);
-
-		name = _name;
+		super(_game, _module, _name);
 
 		main_node = new Node(name + "_MainNode");
 	}
@@ -96,12 +93,6 @@ public abstract class PhysicalEntity extends Entity implements IProcessable {//,
 		}
 		return true;
 	}*/
-
-
-	@Override
-	public String toString() {
-		return "Entity:" + name;
-	}
 
 
 	public Vector3f getLocation() {

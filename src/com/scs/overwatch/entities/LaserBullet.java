@@ -75,6 +75,8 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 			SmallExplosion expl = new SmallExplosion(module, game.getRootNode(), game.getAssetManager(), game.getRenderManager(), .05f);
 			expl.setLocalTranslation(this.getLocation());
 			module.addEntity(expl);
+			
+			CubeExplosionShard.Factory(game, module, this.getLocation(), 3);
 
 			this.remove(); // Don't bounce
 		}

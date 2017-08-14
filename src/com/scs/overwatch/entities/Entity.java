@@ -16,11 +16,19 @@ public class Entity implements IEntity, Savable {
 	public final int id;
 	protected Overwatch game;
 	protected GameModule module;
+	public String name;
 
-	public Entity(Overwatch _game, GameModule _module) {
+	public Entity(Overwatch _game, GameModule _module, String _name) {
 		id = nextId++;
 		game = _game;
 		module = _module;
+		name = _name;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Entity:" + name + " (" + id + ")";
 	}
 
 

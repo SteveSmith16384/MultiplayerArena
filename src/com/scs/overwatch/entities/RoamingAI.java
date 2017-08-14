@@ -170,6 +170,8 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 		if (other instanceof IBullet) {
 			IBullet bullet = (IBullet)other;
 			if (bullet.getShooter() != this) {
+				CubeExplosionShard.Factory(game, module, this.getLocation(), 10);
+
 				module.doExplosion(this.getLocation(), this);//, 5, 5);
 				this.remove();
 				bullet.getShooter().hasSuccessfullyHit(this);

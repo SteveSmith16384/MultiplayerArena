@@ -24,7 +24,7 @@ public class SkyScraper extends PhysicalEntity implements IProcessable, ICollide
 
 		String tex = null;
 		if (Settings.NEON) {
-			tex = "Textures/neon1.jpg";//10125-v4.jpg";//tron1.jpg";
+			tex = "Textures/neon1.jpg";//tron3.jpg";
 		} else {
 			tex = "Textures/skyscraper" + NumberFunctions.rnd(1, 4) + ".jpg";
 		}

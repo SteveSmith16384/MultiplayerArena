@@ -216,7 +216,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			fpp.addFilter(bloom);
 
 			// test filter
-			//RadialBlurFilter blur = new RadialBlurFilter(); // todo - remove?
+			//RadialBlurFilter blur = new RadialBlurFilter();
 			//fpp.addFilter(blur);
 		}
 		view2.addProcessor(fpp);

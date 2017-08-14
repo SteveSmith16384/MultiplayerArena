@@ -2,24 +2,27 @@ MULTIPLAYER ARENA
 
 
 URGENT
-Player still gets stuck sometime when dying
+TEST Show game mode on screen
+	Show id in toString()
+	Use cubeshards when AI killed
+	Player still gets stuck sometime when dying
+	Sometimes starting on edge of arena
 	Show small explosion when bullet hits wall
-	Show reason why score increased
-	Dodgeball not grey at start
-Sometimes win immediately - collectables?
-	Show game mode on screen
-	Show "reloading gun"
+	Sometimes win immediately - collectables?
 	Check if objects are outside of arena - ai, dodgeball
-Sometimes starting on edge of arena
-HOME Change colour of tron tex and use it
-Search for todos
 HOME create logo - Multiplayer Arena
+Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
+
+SOON
+Search for todos
 Collectables inc jetpac fuel?
+HOME Add SFX - from Ares
+Show shot accuracy
 
 
 TODO
+HOME Music
 Only change physics settings if dodgeball
-Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
 Create config file like Killer Crates
 Game option - have edge walls
 Targetter position not right
@@ -32,18 +35,13 @@ Map made up of lots of fallen pillars
 Map with area in sky
 Maze map
 Castle map
-Shadows
 Rotate the whole map
 Monorail
 Mess about with gravity
-Red kill only covering top half of screen
 Find flash.png
 Better font - use SF font?
-HOME Music
-HOME Add SFX - from Ares
 Do explosion by throwing invis balls
 Players get harmed by explosion
-Make rocket look better
 Search for todos
 zoom-in ability
 Cylinder not working
@@ -58,7 +56,6 @@ Cars that drive down roads
 	Explosions
 Better skybox
 Shrink ray
-Show shot accuracy
 Headshots - have small box at top
 AI comrades & enemy
 
