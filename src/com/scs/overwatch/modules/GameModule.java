@@ -76,6 +76,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 		// Set up Physics
 		bulletAppState = new BulletAppState();
+		//bulletAppState.setSpeed(speed);
 		game.getStateManager().attach(bulletAppState);
 		bulletAppState.getPhysicsSpace().addCollisionListener(this);
 		bulletAppState.getPhysicsSpace().addTickListener(this);
@@ -405,7 +406,9 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 					pos.y = 0;
 					pos.z-=2;
 					doExplosion(pos);//, 5, 10);*/
-					break;
+					//break;
+				} else if (e instanceof DodgeballBall) {
+					((DodgeballBall) e).remove();
 				}
 			}
 

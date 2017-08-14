@@ -2,10 +2,14 @@ MULTIPLAYER ARENA
 
 
 URGENT
+Dodgeballs inside skyscrapers
+Inc physics fps?
+Loads of dodgeballs!
+Players dying immed in Dodgeball
+Show "reloading gun"
+Reduce pts for collectables
 	Check if objects are outside of arena - ai, dodgeball
 Starting on edge of arena
-HOME Test Gamepad turning jumps
-HOME - Test gamepad myself
 HOME Get tex for new robot model
 Show game mode on screen
 	Dodgeball - Kill player if hit by ball
@@ -69,6 +73,7 @@ GAME MODES
 	3 - Dodgeball
 	4 - Hunt the most AI enemies
 	5 - Clone Wars (Lots of identical player-sized boxes - What the Box)
+Hide and seek - take turns finding each other and shooting
 Collect the most collectables
 Tig - who can be it the longest, lose when killed, killer gets it (floating dot above head)
 2v1 - with 1 being more powerful

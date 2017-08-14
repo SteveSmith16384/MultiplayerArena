@@ -89,8 +89,8 @@ public class DodgeballBall extends PhysicalEntity implements IBullet, IMustRemai
 
 		//Settings.p("Dodgeball pos=" + this.floor_phy.getPhysicsLocation());
 		// Check if fallen off edge
-		if (this.floor_phy.getPhysicsLocation().y < -1f) {
-			Settings.p("Dodgeball has fallen off the edge");
+		if (this.floor_phy.getPhysicsLocation().y < -5f) {
+			Settings.p("Dodgeball has fallen off the edge" + this.floor_phy.getPhysicsLocation());
 			
 			// Relaunch
 			this.remove();
