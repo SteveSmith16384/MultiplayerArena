@@ -36,7 +36,10 @@ public class ModelViewer extends SimpleApplication {
 		n.getChild(5).removeFromParent();
 		model.scale(0.1f);*/
 		
-		JMEFunctions.SetTextureOnSpatial(assetManager, model, "Textures/sun.jpg");
+		//JMEFunctions.SetTextureOnSpatial(assetManager, model, "Textures/sun.jpg");
+		JMEFunctions.SetTextureOnSpatial(assetManager, model, "Textures/cells3.png");
+		//JMEFunctions.SetTextureOnSpatial(assetManager, model, "Textures/glowingbox.png");
+
 		
 		model.setModelBound(new BoundingBox());
 		model.updateModelBound();

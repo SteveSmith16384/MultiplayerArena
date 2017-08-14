@@ -34,6 +34,7 @@ import com.scs.overwatch.components.ITargetByAI;
 import com.scs.overwatch.hud.AbstractHUDImage;
 import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
+import com.scs.overwatch.map.SimpleCity;
 import com.scs.overwatch.models.RobotModel;
 import com.scs.overwatch.modules.GameModule;
 import com.scs.overwatch.weapons.DodgeballGun;
@@ -367,9 +368,10 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		this.restartAt = System.currentTimeMillis() + RESTART_DUR;
 		invulnerableUntil = System.currentTimeMillis() + (RESTART_DUR*2);
 		//this.getMainNode().getWorldTranslation();
+		
 		// Move us below the map
 		Vector3f pos = this.getMainNode().getWorldTranslation().clone();//.floor_phy.getPhysicsLocation().clone();
-		pos.y = -3;
+		pos.y = -SimpleCity.FLOOR_THICKNESS * 2;
 		playerControl.warp(pos);
 	}
 

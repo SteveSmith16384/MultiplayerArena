@@ -9,7 +9,7 @@ public class Settings {
 	public static final boolean SHOW_LOGO = false;
 	public static final boolean ALWAYS_SHOW_4_CAMS = false;
 	public static final boolean RECORD_VID = false;
-	public static final boolean USE_MODEL_FOR_PLAYERS = false;
+	public static final boolean USE_MODEL_FOR_PLAYERS = true;
 
 	// DEBUG
 	public static final boolean DEBUG_GAMEPAD_TURNING = true;

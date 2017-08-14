@@ -53,12 +53,11 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	protected Overwatch game;
 	public BulletAppState bulletAppState;
 	public TSArrayList<IEntity> entities = new TSArrayList<>();
-	//private TSArrayList<PlayersAvatar> avatars = new TSArrayList<>();
 	public IPertinentMapData mapData;
 	public List<PlayersAvatar> toWarp = new ArrayList<>();
 	private RealtimeInterval checkMR = new RealtimeInterval(1000);
 
-	
+
 	public GameModule(Overwatch _game) {
 		super();
 
@@ -80,6 +79,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		game.getStateManager().attach(bulletAppState);
 		bulletAppState.getPhysicsSpace().addCollisionListener(this);
 		bulletAppState.getPhysicsSpace().addTickListener(this);
+		bulletAppState.getPhysicsSpace().setAccuracy(1f / 80f);
 		//bulletAppState.getPhysicsSpace().enableDebug(game.getAssetManager());
 
 		game.getRenderManager().removeMainView(game.getViewPort()); // Since we create new ones for each player
@@ -210,7 +210,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Scene);
 			bloom.setEnabled(true);
 			bloom.setBloomIntensity(40f);//50f);
-			bloom.setBlurScale(10f);
+			bloom.setBlurScale(3f);//10f);
 			fpp.addFilter(bloom);
 
 			// test filter
@@ -454,6 +454,10 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	@Override
 	public void destroy() {
+		// These lines cause a crash at the end
+		//this.bulletAppState.getPhysicsSpace().destroy();
+		//this.bulletAppState.cleanup();
+
 		game.getInputManager().clearMappings();
 		game.getInputManager().clearRawInputListeners();
 	}
@@ -485,6 +489,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	public void createDodgeballBall() {
 		Point p = mapData.getRandomCollectablePos();
 		DodgeballBall c = new DodgeballBall(game, this, null);
+		c.live = false; // Prevent player being killed immed
 		c.getMainNode().setLocalTranslation(p.x,  10f,  p.y);
 		c.floor_phy.setPhysicsLocation(new Vector3f(p.x,  mapData.getRespawnHeight(),  p.y));
 		Overwatch.instance.getRootNode().attachChild(c.getMainNode());

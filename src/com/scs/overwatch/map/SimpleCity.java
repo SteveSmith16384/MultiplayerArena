@@ -21,8 +21,8 @@ public class SimpleCity implements IPertinentMapData {
 
 	private static final int SKYSCRAPER_WIDTH = 7;
 
-	private static final float WALL_THICKNESS = 5;
-	private static final float FLOOR_THICKNESS = 5f;
+	private static final float WALL_THICKNESS = 3;
+	public static final float FLOOR_THICKNESS = 3f;
 	private static final float PATH_THICKNESS = .1f;
 
 	private Overwatch game;

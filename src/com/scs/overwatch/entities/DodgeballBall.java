@@ -109,9 +109,9 @@ public class DodgeballBall extends PhysicalEntity implements IBullet, IMustRemai
 
 	@Override
 	public void collidedWith(ICollideable other) {
-		//Settings.p("Coll with " + other);
 		if (other instanceof PlayersAvatar) {
 			PlayersAvatar av = (PlayersAvatar) other;
+			Settings.p(this + " collided with " + other);
 			if (live) {
 				if (other != this.shooter) {
 					av.hitByBullet(this);

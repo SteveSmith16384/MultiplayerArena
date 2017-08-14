@@ -2,18 +2,21 @@ MULTIPLAYER ARENA
 
 
 URGENT
-Dodgeballs inside skyscrapers
+Game goes mad when player dies
+Show on start if recording vid
+Create vid
+Only change physics settings if dodgeball
+Show game mode on screen
+TEST robot model
+	Dodgeballs inside skyscrapers
 Inc physics fps?
 Loads of dodgeballs!
-Players dying immed in Dodgeball
-Show "reloading gun"
+	Players dying immed in Dodgeball
+	Show "reloading gun"
 Reduce pts for collectables
 	Check if objects are outside of arena - ai, dodgeball
 Starting on edge of arena
 HOME Get tex for new robot model
-Show game mode on screen
-	Dodgeball - Kill player if hit by ball
-	Dodgeball going through wall
 HOME Diff texture for AI
 HOME Change colour of tron tex and use it
 Search for todos
@@ -44,7 +47,6 @@ Find flash.png
 Better font - use SF font?
 HOME Music
 HOME Add SFX - from Ares
-Platforms on buildings
 Do explosion by throwing invis balls
 Players get harmed by explosion
 Make rocket look better
