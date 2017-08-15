@@ -54,7 +54,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	private IInputDevice input;
 
 	//Temporary vectors used on each frame.
-	private Camera cam;
+	public Camera cam;
 	private final Vector3f camDir = new Vector3f();
 	private final Vector3f camLeft = new Vector3f();
 
@@ -70,6 +70,9 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	private long restartAt, invulnerableUntil;
 	public Vector3f warpPos;
 	private boolean hasBall = false;
+	
+	private int numShots = 0;
+	private int numShotsHit = 0;
 
 	public AbstractHUDImage gamepadTest;
 
@@ -216,7 +219,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 		if (!this.restarting) {
 			// Have we fallen off the edge
-			if (this.playerControl.getPhysicsRigidBody().getPhysicsLocation().y < -5f) {
+			if (this.playerControl.getPhysicsRigidBody().getPhysicsLocation().y < -1f) {
 				//if (this.getMainNode().getWorldTranslation().y < -5f) {
 				//this.moveToStartPostion();
 				died("Too low");
@@ -292,7 +295,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 		// Move cam fwd so we don't see ourselves
 		cam.setLocation(cam.getLocation().add(cam.getDirection().mult(PLAYER_RAD)));
-	
+
 		this.input.resetFlags();
 
 		walkDirection.set(0, 0, 0);
@@ -311,6 +314,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			}
 			this.score--;
 			this.hud.setScore(this.score);
+			this.numShots++;
+			calcAccuracy();
 		}
 	}
 
@@ -368,9 +373,9 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		Settings.p("Player died: " + reason);
 		this.restarting = true;
 		this.restartAt = System.currentTimeMillis() + RESTART_DUR;
-		invulnerableUntil = System.currentTimeMillis() + (RESTART_DUR*2);
+		invulnerableUntil = System.currentTimeMillis() + (RESTART_DUR*3);
 		//this.getMainNode().getWorldTranslation();
-		
+
 		// Move us below the map
 		Vector3f pos = this.getMainNode().getWorldTranslation().clone();//.floor_phy.getPhysicsLocation().clone();
 		pos.y = -SimpleCity.FLOOR_THICKNESS * 2;
@@ -384,8 +389,16 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		this.incScore(20, "shot " + e.toString());
 		//new AbstractHUDImage(game, module, this.hud, "Textures/text/hit.png", this.hud.hud_width, this.hud.hud_height, 2);
 		this.hud.showCollectBox();
+		numShotsHit++;
+		calcAccuracy();
 	}
 
+
+	private void calcAccuracy() {
+		int a = (int)((this.numShotsHit * 100f) / this.numShots);
+		hud.setAccuracy(a);
+	}
+	
 
 	public void incScore(float amt, String reason) {
 		Settings.p("Inc score: +" + amt + ", " + reason);
@@ -414,10 +427,12 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		} else if (other instanceof Collectable) {
 			Collectable col = (Collectable)other;
 			col.remove();
-			this.incScore(10, "Collectable");
-			this.hud.showCollectBox();
+			if (!col.collected) {
+				this.incScore(10, "Collectable");
+				this.hud.showCollectBox();
+				module.createCollectable();
+			}
 
-			module.createCollectable();
 
 		} else if (other instanceof Base) {
 			incScore(0.005f, " on base "); // todo - add to config

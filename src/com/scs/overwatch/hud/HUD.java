@@ -42,7 +42,7 @@ public class HUD extends Node implements IEntity, IProcessable {
 	private List<Picture> targetting_reticules = new ArrayList<>();
 	private Overwatch game;
 	private GameModule module;
-	private BitmapText abilityGun, abilityOther, score, haveBall;
+	private BitmapText abilityGun, abilityOther, score, haveBall, accuracy;
 	public BitmapText helpText;
 	private float showHelpUntil = 5;
 
@@ -79,6 +79,10 @@ public class HUD extends Node implements IEntity, IProcessable {
 		haveBall = new BitmapText(font_small, false);
 		haveBall.setLocalTranslation(10, hud_height-60, 0);
 		this.attachChild(haveBall);
+
+		accuracy = new BitmapText(font_small, false);
+		accuracy.setLocalTranslation(10, hud_height-75, 0);
+		this.attachChild(accuracy);
 
 		helpText = new BitmapText(font_small, false);
 		helpText.setText(GameModule.HELP_TEXT);
@@ -225,6 +229,11 @@ public class HUD extends Node implements IEntity, IProcessable {
 	}
 
 
+	public void setAccuracy(int a)  {
+		this.accuracy.setText("Accuracy: " + a + "%");
+	}
+	
+	
 	public void updateHasBall(boolean a) {
 		if (a) {
 			this.haveBall.setText("YOU HAVE THE BALL");

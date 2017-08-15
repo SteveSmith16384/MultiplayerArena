@@ -17,6 +17,8 @@ import com.scs.overwatch.modules.GameModule;
 public class Collectable extends PhysicalEntity implements ICollideable, IShowOnHUD, IAffectedByPhysics {
 
 	private static final float SIZE = .1f;
+	
+	public boolean collected = false;
 
 	public Collectable(Overwatch _game, GameModule _module, float x, float y, float z) {
 		super(_game, _module, "Collectable");
@@ -37,8 +39,6 @@ public class Collectable extends PhysicalEntity implements ICollideable, IShowOn
 			floor_mat.setTexture("ColorMap", tex3);
 		}
 		geometry.setMaterial(floor_mat);
-		//floor_mat.getAdditionalRenderState().setDepthTest(false);
-		//geometry.setQueueBucket(Bucket.Transparent);
 
 		this.main_node.attachChild(geometry);
 		main_node.setLocalTranslation(x, y, z); // Drop from sky
@@ -54,6 +54,8 @@ public class Collectable extends PhysicalEntity implements ICollideable, IShowOn
 		floor_phy.setRestitution(.5f);
 
 		module.addEntity(this); // need this to target it
+		
+		Settings.p("Created collectable");
 		
 	}
 

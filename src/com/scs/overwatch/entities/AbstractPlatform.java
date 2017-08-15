@@ -26,7 +26,7 @@ public abstract class AbstractPlatform extends PhysicalEntity implements IProces
 		//TextureKey key3 = new TextureKey("Textures/crate.png");
 		TextureKey key3 = null;
 		if (Settings.NEON) {
-			key3 = new TextureKey("Textures/tron1.jpg");
+			key3 = new TextureKey("Textures/tron_blue.jpg");
 		} else {
 			key3 = new TextureKey("Textures/boxes and crates/3.png");
 			

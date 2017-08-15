@@ -510,7 +510,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	public void createCollectable() {
 		Point p = mapData.getRandomCollectablePos();
-		Collectable c = new Collectable(game, this, p.x, mapData.getRespawnHeight(), p.y);
+		Collectable c = new Collectable(game, this, p.x+1, mapData.getRespawnHeight(), p.y+1);
 		Overwatch.instance.getRootNode().attachChild(c.getMainNode());
 
 	}

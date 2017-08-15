@@ -22,9 +22,9 @@ import com.scs.overwatch.entities.PlayersAvatar;
 public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawInputListener {
 
 	private static final float LOOK_UD_ADJ = .4f;//.75f;//.5f; // todo - add to config
-	private static final float SPEED = 5; // todo - add to config
+	private static final float MOVE_SPEED = 5; // todo - add to config
 	private static final float DEADZONE = 0.0015f; // todo - add to config
-	private static final float TURN_SPEED = 100f;//150f;
+	private static final float TURN_SPEED = 100f;//150f; // todo - add to config
 	
 	public PlayersAvatar avatar;
 	protected Joystick joystick;
@@ -198,16 +198,16 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 		rightVal = 0;
 
 		if (x > 0) {
-			fwdVal = Math.min(1, x *SPEED);
+			fwdVal = Math.min(1, x * MOVE_SPEED);
 			//Settings.p("fwdVal=" + fwdVal);
 		} else {
-			backVal = Math.min(1, -x *SPEED);
+			backVal = Math.min(1, -x * MOVE_SPEED);
 			//Settings.p("backVal=" + backVal);
 		}
 		if (y > 0) {
-			rightVal = Math.min(1, y *SPEED);
+			rightVal = Math.min(1, y * MOVE_SPEED);
 		} else {
-			leftVal = Math.min(1, -y *SPEED);
+			leftVal = Math.min(1, -y * MOVE_SPEED);
 		}
 	}
 
@@ -259,7 +259,6 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 	public void onMouseButtonEvent(MouseButtonEvent evt) {}
 	public void onKeyEvent(KeyInputEvent evt) {}
 	public void onTouchEvent(TouchEvent evt) {}
-
 
 	// End of Raw Input Listener
 

@@ -6,11 +6,13 @@ import com.scs.overwatch.entities.PlayersAvatar;
 public class JetPac extends AbstractAbility {
 
 	private static final Vector3f FORCE = new Vector3f(0, .25f, 0);
+	private static final float POWER = 3;
 	//private static final Vector3f FORCE = new Vector3f(0, .3f, 0);
 	private static final float MAX_FUEL = 10;
 
 	private float fuel;
 	private PlayersAvatar player;
+	private final Vector3f camUp = new Vector3f();
 
 	public JetPac(PlayersAvatar _player) {
 		super();
@@ -18,11 +20,11 @@ public class JetPac extends AbstractAbility {
 		player = _player;
 	}
 
-	
+
 	@Override
 	public boolean process(float interpol) {
-			fuel += interpol;
-			fuel = Math.min(fuel, MAX_FUEL);
+		fuel += interpol;
+		fuel = Math.min(fuel, MAX_FUEL);
 		return fuel < MAX_FUEL;
 	}
 
@@ -33,14 +35,16 @@ public class JetPac extends AbstractAbility {
 		fuel = Math.max(fuel, 0);
 		if (fuel > 0) {
 			//Settings.p("Jetpac-ing!");
-			//player.playerControl.getPhysicsRigidBody().applyImpulse(FORCE, Vector3f.ZERO);
-			player.walkDirection.addLocal(FORCE);//, Vector3f.ZERO);
+			//player.walkDirection.addLocal(FORCE);//, Vector3f.ZERO);
+
+			camUp.set(player.cam.getUp()).multLocal(POWER);
+			player.walkDirection.addLocal(camUp);
 			return true;
 		}
 		return false;
 	}
 
-	
+
 	@Override
 	public String getHudText() {
 		return "JetPac Fuel:" + ((int)(fuel*10));

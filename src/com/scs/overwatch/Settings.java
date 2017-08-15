@@ -12,7 +12,7 @@ public class Settings {
 	public static final boolean USE_MODEL_FOR_PLAYERS = true;
 
 	// DEBUG
-	public static final boolean DEBUG_DEATH = false;
+	public static final boolean DEBUG_DEATH = true;
 	public static final boolean DEBUG_GAMEPAD_TURNING = false;
 	public static final boolean DEBUG_HUD = false;
 	public static final boolean DEBUG_TARGETTER = false;
@@ -32,6 +32,7 @@ public class Settings {
 	// Our movement speed
 	public static final float DEFAULT_MOVE_SPEED = 3f;
 	public static final float DEFAULT_STRAFE_SPEED = 3f;
+	public static final float MAX_TURN_SPEED = 1f;
 
 	public static final float CAM_DIST = 50f;
 	public static final int FLOOR_SECTION_SIZE = 12;
@@ -68,7 +69,7 @@ public class Settings {
 	
 	public static String getRoadwayTex() {
 		if (NEON) {
-			return "Textures/tron1.jpg";
+			return "Textures/tron_blue.jpg";
 		} else {
 			int i = NumberFunctions.rnd(1, 10);
 			return "Textures/floor0041.png";

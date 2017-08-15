@@ -2,30 +2,25 @@ MULTIPLAYER ARENA
 
 
 URGENT
-Gamepad have max turn speed
-TEST Show game mode on screen
-	Show id in toString()
-	Use cubeshards when AI killed
-	Player still gets stuck sometime when dying
+TEST Jetpac too powerful
+New tron colour
 	Sometimes starting on edge of arena
-	Show small explosion when bullet hits wall
-	Sometimes win immediately - collectables?
-	Check if objects are outside of arena - ai, dodgeball
+	Still getting stuck on respawn	
+	HOME TEST Gamepad have max turn speed
 HOME create logo - Multiplayer Arena
-Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
+HOME Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
+HOME Add SFX - from Ares
+
 
 SOON
 Search for todos
-Collectables inc jetpac fuel?
-HOME Add SFX - from Ares
-Show shot accuracy
 
 
 TODO
+Collectables inc jetpac fuel?
 HOME Music
 Only change physics settings if dodgeball
 Create config file like Killer Crates
-Game option - have edge walls
 Targetter position not right
 Check all entities for falling off edge
 Sfx
@@ -55,7 +50,6 @@ Targetting HUD
 Select character class at start
 Cars that drive down roads
 	Explosions
-Better skybox
 Shrink ray
 Headshots - have small box at top
 AI comrades & enemy

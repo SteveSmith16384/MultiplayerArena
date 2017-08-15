@@ -14,30 +14,29 @@ import com.jme3.renderer.Camera;
 public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 
 	public static String[] mappings = new String[] {
-			"FLYCAM_Left",
-			"FLYCAM_Right",
-			"FLYCAM_Up",
-			"FLYCAM_Down",
+		"FLYCAM_Left",
+		"FLYCAM_Right",
+		"FLYCAM_Up",
+		"FLYCAM_Down",
 
-			"FLYCAM_StrafeLeft",
-			"FLYCAM_StrafeRight",
-			"FLYCAM_Forward",
-			"FLYCAM_Backward",
+		"FLYCAM_StrafeLeft",
+		"FLYCAM_StrafeRight",
+		"FLYCAM_Forward",
+		"FLYCAM_Backward",
 
-			"FLYCAM_ZoomIn",
-			"FLYCAM_ZoomOut",
-			"FLYCAM_RotateDrag",
+		"FLYCAM_ZoomIn",
+		"FLYCAM_ZoomOut",
+		"FLYCAM_RotateDrag",
 
-			"FLYCAM_Rise",
-			"FLYCAM_Lower",
+		"FLYCAM_Rise",
+		"FLYCAM_Lower",
 
-			"FLYCAM_InvertY"
+		"FLYCAM_InvertY"
 	};
 
 	protected Camera cam;
 	protected Vector3f initialUpVec;
 	protected float rotationSpeed = 1f;
-	//protected float moveSpeed_ = 3f;
 	protected float zoomSpeed = 1f;
 	protected MotionAllowedListener motionAllowed = null;
 	protected boolean enabled = true;
@@ -66,22 +65,6 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 	public void setMotionAllowedListener(MotionAllowedListener listener){
 		this.motionAllowed = listener;
 	}
-
-	/**
-	 * Sets the move speed. The speed is given in world units per second.
-	 * @param moveSpeed
-	 */
-	/*public void setMoveSpeed(float moveSpeed){
-		this.moveSpeed = moveSpeed;
-	}*/
-
-	/**
-	 * Gets the move speed. The speed is given in world units per second.
-	 * @return moveSpeed
-	 */
-	/*public float getMoveSpeed(){
-		return moveSpeed;
-	}*/
 
 	/**
 	 * Sets the rotation speed.
@@ -236,7 +219,7 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 		}                
 	}*/
 
-	
+
 	/**
 	 * Registers the FlyByCamera to receive input events from the provided
 	 * Dispatcher.
@@ -269,13 +252,22 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 		if (dragToRotate) {
 			if (canRotate) {
 				// value = -value;
-			}else{
+			} else{
 				return;
 			}
 		}
 
+		float tot = rotationSpeed * value;
+		if (tot > Settings.MAX_TURN_SPEED) {
+			Settings.p("Turn speed too high: " + tot);
+			tot = Settings.MAX_TURN_SPEED;
+		} else if (tot < -Settings.MAX_TURN_SPEED) {
+			Settings.p("Turn speed too high: " + tot);
+			tot = -Settings.MAX_TURN_SPEED;
+		}
+
 		Matrix3f mat = new Matrix3f();
-		mat.fromAngleNormalAxis(rotationSpeed * value, axis);
+		mat.fromAngleNormalAxis(tot, axis);
 
 		Vector3f up = cam.getUp();
 		Vector3f left = cam.getLeft();
@@ -292,7 +284,7 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 		cam.setAxes(q);
 	}
 
-	
+
 	protected void zoomCamera(float value) {
 		// derive fovY value
 		float h = cam.getFrustumTop();
@@ -301,8 +293,7 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 
 		float near = cam.getFrustumNear();
 
-		float fovY = FastMath.atan(h / near)
-				/ (FastMath.DEG_TO_RAD * .5f);
+		float fovY = FastMath.atan(h / near) / (FastMath.DEG_TO_RAD * .5f);
 		float newFovY = fovY + value * 0.1f * zoomSpeed;
 		if (newFovY > 0f) {
 			// Don't let the FOV go zero or negative.
@@ -365,8 +356,8 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 			}
 		}        
 	}
-	
-	
+
+
 	public Vector3f getLocation() {
 		return cam.getLocation();
 	}

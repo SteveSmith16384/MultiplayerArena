@@ -95,7 +95,7 @@ public class SimpleCity implements IPertinentMapData {
 
 		// Drop new collectable
 		for (int i=0 ; i<Settings.NUM_COLLECTABLES_PER_SECTOR * numSectors ; i++) {
-			module.createCollectable();
+			//todo - re-add module.createCollectable();
 		}
 
 		// Add AI roamers
@@ -152,7 +152,7 @@ public class SimpleCity implements IPertinentMapData {
 		// Road
 		String roadtex = null;
 		if (Settings.NEON) {
-			roadtex = "Textures/tron2.jpg";
+			roadtex = "Textures/tron_purple.jpg";
 		} else {
 			roadtex = "Textures/road2.png";
 		}
@@ -164,7 +164,7 @@ public class SimpleCity implements IPertinentMapData {
 		// Sidewalk
 		String sidewalktex = null;
 		if (Settings.NEON) {
-			sidewalktex = "Textures/tron3.jpg";//bluecross.png";//tron1.jpg";
+			sidewalktex = "Textures/tron_yellow.jpg";//bluecross.png";//tron1.jpg";
 		} else {
 			sidewalktex = "Textures/floor015.png";
 		}
@@ -174,7 +174,7 @@ public class SimpleCity implements IPertinentMapData {
 		CreateFloor(x+2, -FLOOR_THICKNESS+PATH_THICKNESS, y+3, 1, FLOOR_THICKNESS, SKYSCRAPER_WIDTH, sidewalktex, null); // Left x
 
 		if (createBase) {//x == 1 && y == 1 && Settings.HAVE_BASE) {
-			Base base = new Base(game, module, x+3, 0f, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, "Textures/sun.jpg", null);
+			Base base = new Base(game, module, x+3, 0f, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, "Textures/tron_red.jpg", null);
 			game.getRootNode().attachChild(base.getMainNode());
 		} else {
 			int i = NumberFunctions.rnd(1, 4);
@@ -182,7 +182,7 @@ public class SimpleCity implements IPertinentMapData {
 				// Grass area
 				String grasstex = null;
 				if (Settings.NEON) {
-					grasstex = "Textures/tron4.jpg";
+					grasstex = "Textures/tron_green.jpg";
 				} else {
 					grasstex = "Textures/grass.png";
 				}
