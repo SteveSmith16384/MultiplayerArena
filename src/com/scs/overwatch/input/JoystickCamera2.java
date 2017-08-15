@@ -21,10 +21,11 @@ import com.scs.overwatch.entities.PlayersAvatar;
 
 public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawInputListener {
 
-	private static final float LOOK_UD_ADJ = .75f;//.5f; // todo - add to config
+	private static final float LOOK_UD_ADJ = .4f;//.75f;//.5f; // todo - add to config
 	private static final float SPEED = 5; // todo - add to config
 	private static final float DEADZONE = 0.0015f; // todo - add to config
-
+	private static final float TURN_SPEED = 100f;//150f;
+	
 	public PlayersAvatar avatar;
 	protected Joystick joystick;
 	private float fwdVal, backVal, leftVal, rightVal;
@@ -41,7 +42,7 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 		id = joystick.getJoyId();
 
 		//super.setMoveSpeed(.7f);//1f);
-		super.setRotationSpeed(200.85f);//.5f); SCS  // todo - add to config
+		super.setRotationSpeed(TURN_SPEED);//200f);//.5f); SCS  // todo - add to config
 
 		this.inputManager.addRawInputListener(this);
 

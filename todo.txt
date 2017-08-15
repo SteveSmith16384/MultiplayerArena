@@ -2,6 +2,7 @@ MULTIPLAYER ARENA
 
 
 URGENT
+Gamepad have max turn speed
 TEST Show game mode on screen
 	Show id in toString()
 	Use cubeshards when AI killed
