@@ -12,7 +12,7 @@ public class PlayersClone extends PhysicalEntity implements IAffectedByPhysics {
 	public PlayersClone(Overwatch _game, GameModule _module, float x, float y, float z, float rotDegrees) {
 		super(_game, _module, "PlayersClone");
 
-		Spatial geometry = PlayersAvatar.getPlayersModel(game);
+		Spatial geometry = PlayersAvatar.getPlayersModel(game, Settings.CLONE_ID);
 		this.main_node.attachChild(geometry);
 		
 		float rads = (float)Math.toRadians(rotDegrees);

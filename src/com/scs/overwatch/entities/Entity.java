@@ -28,7 +28,7 @@ public class Entity implements IEntity, Savable {
 
 	@Override
 	public String toString() {
-		return "Entity:" + name + " (" + id + ")";
+		return "E_" + name + "_" + id;
 	}
 
 

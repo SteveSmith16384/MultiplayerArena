@@ -2,8 +2,9 @@ MULTIPLAYER ARENA
 
 
 URGENT
-TEST Jetpac too powerful
-New tron colour
+Physics not right after restart - mouse controller - not removing listeners
+Jetpac too powerful
+	Players can sometimes see own model
 	Sometimes starting on edge of arena
 	Still getting stuck on respawn	
 	HOME TEST Gamepad have max turn speed
@@ -21,7 +22,6 @@ Collectables inc jetpac fuel?
 HOME Music
 Only change physics settings if dodgeball
 Create config file like Killer Crates
-Targetter position not right
 Check all entities for falling off edge
 Sfx
 large columns that come up through floor
@@ -38,7 +38,6 @@ Find flash.png
 Better font - use SF font?
 Do explosion by throwing invis balls
 Players get harmed by explosion
-Search for todos
 zoom-in ability
 Cylinder not working
 Use ICanCollect
@@ -102,11 +101,6 @@ Blow enemies away
 Force Field
 	Run fast
 Auto-aim
-
-
-TEX
-https://opengameart.org/content/scifi-metal-texture
-
 
 
 INSPIRATION

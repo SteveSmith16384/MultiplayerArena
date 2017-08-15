@@ -114,6 +114,7 @@ public class Overwatch extends MySimpleApplication {
 			getRootNode().getLocalLightList().clear();
 
 			this.currentModule = pendingModule;
+			initialize();		
 			this.currentModule.init();
 			pendingModule = null;
 		}

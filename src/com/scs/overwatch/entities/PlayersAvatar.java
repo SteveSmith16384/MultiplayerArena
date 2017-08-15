@@ -64,7 +64,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	private IAbility abilityGun, abilityOther;
 	public Spatial playerGeometry;
 	private float score = 0;
-	private float health = 100;
+	//private float health = 100;
 
 	private boolean restarting = false;
 	private long restartAt, invulnerableUntil;
@@ -87,7 +87,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		hud = _hud;
 
 		{
-			playerGeometry = getPlayersModel(game);
+			int pid = Settings.GAME_MODE != GameMode.CloneWars ? id : Settings.CLONE_ID;
+			playerGeometry = getPlayersModel(game, pid);
 			this.getMainNode().attachChild(playerGeometry);
 			//this.getMainNode().setLocalTranslation(new Vector3f(0,PLAYER_HEIGHT,0)); // Need this to ensure the crate is on the floor
 		}
@@ -112,11 +113,9 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			//this.getMainNode().attachChild(gun);*/
 		}
 
-		// create character control parameters (Radius,Height,Weight)
 		playerControl = new MyBetterCharacterControl(PLAYER_RAD, PLAYER_HEIGHT, WEIGHT);
 		playerControl.setJumpForce(new Vector3f(0, 7f, 0)); 
 		this.getMainNode().addControl(playerControl);
-
 		module.bulletAppState.getPhysicsSpace().add(playerControl);
 
 		this.getMainNode().setUserData(Settings.ENTITY, this);
@@ -150,9 +149,9 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	}
 
 
-	public static Spatial getPlayersModel(Overwatch game) {
+	public static Spatial getPlayersModel(Overwatch game, int pid) {
 		if (Settings.USE_MODEL_FOR_PLAYERS) {
-			return new RobotModel(game.getAssetManager());
+			return new RobotModel(game.getAssetManager(), pid);
 		} else {
 			// Add player's box
 			Box box1 = new Box(PLAYER_RAD, PLAYER_HEIGHT/2, PLAYER_RAD);
@@ -295,7 +294,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 		// Move cam fwd so we don't see ourselves
 		cam.setLocation(cam.getLocation().add(cam.getDirection().mult(PLAYER_RAD)));
-
+		cam.update();
+		
 		this.input.resetFlags();
 
 		walkDirection.set(0, 0, 0);
@@ -327,16 +327,9 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 
 	@Override
-	public void remove() {
-		super.remove();
-		this.module.bulletAppState.getPhysicsSpace().remove(this.playerControl);
-
-	}
-
-
-	@Override
 	public Vector3f getLocation() {
-		return this.cam.getLocation();
+		//return this.cam.getLocation();
+		return playerControl.getPhysicsRigidBody().getPhysicsLocation();
 	}
 
 
@@ -357,7 +350,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			if (dam > 0) {
 				Settings.p("Player hit by bullet");
 				module.doExplosion(this.main_node.getWorldTranslation(), this);
-				this.health -= dam;
+				//this.health -= dam;
 				//this.hud.setHealth(this.health);
 				this.hud.showDamageBox();
 
@@ -470,4 +463,14 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		this.hasBall = a;
 		this.hud.updateHasBall(a);
 	}
+
+
+	@Override
+	public void remove() {
+		super.remove();
+		this.module.bulletAppState.getPhysicsSpace().remove(this.playerControl);
+
+	}
+
+
 }

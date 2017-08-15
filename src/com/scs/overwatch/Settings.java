@@ -8,7 +8,7 @@ public class Settings {
 	public static final String VERSION = "0.01";
 	public static final boolean SHOW_LOGO = false;
 	public static final boolean ALWAYS_SHOW_4_CAMS = false;
-	public static final boolean RECORD_VID = true;
+	public static final boolean RECORD_VID = false;
 	public static final boolean USE_MODEL_FOR_PLAYERS = true;
 
 	// DEBUG
@@ -21,12 +21,9 @@ public class Settings {
 	public enum GameMode {Skirmish, KingOfTheHill, Dodgeball, Bladerunner, CloneWars }
 	
 	public static GameMode GAME_MODE;
-	//public static boolean HAVE_BASE = true;
 	public static boolean PVP = true;
 	public static int NUM_AI = 0;
 	public static int NUM_COLLECTABLES_PER_SECTOR = 0;
-	//public static boolean DODGEBALL = false;
-	//public static boolean CLONE_WARS = true;
 	public static int NUM_SECTORS = 3;
 	
 	// Our movement speed
@@ -37,7 +34,8 @@ public class Settings {
 	public static final float CAM_DIST = 50f;
 	public static final int FLOOR_SECTION_SIZE = 12;
 	public static final boolean LIGHTING = true;
-	public static final String NAME = "OverKill";
+	public static final String NAME = "Multiplayer Arena";
+	public static final int CLONE_ID = 2;
 	
 	// User Data
 	public static final String ENTITY = "Entity";

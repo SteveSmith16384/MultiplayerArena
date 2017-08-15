@@ -35,6 +35,7 @@ import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.effects.SmallExplosion;
 import com.scs.overwatch.entities.Collectable;
 import com.scs.overwatch.entities.DodgeballBall;
+import com.scs.overwatch.entities.Entity;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
 import com.scs.overwatch.entities.RoamingAI;
@@ -69,6 +70,8 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	@Override
 	public void init() {
+		//game.initialize();
+		
 		game.getInputManager().addMapping(QUIT, new KeyTrigger(KeyInput.KEY_ESCAPE));
 		game.getInputManager().addListener(this, QUIT);            
 
@@ -77,7 +80,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 		// Set up Physics
 		bulletAppState = new BulletAppState();
-		//bulletAppState.setSpeed(speed);
 		game.getStateManager().attach(bulletAppState);
 		bulletAppState.getPhysicsSpace().addCollisionListener(this);
 		bulletAppState.getPhysicsSpace().addTickListener(this);
@@ -454,17 +456,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	}
 
 
-	@Override
-	public void destroy() {
-		// These lines cause a crash at the end
-		//this.bulletAppState.getPhysicsSpace().destroy();
-		//this.bulletAppState.cleanup();
-
-		game.getInputManager().clearMappings();
-		game.getInputManager().clearRawInputListeners();
-	}
-
-
 	public void addAI() {
 		Point p = mapData.getRandomCollectablePos();
 		RoamingAI ai = new RoamingAI(game, this, p.x, p.y);
@@ -514,5 +505,26 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		Overwatch.instance.getRootNode().attachChild(c.getMainNode());
 
 	}
+
+
+	@Override
+	public void destroy() {
+		/*for(IEntity e : entities) {
+			if (e instanceof Entity) {
+				Entity pe = (Entity)e;
+				pe.remove();
+			}
+		}
+		
+		// These lines cause a crash at the end
+		this.bulletAppState.getPhysicsSpace().destroy();
+		//this.bulletAppState.cleanup();
+		game.getStateManager().detach(bulletAppState);*/
+		
+		game.getInputManager().removeListener(this);
+		game.getInputManager().clearMappings();
+		game.getInputManager().clearRawInputListeners();
+	}
+
 
 }

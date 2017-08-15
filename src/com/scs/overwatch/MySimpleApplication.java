@@ -28,7 +28,6 @@ public abstract class MySimpleApplication extends Application {
     protected Node guiNode = new Node("Gui Node");
     protected BitmapText fpsText;
     protected BitmapFont guiFont;
-    //protected FlyByCamera flyCam;
     protected boolean showSettings = true;
     private AppActionListener actionListener = new AppActionListener();
     
