@@ -80,7 +80,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 
 		weapon = new LaserRifle(_game, _module, this);
 
-		Settings.p("Created new AI");
+		//Settings.p("Created new AI");
 	}
 
 
@@ -169,7 +169,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 		if (other instanceof IBullet) {
 			IBullet bullet = (IBullet)other;
 			if (bullet.getShooter() != this) {
-				Settings.p("AI hit by bullet");
+				//Settings.p("AI hit by bullet");
 				CubeExplosionShard.Factory(game, module, this.getLocation(), 10);
 
 				module.doExplosion(this.getLocation(), this);//, 5, 5);

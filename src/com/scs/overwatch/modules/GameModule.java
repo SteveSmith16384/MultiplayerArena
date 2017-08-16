@@ -53,7 +53,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	private static final String TEST = "Test";
 
 	public static String HELP_TEXT = "";
-	
+
 	protected Overwatch game;
 	public BulletAppState bulletAppState;
 	public TSArrayList<IEntity> entities = new TSArrayList<>();
@@ -72,10 +72,10 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	@Override
 	public void init() {
-        game.getCamera().setLocation(new Vector3f(0f, 0f, 10f)); // scs
-        game.getCamera().lookAt(new Vector3f(0f, 0f, 0f), Vector3f.UNIT_Y); // scs
+		game.getCamera().setLocation(new Vector3f(0f, 0f, 10f)); // scs
+		game.getCamera().lookAt(new Vector3f(0f, 0f, 0f), Vector3f.UNIT_Y); // scs
 
-        game.getInputManager().addMapping(QUIT, new KeyTrigger(KeyInput.KEY_ESCAPE));
+		game.getInputManager().addMapping(QUIT, new KeyTrigger(KeyInput.KEY_ESCAPE));
 		game.getInputManager().addListener(this, QUIT);            
 
 		game.getInputManager().addMapping(TEST, new KeyTrigger(KeyInput.KEY_T));
@@ -150,7 +150,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		//audio_gun.setVolume(2);
 		game.getRootNode().attachChild(audioExplode);
 
-		audioSmallExplode = new AudioNode(game.getAssetManager(), "Sound/explodeSmall.wav", false);
+		audioSmallExplode = new AudioNode(game.getAssetManager(), "Sound/explodemini.wav", false);
 		audioSmallExplode.setPositional(false);
 		audioSmallExplode.setLooping(false);
 		//audio_gun.setVolume(2);
@@ -441,7 +441,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 
 	public void doExplosion(Vector3f pos, IEntity ignore) {//, float range, float power) {
-		Settings.p("Showing explosion");
+		//Settings.p("Showing explosion");
 		float range = 5;
 		float power = 20f;
 
@@ -498,7 +498,9 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	public void addToWarpList(PlayersAvatar a) {
 		synchronized (toWarp) {
-			this.toWarp.add(a);
+			if (!this.toWarp.contains(a)) {
+				this.toWarp.add(a);
+			}
 		}		
 	}
 
@@ -529,12 +531,12 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				pe.remove();
 			}
 		}
-		
+
 		// These lines cause a crash at the end
 		this.bulletAppState.getPhysicsSpace().destroy();
 		//this.bulletAppState.cleanup();
 		game.getStateManager().detach(bulletAppState);*/
-		
+
 		game.getInputManager().removeListener(this);
 		game.getInputManager().clearMappings();
 		game.getInputManager().clearRawInputListeners();

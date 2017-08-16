@@ -2,14 +2,10 @@ MULTIPLAYER ARENA
 
 
 URGENT
-TEST Make explosion blocks shoot upwards
-TEST Jetpac too powerful
 TEST HOME Add SFX - from Ares
-TEST Physics not right after restart - mouse controller - if restarting game after looking at funny angle
+	Physics not right after restart - mouse controller - if restarting game after looking at funny angle
 HOME TEST Gamepad have max turn speed
-	Boost fwd ability
 	Sometimes starting on edge of arena
-	Still getting stuck on respawn
 HOME create logo - Multiplayer Arena
 TEST HOME Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
 

@@ -16,7 +16,6 @@ import com.scs.overwatch.modules.GameModule;
 public class LaserBullet extends PhysicalEntity implements IBullet {
 
 	public ICanShoot shooter;
-	//private RigidBodyControl ball_phy;
 	private float timeLeft = 3;
 
 	public LaserBullet(Overwatch _game, GameModule _module, ICanShoot _shooter) {

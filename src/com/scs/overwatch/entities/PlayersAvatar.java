@@ -133,11 +133,11 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			this.hud.setAbilityOtherText(this.abilityOther.getHudText());
 		}
 
-		audio_gun = new AudioNode(game.getAssetManager(), "Sound/playerLaser.ogg", false);
+		/*audio_gun = new AudioNode(game.getAssetManager(), "Sound/playerLaser.ogg", false);
 		audio_gun.setPositional(false);
 		audio_gun.setLooping(false);
 		audio_gun.setVolume(2);
-		this.getMainNode().attachChild(audio_gun);
+		this.getMainNode().attachChild(audio_gun);*/
 
 		playerControl.getPhysicsRigidBody().setCcdMotionThreshold(PLAYER_RAD*2);
 

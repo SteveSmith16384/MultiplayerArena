@@ -6,7 +6,7 @@ import com.scs.overwatch.entities.PlayersAvatar;
 public class JetPac extends AbstractAbility {
 
 	//private static final Vector3f FORCE = new Vector3f(0, .25f, 0);
-	private static final float POWER = 1f;//.3f;
+	private static final float POWER = .7f;//.3f;
 	private static final float MAX_FUEL = 10;
 
 	private float fuel = 100;
@@ -22,7 +22,7 @@ public class JetPac extends AbstractAbility {
 
 	@Override
 	public boolean process(float interpol) {
-		fuel += interpol*3;
+		fuel += interpol*4;
 		fuel = Math.min(fuel, MAX_FUEL);
 		return fuel < MAX_FUEL;
 	}
@@ -30,7 +30,7 @@ public class JetPac extends AbstractAbility {
 
 	@Override
 	public boolean activate(float interpol) {
-		fuel -= (interpol*10);
+		fuel -= (interpol*20);
 		fuel = Math.max(fuel, 0);
 		if (fuel > 0) {
 			//Settings.p("Jetpac-ing!");

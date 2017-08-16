@@ -73,10 +73,8 @@ public class CubeExplosionShard extends PhysicalEntity {//implements IAffectedBy
 		
 		module.addEntity(this);
 		
-		//Vector3f force = new Vector3f(NumberFunctions.rndFloat(-1, 1), NumberFunctions.rndFloat(2, 4), NumberFunctions.rndFloat(-1, 1));
-		Vector3f force = new Vector3f(0, 2000, 0);
-		//force.multLocal(25f);
-		//this.floor_phy.applyCentralForce(force);
+		Vector3f force = new Vector3f(NumberFunctions.rndFloat(-1, 1), NumberFunctions.rndFloat(1, 2), NumberFunctions.rndFloat(-1, 1));
+		//Vector3f force = new Vector3f(0, 1.4f, 0);
 		this.floor_phy.applyImpulse(force, Vector3f.ZERO);
 
 	}
