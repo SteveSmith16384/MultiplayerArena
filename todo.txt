@@ -2,15 +2,16 @@ MULTIPLAYER ARENA
 
 
 URGENT
-Physics not right after restart - mouse controller - not removing listeners
-Jetpac too powerful
-	Players can sometimes see own model
+TEST Make explosion blocks shoot upwards
+TEST Jetpac too powerful
+TEST HOME Add SFX - from Ares
+TEST Physics not right after restart - mouse controller - if restarting game after looking at funny angle
+HOME TEST Gamepad have max turn speed
+	Boost fwd ability
 	Sometimes starting on edge of arena
-	Still getting stuck on respawn	
-	HOME TEST Gamepad have max turn speed
+	Still getting stuck on respawn
 HOME create logo - Multiplayer Arena
-HOME Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
-HOME Add SFX - from Ares
+TEST HOME Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
 
 
 SOON
@@ -85,6 +86,7 @@ Rocket launcher
 sniper rifle
 Bullets that bounce around corners
 Shrink ray
+Short range powerful gun
 
 
 ABILITIES

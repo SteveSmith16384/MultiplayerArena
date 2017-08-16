@@ -55,7 +55,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	//Temporary vectors used on each frame.
 	public Camera cam;
-	private final Vector3f camDir = new Vector3f();
+	public final Vector3f camDir = new Vector3f();
 	private final Vector3f camLeft = new Vector3f();
 
 	public HUD hud;
@@ -125,7 +125,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			abilityGun = new DodgeballGun(_game, _module, this);
 		} else {
 			abilityGun = new LaserRifle(_game, _module, this);
-			this.abilityOther = new JetPac(this);// getRandomAbility(this);
+			this.abilityOther = new JetPac(this);// BoostFwd(this);//getRandomAbility(this);
 		}
 
 		this.hud.setAbilityGunText(this.abilityGun.getHudText());
@@ -133,12 +133,12 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			this.hud.setAbilityOtherText(this.abilityOther.getHudText());
 		}
 
-		/*todo - add audio_gun = new AudioNode(game.getAssetManager(), "Sound/Effects/Gun.wav", false); // todo
+		audio_gun = new AudioNode(game.getAssetManager(), "Sound/playerLaser.ogg", false);
 		audio_gun.setPositional(false);
 		audio_gun.setLooping(false);
 		audio_gun.setVolume(2);
 		this.getMainNode().attachChild(audio_gun);
-		 */
+
 		playerControl.getPhysicsRigidBody().setCcdMotionThreshold(PLAYER_RAD*2);
 
 		if (Settings.DEBUG_GAMEPAD_TURNING) {
@@ -328,8 +328,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	@Override
 	public Vector3f getLocation() {
-		//return this.cam.getLocation();
-		return playerControl.getPhysicsRigidBody().getPhysicsLocation();
+		return this.cam.getLocation();
+		//return playerControl.getPhysicsRigidBody().getPhysicsLocation();  This is very low!
 	}
 
 
@@ -350,6 +350,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			if (dam > 0) {
 				Settings.p("Player hit by bullet");
 				module.doExplosion(this.main_node.getWorldTranslation(), this);
+				module.audioExplode.play();
 				//this.health -= dam;
 				//this.hud.setHealth(this.health);
 				this.hud.showDamageBox();

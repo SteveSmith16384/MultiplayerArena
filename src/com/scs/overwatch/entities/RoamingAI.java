@@ -34,7 +34,6 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 
 	private static final float SPEED = 7;
 
-	//private Vector3f currDir = new Vector3f(0, 0, 1);
 	private Vector3f currDir = new Vector3f(0, 1.3f, 1); // was 1.2f
 	private Vector3f shotDir = new Vector3f(0, 0, 0);
 	protected RealtimeInterval targetCheck = new RealtimeInterval(1000);
@@ -174,6 +173,9 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 				CubeExplosionShard.Factory(game, module, this.getLocation(), 10);
 
 				module.doExplosion(this.getLocation(), this);//, 5, 5);
+
+				module.audioExplode.play();
+				
 				this.remove();
 				bullet.getShooter().hasSuccessfullyHit(this);
 				module.addAI(); // Add another
@@ -186,7 +188,6 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 	public void respawn() {
 		module.addAI();
 	}
-
 
 
 }

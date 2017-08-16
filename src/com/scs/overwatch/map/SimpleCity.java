@@ -95,7 +95,7 @@ public class SimpleCity implements IPertinentMapData {
 
 		// Drop new collectable
 		for (int i=0 ; i<Settings.NUM_COLLECTABLES_PER_SECTOR * numSectors ; i++) {
-			//todo - re-add module.createCollectable();
+			module.createCollectable();
 		}
 
 		// Add AI roamers
@@ -191,7 +191,7 @@ public class SimpleCity implements IPertinentMapData {
 				pyramid(x+2, y+2, sidewalktex);
 			} else {
 				// Add skyscraper
-				float height = NumberFunctions.rndFloat(4, 10);
+				float height = NumberFunctions.rndFloat(3, 10);
 				SkyScraper skyscraper = new SkyScraper(game, module, x+3, y+3, SKYSCRAPER_WIDTH, height, SKYSCRAPER_WIDTH);
 				game.getRootNode().attachChild(skyscraper.getMainNode());
 

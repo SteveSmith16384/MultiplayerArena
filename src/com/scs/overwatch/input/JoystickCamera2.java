@@ -41,7 +41,7 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 		this.joystick = _joystick;
 		id = joystick.getJoyId();
 
-		super.setRotationSpeed(TURN_SPEED);//200f);//.5f); SCS  // todo - add to config
+		super.setRotationSpeed(TURN_SPEED);//200f);//.5f);
 
 		this.inputManager.addRawInputListener(this);
 

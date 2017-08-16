@@ -28,11 +28,11 @@ import com.scs.overwatch.Settings.GameMode;
 public class StartModule implements IModule, ActionListener, RawInputListener {
 
 	private static final String QUIT = "Quit";
-	private static final String START = "Start";
 
 	protected Overwatch game;
 	private BitmapText numPlayerText;
-
+	private int numPlayers;
+	
 	public StartModule(Overwatch _game) {
 		super();
 
@@ -120,9 +120,8 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 	@Override
 	public void update(float tpf) {
 		Joystick[] joysticks = game.getInputManager().getJoysticks();
-		numPlayerText.setText((1+joysticks.length) + " player(s) found.");
-
-
+		numPlayers = (1+joysticks.length);
+		numPlayerText.setText(numPlayers + " player(s) found.");
 	}
 
 
@@ -141,9 +140,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 			return;
 		}
 
-		/*if (name.equals(START)) {
-			//startGame();
-		} else */if (name.equals("1")) {
+		if (name.equals("1")) {
 			// Skirmish
 			Settings.GAME_MODE = GameMode.Skirmish;
 			Settings.NUM_SECTORS = 3;
@@ -174,10 +171,10 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		} else if (name.equals("4")) {
 			// Bladerunner
 			Settings.GAME_MODE = GameMode.Bladerunner;
-			Settings.NUM_SECTORS = 3;
+			Settings.NUM_SECTORS = 2+numPlayers;
 			//Settings.HAVE_BASE = false;
 			Settings.PVP = false;
-			Settings.NUM_AI = Math.max(1, game.getInputManager().getJoysticks().length) + (Settings.DEBUG_DEATH?4:0); // One less than num players, min of 1 
+			Settings.NUM_AI = Math.max(1, numPlayers-1) + (Settings.DEBUG_DEATH?4:0); // One less than num players, min of 1 
 			Settings.NUM_COLLECTABLES_PER_SECTOR = 1;
 			GameModule.HELP_TEXT = "Hunt the rogue AI";
 			startGame();

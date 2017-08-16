@@ -16,7 +16,7 @@ import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.modules.GameModule;
 
-public class SmallExplosion extends Node implements IEntity, IProcessable {
+public class Explosion extends Node implements IEntity, IProcessable {
 
 	private static final boolean POINT_SPRITE = true;
 	private static final Type EMITTER_TYPE = POINT_SPRITE ? Type.Point : Type.Triangle;
@@ -28,13 +28,13 @@ public class SmallExplosion extends Node implements IEntity, IProcessable {
 	private GameModule module;
 	private RealtimeInterval expire = new RealtimeInterval(1000, false);
 
-	public SmallExplosion(GameModule _module, Node mainNode, AssetManager assetManager, RenderManager renderManager, float size) {
+	public Explosion(GameModule _module, Node mainNode, AssetManager assetManager, RenderManager renderManager, float size) {
 		super("SmallExplosionModel");
 
 		module = _module;
 
 		this.createFlame(assetManager);
-		//todo re- add this.createFlash(assetManager);
+		//re- add this.createFlash(assetManager);
 
 		explosionEffect.scale(size);//.2f);
 		explosionEffect.updateModelBound();

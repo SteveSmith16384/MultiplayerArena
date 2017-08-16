@@ -7,6 +7,7 @@ import java.util.List;
 import ssmith.util.RealtimeInterval;
 import ssmith.util.TSArrayList;
 
+import com.jme3.audio.AudioNode;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.PhysicsTickListener;
@@ -32,7 +33,7 @@ import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IEntity;
 import com.scs.overwatch.components.IMustRemainInArena;
 import com.scs.overwatch.components.IProcessable;
-import com.scs.overwatch.effects.SmallExplosion;
+import com.scs.overwatch.effects.Explosion;
 import com.scs.overwatch.entities.Collectable;
 import com.scs.overwatch.entities.DodgeballBall;
 import com.scs.overwatch.entities.Entity;
@@ -60,6 +61,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	private List<PlayersAvatar> toWarp = new ArrayList<>();
 	private RealtimeInterval checkMR = new RealtimeInterval(1000);
 
+	public AudioNode audioExplode, audioSmallExplode;
 
 	public GameModule(Overwatch _game) {
 		super();
@@ -70,9 +72,10 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	@Override
 	public void init() {
-		//game.initialize();
-		
-		game.getInputManager().addMapping(QUIT, new KeyTrigger(KeyInput.KEY_ESCAPE));
+        game.getCamera().setLocation(new Vector3f(0f, 0f, 10f)); // scs
+        game.getCamera().lookAt(new Vector3f(0f, 0f, 0f), Vector3f.UNIT_Y); // scs
+
+        game.getInputManager().addMapping(QUIT, new KeyTrigger(KeyInput.KEY_ESCAPE));
 		game.getInputManager().addListener(this, QUIT);            
 
 		game.getInputManager().addMapping(TEST, new KeyTrigger(KeyInput.KEY_T));
@@ -90,9 +93,8 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 		setUpLight();
 
-		mapData = new SimpleCity(game, this);
+		mapData = new SimpleCity(game, this); //  OverworldMap(game, this);
 		mapData.setup();
-		//mapData = new OverworldMap(game, this);
 
 		Joystick[] joysticks = game.getInputManager().getJoysticks();
 		int numPlayers = 1+joysticks.length;
@@ -141,6 +143,18 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		}
 
 		//stateManager.getState(StatsAppState.class).toggleStats(); // Turn off stats
+
+		audioExplode = new AudioNode(game.getAssetManager(), "Sound/explode.wav", false);
+		audioExplode.setPositional(false);
+		audioExplode.setLooping(false);
+		//audio_gun.setVolume(2);
+		game.getRootNode().attachChild(audioExplode);
+
+		audioSmallExplode = new AudioNode(game.getAssetManager(), "Sound/explodeSmall.wav", false);
+		audioSmallExplode.setPositional(false);
+		audioSmallExplode.setLooping(false);
+		//audio_gun.setVolume(2);
+		game.getRootNode().attachChild(audioSmallExplode);
 
 	}
 
@@ -450,7 +464,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		}
 
 		// show explosion effect
-		SmallExplosion expl = new SmallExplosion(this, game.getRootNode(), game.getAssetManager(), game.getRenderManager(), .2f);
+		Explosion expl = new Explosion(this, game.getRootNode(), game.getAssetManager(), game.getRenderManager(), .2f);
 		expl.setLocalTranslation(pos);
 		this.addEntity(expl);
 	}
