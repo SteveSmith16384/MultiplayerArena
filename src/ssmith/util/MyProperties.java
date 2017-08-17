@@ -13,29 +13,31 @@ public class MyProperties {
 	private String filename;
 	private Properties properties;
 
-	public MyProperties(String _name) {
+	public MyProperties(String _name) throws IOException {
 		filename = _name;
+		this.loadProperties();
 	}
 
 
-	public void loadProperties() throws IOException {
+	private void loadProperties() throws IOException {
 		String filepath = filename;
 		File propsFile = new File(filepath);
+		properties = new Properties();
 		if (propsFile.canRead()) {
 			properties.load(new FileInputStream(new File(filepath)));
-		} else {
-			properties = new Properties();
 		}
 	}
 
 
 	public void saveProperties() {
-		String filepath = filename;
-		File propsFile = new File(filepath);
-		try {
-			properties.store(new FileOutputStream(propsFile), Settings.NAME + " settings file");
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (this.properties.size() > 0) {
+			String filepath = filename;
+			File propsFile = new File(filepath);
+			try {
+				properties.store(new FileOutputStream(propsFile), Settings.NAME + " settings file");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

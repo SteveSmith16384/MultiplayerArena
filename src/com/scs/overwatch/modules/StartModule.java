@@ -23,6 +23,7 @@ import com.jme3.ui.Picture;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.Settings.GameMode;
+import com.scs.overwatch.models.RobotModel;
 
 
 public class StartModule implements IModule, ActionListener, RawInputListener {
@@ -32,6 +33,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 	protected Overwatch game;
 	private BitmapText numPlayerText;
 	private int numPlayers;
+	private RobotModel robot;
 	
 	public StartModule(Overwatch _game) {
 		super();
@@ -61,16 +63,6 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 
 		game.getInputManager().addMapping(QUIT, new KeyTrigger(KeyInput.KEY_ESCAPE));
 		game.getInputManager().addListener(this, QUIT);
-		//game.getInputManager().addMapping(START, new MouseButtonTrigger(MouseInput.BUTTON_LEFT), new KeyTrigger(KeyInput.KEY_SPACE));
-		//game.getInputManager().addListener(this, START);
-		/*game.getInputManager().addMapping("1", new KeyTrigger(KeyInput.KEY_1));
-		game.getInputManager().addListener(this, "1");
-		game.getInputManager().addMapping("2", new KeyTrigger(KeyInput.KEY_1));
-		game.getInputManager().addListener(this, "1");
-		game.getInputManager().addMapping("2", new KeyTrigger(KeyInput.KEY_1));
-		game.getInputManager().addListener(this, "1");
-		game.getInputManager().addMapping("2", new KeyTrigger(KeyInput.KEY_1));
-		game.getInputManager().addListener(this, "1");*/
 		for (int i=1 ; i<=6 ; i++) {
 			game.getInputManager().addMapping(""+i, new KeyTrigger(KeyInput.KEY_1+i-1));
 			game.getInputManager().addListener(this, ""+i);
@@ -105,6 +97,12 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		numPlayerText.setLocalTranslation(20, game.getCamera().getHeight()-20, 0);
 		game.getGuiNode().attachChild(numPlayerText);
 
+		robot = new RobotModel(game.getAssetManager(), 2);
+		robot.setLocalTranslation(0, -1.5f, 2f);
+		robot.scale(4);
+		game.getRootNode().attachChild(robot);
+		game.getRootNode().updateGeometricState();
+		
 		// Audio
 		/*todo - re-add AudioNode audio_nature = new AudioNode(game.getAssetManager(), "sfx/independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood25.mp3.flac", true, false);
 		//AudioNode audio_nature = new AudioNode(game.getAssetManager(), "sfx/megasong.mp3", true, false);
@@ -119,6 +117,9 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 
 	@Override
 	public void update(float tpf) {
+		robot.getWorldTranslation();
+		robot.rotate(0, tpf, 0);
+
 		Joystick[] joysticks = game.getInputManager().getJoysticks();
 		numPlayers = (1+joysticks.length);
 		numPlayerText.setText(numPlayers + " player(s) found.");

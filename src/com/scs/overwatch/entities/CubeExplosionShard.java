@@ -76,6 +76,8 @@ public class CubeExplosionShard extends PhysicalEntity {//implements IAffectedBy
 		Vector3f force = new Vector3f(NumberFunctions.rndFloat(-1, 1), NumberFunctions.rndFloat(1, 2), NumberFunctions.rndFloat(-1, 1));
 		//Vector3f force = new Vector3f(0, 1.4f, 0);
 		this.floor_phy.applyImpulse(force, Vector3f.ZERO);
+		
+		this.floor_phy.setRestitution(.9f);
 
 	}
 

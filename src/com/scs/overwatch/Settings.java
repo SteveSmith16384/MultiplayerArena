@@ -13,14 +13,14 @@ public class Settings {
 	public static final boolean SHOW_FLASH_EXPLOSIONS = false;
 
 	// DEBUG
-	public static final boolean DEBUG_DEATH = false;
+	public static final boolean DEBUG_DEATH = true;
 	public static final boolean DEBUG_GAMEPAD_TURNING = false;
 	public static final boolean DEBUG_HUD = false;
 	public static final boolean DEBUG_TARGETTER = false;
 
-	// Game settings
 	public enum GameMode {Skirmish, KingOfTheHill, Dodgeball, Bladerunner, CloneWars }
 	
+	// Game settings
 	public static GameMode GAME_MODE;
 	public static boolean PVP = true;
 	public static int NUM_AI = 0;
@@ -30,7 +30,7 @@ public class Settings {
 	// Our movement speed
 	public static final float DEFAULT_MOVE_SPEED = 3f;
 	public static final float DEFAULT_STRAFE_SPEED = 3f;
-	public static final float MAX_TURN_SPEED = 1f;
+	public static final float MAX_TURN_SPEED = 1f; // todo Overwatch.properties.GetMaxTurnSpeed();
 
 	public static final float CAM_DIST = 50f;
 	public static final int FLOOR_SECTION_SIZE = 12;

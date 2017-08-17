@@ -42,7 +42,7 @@ import com.scs.overwatch.weapons.LaserRifle;
 
 public class PlayersAvatar extends PhysicalEntity implements IProcessable, ICollideable, ICanShoot, IShowOnHUD, ITargetByAI, IAffectedByPhysics, IDamagable {
 
-	private static final long RESTART_DUR = 3000;
+	private static final long RESTART_DUR = 3;
 
 	// Player dimensions
 	public static final float PLAYER_HEIGHT = 0.7f;
@@ -67,7 +67,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	//private float health = 100;
 
 	private boolean restarting = false;
-	private long restartAt, invulnerableUntil;
+	private float restartTime, invulnerableTime;
 	public Vector3f warpPos;
 	private boolean hasBall = false;
 	
@@ -197,7 +197,10 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		//playerControl.warp(new Vector3f(p.x, 20f, p.y));
 		warpPos = new Vector3f(p.x, module.mapData.getRespawnHeight(), p.y);
 		Settings.p("Scheduling player to start position: " + warpPos);
-		module.addToWarpList(this);
+
+		//module.addToWarpList(this);
+		this.playerControl.warp(warpPos);
+		
 		//this.getMainNode().setLocalTranslation(new Vector3f(p.x, 20f, p.y));
 		//this.getMainNode().updateGeometricState();
 		//Settings.p("Player starting at:" + this.getMainNode().getWorldTranslation());
@@ -209,18 +212,21 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	@Override
 	public void process(float tpf) {
 		if (this.restarting) {
-			if (this.restartAt < System.currentTimeMillis()) {
+			restartTime -= tpf;
+			if (this.restartTime <= 0) {
 				this.moveToStartPostion();
 				restarting = false;
 				return;
 			}
 		}
+		
+		if (invulnerableTime > 0) {
+			invulnerableTime -= tpf;
+		}
 
 		if (!this.restarting) {
 			// Have we fallen off the edge
-			if (this.playerControl.getPhysicsRigidBody().getPhysicsLocation().y < -1f) {
-				//if (this.getMainNode().getWorldTranslation().y < -5f) {
-				//this.moveToStartPostion();
+			if (this.playerControl.getPhysicsRigidBody().getPhysicsLocation().y < -1f) { // scs catching here after died!
 				died("Too low");
 				return;
 			}
@@ -345,7 +351,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 
 	public void hitByBullet(IBullet bullet) {
-		if (System.currentTimeMillis() > this.invulnerableUntil) {
+		if (invulnerableTime <= 0) {
 			float dam = bullet.getDamageCaused();
 			if (dam > 0) {
 				Settings.p("Player hit by bullet");
@@ -366,8 +372,8 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	private void died(String reason) {
 		Settings.p("Player died: " + reason);
 		this.restarting = true;
-		this.restartAt = System.currentTimeMillis() + RESTART_DUR;
-		invulnerableUntil = System.currentTimeMillis() + (RESTART_DUR*3);
+		this.restartTime = RESTART_DUR;
+		invulnerableTime = RESTART_DUR*3;
 		//this.getMainNode().getWorldTranslation();
 
 		// Move us below the map

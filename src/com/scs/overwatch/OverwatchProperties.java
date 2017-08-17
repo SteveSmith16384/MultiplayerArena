@@ -1,10 +1,12 @@
 package com.scs.overwatch;
 
+import java.io.IOException;
+
 import ssmith.util.MyProperties;
 
 public class OverwatchProperties extends MyProperties {
 
-	public OverwatchProperties(String file) {
+	public OverwatchProperties(String file) throws IOException {
 		super(file);
 	}
 	
@@ -27,4 +29,11 @@ public class OverwatchProperties extends MyProperties {
 	public float GetGamepadDeadZone() {
 		return super.getPropertyAsFloat("GamepadDeadZone", 0.0015f);
 	}
+
+
+	public float GetMaxTurnSpeed() {
+		return super.getPropertyAsFloat("MaxTurnSpeed", 1f);
+	}
+
+
 }

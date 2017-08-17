@@ -2,7 +2,10 @@ MULTIPLAYER ARENA
 
 
 URGENT
-More interesting maps
+	Make rotating robot bigger
+	Respawning still not great
+	Don't use realtime for restart timer
+	Show rotating robot on startup screen
 Post to JME when released
 TEST HOME Add SFX - from Ares
 	Physics not right after restart - mouse controller - if restarting game after looking at funny angle
@@ -14,6 +17,7 @@ Search for todos
 
 
 TODO
+More interesting maps
 Collectables inc jetpac fuel?
 HOME Music
 Only change physics settings if dodgeball
@@ -114,6 +118,7 @@ https://opengameart.org/content/abstract-rts-model-pack
 
 OTHER GAMES
 Split-screen space combat
+Half-Life 3
 
 Sorcerers2 spells
 https://opengameart.org/content/wizard-4
