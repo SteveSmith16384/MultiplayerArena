@@ -42,8 +42,8 @@ public class MovingPlatform extends AbstractPlatform implements ICollideable {
 		//pos = pos.add(this.offset.mult(speed*tpf));
 		//this.floor_phy.setPhysicsLocation(pos);
 		
-		//this.floor_phy.applyCentralForce(offset.mult(speed*tpf)); // todo - change to applyImpulse?
-		this.floor_phy.applyImpulse(offset.mult(speed*tpf), Vector3f.ZERO); // todo - change to applyImpulse?
+		//this.floor_phy.applyCentralForce(offset.mult(speed*tpf));
+		this.floor_phy.applyImpulse(offset.mult(speed*tpf), Vector3f.ZERO);
 
 	}
 

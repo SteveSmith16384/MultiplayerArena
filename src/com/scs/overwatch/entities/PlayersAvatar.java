@@ -429,7 +429,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 
 		} else if (other instanceof Base) {
-			incScore(0.005f, " on base "); // todo - add to config
+			incScore(0.005f, " on base "); // todo - add to config, make an interval
 		}
 	}
 

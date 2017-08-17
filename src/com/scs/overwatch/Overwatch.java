@@ -1,12 +1,9 @@
 package com.scs.overwatch;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Properties;
 import java.util.Random;
 import java.util.prefs.BackingStoreException;
+
+import ssmith.util.MyProperties;
 
 import com.jme3.app.state.VideoRecorderAppState;
 import com.jme3.asset.plugins.ClasspathLocator;
@@ -23,14 +20,14 @@ public class Overwatch extends MySimpleApplication {
 	public static final Random rnd = new Random();
 
 	private IModule currentModule, pendingModule;
-	public static BitmapFont guiFont_small;// = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
-	
+	public static BitmapFont guiFont_small; // = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
 	public static Overwatch instance;
 	public static AppSettings settings;
+	public static OverwatchProperties properties;
 	
 	public static void main(String[] args) {
 		try {
-			//properties = loadProperties();
+			properties = new OverwatchProperties(PROPS_FILE);
 			settings = new AppSettings(true);
 			try {
 				settings.load(Settings.NAME);
@@ -128,22 +125,4 @@ public class Overwatch extends MySimpleApplication {
 	}
 	
 	
-	private static Properties loadProperties() throws IOException {
-		String filepath = PROPS_FILE;
-		File propsFile = new File(filepath);
-		if (propsFile.canRead() == false) {
-			// Create the properties file
-			PrintWriter out = new PrintWriter(propsFile.getAbsolutePath());
-			out.println("#" + Settings.NAME + " settings file");
-			out.println("# If you mess up this file, just move it out the way and another will be created.");
-			out.close();
-		}
-
-		Properties props = new Properties();
-		props.load(new FileInputStream(new File(filepath)));
-		return props;
-	}
-
-
-
 }

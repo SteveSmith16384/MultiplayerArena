@@ -2,15 +2,14 @@ MULTIPLAYER ARENA
 
 
 URGENT
+More interesting maps
+Post to JME when released
 TEST HOME Add SFX - from Ares
 	Physics not right after restart - mouse controller - if restarting game after looking at funny angle
 HOME TEST Gamepad have max turn speed
 	Sometimes starting on edge of arena
 HOME create logo - Multiplayer Arena
 TEST HOME Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
-
-
-SOON
 Search for todos
 
 
@@ -31,7 +30,6 @@ Castle map
 Rotate the whole map
 Monorail
 Mess about with gravity
-Find flash.png
 Better font - use SF font?
 Do explosion by throwing invis balls
 Players get harmed by explosion
@@ -114,6 +112,8 @@ https://opengameart.org/content/mcu-43-gryphon-mech - no MTL files
 https://opengameart.org/content/abstract-rts-model-pack
 
 
+OTHER GAMES
+Split-screen space combat
 
 Sorcerers2 spells
 https://opengameart.org/content/wizard-4

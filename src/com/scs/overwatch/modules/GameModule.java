@@ -35,6 +35,7 @@ import com.scs.overwatch.components.IMustRemainInArena;
 import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.effects.Explosion;
 import com.scs.overwatch.entities.Collectable;
+import com.scs.overwatch.entities.CubeExplosionShard;
 import com.scs.overwatch.entities.DodgeballBall;
 import com.scs.overwatch.entities.Entity;
 import com.scs.overwatch.entities.PhysicalEntity;
@@ -440,7 +441,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	}
 
 
-	public void doExplosion(Vector3f pos, IEntity ignore) {//, float range, float power) {
+	public void doExplosion(Vector3f pos, IEntity ignore) {
 		//Settings.p("Showing explosion");
 		float range = 5;
 		float power = 20f;
@@ -464,9 +465,12 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		}
 
 		// show explosion effect
-		Explosion expl = new Explosion(this, game.getRootNode(), game.getAssetManager(), game.getRenderManager(), .2f);
-		expl.setLocalTranslation(pos);
-		this.addEntity(expl);
+		if (Settings.SHOW_FLASH_EXPLOSIONS) {
+			Explosion expl = new Explosion(this, game.getRootNode(), game.getAssetManager(), game.getRenderManager(), .2f);
+			expl.setLocalTranslation(pos);
+			this.addEntity(expl);
+		}
+		CubeExplosionShard.Factory(game, this, pos, 10);
 	}
 
 

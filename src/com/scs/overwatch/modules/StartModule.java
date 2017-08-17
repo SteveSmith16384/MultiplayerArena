@@ -188,6 +188,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 			GameModule.HELP_TEXT = "Clone Wars: Hunt the other players";
 			startGame();
 		} else if (name.equals(QUIT)) {
+			Overwatch.properties.saveProperties();
 			game.stop();
 		}		
 	}

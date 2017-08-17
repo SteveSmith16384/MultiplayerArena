@@ -70,10 +70,12 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 	public void collidedWith(ICollideable other) {
 		if (other != this.shooter) {
 			//Settings.p("Laser collided with " + other);
-			//this.getLocation();
+
+			if (Settings.SHOW_FLASH_EXPLOSIONS) {
 			Explosion expl = new Explosion(module, game.getRootNode(), game.getAssetManager(), game.getRenderManager(), .05f);
 			expl.setLocalTranslation(this.getLocation());
 			module.addEntity(expl);
+			}
 			
 			CubeExplosionShard.Factory(game, module, this.getLocation(), 3);
 

@@ -16,15 +16,16 @@ import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.scs.overwatch.MyFlyByCamera;
+import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.entities.PlayersAvatar;
 
 public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawInputListener {
 
-	private static final float LOOK_UD_ADJ = .4f;//.75f;//.5f; // todo - add to config
-	private static final float MOVE_SPEED = 5; // todo - add to config
-	private static final float DEADZONE = 0.0015f; // todo - add to config
-	private static final float TURN_SPEED = 100f;//150f; // todo - add to config
+	private static final float LOOK_UD_ADJ = Overwatch.properties.GetGamepadUpDownAdjust();// .4f;//.75f;//.5f;
+	private static final float MOVE_SPEED = Overwatch.properties.GetGamepadMoveSpeed();// 5;
+	private static final float DEADZONE = Overwatch.properties.GetGamepadDeadZone();// 0.0015f;
+	private static final float TURN_SPEED = Overwatch.properties.GetGamepadTurnSpeed();// 100f;//150f;
 	
 	public PlayersAvatar avatar;
 	protected Joystick joystick;
