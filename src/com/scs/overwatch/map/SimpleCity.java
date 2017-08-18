@@ -110,15 +110,15 @@ public class SimpleCity implements IPertinentMapData {
 				int z = NumberFunctions.rnd(4, getDepth()-5);
 				float w = NumberFunctions.rndFloat(.2f, 2f);
 				float d = NumberFunctions.rndFloat(w, w+0.3f);
-				Crate crate = new Crate(game, module, x, 20f, z, w, w, d, NumberFunctions.rnd(0, 359));
+				Crate crate = new Crate(game, module, x, getRespawnHeight(), z, w, w, d, NumberFunctions.rnd(0, 359));
 				game.getRootNode().attachChild(crate.getMainNode());
 			}
 		} else {
-			// Sprinkle lots of identicals
+			// Sprinkle lots of clones
 			for (int i=0 ; i<numSectors*8 ; i++) {
 				int x = NumberFunctions.rnd(4, getWidth()-5);
 				int z = NumberFunctions.rnd(4, getDepth()-5);
-				PlayersClone box = new PlayersClone(game, module, x, 20f, z, NumberFunctions.rnd(0, 359));
+				PlayersClone box = new PlayersClone(game, module, x, getRespawnHeight(), z, NumberFunctions.rnd(0, 359));
 				game.getRootNode().attachChild(box.getMainNode());
 			}
 		}
@@ -178,7 +178,7 @@ public class SimpleCity implements IPertinentMapData {
 			game.getRootNode().attachChild(base.getMainNode());
 		} else {
 			int i = NumberFunctions.rnd(1, 4);
-			if (i == 1) {
+			if (i == 1 || Settings.DEBUG_WATCH_AI) {
 				// Grass area
 				String grasstex = null;
 				if (Settings.NEON) {

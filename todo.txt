@@ -2,15 +2,13 @@ MULTIPLAYER ARENA
 
 
 URGENT
-	Make rotating robot bigger
+Place rotating turrets
+Try model - cone and cyl
+Smaller fast enemy
 	Respawning still not great
-	Don't use realtime for restart timer
-	Show rotating robot on startup screen
 Post to JME when released
 TEST HOME Add SFX - from Ares
-	Physics not right after restart - mouse controller - if restarting game after looking at funny angle
 HOME TEST Gamepad have max turn speed
-	Sometimes starting on edge of arena
 HOME create logo - Multiplayer Arena
 TEST HOME Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
 Search for todos
@@ -101,6 +99,7 @@ Blow enemies away
 Force Field
 	Run fast
 Auto-aim
+Build wall
 
 
 INSPIRATION
@@ -119,6 +118,7 @@ https://opengameart.org/content/abstract-rts-model-pack
 OTHER GAMES
 Split-screen space combat
 Half-Life 3
+
 
 Sorcerers2 spells
 https://opengameart.org/content/wizard-4

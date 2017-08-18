@@ -13,7 +13,8 @@ public class Settings {
 	public static final boolean SHOW_FLASH_EXPLOSIONS = false;
 
 	// DEBUG
-	public static final boolean DEBUG_DEATH = true;
+	public static final boolean DEBUG_WATCH_AI = true;
+	public static final boolean DEBUG_DEATH = false;
 	public static final boolean DEBUG_GAMEPAD_TURNING = false;
 	public static final boolean DEBUG_HUD = false;
 	public static final boolean DEBUG_TARGETTER = false;

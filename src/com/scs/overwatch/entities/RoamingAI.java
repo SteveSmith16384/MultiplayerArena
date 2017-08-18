@@ -66,7 +66,6 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 		geometry.setMaterial(floor_mat);
 
 		this.main_node.attachChild(geometry);
-		//main_node.setLocalTranslation(x+(w/2), h/2, z+(d/2));
 		main_node.setLocalTranslation(x+(w/2), 10, z+(d/2));
 
 		floor_phy = new RigidBodyControl(1f);
@@ -104,21 +103,22 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 				lastPos.set(this.getMainNode().getWorldTranslation());
 			}
 
-			for(IEntity e : module.entities) {
-				if (e instanceof ITargetByAI) {
-					ITargetByAI enemy = (ITargetByAI)e;
-					if (this.canSee(enemy)) {
-						this.getMainNode().lookAt(enemy.getLocation(), Vector3f.UNIT_Y);
-						Vector3f dir = enemy.getLocation().subtract(this.getLocation()).normalize();
-						this.shotDir.set(dir);
-						//Settings.p("AI shooting at " + enemy);
-						this.weapon.activate(tpf);//.shoot();
-					} else {
-						//Settings.p("AI cannot see anyone to shoot at");
+			if (!Settings.DEBUG_WATCH_AI) {
+				for(IEntity e : module.entities) {
+					if (e instanceof ITargetByAI) {
+						ITargetByAI enemy = (ITargetByAI)e;
+						if (this.canSee(enemy)) {
+							this.getMainNode().lookAt(enemy.getLocation(), Vector3f.UNIT_Y);
+							Vector3f dir = enemy.getLocation().subtract(this.getLocation()).normalize();
+							this.shotDir.set(dir);
+							//Settings.p("AI shooting at " + enemy);
+							this.weapon.activate(tpf);//.shoot();
+						} else {
+							//Settings.p("AI cannot see anyone to shoot at");
+						}
 					}
 				}
 			}
-
 
 		}
 	}
@@ -173,7 +173,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 
 				module.doExplosion(this.getLocation(), this);
 				module.audioExplode.play();
-				
+
 				this.remove();
 				bullet.getShooter().hasSuccessfullyHit(this);
 				module.addAI(); // Add another
