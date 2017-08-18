@@ -3,8 +3,6 @@ package com.scs.overwatch;
 import java.util.Random;
 import java.util.prefs.BackingStoreException;
 
-import ssmith.util.MyProperties;
-
 import com.jme3.app.state.VideoRecorderAppState;
 import com.jme3.asset.plugins.ClasspathLocator;
 import com.jme3.asset.plugins.FileLocator;

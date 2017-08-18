@@ -1,7 +1,5 @@
 package com.scs.overwatch.entities;
 
-import ssmith.lang.NumberFunctions;
-
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;

@@ -17,6 +17,7 @@ import com.jme3.input.event.MouseMotionEvent;
 import com.jme3.input.event.TouchEvent;
 import com.jme3.light.AmbientLight;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
 import com.jme3.ui.Picture;
@@ -44,6 +45,9 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 
 	@Override
 	public void init() {
+		game.getCamera().setLocation(new Vector3f(0f, 0f, 10f));
+		game.getCamera().lookAt(new Vector3f(0f, 0f, 0f), Vector3f.UNIT_Y);
+
 		List<ViewPort> views = game.getRenderManager().getMainViews();
 		while (!views.isEmpty()) {
 			game.getRenderManager().removeMainView(views.get(0));
@@ -147,7 +151,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 			Settings.NUM_SECTORS = 3;
 			Settings.PVP = true;
 			Settings.NUM_AI = 0;
-			Settings.NUM_COLLECTABLES_PER_SECTOR = 1;
+			Settings.NUM_COLLECTABLES = 1;
 			GameModule.HELP_TEXT = "Skirmish: Hunt the other players";
 			startGame();
 		} else if (name.equals("2")) {
@@ -156,7 +160,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 			Settings.NUM_SECTORS = 3;
 			Settings.PVP = true;
 			Settings.NUM_AI = 0;
-			Settings.NUM_COLLECTABLES_PER_SECTOR = 0;
+			Settings.NUM_COLLECTABLES = 0;
 			GameModule.HELP_TEXT = "King of the Hill: Dominate the base";
 			startGame();
 		} else if (name.equals("3")) {
@@ -166,7 +170,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 			//Settings.HAVE_BASE = false;
 			Settings.PVP = true;
 			Settings.NUM_AI = 0;
-			Settings.NUM_COLLECTABLES_PER_SECTOR = 0;
+			Settings.NUM_COLLECTABLES = 0;
 			GameModule.HELP_TEXT = "Dodgeball: Hit other players with the ball";
 			startGame();
 		} else if (name.equals("4")) {
@@ -176,7 +180,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 			//Settings.HAVE_BASE = false;
 			Settings.PVP = false;
 			Settings.NUM_AI = Math.max(1, numPlayers-1) + (Settings.DEBUG_DEATH?4:0); // One less than num players, min of 1 
-			Settings.NUM_COLLECTABLES_PER_SECTOR = 1;
+			Settings.NUM_COLLECTABLES = 1;
 			GameModule.HELP_TEXT = "Hunt the rogue AI";
 			startGame();
 		} else if (name.equals("5")) {
@@ -185,7 +189,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 			Settings.NUM_SECTORS = 2;
 			Settings.PVP = true;
 			Settings.NUM_AI = 0;
-			Settings.NUM_COLLECTABLES_PER_SECTOR = 1;
+			Settings.NUM_COLLECTABLES = 1;
 			GameModule.HELP_TEXT = "Clone Wars: Hunt the other players";
 			startGame();
 		} else if (name.equals(QUIT)) {

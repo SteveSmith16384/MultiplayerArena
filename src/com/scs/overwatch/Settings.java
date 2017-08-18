@@ -13,7 +13,7 @@ public class Settings {
 	public static final boolean SHOW_FLASH_EXPLOSIONS = false;
 
 	// DEBUG
-	public static final boolean DEBUG_WATCH_AI = true;
+	public static final boolean DEBUG_WATCH_AI = false;
 	public static final boolean DEBUG_DEATH = false;
 	public static final boolean DEBUG_GAMEPAD_TURNING = false;
 	public static final boolean DEBUG_HUD = false;
@@ -25,7 +25,7 @@ public class Settings {
 	public static GameMode GAME_MODE;
 	public static boolean PVP = true;
 	public static int NUM_AI = 0;
-	public static int NUM_COLLECTABLES_PER_SECTOR = 0;
+	public static int NUM_COLLECTABLES = 0;
 	public static int NUM_SECTORS = 3;
 	
 	// Our movement speed

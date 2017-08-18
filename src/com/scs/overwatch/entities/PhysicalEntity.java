@@ -9,7 +9,7 @@ import com.scs.overwatch.modules.GameModule;
 
 public abstract class PhysicalEntity extends Entity implements IProcessable {//, IAffectedByPhysics {
 
-	protected Node main_node;//, left_node, right_node;
+	protected Node main_node;
 	public RigidBodyControl floor_phy;
 
 	public PhysicalEntity(Overwatch _game, GameModule _module, String _name) {

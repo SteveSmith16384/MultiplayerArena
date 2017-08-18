@@ -94,7 +94,7 @@ public class SimpleCity implements IPertinentMapData {
 		}
 
 		// Drop new collectable
-		for (int i=0 ; i<Settings.NUM_COLLECTABLES_PER_SECTOR * numSectors ; i++) {
+		for (int i=0 ; i<Settings.NUM_COLLECTABLES ; i++) {
 			module.createCollectable();
 		}
 

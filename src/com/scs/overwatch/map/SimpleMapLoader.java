@@ -6,7 +6,6 @@ import com.scs.overwatch.Settings;
 import com.scs.overwatch.entities.Fence;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.SimplePillar;
-import com.scs.overwatch.entities.Tree;
 import com.scs.overwatch.modules.GameModule;
 import com.scs.overwatch.shapes.CreateShapes;
 
@@ -46,8 +45,8 @@ public class SimpleMapLoader implements IMapLoader {
 					break;
 
 				case Settings.MAP_TREE:
-					PhysicalEntity tree = new Tree(game, module, x, z);
-					this.rootNode.attachChild(tree.getMainNode());
+					/*PhysicalEntity tree = new Tree(game, module, x, z);
+					this.rootNode.attachChild(tree.getMainNode());*/
 					break;
 
 				case Settings.MAP_FENCE_LR_HIGH:

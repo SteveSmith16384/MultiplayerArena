@@ -1,16 +1,12 @@
 package com.scs.overwatch.modules;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
 
 import ssmith.util.RealtimeInterval;
 import ssmith.util.TSArrayList;
 
 import com.jme3.audio.AudioNode;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.bullet.PhysicsSpace;
-import com.jme3.bullet.PhysicsTickListener;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.font.BitmapFont;
@@ -37,7 +33,6 @@ import com.scs.overwatch.effects.Explosion;
 import com.scs.overwatch.entities.Collectable;
 import com.scs.overwatch.entities.CubeExplosionShard;
 import com.scs.overwatch.entities.DodgeballBall;
-import com.scs.overwatch.entities.Entity;
 import com.scs.overwatch.entities.PhysicalEntity;
 import com.scs.overwatch.entities.PlayersAvatar;
 import com.scs.overwatch.entities.RoamingAI;
@@ -48,7 +43,7 @@ import com.scs.overwatch.input.MouseAndKeyboardCamera;
 import com.scs.overwatch.map.IPertinentMapData;
 import com.scs.overwatch.map.SimpleCity;
 
-public class GameModule implements IModule, PhysicsCollisionListener, ActionListener, PhysicsTickListener {
+public class GameModule implements IModule, PhysicsCollisionListener, ActionListener {//, PhysicsTickListener {
 
 	private static final String QUIT = "Quit";
 	private static final String TEST = "Test";
@@ -59,8 +54,8 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	public BulletAppState bulletAppState;
 	public TSArrayList<IEntity> entities = new TSArrayList<>();
 	public IPertinentMapData mapData;
-	private List<PlayersAvatar> toWarp = new ArrayList<>();
-	private RealtimeInterval checkMR = new RealtimeInterval(1000);
+	//private List<PlayersAvatar> toWarp = new ArrayList<>();
+	private RealtimeInterval checkMR = new RealtimeInterval(1000); // todo - don't use realtime
 
 	public AudioNode audioExplode, audioSmallExplode;
 
@@ -73,8 +68,8 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	@Override
 	public void init() {
-		game.getCamera().setLocation(new Vector3f(0f, 0f, 10f)); // scs
-		game.getCamera().lookAt(new Vector3f(0f, 0f, 0f), Vector3f.UNIT_Y); // scs
+		game.getCamera().setLocation(new Vector3f(0f, 0f, 10f));
+		game.getCamera().lookAt(new Vector3f(0f, 0f, 0f), Vector3f.UNIT_Y);
 
 		game.getInputManager().addMapping(QUIT, new KeyTrigger(KeyInput.KEY_ESCAPE));
 		game.getInputManager().addListener(this, QUIT);            
@@ -86,7 +81,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		bulletAppState = new BulletAppState();
 		game.getStateManager().attach(bulletAppState);
 		bulletAppState.getPhysicsSpace().addCollisionListener(this);
-		bulletAppState.getPhysicsSpace().addTickListener(this);
+		//bulletAppState.getPhysicsSpace().addTickListener(this);
 		bulletAppState.getPhysicsSpace().setAccuracy(1f / 80f);
 		//bulletAppState.getPhysicsSpace().enableDebug(game.getAssetManager());
 
@@ -267,7 +262,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		//float y = (c.getHeight() * c.getViewPortTop())-(c.getHeight()/2);
 		float yBL = c.getHeight() * c.getViewPortBottom();
 
-		Settings.p("Created HUD for " + id + ": " + xBL + "," +yBL);
+		//Settings.p("Created HUD for " + id + ": " + xBL + "," +yBL);
 
 		float w = c.getWidth() * (c.getViewPortRight()-c.getViewPortLeft());
 		float h = c.getHeight() * (c.getViewPortTop()-c.getViewPortBottom());
@@ -478,11 +473,11 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		Point p = mapData.getRandomCollectablePos();
 		RoamingAI ai = new RoamingAI(game, this, p.x, p.y);
 		game.getRootNode().attachChild(ai.getMainNode());
-
+		Settings.p("Created " + ai);
 	}
 
 
-	@Override
+	/*@Override
 	public void physicsTick(PhysicsSpace arg0, float arg1) {
 
 	}
@@ -506,7 +501,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				this.toWarp.add(a);
 			}
 		}		
-	}
+	}*/
 
 	public void createDodgeballBall() {
 		Point p = mapData.getRandomCollectablePos();
