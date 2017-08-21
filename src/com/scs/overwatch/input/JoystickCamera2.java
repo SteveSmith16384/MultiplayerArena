@@ -32,7 +32,7 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 	private float fwdVal, backVal, leftVal, rightVal;
 	private Vector2f joyPos = new Vector2f();
 	private Vector2f joyPosDir = new Vector2f();
-	private boolean jump = false, shoot = false, ability1 = false;
+	private boolean jump = false, shoot = false, ability1 = false, cycleAbility = false;
 	private int id;
 
 	public JoystickCamera2(Camera _cam, Joystick _joystick, InputManager _inputManager) {
@@ -120,6 +120,11 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 		return ability1;
 	}
 
+
+	@Override
+	public boolean isSelectNextAbilityPressed() {
+		return this.cycleAbility;
+	}
 
 	@Override
 	public void onAnalog(String name, float value, float tpf_) {
@@ -248,6 +253,8 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 				this.shoot = evt.isPressed();
 			} else if (button.getButtonId() == 2) {
 				this.ability1 = evt.isPressed();
+			} else if (button.getButtonId() == 3) {
+				this.cycleAbility = evt.isPressed();
 			}
 
 		}
@@ -259,6 +266,7 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 	public void onMouseButtonEvent(MouseButtonEvent evt) {}
 	public void onKeyEvent(KeyInputEvent evt) {}
 	public void onTouchEvent(TouchEvent evt) {}
+
 
 	// End of Raw Input Listener
 

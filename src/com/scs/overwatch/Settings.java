@@ -13,13 +13,14 @@ public class Settings {
 	public static final boolean SHOW_FLASH_EXPLOSIONS = false;
 
 	// DEBUG
+	public static final boolean DEBUG_RAMP = true;
 	public static final boolean DEBUG_WATCH_AI = false;
 	public static final boolean DEBUG_DEATH = false;
 	public static final boolean DEBUG_GAMEPAD_TURNING = false;
 	public static final boolean DEBUG_HUD = false;
 	public static final boolean DEBUG_TARGETTER = false;
 
-	public enum GameMode {Skirmish, KingOfTheHill, Dodgeball, Bladerunner, CloneWars }
+	public enum GameMode {Skirmish, KingOfTheHill, Dodgeball, Bladerunner, CloneWars, Sorcerers }
 	
 	// Game settings
 	public static GameMode GAME_MODE;

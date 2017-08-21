@@ -14,6 +14,7 @@ import com.scs.overwatch.entities.Crate;
 import com.scs.overwatch.entities.Floor;
 import com.scs.overwatch.entities.Lift;
 import com.scs.overwatch.entities.PlayersClone;
+import com.scs.overwatch.entities.Ramp;
 import com.scs.overwatch.entities.SkyScraper;
 import com.scs.overwatch.modules.GameModule;
 
@@ -129,6 +130,14 @@ public class SimpleCity implements IPertinentMapData {
 				module.createDodgeballBall();
 			}
 		}
+		
+		if (Settings.DEBUG_RAMP) {
+			Ramp ramp = new Ramp(game, module, 2, 0, 2, 0);
+			game.getRootNode().attachChild(ramp.getMainNode());
+
+			ramp = new Ramp(game, module, 4, 0, 2, 1);
+			game.getRootNode().attachChild(ramp.getMainNode());
+		}
 	}
 
 
@@ -241,6 +250,9 @@ public class SimpleCity implements IPertinentMapData {
 		int sz = NumberFunctions.rnd(0, numSectors-1);
 		int x = sx*(SKYSCRAPER_WIDTH+6);
 		int z = sz*(SKYSCRAPER_WIDTH+6); 
+		if (Settings.DEBUG_RAMP) {
+			return new Point(1, 1);
+		}
 		return new Point(x+1, z+1);
 	}
 

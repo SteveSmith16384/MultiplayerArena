@@ -2,6 +2,7 @@ MULTIPLAYER ARENA
 
 
 URGENT
+Sloping ramps
 Play against kids!
 Change colour of collectables - greensun.jpg
 Smaller fast enemy
@@ -15,6 +16,7 @@ Search for todos
 
 
 TODO
+Players/AI evolve over time - get bigger?
 Try tree - cone and cyl
 Place rotating turrets
 More interesting maps

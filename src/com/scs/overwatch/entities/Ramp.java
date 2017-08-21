@@ -17,10 +17,10 @@ import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IProcessable;
 import com.scs.overwatch.modules.GameModule;
 
-public class SkyScraper extends PhysicalEntity implements IProcessable, ICollideable {
+public class Ramp extends PhysicalEntity implements IProcessable, ICollideable {
 
-	public SkyScraper(Overwatch _game, GameModule _module, float leftX, float backZ, float w, float h, float d) {
-		super(_game, _module, "SkyScraper");
+	public Ramp(Overwatch _game, GameModule _module, float x, float y, float z, float ang) {
+		super(_game, _module, "Ramp");
 
 		String tex = null;
 		if (Settings.NEON) {
@@ -29,19 +29,21 @@ public class SkyScraper extends PhysicalEntity implements IProcessable, ICollide
 			tex = "Textures/skyscraper" + NumberFunctions.rnd(1, 4) + ".jpg";
 		}
 
-		Box box1 = new Box(w/2, h/2, d/2);
-
-		box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{ // Ensure tex is tiled correctly
+		float w = 1f;
+		float heightLength = 10;
+		float thickness = 0.1f;
+		
+		/* todo box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{ // Ensure tex is tiled correctly
 				0, h, w, h, w, 0, 0, 0, // back
 				0, h, d, h, d, 0, 0, 0, // right
 		        0, h, w, h, w, 0, 0, 0, // front
 		        0, h, d, h, d, 0, 0, 0, // left
 		        w, 0, w, d, 0, d, 0, 0, // top
 		        w, 0, w, d, 0, d, 0, 0  // bottom
-				}));
+				}));*/
 
-		//box1.scaleTextureCoordinates(new Vector2f(w, h));
-		Geometry geometry = new Geometry("SkyScraper", box1);
+		Box box1 = new Box(w/2, heightLength/2, thickness/2);
+		Geometry geometry = new Geometry("ramp", box1);
 		TextureKey key3 = new TextureKey(tex);
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
@@ -56,11 +58,10 @@ public class SkyScraper extends PhysicalEntity implements IProcessable, ICollide
 			floor_mat.setTexture("ColorMap", tex3);
 		}
 		geometry.setMaterial(floor_mat);
-		//floor_mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
-		//geometry.setQueueBucket(Bucket.Transparent);
-
 		this.main_node.attachChild(geometry);
-		main_node.setLocalTranslation(leftX+(w/2), h/2, backZ+(d/2));
+		
+		geometry.rotate(ang,  0,  0);
+		geometry.setLocalTranslation(x, y+(heightLength/2), z);
 
 		floor_phy = new RigidBodyControl(0);
 		main_node.addControl(floor_phy);
@@ -74,6 +75,7 @@ public class SkyScraper extends PhysicalEntity implements IProcessable, ICollide
 
 	@Override
 	public void process(float tpf) {
+		// Do nothing
 	}
 
 
