@@ -13,7 +13,7 @@ public class Settings {
 	public static final boolean SHOW_FLASH_EXPLOSIONS = false;
 
 	// DEBUG
-	public static final boolean DEBUG_RAMP = true;
+	public static final boolean DEBUG_RAMP = false;
 	public static final boolean DEBUG_WATCH_AI = false;
 	public static final boolean DEBUG_DEATH = false;
 	public static final boolean DEBUG_GAMEPAD_TURNING = false;
@@ -32,7 +32,6 @@ public class Settings {
 	// Our movement speed
 	public static final float DEFAULT_MOVE_SPEED = 3f;
 	public static final float DEFAULT_STRAFE_SPEED = 3f;
-	public static final float MAX_TURN_SPEED = 1f; // todo Overwatch.properties.GetMaxTurnSpeed();
 
 	public static final float CAM_DIST = 50f;
 	public static final int FLOOR_SECTION_SIZE = 12;

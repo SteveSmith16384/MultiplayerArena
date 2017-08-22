@@ -54,8 +54,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	public BulletAppState bulletAppState;
 	public TSArrayList<IEntity> entities = new TSArrayList<>();
 	public IPertinentMapData mapData;
-	//private List<PlayersAvatar> toWarp = new ArrayList<>();
-	private RealtimeInterval checkMR = new RealtimeInterval(1000); // todo - don't use realtime
+	private RealtimeInterval checkOutOfArena = new RealtimeInterval(1000);
 
 	public AudioNode audioExplode, audioSmallExplode;
 
@@ -303,7 +302,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		this.entities.refresh();
 		//this.avatars.refresh();
 
-		boolean check = checkMR.hitInterval();
+		boolean check = checkOutOfArena.hitInterval();
 
 		for(IEntity e : entities) {
 			if (e instanceof IProcessable) {
@@ -452,7 +451,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 						pe.applyForce(force);
 						/*if (e instanceof IDamagable) {
 						IDamagable id = (IDamagable)e;
-						id.damaged(1 * (range-dist)); // todo
+						id.damaged(1 * (range-dist));
 					}*/
 					}
 				}

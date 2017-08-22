@@ -162,7 +162,6 @@ public class HUD extends Node implements IEntity, IProcessable {
 		if (Settings.DEBUG_TARGETTER) {
 			int id = 0;
 			for (IEntity entity : module.entities) {
-				//if (entity != this) { // todo - not right!
 				if (entity instanceof IShowOnHUD) {
 					if (this.targetting_reticules.size() <= id) {
 						this.addTargetter();
@@ -175,7 +174,6 @@ public class HUD extends Node implements IEntity, IProcessable {
 					pic.setPosition(screen_pos.x, screen_pos.y);
 					id++;
 				}
-				//}
 			}
 
 			// Hide the rest

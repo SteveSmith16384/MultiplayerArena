@@ -34,6 +34,11 @@ public class OverwatchProperties extends MyProperties {
 	public float GetMaxTurnSpeed() {
 		return super.getPropertyAsFloat("MaxTurnSpeed", 1f);
 	}
+	
+	
+	public float GetBaseScoreInc() {
+		return super.getPropertyAsFloat("BaseScoreInc", 0.005f);
+	}
 
 
 }

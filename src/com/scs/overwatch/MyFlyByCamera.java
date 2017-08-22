@@ -258,12 +258,12 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 		}
 
 		float tot = rotationSpeed * value;
-		if (tot > Settings.MAX_TURN_SPEED) {
+		if (tot > Overwatch.MAX_TURN_SPEED) {
 			Settings.p("Turn speed too high: " + tot);
-			tot = Settings.MAX_TURN_SPEED;
-		} else if (tot < -Settings.MAX_TURN_SPEED) {
+			tot = Overwatch.MAX_TURN_SPEED;
+		} else if (tot < -Overwatch.MAX_TURN_SPEED) {
 			Settings.p("Turn speed too high: " + tot);
-			tot = -Settings.MAX_TURN_SPEED;
+			tot = -Overwatch.MAX_TURN_SPEED;
 		}
 
 		Matrix3f mat = new Matrix3f();

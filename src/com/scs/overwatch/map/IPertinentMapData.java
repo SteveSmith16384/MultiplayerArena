@@ -14,6 +14,6 @@ public interface IPertinentMapData {
 	
 	Point getRandomCollectablePos();
 	
-	float getRespawnHeight(); // todo - remove and combine with getPlayerStartPos
+	float getRespawnHeight();
 	
 }

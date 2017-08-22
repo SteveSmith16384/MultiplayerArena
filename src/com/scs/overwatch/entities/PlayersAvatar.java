@@ -68,7 +68,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	private boolean restarting = false;
 	private float restartTime, invulnerableTime;
-	public Vector3f warpPos;
+	//public Vector3f warpPos;
 	private boolean hasBall = false;
 	
 	private int numShots = 0;
@@ -133,11 +133,11 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			this.hud.setAbilityOtherText(this.abilityOther.getHudText());
 		}
 
-		/*audio_gun = new AudioNode(game.getAssetManager(), "Sound/playerLaser.ogg", false);
+		audio_gun = new AudioNode(game.getAssetManager(), "Sound/laser3.wav", false);
 		audio_gun.setPositional(false);
 		audio_gun.setLooping(false);
 		audio_gun.setVolume(2);
-		this.getMainNode().attachChild(audio_gun);*/
+		this.getMainNode().attachChild(audio_gun);
 
 		playerControl.getPhysicsRigidBody().setCcdMotionThreshold(PLAYER_RAD*2);
 
@@ -195,7 +195,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	public void moveToStartPostion() {
 		Point p = module.mapData.getPlayerStartPos(id);
 		//playerControl.warp(new Vector3f(p.x, 20f, p.y));
-		warpPos = new Vector3f(p.x, module.mapData.getRespawnHeight(), p.y);
+		Vector3f warpPos = new Vector3f(p.x, module.mapData.getRespawnHeight(), p.y);
 		Settings.p("Scheduling player to start position: " + warpPos);
 
 		//module.addToWarpList(this);
@@ -435,7 +435,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 
 		} else if (other instanceof Base) {
-			incScore(0.005f, " on base "); // todo - add to config, make an interval
+			incScore(Overwatch.BASE_SCORE_INC, " on base ");
 		}
 	}
 

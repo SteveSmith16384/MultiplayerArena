@@ -19,7 +19,7 @@ import com.scs.overwatch.modules.GameModule;
 
 public class Ramp extends PhysicalEntity implements IProcessable, ICollideable {
 
-	public Ramp(Overwatch _game, GameModule _module, float x, float y, float z, float ang) {
+	public Ramp(Overwatch _game, GameModule _module, float x, float y, float z, float len, float ang) {
 		super(_game, _module, "Ramp");
 
 		String tex = null;
@@ -30,7 +30,7 @@ public class Ramp extends PhysicalEntity implements IProcessable, ICollideable {
 		}
 
 		float w = 1f;
-		float heightLength = 10;
+		float heightLength = len;
 		float thickness = 0.1f;
 		
 		/* todo box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{ // Ensure tex is tiled correctly
@@ -60,9 +60,10 @@ public class Ramp extends PhysicalEntity implements IProcessable, ICollideable {
 		geometry.setMaterial(floor_mat);
 		this.main_node.attachChild(geometry);
 		
-		geometry.rotate(ang,  0,  0);
-		geometry.setLocalTranslation(x, y+(heightLength/2), z);
-
+		geometry.setLocalTranslation(0, heightLength/2, 0);
+		main_node.setLocalTranslation(x, y, z);
+		main_node.rotate(ang, 0, 0);
+	
 		floor_phy = new RigidBodyControl(0);
 		main_node.addControl(floor_phy);
 		module.bulletAppState.getPhysicsSpace().add(floor_phy);

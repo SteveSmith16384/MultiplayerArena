@@ -14,6 +14,8 @@ import com.scs.overwatch.modules.StartModule;
 public class Overwatch extends MySimpleApplication { 
 
 	private static final String PROPS_FILE = Settings.NAME.replaceAll(" ", "") + "_settings.txt";
+	public static float MAX_TURN_SPEED = -1; // Overwatch.properties.GetMaxTurnSpeed();
+	public static float BASE_SCORE_INC = 0.005f; // Overwatch.properties.GetMaxTurnSpeed();
 
 	public static final Random rnd = new Random();
 
@@ -40,6 +42,9 @@ public class Overwatch extends MySimpleApplication {
 				settings.setSettingsDialogImage(null);
 			}
 
+			MAX_TURN_SPEED = Overwatch.properties.GetMaxTurnSpeed();
+			BASE_SCORE_INC = Overwatch.properties.GetBaseScoreInc();
+			
 			Overwatch app = new Overwatch();
 			instance = app;
 			app.setSettings(settings);

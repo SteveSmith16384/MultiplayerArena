@@ -132,16 +132,16 @@ public class SimpleCity implements IPertinentMapData {
 		}
 		
 		if (Settings.DEBUG_RAMP) {
-			Ramp ramp = new Ramp(game, module, 2, 0, 2, 0);
+			Ramp ramp = new Ramp(game, module, 2, 0, 2, 5, 0);
 			game.getRootNode().attachChild(ramp.getMainNode());
 
-			ramp = new Ramp(game, module, 4, 0, 2, 1);
-			game.getRootNode().attachChild(ramp.getMainNode());
+			Ramp ramp2 = new Ramp(game, module, 4, 0, 2, 5, 1f);
+			game.getRootNode().attachChild(ramp2.getMainNode());
 		}
 	}
 
 
-	private void createSector(boolean createBase, float x, float y) {
+	private void createSector(boolean createBase, float x, float z) {
 		/* 123456789012
 		 * XRRRRRRRRRRR
 		 * RRRRRRRRRRRR
@@ -165,10 +165,10 @@ public class SimpleCity implements IPertinentMapData {
 		} else {
 			roadtex = "Textures/road2.png";
 		}
-		CreateFloor(x, -FLOOR_THICKNESS, y, SKYSCRAPER_WIDTH+6, FLOOR_THICKNESS, 2, roadtex, null); // top x
-		CreateFloor(x+SKYSCRAPER_WIDTH+4, -FLOOR_THICKNESS, y+2, 2, FLOOR_THICKNESS, SKYSCRAPER_WIDTH+4, roadtex, null); // right x
-		CreateFloor(x+2, -FLOOR_THICKNESS, y+SKYSCRAPER_WIDTH+4, SKYSCRAPER_WIDTH+2, FLOOR_THICKNESS, 2, roadtex, null); // bottom x
-		CreateFloor(x, -FLOOR_THICKNESS, y+2, 2, FLOOR_THICKNESS, SKYSCRAPER_WIDTH+4, roadtex, null); // Left
+		CreateFloor(x, -FLOOR_THICKNESS, z, SKYSCRAPER_WIDTH+6, FLOOR_THICKNESS, 2, roadtex, null); // top x
+		CreateFloor(x+SKYSCRAPER_WIDTH+4, -FLOOR_THICKNESS, z+2, 2, FLOOR_THICKNESS, SKYSCRAPER_WIDTH+4, roadtex, null); // right x
+		CreateFloor(x+2, -FLOOR_THICKNESS, z+SKYSCRAPER_WIDTH+4, SKYSCRAPER_WIDTH+2, FLOOR_THICKNESS, 2, roadtex, null); // bottom x
+		CreateFloor(x, -FLOOR_THICKNESS, z+2, 2, FLOOR_THICKNESS, SKYSCRAPER_WIDTH+4, roadtex, null); // Left
 
 		// Sidewalk
 		String sidewalktex = null;
@@ -177,13 +177,13 @@ public class SimpleCity implements IPertinentMapData {
 		} else {
 			sidewalktex = "Textures/floor015.png";
 		}
-		CreateFloor(x+2, -FLOOR_THICKNESS+PATH_THICKNESS, y+2, SKYSCRAPER_WIDTH+2, FLOOR_THICKNESS, 1, sidewalktex, null); // top x
-		CreateFloor(x+SKYSCRAPER_WIDTH+3, -FLOOR_THICKNESS+PATH_THICKNESS, y+3, 1, FLOOR_THICKNESS, SKYSCRAPER_WIDTH+1, sidewalktex, null); // right x
-		CreateFloor(x+2, -FLOOR_THICKNESS+PATH_THICKNESS, y+SKYSCRAPER_WIDTH+3, SKYSCRAPER_WIDTH+1, FLOOR_THICKNESS, 1, sidewalktex, null); // bottom x
-		CreateFloor(x+2, -FLOOR_THICKNESS+PATH_THICKNESS, y+3, 1, FLOOR_THICKNESS, SKYSCRAPER_WIDTH, sidewalktex, null); // Left x
+		CreateFloor(x+2, -FLOOR_THICKNESS+PATH_THICKNESS, z+2, SKYSCRAPER_WIDTH+2, FLOOR_THICKNESS, 1, sidewalktex, null); // top x
+		CreateFloor(x+SKYSCRAPER_WIDTH+3, -FLOOR_THICKNESS+PATH_THICKNESS, z+3, 1, FLOOR_THICKNESS, SKYSCRAPER_WIDTH+1, sidewalktex, null); // right x
+		CreateFloor(x+2, -FLOOR_THICKNESS+PATH_THICKNESS, z+SKYSCRAPER_WIDTH+3, SKYSCRAPER_WIDTH+1, FLOOR_THICKNESS, 1, sidewalktex, null); // bottom x
+		CreateFloor(x+2, -FLOOR_THICKNESS+PATH_THICKNESS, z+3, 1, FLOOR_THICKNESS, SKYSCRAPER_WIDTH, sidewalktex, null); // Left x
 
 		if (createBase) {//x == 1 && y == 1 && Settings.HAVE_BASE) {
-			Base base = new Base(game, module, x+3, 0f, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, "Textures/tron_red.jpg", null);
+			Base base = new Base(game, module, x+3, 0f, z+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, "Textures/tron_red.jpg", null);
 			game.getRootNode().attachChild(base.getMainNode());
 		} else {
 			int i = NumberFunctions.rnd(1, 4);
@@ -195,21 +195,25 @@ public class SimpleCity implements IPertinentMapData {
 				} else {
 					grasstex = "Textures/grass.png";
 				}
-				CreateFloor(x+3, 0f, y+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, grasstex, null);
+				CreateFloor(x+3, 0f, z+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, grasstex, null);
 			} else if (i == 2) {
-				pyramid(x+2, y+2, sidewalktex);
+				pyramid(x+2, z+2, sidewalktex);
 			} else {
 				// Add skyscraper
 				float height = NumberFunctions.rndFloat(3, 10);
-				SkyScraper skyscraper = new SkyScraper(game, module, x+3, y+3, SKYSCRAPER_WIDTH, height, SKYSCRAPER_WIDTH);
+				SkyScraper skyscraper = new SkyScraper(game, module, x+3, z+3, SKYSCRAPER_WIDTH, height, SKYSCRAPER_WIDTH);
 				game.getRootNode().attachChild(skyscraper.getMainNode());
 
 				// Add lift
-				Lift lift1 = new Lift(game, module, x+4, y+2, 0.1f+AbstractPlatform.HEIGHT, height);
+				Lift lift1 = new Lift(game, module, x+4, z+2, 0.1f+AbstractPlatform.HEIGHT, height);
 				game.getRootNode().attachChild(lift1.getMainNode());
 
-				Lift lift2 = new Lift(game, module, x+5, y+3+SKYSCRAPER_WIDTH, 0.1f+AbstractPlatform.HEIGHT, height);
+				Lift lift2 = new Lift(game, module, x+5, z+3+SKYSCRAPER_WIDTH, 0.1f+AbstractPlatform.HEIGHT, height);
 				game.getRootNode().attachChild(lift2.getMainNode());
+				
+				Ramp ramp = new Ramp(game, module, x+2, 0, z+3, 5, 0);
+				game.getRootNode().attachChild(ramp.getMainNode());
+
 			}
 		}
 	}

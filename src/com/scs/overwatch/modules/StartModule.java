@@ -2,6 +2,7 @@ package com.scs.overwatch.modules;
 
 import java.util.List;
 
+import com.jme3.audio.AudioNode;
 import com.jme3.font.BitmapText;
 import com.jme3.input.Joystick;
 import com.jme3.input.JoystickButton;
@@ -108,8 +109,8 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		game.getRootNode().updateGeometricState();
 		
 		// Audio
-		/*todo - re-add AudioNode audio_nature = new AudioNode(game.getAssetManager(), "sfx/independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood25.mp3.flac", true, false);
-		//AudioNode audio_nature = new AudioNode(game.getAssetManager(), "sfx/megasong.mp3", true, false);
+		//AudioNode audio_nature = new AudioNode(game.getAssetManager(), "sfx/independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood25.mp3.flac", true, false);
+		AudioNode audio_nature = new AudioNode(game.getAssetManager(), "sfx/n-Dimensions (Main Theme - Retro Ver.mp3", true, false);
 	    audio_nature.setLooping(true);  // activate continuous playing
 	    audio_nature.setPositional(false);
 	    audio_nature.setVolume(3);

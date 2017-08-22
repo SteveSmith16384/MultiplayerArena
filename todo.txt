@@ -1,18 +1,18 @@
 MULTIPLAYER ARENA
 
-https://opengameart.org/content/space-dimensions-8bitretro-version
 
 URGENT
+Finish readme
 Sloping ramps
 Play against kids!
 Change colour of collectables - greensun.jpg
 Smaller fast enemy
 	Respawning still not great
 Post to JME when released
-TEST HOME Add SFX - from Ares
-HOME TEST Gamepad have max turn speed
+	TEST HOME Add SFX - from Ares
+	TEST HOME Gamepad have max turn speed
 HOME create logo - Multiplayer Arena
-TEST HOME Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
+	TEST HOME Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
 Search for todos
 
 
@@ -69,6 +69,9 @@ Tig - who can be it the longest, lose when killed, killer gets it (floating dot 
 Defend the base Co-op - fight off AI
 Rocket League
 
+
+CREDITS
+Music: https://opengameart.org/content/space-dimensions-8bitretro-version
 
 
 STATS
