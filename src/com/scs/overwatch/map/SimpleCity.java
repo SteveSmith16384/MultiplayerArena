@@ -211,7 +211,7 @@ public class SimpleCity implements IPertinentMapData {
 				Lift lift2 = new Lift(game, module, x+5, z+3+SKYSCRAPER_WIDTH, 0.1f+AbstractPlatform.HEIGHT, height);
 				game.getRootNode().attachChild(lift2.getMainNode());
 				
-				Ramp ramp = new Ramp(game, module, x+2, 0, z+3, 5, 0);
+				Ramp ramp = new Ramp(game, module, x+2.5f, 0, z+3, 8.4f, 1f);
 				game.getRootNode().attachChild(ramp.getMainNode());
 
 			}

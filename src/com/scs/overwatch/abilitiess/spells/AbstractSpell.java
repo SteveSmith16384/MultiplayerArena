@@ -1,18 +1,17 @@
 package com.scs.overwatch.abilitiess.spells;
 
-import java.util.List;
-
-import com.jme3.bullet.collision.PhysicsRayTestResult;
-import com.jme3.math.Vector3f;
+import com.scs.overwatch.entities.PlayersAvatar;
 import com.scs.overwatch.modules.GameModule;
 
 public abstract class AbstractSpell {
 
 	protected GameModule module;
 	protected String name;
+	protected PlayersAvatar player;
 	
-	public AbstractSpell(GameModule _module, String _name) {
+	public AbstractSpell(GameModule _module, PlayersAvatar _player, String _name) {
 		name = _name;
+		player = _player;
 	}
 
 
@@ -26,9 +25,9 @@ public abstract class AbstractSpell {
 	}
 
 	
-	public Vector3f getPointOnFloor() {
-		//todo List<PhysicsRayTestResult> results = module.bulletAppState.getPhysicsSpace().rayTest(this.getLocation(), enemy.getLocation());
+/*	public Vector3f getPointOnFloor() {
+		List<PhysicsRayTestResult> results = module.bulletAppState.getPhysicsSpace().rayTest(this.getLocation(), enemy.getLocation());
 
 		return null;
-	}
+	}*/
 }

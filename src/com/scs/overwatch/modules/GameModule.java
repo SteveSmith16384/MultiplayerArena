@@ -57,6 +57,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	private RealtimeInterval checkOutOfArena = new RealtimeInterval(1000);
 
 	public AudioNode audioExplode, audioSmallExplode;
+	private AudioNode audioMusic;
 
 	public GameModule(Overwatch _game) {
 		super();
@@ -151,6 +152,13 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		//audio_gun.setVolume(2);
 		game.getRootNode().attachChild(audioSmallExplode);
 
+		// Audio
+		audioMusic = new AudioNode(game.getAssetManager(), "Sound/n-Dimensions (Main Theme - Retro Ver.ogg", true, false);
+	    audioMusic.setLooping(true);  // activate continuous playing
+	    audioMusic.setPositional(false);
+	    audioMusic.setVolume(3);
+	    game.getRootNode().attachChild(audioMusic);
+	    audioMusic.play(); // play continuously!
 	}
 
 
@@ -523,18 +531,8 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	@Override
 	public void destroy() {
-		/*for(IEntity e : entities) {
-			if (e instanceof Entity) {
-				Entity pe = (Entity)e;
-				pe.remove();
-			}
-		}
-
-		// These lines cause a crash at the end
-		this.bulletAppState.getPhysicsSpace().destroy();
-		//this.bulletAppState.cleanup();
-		game.getStateManager().detach(bulletAppState);*/
-
+		audioMusic.stop();
+		
 		game.getInputManager().removeListener(this);
 		game.getInputManager().clearMappings();
 		game.getInputManager().clearRawInputListeners();

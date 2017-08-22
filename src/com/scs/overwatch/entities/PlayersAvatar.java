@@ -1,11 +1,13 @@
 package com.scs.overwatch.entities;
 
 import java.awt.Point;
+import java.util.List;
 
 import ssmith.lang.NumberFunctions;
 
 import com.jme3.asset.TextureKey;
 import com.jme3.audio.AudioNode;
+import com.jme3.bullet.collision.PhysicsRayTestResult;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
@@ -22,6 +24,7 @@ import com.scs.overwatch.abilities.IAbility;
 import com.scs.overwatch.abilities.Invisibility;
 import com.scs.overwatch.abilities.JetPac;
 import com.scs.overwatch.abilities.RunFast;
+import com.scs.overwatch.abilitiess.spells.Wall;
 import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.IBullet;
 import com.scs.overwatch.components.ICanShoot;
@@ -70,7 +73,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	private float restartTime, invulnerableTime;
 	//public Vector3f warpPos;
 	private boolean hasBall = false;
-	
+
 	private int numShots = 0;
 	private int numShotsHit = 0;
 
@@ -125,7 +128,11 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			abilityGun = new DodgeballGun(_game, _module, this);
 		} else {
 			abilityGun = new LaserRifle(_game, _module, this);
-			this.abilityOther = new JetPac(this);// BoostFwd(this);//getRandomAbility(this);
+			if (Settings.DEBUG_SPELLS) {
+				this.abilityOther = new Wall(module, this);
+			} else {
+				this.abilityOther = new JetPac(this);// BoostFwd(this);//getRandomAbility(this);
+			}
 		}
 
 		this.hud.setAbilityGunText(this.abilityGun.getHudText());
@@ -200,7 +207,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 		//module.addToWarpList(this);
 		this.playerControl.warp(warpPos);
-		
+
 		//this.getMainNode().setLocalTranslation(new Vector3f(p.x, 20f, p.y));
 		//this.getMainNode().updateGeometricState();
 		//Settings.p("Player starting at:" + this.getMainNode().getWorldTranslation());
@@ -219,7 +226,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 				return;
 			}
 		}
-		
+
 		if (invulnerableTime > 0) {
 			invulnerableTime -= tpf;
 		}
@@ -301,7 +308,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		// Move cam fwd so we don't see ourselves
 		cam.setLocation(cam.getLocation().add(cam.getDirection().mult(PLAYER_RAD)));
 		cam.update();
-		
+
 		this.input.resetFlags();
 
 		walkDirection.set(0, 0, 0);
@@ -398,7 +405,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		int a = (int)((this.numShotsHit * 100f) / this.numShots);
 		hud.setAccuracy(a);
 	}
-	
+
 
 	public void incScore(float amt, String reason) {
 		Settings.p("Inc score: +" + amt + ", " + reason);
@@ -479,5 +486,32 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	}
 
+
+	public Vector3f getPointOnFloor(float range) {
+		Vector3f from = this.cam.getLocation();
+		Vector3f to = this.cam.getDirection().normalize().multLocal(range).addLocal(from);
+		List<PhysicsRayTestResult> results = module.bulletAppState.getPhysicsSpace().rayTest(from, to);
+		float dist = -1;
+		PhysicsRayTestResult closest = null;
+		for (PhysicsRayTestResult r : results) {
+			if (r.getCollisionObject().getUserObject() != null) {
+				if (closest == null) {
+					closest = r;
+				} else if (r.getHitFraction() < dist) {
+					closest = r;
+				}
+				dist = r.getHitFraction();
+			}
+		}
+		if (closest != null) {
+			Entity e = (Entity)closest.getCollisionObject().getUserObject();
+			Vector3f hitpoint = to.subtract(from).multLocal(closest.getHitFraction()).addLocal(from);
+			Settings.p("Hit " + e + " at " + hitpoint);
+			//module.doExplosion(from, null);
+			return hitpoint;
+		}
+
+		return null;
+	}
 
 }

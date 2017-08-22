@@ -36,6 +36,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 	private BitmapText numPlayerText;
 	private int numPlayers;
 	private RobotModel robot;
+	private AudioNode audioMusic;
 	
 	public StartModule(Overwatch _game) {
 		super();
@@ -109,14 +110,13 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		game.getRootNode().updateGeometricState();
 		
 		// Audio
-		//AudioNode audio_nature = new AudioNode(game.getAssetManager(), "sfx/independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood25.mp3.flac", true, false);
-		AudioNode audio_nature = new AudioNode(game.getAssetManager(), "sfx/n-Dimensions (Main Theme - Retro Ver.mp3", true, false);
-	    audio_nature.setLooping(true);  // activate continuous playing
-	    audio_nature.setPositional(false);
-	    audio_nature.setVolume(3);
-	    game.getRootNode().attachChild(audio_nature);
-	    audio_nature.play(); // play continuously!*/
-		
+		audioMusic = new AudioNode(game.getAssetManager(), "Sound/n-Dimensions (Main Theme - Retro Ver.ogg", true, false);
+	    audioMusic.setLooping(true);  // activate continuous playing
+	    audioMusic.setPositional(false);
+	    audioMusic.setVolume(3);
+	    game.getRootNode().attachChild(audioMusic);
+	    audioMusic.play(); // play continuously!
+
 	}
 
 
@@ -133,6 +133,8 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 
 	@Override
 	public void destroy() {
+		audioMusic.stop();
+		
 		game.getInputManager().clearMappings();
 		game.getInputManager().clearRawInputListeners();
 		game.getInputManager().removeListener(this);

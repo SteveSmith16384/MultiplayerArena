@@ -1,22 +1,28 @@
 MULTIPLAYER ARENA
 
+PUBLICITY
+Opengameart
+Post to JME when released
+
 
 URGENT
-Finish readme
-Sloping ramps
+Increase blur 
+Spells?
 Play against kids!
-Change colour of collectables - greensun.jpg
-Smaller fast enemy
-	Respawning still not great
-Post to JME when released
-	TEST HOME Add SFX - from Ares
+Make ramp the right length for skyscraper
+Finish readme
+	Sloping ramps
+	TEST HOME Add SFX, music
 	TEST HOME Gamepad have max turn speed
 HOME create logo - Multiplayer Arena
 	TEST HOME Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
 Search for todos
+Change colour of collectables - greensun.jpg
+Side of travelator in wrong dir
 
 
 TODO
+Smaller fast enemy
 Players/AI evolve over time - get bigger?
 Try tree - cone and cyl
 Place rotating turrets

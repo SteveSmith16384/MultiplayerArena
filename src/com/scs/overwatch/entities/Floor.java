@@ -112,17 +112,6 @@ public class Floor extends PhysicalEntity implements ICollideable {
 					w+offx, offz, w+offx, d+offz, offx, d+offz, offx, offz  // bottom
 			}));
 			
-			/*offx += 0.1f * tpf;
-			
-			box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
-					0, h, w, h, w, 0, 0, 0, // back
-					0, h, d, h, d, 0, 0, 0, // right
-					offx, h, w+offx, h, w+offx, 0, offx, 0, // front
-			        0, h, d, h, d, 0, 0, 0, // left
-			        w, 0, w, d, 0, d, 0, 0, // top
-			        w, 0, w, d, 0, d, 0, 0  // bottom
-					}));*/
-
 		}
 	}
 

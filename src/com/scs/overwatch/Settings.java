@@ -13,6 +13,7 @@ public class Settings {
 	public static final boolean SHOW_FLASH_EXPLOSIONS = false;
 
 	// DEBUG
+	public static final boolean DEBUG_SPELLS = true;
 	public static final boolean DEBUG_RAMP = false;
 	public static final boolean DEBUG_WATCH_AI = false;
 	public static final boolean DEBUG_DEATH = false;
