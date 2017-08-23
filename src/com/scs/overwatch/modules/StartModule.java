@@ -111,7 +111,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		
 		// Audio
 		audioMusic = new AudioNode(game.getAssetManager(), "Sound/n-Dimensions (Main Theme - Retro Ver.ogg", true, false);
-	    audioMusic.setLooping(true);  // activate continuous playing
+	    //audioMusic.setLooping(true);  // activate continuous playing
 	    audioMusic.setPositional(false);
 	    audioMusic.setVolume(3);
 	    game.getRootNode().attachChild(audioMusic);

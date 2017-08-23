@@ -6,6 +6,10 @@ Post to JME when released
 
 
 URGENT
+Show game desc when game mode seleted
+Change winner logo to be more bitmappy
+Only save props if values added
+Add laser sfx  to  each bullet
 Increase blur 
 Spells?
 Play against kids!
