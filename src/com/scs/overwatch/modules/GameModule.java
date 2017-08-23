@@ -286,7 +286,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		game.getRootNode().attachChild(player.getMainNode());
 		this.entities.add(player);
 
-		player.moveToStartPostion();
+		player.moveToStartPostion(true);
 
 		// Look towards centre
 		player.getMainNode().lookAt(new Vector3f(mapData.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, mapData.getDepth()/2), Vector3f.UNIT_Y);

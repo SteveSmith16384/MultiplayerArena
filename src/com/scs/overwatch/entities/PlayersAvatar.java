@@ -45,7 +45,7 @@ import com.scs.overwatch.weapons.LaserRifle;
 
 public class PlayersAvatar extends PhysicalEntity implements IProcessable, ICollideable, ICanShoot, IShowOnHUD, ITargetByAI, IAffectedByPhysics, IDamagable {
 
-	private static final long RESTART_DUR = 3;
+	private static final long RESTART_DUR = 3; // todo - make config
 
 	// Player dimensions
 	public static final float PLAYER_HEIGHT = 0.7f;
@@ -67,11 +67,10 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	private IAbility abilityGun, abilityOther;
 	public Spatial playerGeometry;
 	private float score = 0;
-	//private float health = 100;
+	//private float health;
 
 	private boolean restarting = false;
 	private float restartTime, invulnerableTime;
-	//public Vector3f warpPos;
 	private boolean hasBall = false;
 
 	private int numShots = 0;
@@ -191,21 +190,15 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	}
 
 
-	public void moveToStartPostion() {
+	public void moveToStartPostion(boolean invuln) {
 		Point p = module.mapData.getPlayerStartPos(id);
-		//playerControl.warp(new Vector3f(p.x, 20f, p.y));
 		Vector3f warpPos = new Vector3f(p.x, module.mapData.getRespawnHeight(), p.y);
 		Settings.p("Scheduling player to start position: " + warpPos);
-
-		//module.addToWarpList(this);
 		this.playerControl.warp(warpPos);
-
-		//this.getMainNode().setLocalTranslation(new Vector3f(p.x, 20f, p.y));
-		//this.getMainNode().updateGeometricState();
-		//Settings.p("Player starting at:" + this.getMainNode().getWorldTranslation());
+		if (invuln) {
+			invulnerableTime = 4; // todo - make config
+		}
 	}
-
-
 
 
 	@Override
@@ -213,13 +206,13 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		if (this.restarting) {
 			restartTime -= tpf;
 			if (this.restartTime <= 0) {
-				this.moveToStartPostion();
+				this.moveToStartPostion(true);
 				restarting = false;
 				return;
 			}
 		}
 
-		if (invulnerableTime > 0) {
+		if (invulnerableTime >= 0) {
 			invulnerableTime -= tpf;
 		}
 
@@ -331,7 +324,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	@Override
 	public Vector3f getLocation() {
 		return this.cam.getLocation();
-		//return playerControl.getPhysicsRigidBody().getPhysicsLocation();  This is very low!
+		//return playerControl.getPhysicsRigidBody().getPhysicsLocation();  This is very low to the ground!
 	}
 
 
@@ -370,13 +363,12 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		this.restarting = true;
 		this.restartTime = RESTART_DUR;
 		invulnerableTime = RESTART_DUR*3;
-		//this.getMainNode().getWorldTranslation();
 
 		// Move us below the map
 		Vector3f pos = this.getMainNode().getWorldTranslation().clone();//.floor_phy.getPhysicsLocation().clone();
 		pos.y = -SimpleCity.FLOOR_THICKNESS * 2;
 		playerControl.warp(pos);
-		Settings.p("Warped player to Hell");
+		//Settings.p("Warped player to Hell");
 	}
 
 

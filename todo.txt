@@ -6,18 +6,16 @@ Post to JME when released
 
 
 URGENT
+Pyramid - set the Dome’s radialSamples=4 and planes=2.
+Health
+More shapes - pyramid
+	Make player invulnerable at start
 Change winner logo to be more bitmappy
-	Make writing green?
-	Show game desc when game mode seleted
 	Only save props if values added
 	Add laser sfx to each bullet
-	Increase blur
 Spells?
 	Wall spell
-Play against kids!
-	Make ramp the right length for skyscraper
 Finish readme
-	TEST HOME Gamepad have max turn speed
 HOME create logo - Multiplayer Arena
 Search for todos
 Change colour of collectables - greensun.jpg
@@ -56,7 +54,6 @@ Use ICanCollect
 Change avatar - rotating cylinder?
 Crosshairs
 Use IDamagable
-Health
 Targetting HUD
 Select character class at start
 Cars that drive down roads
@@ -75,7 +72,7 @@ GAME MODES
 Hide and seek - take turns finding each other and shooting
 Collect the most collectables
 Tig - who can be it the longest, lose when killed, killer gets it (floating dot above head)
-Evolve 2v1 - with 1 being more powerful, i.e. they evolve
+Evolve 2v1 - with 1 being more powerful, i.e. they evolve by eating collectables
 Defend the base Co-op - fight off AI
 Rocket League
 
