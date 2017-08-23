@@ -69,10 +69,12 @@ public class HUD extends Node implements IEntity, IProcessable {
 		this.setScore(0);
 
 		abilityGun = new BitmapText(font_small, false);
+		abilityGun.setColor(ColorRGBA.Green);
 		abilityGun.setLocalTranslation(10, hud_height-30, 0);
 		this.attachChild(abilityGun);
 
 		abilityOther = new BitmapText(font_small, false);
+		abilityOther.setColor(ColorRGBA.Green);
 		abilityOther.setLocalTranslation(10, hud_height-45, 0);
 		this.attachChild(abilityOther);
 
@@ -85,6 +87,7 @@ public class HUD extends Node implements IEntity, IProcessable {
 		this.attachChild(accuracy);
 
 		helpText = new BitmapText(font_small, false);
+		abilityOther.setColor(ColorRGBA.Red);
 		helpText.setText(GameModule.HELP_TEXT);
 		helpText.setLocalTranslation(10, hud_height-75, 0);
 		this.attachChild(helpText);

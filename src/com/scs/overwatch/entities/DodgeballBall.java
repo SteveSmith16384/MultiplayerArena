@@ -30,24 +30,8 @@ public class DodgeballBall extends PhysicalEntity implements IBullet, IMustRemai
 
 		this.shooter = _shooter;
 
-		Sphere sphere = new Sphere(16, 16, RAD, true, false);
-		sphere.setTextureMode(TextureMode.Projected);
-		/** Create a cannon ball geometry and attach to scene graph. */
-		ball_geo = new Geometry("cannon ball", sphere);
-
-		TextureKey key3 = new TextureKey( "Textures/cells3.png");
-		Texture tex3 = game.getAssetManager().loadTexture(key3);
-		Material floor_mat = null;
-		if (Settings.LIGHTING) {
-			floor_mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
-			floor_mat.setTexture("DiffuseMap", tex3);
-		} else {
-			floor_mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
-			floor_mat.setTexture("ColorMap", tex3);
-		}
-		ball_geo.setMaterial(floor_mat);
-
-		floor_mat.getAdditionalRenderState().setDepthTest(false);
+		ball_geo = getBall(game);
+		
 		ball_geo.setQueueBucket(Bucket.Transparent);
 
 		this.main_node.attachChild(ball_geo);
@@ -73,6 +57,28 @@ public class DodgeballBall extends PhysicalEntity implements IBullet, IMustRemai
 	}
 
 
+	public static Geometry getBall(Overwatch game) {
+		Sphere sphere = new Sphere(16, 16, RAD, true, false);
+		sphere.setTextureMode(TextureMode.Projected);
+		/** Create a cannon ball geometry and attach to scene graph. */
+		Geometry ball = new Geometry("cannon ball", sphere);
+
+		TextureKey key3 = new TextureKey( "Textures/cells3.png");
+		Texture tex3 = game.getAssetManager().loadTexture(key3);
+		Material floor_mat = null;
+		if (Settings.LIGHTING) {
+			floor_mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
+			floor_mat.setTexture("DiffuseMap", tex3);
+		} else {
+			floor_mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+			floor_mat.setTexture("ColorMap", tex3);
+		}
+		ball.setMaterial(floor_mat);
+		floor_mat.getAdditionalRenderState().setDepthTest(false);
+		return ball;
+	}
+	
+	
 	@Override
 	public void process(float tpf) {
 		if (live) {

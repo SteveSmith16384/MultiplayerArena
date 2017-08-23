@@ -6,26 +6,26 @@ Post to JME when released
 
 
 URGENT
-Show game desc when game mode seleted
 Change winner logo to be more bitmappy
-Only save props if values added
-Add laser sfx  to  each bullet
-Increase blur 
+	Make writing green?
+	Show game desc when game mode seleted
+	Only save props if values added
+	Add laser sfx to each bullet
+	Increase blur
 Spells?
+	Wall spell
 Play against kids!
-Make ramp the right length for skyscraper
+	Make ramp the right length for skyscraper
 Finish readme
-	Sloping ramps
-	TEST HOME Add SFX, music
 	TEST HOME Gamepad have max turn speed
 HOME create logo - Multiplayer Arena
-	TEST HOME Change player tex to something more tron-y and diff colour for each player (unless Clone Wars)
 Search for todos
 Change colour of collectables - greensun.jpg
-Side of travelator in wrong dir
+Clone wars - player jumps if inactive for too long
 
 
 TODO
+Side of travelator in wrong dir
 Smaller fast enemy
 Players/AI evolve over time - get bigger?
 Try tree - cone and cyl
@@ -75,7 +75,7 @@ GAME MODES
 Hide and seek - take turns finding each other and shooting
 Collect the most collectables
 Tig - who can be it the longest, lose when killed, killer gets it (floating dot above head)
-2v1 - with 1 being more powerful
+Evolve 2v1 - with 1 being more powerful, i.e. they evolve
 Defend the base Co-op - fight off AI
 Rocket League
 
@@ -140,7 +140,7 @@ Half-Life 3
 
 Sorcerers2 spells
 https://opengameart.org/content/wizard-4
-Wall
+	Wall
 Fire
 Shrink
 Tornado

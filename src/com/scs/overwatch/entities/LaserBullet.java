@@ -1,5 +1,6 @@
 package com.scs.overwatch.entities;
 
+import com.jme3.audio.AudioNode;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
@@ -17,6 +18,8 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 
 	public ICanShoot shooter;
 	private float timeLeft = 3;
+
+	//protected AudioNode audio_gun;
 
 	public LaserBullet(Overwatch _game, GameModule _module, ICanShoot _shooter) {
 		super(_game, _module, "LaserBullet");
@@ -45,6 +48,13 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 		ball_geo.setUserData(Settings.ENTITY, this);
 		floor_phy.setUserObject(this);
 		module.addEntity(this);
+
+		AudioNode audio_gun = new AudioNode(game.getAssetManager(), "Sound/laser3.wav", false);
+		audio_gun.setPositional(false);
+		audio_gun.setLooping(false);
+		audio_gun.setVolume(2);
+		this.getMainNode().attachChild(audio_gun);
+		audio_gun.play();
 
 	}
 

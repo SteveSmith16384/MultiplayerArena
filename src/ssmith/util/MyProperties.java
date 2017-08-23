@@ -12,6 +12,7 @@ public class MyProperties {
 
 	private String filename;
 	private Properties properties;
+	private boolean needsSaving = false;
 
 	public MyProperties(String _name) throws IOException {
 		filename = _name;
@@ -30,7 +31,7 @@ public class MyProperties {
 
 
 	public void saveProperties() {
-		if (this.properties.size() > 0) {
+		if (needsSaving && this.properties.size() > 0) {
 			String filepath = filename;
 			File propsFile = new File(filepath);
 			try {
@@ -49,6 +50,7 @@ public class MyProperties {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			properties.put(name, ""+def);
+			needsSaving = true;
 			return def;
 		}
 	}
@@ -62,11 +64,13 @@ public class MyProperties {
 				return value;
 			} else {
 				properties.put(name, ""+def);
+				needsSaving = true;
 				return getPropertyAsBoolean(name, def);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			properties.put(name, ""+def);
+			needsSaving = true;
 			return def;
 		}
 	}
@@ -79,6 +83,7 @@ public class MyProperties {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			properties.put(name, ""+def);
+			needsSaving = true;
 			return def;
 		}
 	}

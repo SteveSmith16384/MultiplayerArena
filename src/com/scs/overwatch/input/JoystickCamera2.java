@@ -127,7 +127,7 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 	}
 
 	@Override
-	public void onAnalog(String name, float value, float tpf_) {
+	public void onAnalog(String name, float value, float tpf_UNUSED) {
 		if (!enabled)
 			return;
 

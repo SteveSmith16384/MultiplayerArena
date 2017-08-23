@@ -8,6 +8,7 @@ import com.jme3.asset.plugins.ClasspathLocator;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.font.BitmapFont;
 import com.jme3.system.AppSettings;
+import com.scs.overwatch.Settings.GameMode;
 import com.scs.overwatch.modules.IModule;
 import com.scs.overwatch.modules.StartModule;
 
@@ -91,7 +92,7 @@ public class Overwatch extends MySimpleApplication {
 		cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
 		cam.setViewPort(0f, 0.5f, 0f, 0.5f); // BL
 
-		currentModule = new StartModule(this);//GameModule(this);
+		currentModule = new StartModule(this, GameMode.Skirmish);//GameModule(this);
 		currentModule.init();
 		
 		if (Settings.RECORD_VID) {

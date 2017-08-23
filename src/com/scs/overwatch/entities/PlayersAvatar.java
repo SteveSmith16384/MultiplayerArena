@@ -24,7 +24,7 @@ import com.scs.overwatch.abilities.IAbility;
 import com.scs.overwatch.abilities.Invisibility;
 import com.scs.overwatch.abilities.JetPac;
 import com.scs.overwatch.abilities.RunFast;
-import com.scs.overwatch.abilitiess.spells.Wall;
+import com.scs.overwatch.abilitiess.spells.WallSpell;
 import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.IBullet;
 import com.scs.overwatch.components.ICanShoot;
@@ -79,8 +79,6 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	public AbstractHUDImage gamepadTest;
 
-	protected AudioNode audio_gun;
-
 	public PlayersAvatar(Overwatch _game, GameModule _module, int _id, Camera _cam, IInputDevice _input, HUD _hud) {
 		super(_game, _module, "Player");
 
@@ -129,7 +127,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		} else {
 			abilityGun = new LaserRifle(_game, _module, this);
 			if (Settings.DEBUG_SPELLS) {
-				this.abilityOther = new Wall(module, this);
+				this.abilityOther = new WallSpell(module, this);
 			} else {
 				this.abilityOther = new JetPac(this);// BoostFwd(this);//getRandomAbility(this);
 			}
@@ -139,12 +137,6 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		if (abilityOther != null) {
 			this.hud.setAbilityOtherText(this.abilityOther.getHudText());
 		}
-
-		audio_gun = new AudioNode(game.getAssetManager(), "Sound/laser3.wav", false);
-		audio_gun.setPositional(false);
-		audio_gun.setLooping(false);
-		audio_gun.setVolume(2);
-		this.getMainNode().attachChild(audio_gun);
 
 		playerControl.getPhysicsRigidBody().setCcdMotionThreshold(PLAYER_RAD*2);
 
@@ -322,9 +314,6 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	public void shoot() {
 		if (this.abilityGun.activate(0)) {
-			if (audio_gun != null) {
-				this.audio_gun.play();
-			}
 			this.score--;
 			this.hud.setScore(this.score);
 			this.numShots++;

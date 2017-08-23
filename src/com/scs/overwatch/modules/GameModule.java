@@ -24,6 +24,7 @@ import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
+import com.scs.overwatch.Settings.GameMode;
 import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.components.IEntity;
@@ -231,7 +232,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Scene);
 			bloom.setEnabled(true);
 			bloom.setBloomIntensity(40f);//50f);
-			bloom.setBlurScale(3f);//10f);
+			bloom.setBlurScale(6f);//3f);//10f);
 			fpp.addFilter(bloom);
 
 			// test filter
@@ -437,7 +438,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			this.getBulletAppState().getPhysicsSpace().getGravity(tmp);
 			this.getBulletAppState().getPhysicsSpace().setGravity(tmp.mult(-1));*/
 		} else if (name.equals(QUIT)) {
-			game.setNextModule(new StartModule(game));
+			game.setNextModule(new StartModule(game, GameMode.Skirmish));
 		}
 
 	}

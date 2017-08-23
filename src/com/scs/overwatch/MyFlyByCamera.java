@@ -248,7 +248,7 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 		}*/
 	}
 
-	protected void rotateCamera(float value, Vector3f axis){
+	protected void rotateCamera(float value, Vector3f axis) {
 		if (dragToRotate) {
 			if (canRotate) {
 				// value = -value;

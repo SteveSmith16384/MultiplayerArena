@@ -47,8 +47,32 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 		float h = 1f;//0.5f;
 		float d = 1f;//0.5f;
 
+		Geometry geometry = getModel(game);
+		this.main_node.attachChild(geometry);
+		main_node.setLocalTranslation(x+(w/2), 10, z+(d/2));
+
+		floor_phy = new RigidBodyControl(1f);
+		main_node.addControl(floor_phy);
+		module.bulletAppState.getPhysicsSpace().add(floor_phy);
+
+		geometry.setUserData(Settings.ENTITY, this);
+		floor_phy.setUserObject(this);
+		floor_phy.setCcdMotionThreshold(1);
+		module.addEntity(this);
+
+		weapon = new LaserRifle(_game, _module, this);
+
+		//Settings.p("Created new AI");
+	}
+
+
+	public static Geometry getModel(Overwatch game) {
+		float w = 1f;//0.5f;
+		float h = 1f;//0.5f;
+		float d = 1f;//0.5f;
+
 		Box box1 = new Box(w/2, h/2, d/2);
-		Geometry geometry = new Geometry("Crate", box1);
+		Geometry model = new Geometry("Crate", box1);
 		//TextureKey key3 = new TextureKey("Textures/sun.jpg");//computerconsole2.jpg");
 		TextureKey key3 = new TextureKey("Textures/computerconsole2.jpg");
 		key3.setGenerateMips(true);
@@ -63,26 +87,11 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 			floor_mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
 			floor_mat.setTexture("ColorMap", tex3);
 		}
-		geometry.setMaterial(floor_mat);
-
-		this.main_node.attachChild(geometry);
-		main_node.setLocalTranslation(x+(w/2), 10, z+(d/2));
-
-		floor_phy = new RigidBodyControl(1f);
-		main_node.addControl(floor_phy);
-		module.bulletAppState.getPhysicsSpace().add(floor_phy);
-
-		geometry.setUserData(Settings.ENTITY, this);
-		floor_phy.setUserObject(this);
-		floor_phy.setCcdMotionThreshold(w);
-		module.addEntity(this);
-
-		weapon = new LaserRifle(_game, _module, this);
-
-		//Settings.p("Created new AI");
+		model.setMaterial(floor_mat);
+		return model;
 	}
-
-
+	
+	
 	@Override
 	public void process(float tpf) {
 		weapon.process(tpf);

@@ -8,7 +8,7 @@ public class Settings {
 	public static final String VERSION = "0.01";
 	public static final boolean SHOW_LOGO = false;
 	public static final boolean ALWAYS_SHOW_4_CAMS = false;
-	public static final boolean RECORD_VID = true;
+	public static final boolean RECORD_VID = false;
 	public static final boolean USE_MODEL_FOR_PLAYERS = true;
 	public static final boolean SHOW_FLASH_EXPLOSIONS = false;
 
