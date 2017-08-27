@@ -1,5 +1,11 @@
 MULTIPLAYER ARENA
 
+LOGOS
+http://eu4.flamingtext.co.uk/net-fu/dynamic.cgi?script=clan-logo&text=winner!&fillTextType=1&fillTextPattern=Blue+Bar&backgroundRadio=0
+http://www.flamingtext.co.uk/logo/Design-Dance?fontname=ethnocentric
+http://www.flamingtext.co.uk/logo/Design-Sports?fillTextType=1&fillTextPattern=orange+swiss+cheese%3F
+
+
 PUBLICITY
 Opengameart
 Post to JME when released
