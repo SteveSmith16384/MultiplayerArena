@@ -6,14 +6,14 @@ Post to JME when released
 
 
 URGENT
-Pyramid - set the Dome’s radialSamples=4 and planes=2.
 Health
-More shapes - pyramid
+	Pyramid - set the Dome’s radialSamples=4 and planes=2.
 	Make player invulnerable at start
 Change winner logo to be more bitmappy
 	Only save props if values added
 	Add laser sfx to each bullet
 Spells?
+Check licences on media - models, music
 	Wall spell
 Finish readme
 HOME create logo - Multiplayer Arena

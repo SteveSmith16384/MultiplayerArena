@@ -14,6 +14,7 @@ import com.scs.overwatch.entities.Crate;
 import com.scs.overwatch.entities.Floor;
 import com.scs.overwatch.entities.Lift;
 import com.scs.overwatch.entities.PlayersClone;
+import com.scs.overwatch.entities.Pyramid;
 import com.scs.overwatch.entities.Ramp;
 import com.scs.overwatch.entities.SkyScraper;
 import com.scs.overwatch.modules.GameModule;
@@ -57,7 +58,7 @@ public class SimpleCity implements IPertinentMapData {
 			height = NumberFunctions.rndFloat(10, 20);
 			SkyScraper skyscraperLeft = new SkyScraper(game, module, -WALL_THICKNESS, j*(SKYSCRAPER_WIDTH+6), WALL_THICKNESS, height, SKYSCRAPER_WIDTH+6);
 			game.getRootNode().attachChild(skyscraperLeft.getMainNode());
-			
+
 			// Front
 			height = NumberFunctions.rndFloat(10, 20);
 			SkyScraper skyscraperFront = new SkyScraper(game, module, j*(SKYSCRAPER_WIDTH+6), (numSectors*(SKYSCRAPER_WIDTH+6)), SKYSCRAPER_WIDTH+6, height, WALL_THICKNESS);
@@ -130,14 +131,6 @@ public class SimpleCity implements IPertinentMapData {
 				module.createDodgeballBall();
 			}
 		}
-		
-		if (Settings.DEBUG_RAMP) {
-			Ramp ramp = new Ramp(game, module, 2, 0, 2, 5, 0);
-			game.getRootNode().attachChild(ramp.getMainNode());
-
-			Ramp ramp2 = new Ramp(game, module, 4, 0, 2, 5, 1f);
-			game.getRootNode().attachChild(ramp2.getMainNode());
-		}
 	}
 
 
@@ -187,7 +180,10 @@ public class SimpleCity implements IPertinentMapData {
 			game.getRootNode().attachChild(base.getMainNode());
 		} else {
 			int i = NumberFunctions.rnd(1, 4);
-			if (i == 1 || Settings.DEBUG_WATCH_AI) {
+			if (Settings.DEBUG_PYRAMID) {
+				Pyramid pyramid = new Pyramid(game, module, x+3, 0, z+3, SKYSCRAPER_WIDTH, "Textures/tron_red.jpg", null);
+				game.getRootNode().attachChild(pyramid.getMainNode());
+			} else if (i == 1 || Settings.DEBUG_WATCH_AI) {
 				// Grass area
 				String grasstex = null;
 				if (Settings.NEON) {
@@ -210,7 +206,7 @@ public class SimpleCity implements IPertinentMapData {
 
 				Lift lift2 = new Lift(game, module, x+5, z+3+SKYSCRAPER_WIDTH, 0.1f+AbstractPlatform.HEIGHT, height);
 				game.getRootNode().attachChild(lift2.getMainNode());
-				
+
 				Ramp ramp = new Ramp(game, module, x+2.5f, 0, z+3, 8.4f, 1f);
 				game.getRootNode().attachChild(ramp.getMainNode());
 
@@ -254,9 +250,6 @@ public class SimpleCity implements IPertinentMapData {
 		int sz = NumberFunctions.rnd(0, numSectors-1);
 		int x = sx*(SKYSCRAPER_WIDTH+6);
 		int z = sz*(SKYSCRAPER_WIDTH+6); 
-		if (Settings.DEBUG_RAMP) {
-			return new Point(1, 1);
-		}
 		return new Point(x+1, z+1);
 	}
 

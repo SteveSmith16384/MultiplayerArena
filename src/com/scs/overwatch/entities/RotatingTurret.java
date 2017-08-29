@@ -11,7 +11,6 @@ import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
-import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.modules.GameModule;
 

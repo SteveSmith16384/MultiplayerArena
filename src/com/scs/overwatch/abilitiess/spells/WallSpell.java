@@ -1,7 +1,5 @@
 package com.scs.overwatch.abilitiess.spells;
 
-import ssmith.lang.NumberFunctions;
-
 import com.jme3.math.Vector3f;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.abilities.IAbility;

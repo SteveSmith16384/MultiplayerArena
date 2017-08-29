@@ -5,42 +5,38 @@ import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
-import com.jme3.scene.VertexBuffer.Type;
-import com.jme3.scene.shape.Box;
+import com.jme3.scene.shape.Dome;
 import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
-import com.jme3.util.BufferUtils;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.components.ICollideable;
 import com.scs.overwatch.modules.GameModule;
 
-public class Floor extends PhysicalEntity implements ICollideable {
+public class Pyramid extends PhysicalEntity implements ICollideable {
 
-	private Box box1;
-	private Vector3f texScroll, thisScroll;
-	private float w, h, d;
+	private Dome box1;
+	//private Vector3f texScroll, thisScroll;
+	private float w;
 
-	public Floor(Overwatch _game, GameModule _module, float x, float y, float z, float w, float h, float d, String tex, Vector3f _texScroll) {
-		super(_game, _module, "Floor");
+	public Pyramid(Overwatch _game, GameModule _module, float x, float y, float z, float w, String tex, Vector3f _texScroll) {
+		super(_game, _module, "Pyramid");
 
 		this.w = w;
-		this.h = h;
-		this.d = d;
 
-		this.texScroll = _texScroll;
-		thisScroll = new Vector3f();
+		//this.texScroll = _texScroll;
+		//thisScroll = new Vector3f();
 
-		box1 = new Box(w/2, h/2, d/2);
+		box1 = new Dome(2, 4, w/2);
 
-		box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
+		/*box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
 				0, h, w, h, w, 0, 0, 0, // back
 				0, h, d, h, d, 0, 0, 0, // right
 				0, h, w, h, w, 0, 0, 0, // front
 				0, h, d, h, d, 0, 0, 0, // left
 				w, 0, w, d, 0, d, 0, 0, // top
 				w, 0, w, d, 0, d, 0, 0  // bottom
-		}));
+		}));*/
 
 		//box1.scaleTextureCoordinates(new Vector2f(w, d)); // scs check this
 		Geometry geometry = new Geometry("Crate", box1);
@@ -60,7 +56,7 @@ public class Floor extends PhysicalEntity implements ICollideable {
 		geometry.setMaterial(floor_mat);
 
 		this.main_node.attachChild(geometry);
-		geometry.setLocalTranslation(x+(w/2), y+(h/2), z+(d/2)); // Move it into position
+		geometry.setLocalTranslation(x+(w/2), y, z+(w/2)); // Move it into position
 
 		floor_phy = new RigidBodyControl(0f);
 		main_node.addControl(floor_phy);
@@ -80,7 +76,7 @@ public class Floor extends PhysicalEntity implements ICollideable {
 
 	@Override
 	public void process(float tpf) {
-		if (texScroll != null) {
+		/*if (texScroll != null) {
 			float diff = tpf*1f;
 			thisScroll.addLocal(diff, diff, diff);
 			thisScroll.multLocal(this.texScroll);
@@ -112,7 +108,7 @@ public class Floor extends PhysicalEntity implements ICollideable {
 					w+offx, offz, w+offx, d+offz, offx, d+offz, offx, offz  // bottom
 			}));
 			
-		}
+		}*/
 	}
 
 
@@ -120,6 +116,7 @@ public class Floor extends PhysicalEntity implements ICollideable {
 	public void collidedWith(ICollideable other) {
 		// Do nothing
 	}
+
 
 
 }

@@ -13,8 +13,8 @@ public class Settings {
 	public static final boolean SHOW_FLASH_EXPLOSIONS = false;
 
 	// DEBUG
+	public static final boolean DEBUG_PYRAMID = true;
 	public static final boolean DEBUG_SPELLS = false;
-	public static final boolean DEBUG_RAMP = false;
 	public static final boolean DEBUG_WATCH_AI = false;
 	public static final boolean DEBUG_DEATH = false;
 	public static final boolean DEBUG_GAMEPAD_TURNING = false;
