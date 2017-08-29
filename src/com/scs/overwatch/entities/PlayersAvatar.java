@@ -44,8 +44,6 @@ import com.scs.overwatch.weapons.LaserRifle;
 
 public class PlayersAvatar extends PhysicalEntity implements IProcessable, ICollideable, ICanShoot, IShowOnHUD, ITargetByAI, IAffectedByPhysics, IDamagable {
 
-	//private static final float RESTART_DUR = Overwatch.properties.GetRestartTimeSecs();
-
 	// Player dimensions
 	public static final float PLAYER_HEIGHT = 0.7f;
 	public static final float PLAYER_RAD = 0.2f;
@@ -71,6 +69,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	private boolean restarting = false;
 	private float restartTime, invulnerableTime;
 	private boolean hasBall = false;
+	private float timeSinceLastMove = 0;
 
 	private int numShots = 0;
 	private int numShotsHit = 0;
@@ -194,13 +193,15 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		if (invulnerableTime >= 0) {
 			invulnerableTime -= tpf;
 		}
-
+		
 		if (!this.restarting) {
 			// Have we fallen off the edge
 			if (this.playerControl.getPhysicsRigidBody().getPhysicsLocation().y < -1f) { // scs catching here after died!
 				died("Too low");
 				return;
 			}
+
+			timeSinceLastMove += tpf;
 
 			abilityGun.process(tpf);
 			if (this.abilityOther != null) {
@@ -227,15 +228,17 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			if (input.getFwdValue() > 0) {	
 				//Settings.p("fwd=" + input.getFwdValue());
 				walkDirection.addLocal(camDir.mult(input.getFwdValue()));
-			}
-			if (input.getBackValue() > 0) {
+				timeSinceLastMove = 0;
+			} else if (input.getBackValue() > 0) {
 				walkDirection.addLocal(camDir.negate().mult(input.getBackValue()));
+				timeSinceLastMove = 0;
 			}
 			if (input.getStrafeLeftValue() > 0) {		
 				walkDirection.addLocal(camLeft.mult(input.getStrafeLeftValue()));
-			}
-			if (input.getStrafeRightValue() > 0) {		
+				timeSinceLastMove = 0;
+			} else if (input.getStrafeRightValue() > 0) {		
 				walkDirection.addLocal(camLeft.negate().mult(input.getStrafeRightValue()));
+				timeSinceLastMove = 0;
 			}
 
 			/*if (walkDirection.length() != 0) {
@@ -245,6 +248,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 			if (input.isJumpPressed()){
 				this.jump();
+				timeSinceLastMove = 0;
 			}
 
 			if (input.isShootPressed()) {
@@ -256,6 +260,14 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			if (abilityOther != null) {
 				this.hud.setAbilityOtherText(this.abilityOther.getHudText());
 			}
+			
+			if (Settings.GAME_MODE == GameMode.CloneWars) {
+				if (this.timeSinceLastMove > 10) {
+					this.jump();
+					timeSinceLastMove = 0;
+				}
+			}
+
 		}
 
 		// Position camera at node

@@ -107,7 +107,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 
 		if (Settings.SHOW_LOGO) {
 			Picture pic = new Picture("HUD Picture");
-			pic.setImage(game.getAssetManager(), "Textures/killercrates_logo.png", true);
+			pic.setImage(game.getAssetManager(), "Textures/text/multiplayerarena.png", true);
 			pic.setWidth(game.getCamera().getWidth());
 			pic.setHeight(game.getCamera().getWidth()/7);
 			game.getGuiNode().attachChild(pic);

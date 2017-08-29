@@ -6,22 +6,23 @@ Post to JME when released
 
 
 URGENT
-Check licences on media - models, music
-Clone wars - player jumps if inactive for too long
+Make skyscraper texture less condensed
+	Fix tex on ramp
+	Check licences on media - models, music
+	Clone wars - player jumps if inactive for too long
 Move wall to middle
 How to cycle through spells
-Pyramid not quite right
-Make skyscraper texture less condensed
 	Pyramid - set the Dome’s radialSamples=4 and planes=2.
 	Change winner logo
 Spells
-Finish readme
+	Finish readme
 	HOME create logo - Multiplayer Arena
 Search for todos
 Change colour of collectables - greensun.jpg
 
 
 TODO
+Pyramid not quite right
 Health, idamagable etc...
 Side of travelator in wrong dir
 Smaller fast enemy
@@ -158,6 +159,7 @@ Shrink creature
 Magic Carpet
 Temporary Blindness
 Hailstorm
+Remove gravity
 
 
 Sorcerers Mode:

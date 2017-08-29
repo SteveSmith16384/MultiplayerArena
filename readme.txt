@@ -6,7 +6,7 @@ By Steve Smith - https://twitter.com/stephencsmith
 
 
 STARTING A GAME
-Select the game mode with the numbers 1-5.  Start a game by pressing 0.
+Select a game mode with the numbers 1-5.  Start a game by pressing 0.
 
 
 CONTROLS
@@ -18,13 +18,13 @@ GAME MODES
 Skirmish - Every player against every other player.
 King of the Hill - Gain points by occupying the base.
 Dodgeball - You must hit other players with a ball.
-Bladerunner - Destroy the rogue AI's.
+Bladerunner - Destroy the rogue AIs.
 Clone Wars - Every player against every other player, but identifying them could prove difficult!
-
 
 * The aim of every game mode is to be the first player to 100 points.
 
 
 CREDITS
-Written by Steve Smith - https://twitter.com/stephencsmith/ 
-
+Design and programming by Steve Smith - https://twitter.com/stephencsmith/ 
+Robot models by Nikke (https://opengameart.org/content/abstract-rts-model-pack / http://www.ironbane.com/).
+Music by Matthew Pablo (https://opengameart.org/content/space-dimensions-8bitretro-version / http://www.matthewpablo.com).

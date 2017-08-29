@@ -6,15 +6,15 @@ public class Settings {
 
 	public static final boolean NEON = true;
 	public static final String VERSION = "0.01";
-	public static final boolean SHOW_LOGO = false;
+	public static final boolean SHOW_LOGO = true;
 	public static final boolean ALWAYS_SHOW_4_CAMS = false;
 	public static final boolean RECORD_VID = false;
 	public static final boolean USE_MODEL_FOR_PLAYERS = true;
 	public static final boolean SHOW_FLASH_EXPLOSIONS = false;
 
 	// DEBUG
-	public static final boolean DEBUG_PYRAMID = true;
-	public static final boolean DEBUG_SPELLS = true;
+	public static final boolean DEBUG_PYRAMID = false;
+	public static final boolean DEBUG_SPELLS = false;
 	public static final boolean DEBUG_WATCH_AI = false;
 	public static final boolean DEBUG_DEATH = false;
 	public static final boolean DEBUG_GAMEPAD_TURNING = false;
