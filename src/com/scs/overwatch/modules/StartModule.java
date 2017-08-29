@@ -166,8 +166,9 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 			break;
 
 		default:
-			throw new RuntimeException("Todo");
+			throw new RuntimeException("Unknown Game Mode: " + gameMode);
 		}
+		
 		game.getRootNode().attachChild(robot);
 		gameModeSpecificText.setText(gameMode.toString() + ": " + gameModeSpecificText.getText() + "\n\nThe winner is the first player to 100 points.");
 
@@ -214,9 +215,9 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		}
 
 		if (name.equals(START)) {
+			Settings.GAME_MODE = gameMode;
 			switch (gameMode) {
 			case Skirmish:
-				Settings.GAME_MODE = GameMode.Skirmish;
 				Settings.NUM_SECTORS = 3;
 				Settings.PVP = true;
 				Settings.NUM_AI = 0;
@@ -227,7 +228,6 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 				
 			case KingOfTheHill:
 				// King of the Hill
-				Settings.GAME_MODE = GameMode.KingOfTheHill;
 				Settings.NUM_SECTORS = 3;
 				Settings.PVP = true;
 				Settings.NUM_AI = 0;
@@ -238,7 +238,6 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 				
 			case Dodgeball:
 				// Dodgeball
-				Settings.GAME_MODE = GameMode.Dodgeball;
 				Settings.NUM_SECTORS = 2;
 				//Settings.HAVE_BASE = false;
 				Settings.PVP = true;
@@ -250,7 +249,6 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 				
 			case Bladerunner:
 				// Bladerunner
-				Settings.GAME_MODE = GameMode.Bladerunner;
 				Settings.NUM_SECTORS = 2+numPlayers;
 				//Settings.HAVE_BASE = false;
 				Settings.PVP = false;
@@ -262,7 +260,6 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 				
 			case CloneWars:
 				// Clone Wars
-				Settings.GAME_MODE = GameMode.CloneWars;
 				Settings.NUM_SECTORS = 2;
 				Settings.PVP = true;
 				Settings.NUM_AI = 0;
@@ -271,8 +268,18 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 				startGame();
 				break;
 
+			case Sorcerers:
+				// Clone Wars
+				Settings.NUM_SECTORS = 3;
+				Settings.PVP = true;
+				Settings.NUM_AI = 0;
+				Settings.NUM_COLLECTABLES = 3;
+				GameModule.HELP_TEXT = "Sorcerers: Use spells to defeat the other players";
+				startGame();
+				break;
+
 			default:
-				throw new RuntimeException("Todo");
+				throw new RuntimeException("Unknown Game Mode: " + gameMode);
 			}
 		} else if (name.equals("1")) {
 			game.setNextModule(new StartModule(game, GameMode.Skirmish));

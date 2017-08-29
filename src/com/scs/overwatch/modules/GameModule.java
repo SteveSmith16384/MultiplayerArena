@@ -485,32 +485,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	}
 
 
-	/*@Override
-	public void physicsTick(PhysicsSpace arg0, float arg1) {
-
-	}
-
-
-	@Override
-	public void prePhysicsTick(PhysicsSpace arg0, float arg1) {
-		synchronized (toWarp) {
-			while (this.toWarp.size() > 0) {
-				PlayersAvatar a = this.toWarp.remove(0);
-				Settings.p("Actually warping player to start position: " + a.warpPos);
-				a.playerControl.warp(a.warpPos);
-			}
-		}
-	}
-
-
-	public void addToWarpList(PlayersAvatar a) {
-		synchronized (toWarp) {
-			if (!this.toWarp.contains(a)) {
-				this.toWarp.add(a);
-			}
-		}		
-	}*/
-
 	public void createDodgeballBall() {
 		Point p = mapData.getRandomCollectablePos();
 		DodgeballBall c = new DodgeballBall(game, this, null);
@@ -530,6 +504,15 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	}
 
 
+	public float getPlayersHealth(int id) {
+		if (Settings.GAME_MODE == GameMode.KingOfTheHill) {
+			return 100f;
+		} else {
+			return 1f; // Die immed
+		}
+	}
+	
+	
 	@Override
 	public void destroy() {
 		audioMusic.stop();

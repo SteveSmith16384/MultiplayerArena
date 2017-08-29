@@ -6,9 +6,11 @@ import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.VertexBuffer.Type;
 import com.jme3.scene.shape.Box;
 import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
+import com.jme3.util.BufferUtils;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 import com.scs.overwatch.components.ICollideable;
@@ -30,22 +32,23 @@ public class Ramp extends PhysicalEntity implements IProcessable, ICollideable {
 		float w = 1f;
 		float heightLength = len;
 		float thickness = 0.1f;
+		float d = w;
 		
-		/* todo box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{ // Ensure tex is tiled correctly
-				0, h, w, h, w, 0, 0, 0, // back
-				0, h, d, h, d, 0, 0, 0, // right
-		        0, h, w, h, w, 0, 0, 0, // front
-		        0, h, d, h, d, 0, 0, 0, // left
-		        w, 0, w, d, 0, d, 0, 0, // top
-		        w, 0, w, d, 0, d, 0, 0  // bottom
-				}));*/
-
 		Box box1 = new Box(w/2, heightLength/2, thickness/2);
 		Geometry geometry = new Geometry("ramp", box1);
 		TextureKey key3 = new TextureKey(tex);
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);
+
+		box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{ // Ensure tex is tiled correctly
+				0, heightLength, w, heightLength, w, 0, 0, 0, // back
+				0, heightLength, d, heightLength, d, 0, 0, 0, // right
+		        0, heightLength, w, heightLength, w, 0, 0, 0, // front
+		        0, heightLength, d, heightLength, d, 0, 0, 0, // left
+		        w, 0, w, d, 0, d, 0, 0, // top
+		        w, 0, w, d, 0, d, 0, 0  // bottom
+				}));
 
 		Material floor_mat = null;
 		if (Settings.LIGHTING) {

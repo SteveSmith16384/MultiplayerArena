@@ -8,12 +8,10 @@ public class BoostFwd extends AbstractAbility {
 	private static final float MAX_FUEL = 10;
 
 	private float fuel = 100;
-	private PlayersAvatar player;
 
 	public BoostFwd(PlayersAvatar _player) {
-		super();
+		super(_player);
 
-		player = _player;
 	}
 
 

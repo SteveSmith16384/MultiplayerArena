@@ -40,5 +40,15 @@ public class OverwatchProperties extends MyProperties {
 		return super.getPropertyAsFloat("BaseScoreInc", 0.005f);
 	}
 
+	
+	public float GetRestartTimeSecs() {
+		return super.getPropertyAsFloat("RestartTimeSecs", 3f);
+	}
+	
+	
+	public float GetInvulnerableTimeSecs() {
+		return super.getPropertyAsFloat("InvulnerableTimeSecs", 3f);
+		
+	}
 
 }

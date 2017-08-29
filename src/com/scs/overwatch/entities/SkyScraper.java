@@ -5,6 +5,7 @@ import ssmith.lang.NumberFunctions;
 import com.jme3.asset.TextureKey;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
+import com.jme3.math.Vector2f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.VertexBuffer.Type;
 import com.jme3.scene.shape.Box;
@@ -31,7 +32,7 @@ public class SkyScraper extends PhysicalEntity implements IProcessable, ICollide
 
 		Box box1 = new Box(w/2, h/2, d/2);
 
-		box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{ // Ensure tex is tiled correctly
+		box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{ // Ensure texture is tiled correctly
 				0, h, w, h, w, 0, 0, 0, // back
 				0, h, d, h, d, 0, 0, 0, // right
 		        0, h, w, h, w, 0, 0, 0, // front
@@ -40,7 +41,8 @@ public class SkyScraper extends PhysicalEntity implements IProcessable, ICollide
 		        w, 0, w, d, 0, d, 0, 0  // bottom
 				}));
 
-		//box1.scaleTextureCoordinates(new Vector2f(w, h));
+		box1.scaleTextureCoordinates(new Vector2f(.25f, .25f)); // scs
+		
 		Geometry geometry = new Geometry("SkyScraper", box1);
 		TextureKey key3 = new TextureKey(tex);
 		key3.setGenerateMips(true);

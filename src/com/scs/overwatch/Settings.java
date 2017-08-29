@@ -14,7 +14,7 @@ public class Settings {
 
 	// DEBUG
 	public static final boolean DEBUG_PYRAMID = true;
-	public static final boolean DEBUG_SPELLS = false;
+	public static final boolean DEBUG_SPELLS = true;
 	public static final boolean DEBUG_WATCH_AI = false;
 	public static final boolean DEBUG_DEATH = false;
 	public static final boolean DEBUG_GAMEPAD_TURNING = false;

@@ -6,13 +6,10 @@ import com.scs.overwatch.entities.PlayersAvatar;
 
 public class ZoomIn extends AbstractAbility {
 
-	private PlayersAvatar player;
 	private boolean isZoomedIn;
 
 	public ZoomIn(PlayersAvatar _player) {
-		super();
-
-		player = _player;
+		super(_player);
 	}
 
 

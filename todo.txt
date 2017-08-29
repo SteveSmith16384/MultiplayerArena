@@ -1,34 +1,28 @@
 MULTIPLAYER ARENA
 
-LOGOS
-http://eu4.flamingtext.co.uk/net-fu/dynamic.cgi?script=clan-logo&text=winner!&fillTextType=1&fillTextPattern=Blue+Bar&backgroundRadio=0
-http://www.flamingtext.co.uk/logo/Design-Dance?fontname=ethnocentric
-http://www.flamingtext.co.uk/logo/Design-Sports?fillTextType=1&fillTextPattern=orange+swiss+cheese%3F
-
-
 PUBLICITY
 Opengameart
 Post to JME when released
 
 
 URGENT
-Health
-	Pyramid - set the Dome’s radialSamples=4 and planes=2.
-	Make player invulnerable at start
-Change winner logo to be more bitmappy
-	Only save props if values added
-	Add laser sfx to each bullet
-Spells?
 Check licences on media - models, music
-	Wall spell
+Clone wars - player jumps if inactive for too long
+Move wall to middle
+How to cycle through spells
+Pyramid not quite right
+Make skyscraper texture less condensed
+	Pyramid - set the Dome’s radialSamples=4 and planes=2.
+	Change winner logo
+Spells
 Finish readme
-HOME create logo - Multiplayer Arena
+	HOME create logo - Multiplayer Arena
 Search for todos
 Change colour of collectables - greensun.jpg
-Clone wars - player jumps if inactive for too long
 
 
 TODO
+Health, idamagable etc...
 Side of travelator in wrong dir
 Smaller fast enemy
 Players/AI evolve over time - get bigger?
@@ -36,9 +30,7 @@ Try tree - cone and cyl
 Place rotating turrets
 More interesting maps
 Collectables inc jetpac fuel?
-HOME Music
-Only change physics settings if dodgeball
-Create config file like Killer Crates
+	Create config file like Killer Crates
 Check all entities for falling off edge
 Sfx
 large columns that come up through floor
@@ -59,7 +51,6 @@ Cylinder not working
 Use ICanCollect
 Change avatar - rotating cylinder?
 Crosshairs
-Use IDamagable
 Targetting HUD
 Select character class at start
 Cars that drive down roads
@@ -75,16 +66,20 @@ GAME MODES
 	3 - Dodgeball
 	4 - Hunt the most AI enemies
 	5 - Clone Wars (Lots of identical player-sized boxes - What the Box)
+Sorcerers - Cast spells at each other
+Evolve 2v1 - with 1 being more powerful, i.e. they evolve by eating collectables
 Hide and seek - take turns finding each other and shooting
 Collect the most collectables
 Tig - who can be it the longest, lose when killed, killer gets it (floating dot above head)
-Evolve 2v1 - with 1 being more powerful, i.e. they evolve by eating collectables
 Defend the base Co-op - fight off AI
 Rocket League
 
 
 CREDITS
 Music: https://opengameart.org/content/space-dimensions-8bitretro-version
+Model: https://opengameart.org/content/mobile-turret - No tex
+Model: https://opengameart.org/content/mcu-43-gryphon-mech - no MTL files
+Model: https://opengameart.org/content/abstract-rts-model-pack
 
 
 STATS
@@ -130,10 +125,6 @@ Goldeneye N64
 Quazatron
 
 
-MODELS
-https://opengameart.org/content/mobile-turret - No tex
-https://opengameart.org/content/mcu-43-gryphon-mech - no MTL files
-https://opengameart.org/content/abstract-rts-model-pack
 
 
 OTHER GAMES
@@ -166,8 +157,16 @@ Heal
 Shrink creature
 Magic Carpet
 Temporary Blindness
+Hailstorm
 
 
 Sorcerers Mode:
 Leave gravestones
+
+
+LOGOS
+http://eu4.flamingtext.co.uk/net-fu/dynamic.cgi?script=clan-logo&text=winner!&fillTextType=1&fillTextPattern=Blue+Bar&backgroundRadio=0
+http://www.flamingtext.co.uk/logo/Design-Dance?fontname=ethnocentric
+http://www.flamingtext.co.uk/logo/Design-Sports?fillTextType=1&fillTextPattern=orange+swiss+cheese%3F
+
 

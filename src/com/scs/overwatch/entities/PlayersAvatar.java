@@ -23,7 +23,7 @@ import com.scs.overwatch.abilities.IAbility;
 import com.scs.overwatch.abilities.Invisibility;
 import com.scs.overwatch.abilities.JetPac;
 import com.scs.overwatch.abilities.RunFast;
-import com.scs.overwatch.abilitiess.spells.WallSpell;
+import com.scs.overwatch.abilities.Spellbook;
 import com.scs.overwatch.components.IAffectedByPhysics;
 import com.scs.overwatch.components.IBullet;
 import com.scs.overwatch.components.ICanShoot;
@@ -44,7 +44,7 @@ import com.scs.overwatch.weapons.LaserRifle;
 
 public class PlayersAvatar extends PhysicalEntity implements IProcessable, ICollideable, ICanShoot, IShowOnHUD, ITargetByAI, IAffectedByPhysics, IDamagable {
 
-	private static final long RESTART_DUR = 3; // todo - make config
+	//private static final float RESTART_DUR = Overwatch.properties.GetRestartTimeSecs();
 
 	// Player dimensions
 	public static final float PLAYER_HEIGHT = 0.7f;
@@ -66,7 +66,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	private IAbility abilityGun, abilityOther;
 	public Spatial playerGeometry;
 	private float score = 0;
-	//private float health;
+	private float health;
 
 	private boolean restarting = false;
 	private float restartTime, invulnerableTime;
@@ -84,32 +84,12 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		cam = _cam;
 		input = _input;
 		hud = _hud;
+		health = module.getPlayersHealth(id);
 
 		{
 			int pid = Settings.GAME_MODE != GameMode.CloneWars ? id : Settings.CLONE_ID;
 			playerGeometry = getPlayersModel(game, pid);
 			this.getMainNode().attachChild(playerGeometry);
-			//this.getMainNode().setLocalTranslation(new Vector3f(0,PLAYER_HEIGHT,0)); // Need this to ensure the crate is on the floor
-		}
-
-		// Add gun
-		{
-			/*Box box1 = new Box(.1f, .1f, .3f);
-			gun = new Geometry("Gun", box1);
-			TextureKey key3 = new TextureKey("Textures/computerconsole2.jpg");
-			key3.setGenerateMips(true);
-			Texture tex3 = game.getAssetManager().loadTexture(key3);
-			Material floor_mat = null;
-			if (Settings.LIGHTING) {
-				floor_mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");  // create a simple material
-				floor_mat.setTexture("DiffuseMap", tex3);
-			} else {
-				floor_mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
-				floor_mat.setTexture("ColorMap", tex3);
-			}
-			gun.setMaterial(floor_mat);
-			gun.setLocalTranslation(0, 0, .15f);
-			//this.getMainNode().attachChild(gun);*/
 		}
 
 		playerControl = new MyBetterCharacterControl(PLAYER_RAD, PLAYER_HEIGHT, WEIGHT);
@@ -125,7 +105,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		} else {
 			abilityGun = new LaserRifle(_game, _module, this);
 			if (Settings.DEBUG_SPELLS) {
-				this.abilityOther = new WallSpell(module, this);
+				this.abilityOther = new Spellbook(module, this);
 			} else {
 				this.abilityOther = new JetPac(this);// BoostFwd(this);//getRandomAbility(this);
 			}
@@ -195,7 +175,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		Settings.p("Scheduling player to start position: " + warpPos);
 		this.playerControl.warp(warpPos);
 		if (invuln) {
-			invulnerableTime = 4; // todo - make config
+			invulnerableTime = Overwatch.properties.GetInvulnerableTimeSecs();
 		}
 	}
 
@@ -360,14 +340,13 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	private void died(String reason) {
 		Settings.p("Player died: " + reason);
 		this.restarting = true;
-		this.restartTime = RESTART_DUR;
-		invulnerableTime = RESTART_DUR*3;
+		this.restartTime = Overwatch.properties.GetRestartTimeSecs();
+		//invulnerableTime = RESTART_DUR*3;
 
 		// Move us below the map
 		Vector3f pos = this.getMainNode().getWorldTranslation().clone();//.floor_phy.getPhysicsLocation().clone();
 		pos.y = -SimpleCity.FLOOR_THICKNESS * 2;
 		playerControl.warp(pos);
-		//Settings.p("Warped player to Hell");
 	}
 
 
@@ -400,7 +379,6 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	@Override
 	public void collidedWith(ICollideable other) {
-		//if (Settings.GAME_MODE != GameMode.Dodgeball && other instanceof IBullet) { // Dodgeball handles bullets differently
 		if (other instanceof IBullet) {
 			IBullet bullet = (IBullet)other;
 			if (bullet.getShooter() != null) {

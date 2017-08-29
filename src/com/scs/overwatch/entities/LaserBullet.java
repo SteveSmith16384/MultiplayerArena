@@ -19,8 +19,6 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 	public ICanShoot shooter;
 	private float timeLeft = 3;
 
-	//protected AudioNode audio_gun;
-
 	public LaserBullet(Overwatch _game, GameModule _module, ICanShoot _shooter) {
 		super(_game, _module, "LaserBullet");
 
@@ -29,7 +27,7 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 		Vector3f origin = shooter.getLocation().clone();
 
 		Node ball_geo = BeamLaserModel.Factory(game.getAssetManager(), origin, origin.add(shooter.getShootDir().multLocal(1)), ColorRGBA.Pink);
-		
+
 		this.main_node.attachChild(ball_geo);
 		game.getRootNode().attachChild(this.main_node);
 		/** Position the cannon ball  */
@@ -63,10 +61,8 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 	public void process(float tpf) {
 		this.timeLeft -= tpf;
 		if (this.timeLeft < 0) {
-			//Settings.p("Bullet removed");
 			this.remove();
 		}
-
 	}
 
 
@@ -82,15 +78,15 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 			//Settings.p("Laser collided with " + other);
 
 			if (Settings.SHOW_FLASH_EXPLOSIONS) {
-			Explosion expl = new Explosion(module, game.getRootNode(), game.getAssetManager(), game.getRenderManager(), .05f);
-			expl.setLocalTranslation(this.getLocation());
-			module.addEntity(expl);
+				Explosion expl = new Explosion(module, game.getRootNode(), game.getAssetManager(), game.getRenderManager(), .05f);
+				expl.setLocalTranslation(this.getLocation());
+				module.addEntity(expl);
 			}
-			
+
 			CubeExplosionShard.Factory(game, module, this.getLocation(), 3);
 
 			module.audioSmallExplode.play();
-			
+
 			this.remove(); // Don't bounce
 		}
 	}
@@ -98,7 +94,7 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 
 	@Override
 	public float getDamageCaused() {
-		return 1;
+		return 10;
 	}
 
 

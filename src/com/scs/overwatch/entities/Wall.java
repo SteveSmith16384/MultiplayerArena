@@ -19,7 +19,7 @@ public class Wall extends PhysicalEntity implements IAffectedByPhysics, ICollide
 
 	public Wall(Overwatch _game, GameModule _module, float x, float yBottom, float z, float rotDegrees) {
 		super(_game, _module, "Wall");
-		
+
 		float w = 3f;
 		float h = 1f;
 		float d = 0.1f;
@@ -41,24 +41,24 @@ public class Wall extends PhysicalEntity implements IAffectedByPhysics, ICollide
 			floor_mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
 			floor_mat.setTexture("ColorMap", tex3);
 		}
-		
+
 		geometry.setMaterial(floor_mat);
-		floor_mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
-		geometry.setQueueBucket(Bucket.Transparent);
 
 		this.main_node.attachChild(geometry);
-		float rads = (float)Math.toRadians(rotDegrees);
-		main_node.rotate(0, rads, 0);
+		if (rotDegrees != 0) {
+			float rads = (float)Math.toRadians(rotDegrees);
+			main_node.rotate(0, rads, 0);
+		}
 		main_node.setLocalTranslation(x+(w/2), yBottom+(h/2), z+(d/2));
 
-		floor_phy = new RigidBodyControl(1f);
+		floor_phy = new RigidBodyControl(0f);
 		main_node.addControl(floor_phy);
 		module.getBulletAppState().getPhysicsSpace().add(floor_phy);
 
 		geometry.setUserData(Settings.ENTITY, this);
 		main_node.setUserData(Settings.ENTITY, this);
 		floor_phy.setUserObject(this);
-		
+
 		module.addEntity(this);
 
 	}

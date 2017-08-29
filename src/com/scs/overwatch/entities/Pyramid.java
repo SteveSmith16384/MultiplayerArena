@@ -15,19 +15,20 @@ import com.scs.overwatch.modules.GameModule;
 
 public class Pyramid extends PhysicalEntity implements ICollideable {
 
-	private Dome box1;
+	private Dome dome;
 	//private Vector3f texScroll, thisScroll;
-	private float w;
+	private float width;
 
 	public Pyramid(Overwatch _game, GameModule _module, float x, float y, float z, float w, String tex, Vector3f _texScroll) {
 		super(_game, _module, "Pyramid");
 
-		this.w = w;
+		this.width = w;
 
 		//this.texScroll = _texScroll;
 		//thisScroll = new Vector3f();
 
-		box1 = new Dome(2, 4, w/2);
+		//box1 = new Dome(2, 4, w/2);
+		dome = new Dome(10, 10, width/2);
 
 		/*box1.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(new float[]{
 				0, h, w, h, w, 0, 0, 0, // back
@@ -39,7 +40,7 @@ public class Pyramid extends PhysicalEntity implements ICollideable {
 		}));*/
 
 		//box1.scaleTextureCoordinates(new Vector2f(w, d)); // scs check this
-		Geometry geometry = new Geometry("Crate", box1);
+		Geometry geometry = new Geometry("Crate", dome);
 		TextureKey key3 = new TextureKey(tex);
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);

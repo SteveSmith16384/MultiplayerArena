@@ -10,13 +10,10 @@ public class JetPac extends AbstractAbility {
 	private static final float MAX_FUEL = 10;
 
 	private float fuel = 100;
-	private PlayersAvatar player;
 	private final Vector3f camUp = new Vector3f();
 
 	public JetPac(PlayersAvatar _player) {
-		super();
-
-		player = _player;
+		super(_player);
 	}
 
 

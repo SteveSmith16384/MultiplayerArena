@@ -8,13 +8,10 @@ public class Invisibility extends AbstractAbility {
 	private static final float MAX_POWER = 10;
 	
 	private float power;
-	private PlayersAvatar player;
 	private boolean isInvisible;
 	
 	public Invisibility(PlayersAvatar _player) {
-		super();
-		
-		player = _player;
+		super(_player);
 	}
 
 	
