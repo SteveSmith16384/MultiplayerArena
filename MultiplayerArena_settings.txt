@@ -1,9 +1,10 @@
 #Multiplayer Arena settings file
-#Tue Aug 29 10:59:03 BST 2017
-GamepadUpDownAdjust=0.7
-GamepadTurnSpeed=120.0
+#Tue Aug 29 18:46:45 BST 2017
+GamepadUpDownAdjust=0.4
 BaseScoreInc=0.005
+GamepadTurnSpeed=100.0
 InvulnerableTimeSecs=3.0
-GamepadDeadZone=0.0015
+GamepadDeadZone=0.003
 GamepadMoveSpeed=14.0
-MaxTurnSpeed=.09
+MaxTurnSpeed=.07
+RestartTimeSecs=3.0

@@ -6,6 +6,10 @@ Post to JME when released
 
 
 URGENT
+Jump higher
+Why is mouse slowe to turn?
+Check maxturnspeed etc are checked at the right time
+Either 3 players or using TV makes controllers too sensitive
 Make skyscraper texture less condensed
 	Fix tex on ramp
 	Check licences on media - models, music
