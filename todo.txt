@@ -6,7 +6,7 @@ Post to JME when released
 
 
 URGENT
-Look for existing jme gamepad source
+Post screenshot of robots to OGA
 TEST HOME Try dividing by tpf?
 TEST HOME Use avg turn value?
 	Make skyscraper texture less condensed
@@ -16,6 +16,7 @@ Either 4 players/cams or using TV makes controllers too sensitive
 	Jump higher
 	Clone wars - player jumps if inactive for too long
 Search for todos
+Robots are floating slightly
 
 
 TODO
@@ -70,7 +71,7 @@ GAME MODES
 	3 - Dodgeball
 	4 - Hunt the most AI enemies
 	5 - Clone Wars (Lots of identical player-sized boxes - What the Box)
-Sorcerers - Cast spells at each other
+Sorcerers - Cast spells at each other.  How to control creatures?
 Evolve 2v1 - with 1 being more powerful, i.e. they evolve by eating collectables
 Hide and seek - take turns finding each other and shooting
 Collect the most collectables
@@ -150,7 +151,7 @@ Fireball
 Turmoil
 Resurrect
 Subversion
-Gooey Blob
+Gooey Blob - use domes?
 Magic Castle
 Enhance creature - make it bigger
 Teleport

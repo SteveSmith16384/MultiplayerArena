@@ -46,7 +46,7 @@ public class ModelViewer extends SimpleApplication {
 
 		rootNode.attachChild(model);
 
-		//this.rootNode.attachChild(JMEFunctions.GetGrid(assetManager, 10));
+		this.rootNode.attachChild(JMEFunctions.GetGrid(assetManager, 10));
 
 		this.flyCam.setMoveSpeed(12f);
 
