@@ -41,7 +41,7 @@ public class SkyScraper extends PhysicalEntity implements IProcessable, ICollide
 		        w, 0, w, d, 0, d, 0, 0  // bottom
 				}));
 
-		box1.scaleTextureCoordinates(new Vector2f(.25f, .25f)); // scs
+		box1.scaleTextureCoordinates(new Vector2f(100, 100)); // scs
 		
 		Geometry geometry = new Geometry("SkyScraper", box1);
 		TextureKey key3 = new TextureKey(tex);

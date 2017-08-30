@@ -18,5 +18,5 @@ public interface IInputDevice {
 	
 	boolean isSelectNextAbilityPressed();
 
-	void resetFlags();
+	//void resetFlags();
 }

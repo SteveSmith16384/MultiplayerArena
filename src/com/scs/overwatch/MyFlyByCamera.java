@@ -35,7 +35,7 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 	};
 
 	protected Camera cam;
-	protected Vector3f initialUpVec;
+	protected final Vector3f initialUpVec = Vector3f.UNIT_Y;
 	protected float rotationSpeed = 1f;
 	protected float zoomSpeed = 1f;
 	protected MotionAllowedListener motionAllowed = null;
@@ -51,7 +51,7 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 	 */
 	public MyFlyByCamera(Camera cam){
 		this.cam = cam;
-		initialUpVec = cam.getUp().clone();
+		//initialUpVec = Vector3f.UNIT_Y;// cam.getUp().clone();
 	}
 
 	/**
@@ -70,17 +70,17 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 	 * Sets the rotation speed.
 	 * @param rotationSpeed
 	 */
-	public void setRotationSpeed(float rotationSpeed){
+	/*public void setRotationSpeed(float rotationSpeed){
 		this.rotationSpeed = rotationSpeed;
-	}
+	}*/
 
 	/**
 	 * Gets the move speed. The speed is given in world units per second.
 	 * @return rotationSpeed
 	 */
-	public float getRotationSpeed(){
+	/*public float getRotationSpeed(){
 		return rotationSpeed;
-	}
+	}*/
 
 	/**
 	 * Sets the zoom speed.

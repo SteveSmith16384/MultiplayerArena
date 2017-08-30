@@ -25,7 +25,7 @@ public class Collectable extends PhysicalEntity implements ICollideable, IShowOn
 
 		Box box1 = new Box(SIZE, SIZE, SIZE);
 		Geometry geometry = new Geometry("Collectable", box1);
-		TextureKey key3 = new TextureKey("Textures/sun.jpg");
+		TextureKey key3 = new TextureKey("Textures/greensun.jpg");
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);

@@ -34,6 +34,7 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 	private Vector2f joyPosDir = new Vector2f();
 	private boolean jump = false, shoot = false, ability1 = false, cycleAbility = false;
 	private int id;
+	private float prevLeft, prevRight, prevUp, prevDown;
 
 	public JoystickCamera2(Camera _cam, Joystick _joystick, InputManager _inputManager) {
 		super(_cam);
@@ -42,7 +43,7 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 		this.joystick = _joystick;
 		id = joystick.getJoyId();
 
-		super.setRotationSpeed(TURN_SPEED);//200f);//.5f);
+		//super.setRotationSpeed(TURN_SPEED);//200f);//.5f);
 
 		this.inputManager.addRawInputListener(this);
 
@@ -127,33 +128,58 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 	}
 
 	@Override
-	public void onAnalog(String name, float value, float tpf_UNUSED) {
-		if (!enabled)
+	public void onAnalog(String name, float value, float tpf) {
+		if (!enabled) {			
 			return;
+		}
+		
+		if (Settings.DEBUG_GAMEPAD_DIV_TPF) {
+			value = value / tpf;
+		}
+
+		//----------- CAMERA DIRECTION
+		
+		float tmp = value;
 
 		if (name.equals("jFLYCAM_Left" + id)) {
-			if (Settings.DEBUG_GAMEPAD_TURNING) {
+			/*if (Settings.DEBUG_GAMEPAD_TURNING) {
 				Vector3f pos = this.avatar.gamepadTest.getLocalTranslation();
 				float newX = value * 10000;
 				//Settings.p("X=" + newX);
 				this.avatar.gamepadTest.setPosition(200f - newX, pos.y);
+			}*/
+			if (Settings.DEBUG_GAMEPAD_USE_AVG) {
+				value = (value + prevLeft) / 2;
+				prevLeft = tmp;
 			}
-			rotateCamera(value*value, initialUpVec);
+			rotateCamera(value * value * TURN_SPEED, initialUpVec);
 		} else if (name.equals("jFLYCAM_Right" + id)) {
-			if (Settings.DEBUG_GAMEPAD_TURNING) {
+			/*if (Settings.DEBUG_GAMEPAD_TURNING) {
 				Vector3f pos = this.avatar.gamepadTest.getLocalTranslation();
 				float newX = value * 10000;
 				//Settings.p("X=" + newX);
 				this.avatar.gamepadTest.setPosition(200f + newX, pos.y);
+			}*/
+			if (Settings.DEBUG_GAMEPAD_USE_AVG) {
+				value = (value + prevRight) / 2;
+				prevRight = tmp;
 			}
-			rotateCamera(-value*value, initialUpVec);
+			rotateCamera(-value * value * TURN_SPEED, initialUpVec);
 		} else if (name.equals("jFLYCAM_Up" + id)) {
-			rotateCamera(-value*value * LOOK_UD_ADJ * (invertY ? -1 : 1), cam.getLeft());
+			if (Settings.DEBUG_GAMEPAD_USE_AVG) {
+				value = (value + prevUp) / 2;
+				prevUp = tmp;
+			}
+			rotateCamera(-value*value * LOOK_UD_ADJ * TURN_SPEED * (invertY ? -1 : 1), cam.getLeft());
 		} else if (name.equals("jFLYCAM_Down" + id)) {
-			//value -= DEADZONE;
-			//if (value > 0) {
-			rotateCamera(value*value * LOOK_UD_ADJ * (invertY ? -1 : 1), cam.getLeft());
-			//}
+			if (Settings.DEBUG_GAMEPAD_USE_AVG) {
+				value = (value + prevDown) / 2;
+				prevDown = tmp;
+			}
+			rotateCamera(value*value * LOOK_UD_ADJ * TURN_SPEED * (invertY ? -1 : 1), cam.getLeft());
+			
+			//----------- MOVEMENT
+			
 		} else if (name.equals("jFLYCAM_Forward" + id)) {
 			value -= DEADZONE;
 			if (value > 0) {
@@ -217,14 +243,14 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 	}
 
 
-	@Override
+	/*@Override
 	public void resetFlags() {
 		//fwdVal = 0;
 		//backVal = 0;
 		//leftVal = 0;
 		//rightVal = 0;
 
-	}        
+	}       */ 
 
 
 	// Raw Input Listener ------------------------

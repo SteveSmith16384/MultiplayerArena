@@ -6,26 +6,25 @@ Post to JME when released
 
 
 URGENT
-Jump higher
-Why is mouse slowe to turn?
-Check maxturnspeed etc are checked at the right time
-Either 3 players or using TV makes controllers too sensitive
-Make skyscraper texture less condensed
-	Fix tex on ramp
-	Check licences on media - models, music
+Look for existing jme gamepad source
+TEST HOME Try dividing by tpf?
+TEST HOME Use avg turn value?
+	Make skyscraper texture less condensed
+Either 4 players/cams or using TV makes controllers too sensitive
+	Change colour of collectables - greensun.jpg
+	Why is mouse slow to turn?
+	Jump higher
 	Clone wars - player jumps if inactive for too long
-Move wall to middle
-How to cycle through spells
-	Pyramid - set the Dome’s radialSamples=4 and planes=2.
-	Change winner logo
-Spells
-	Finish readme
-	HOME create logo - Multiplayer Arena
 Search for todos
-Change colour of collectables - greensun.jpg
 
 
 TODO
+Make base higher, with walls?
+Move wall to middle
+How to cycle through spells - isSelectNextAbilityPressed()
+Spells
+Pyramid - set the Dome’s radialSamples=4 and planes=2.
+Cache properties and reload if file changed
 Pyramid not quite right
 Health, idamagable etc...
 Side of travelator in wrong dir

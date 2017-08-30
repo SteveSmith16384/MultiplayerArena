@@ -50,7 +50,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 	private static final float WEIGHT = 3f;
 
 	public final Vector3f walkDirection = new Vector3f();
-	public float moveSpeed = Settings.DEFAULT_MOVE_SPEED;
+	public float moveSpeed = Settings.PLAYER_MOVE_SPEED;
 	private IInputDevice input;
 
 	//Temporary vectors used on each frame.
@@ -92,7 +92,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		}
 
 		playerControl = new MyBetterCharacterControl(PLAYER_RAD, PLAYER_HEIGHT, WEIGHT);
-		playerControl.setJumpForce(new Vector3f(0, 7f, 0)); 
+		playerControl.setJumpForce(new Vector3f(0, Settings.JUMP_FORCE, 0)); 
 		this.getMainNode().addControl(playerControl);
 		module.bulletAppState.getPhysicsSpace().add(playerControl);
 
@@ -285,7 +285,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 		cam.setLocation(cam.getLocation().add(cam.getDirection().mult(PLAYER_RAD)));
 		cam.update();
 
-		this.input.resetFlags();
+		//this.input.resetFlags();
 
 		walkDirection.set(0, 0, 0);
 	}
