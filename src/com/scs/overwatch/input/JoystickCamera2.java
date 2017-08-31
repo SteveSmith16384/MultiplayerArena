@@ -43,8 +43,6 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 		this.joystick = _joystick;
 		id = joystick.getJoyId();
 
-		//super.setRotationSpeed(TURN_SPEED);//200f);//.5f);
-
 		this.inputManager.addRawInputListener(this);
 
 		inputManager.addListener(this, "jFLYCAM_Left"+id);
@@ -150,7 +148,7 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 			}*/
 			if (Settings.DEBUG_GAMEPAD_USE_AVG) {
 				value = (value + prevLeft) / 2;
-				prevLeft = tmp;
+				prevLeft = value; //tmp;
 			}
 			rotateCamera(value * value * TURN_SPEED, initialUpVec);
 		} else if (name.equals("jFLYCAM_Right" + id)) {
@@ -162,19 +160,19 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 			}*/
 			if (Settings.DEBUG_GAMEPAD_USE_AVG) {
 				value = (value + prevRight) / 2;
-				prevRight = tmp;
+				prevRight = value; //tmp;
 			}
 			rotateCamera(-value * value * TURN_SPEED, initialUpVec);
 		} else if (name.equals("jFLYCAM_Up" + id)) {
 			if (Settings.DEBUG_GAMEPAD_USE_AVG) {
 				value = (value + prevUp) / 2;
-				prevUp = tmp;
+				prevUp = value; //tmp;
 			}
 			rotateCamera(-value*value * LOOK_UD_ADJ * TURN_SPEED * (invertY ? -1 : 1), cam.getLeft());
 		} else if (name.equals("jFLYCAM_Down" + id)) {
 			if (Settings.DEBUG_GAMEPAD_USE_AVG) {
 				value = (value + prevDown) / 2;
-				prevDown = tmp;
+				prevDown = value; //tmp;
 			}
 			rotateCamera(value*value * LOOK_UD_ADJ * TURN_SPEED * (invertY ? -1 : 1), cam.getLeft());
 			
@@ -220,8 +218,8 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 		joyPosDir.normalizeLocal();
 
 		float angle = joyPosDir.getAngle();
-		float x = FastMath.cos(angle) * length * 10;
-		float y = FastMath.sin(angle) * length * 10;  
+		float x = FastMath.cos(angle) * length;// * 10; // scs todo - why 10?
+		float y = FastMath.sin(angle) * length;// * 10;  
 
 		fwdVal = 0;
 		backVal = 0;
@@ -241,16 +239,6 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 			leftVal = Math.min(1, -y * MOVE_SPEED);
 		}
 	}
-
-
-	/*@Override
-	public void resetFlags() {
-		//fwdVal = 0;
-		//backVal = 0;
-		//leftVal = 0;
-		//rightVal = 0;
-
-	}       */ 
 
 
 	// Raw Input Listener ------------------------

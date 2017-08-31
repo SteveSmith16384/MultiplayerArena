@@ -5,6 +5,7 @@ import java.awt.Point;
 import ssmith.util.RealtimeInterval;
 import ssmith.util.TSArrayList;
 
+import com.jme3.app.StatsAppState;
 import com.jme3.audio.AudioNode;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
@@ -155,11 +156,16 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 		// Audio
 		audioMusic = new AudioNode(game.getAssetManager(), "Sound/n-Dimensions (Main Theme - Retro Ver.ogg", true, false);
-	    audioMusic.setLooping(true);  // activate continuous playing
-	    audioMusic.setPositional(false);
-	    audioMusic.setVolume(3);
-	    game.getRootNode().attachChild(audioMusic);
-	    audioMusic.play(); // play continuously!
+		audioMusic.setLooping(true);  // activate continuous playing
+		audioMusic.setPositional(false);
+		audioMusic.setVolume(3);
+		game.getRootNode().attachChild(audioMusic);
+		audioMusic.play(); // play continuously!
+
+		if (Settings.SHOW_FPS) {
+			BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
+			game.getStateManager().attach(new StatsAppState(game.getGuiNode(), guiFont_small));
+		}
 	}
 
 
@@ -245,7 +251,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	}
 
 
-	private HUD createHUD_ORIG(Camera c, int id) {
+	/*private HUD createHUD_ORIG(Camera c, int id) {
 		BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
 
 		// cam.getWidth() = 640x480, cam.getViewPortLeft() = 0.5f
@@ -259,7 +265,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		game.getGuiNode().attachChild(hud);
 		return hud;
 
-	}
+	}*/
 
 
 	private HUD createHUD(Camera c, int id) {
@@ -511,12 +517,12 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			return 1f; // Die immed
 		}
 	}
-	
-	
+
+
 	@Override
 	public void destroy() {
 		audioMusic.stop();
-		
+
 		game.getInputManager().removeListener(this);
 		game.getInputManager().clearMappings();
 		game.getInputManager().clearRawInputListeners();

@@ -3,6 +3,7 @@ package com.scs.overwatch;
 import java.util.Random;
 import java.util.prefs.BackingStoreException;
 
+import com.jme3.app.StatsAppState;
 import com.jme3.app.state.VideoRecorderAppState;
 import com.jme3.asset.plugins.ClasspathLocator;
 import com.jme3.asset.plugins.FileLocator;
@@ -100,6 +101,7 @@ public class Overwatch extends MySimpleApplication {
 			VideoRecorderAppState video_recorder = new VideoRecorderAppState();
 			stateManager.attach(video_recorder);
 		}
+		
 	}
 
 

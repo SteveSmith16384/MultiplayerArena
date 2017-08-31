@@ -6,17 +6,16 @@ Post to JME when released
 
 
 URGENT
-Post screenshot of robots to OGA
-TEST HOME Try dividing by tpf?
-TEST HOME Use avg turn value?
+Try running SimpleFPS and use gamepads
+	Show FPS - debug!
+	TEST HOME Try dividing by tpf?
+	TEST HOME Use avg turn value?
 	Make skyscraper texture less condensed
-Either 4 players/cams or using TV makes controllers too sensitive
 	Change colour of collectables - greensun.jpg
 	Why is mouse slow to turn?
-	Jump higher
 	Clone wars - player jumps if inactive for too long
 Search for todos
-Robots are floating slightly
+Why does jetpac only work when moving fwd?
 
 
 TODO

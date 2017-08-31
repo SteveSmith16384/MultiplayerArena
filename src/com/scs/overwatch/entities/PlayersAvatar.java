@@ -264,7 +264,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 			if (Settings.GAME_MODE == GameMode.CloneWars) {
 				if (this.timeSinceLastMove > 10) {
 					this.jump();
-					timeSinceLastMove = 0;
+					timeSinceLastMove -= 5;
 				}
 			}
 
