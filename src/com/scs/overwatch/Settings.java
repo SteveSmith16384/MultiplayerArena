@@ -16,6 +16,8 @@ public class Settings {
 
 	// DEBUG
 	public static final boolean DEBUG_GAMEPAD_DIV_TPF = false;
+	public static final boolean DEBUG_SIMPLE_MAP = true;
+	
 	public static final boolean DEBUG_GAMEPAD_TURNING = false;
 	public static final boolean DEBUG_PYRAMID = false;
 	public static final boolean DEBUG_SPELLS = false;

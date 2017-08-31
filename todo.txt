@@ -1,12 +1,16 @@
 MULTIPLAYER ARENA
 
+GAMEPADS
+SimpleFPS works fine!?
+
+
 PUBLICITY
 Opengameart
 Post to JME when released
 
 
 URGENT
-Try running SimpleFPS and use gamepads
+	Try running SimpleFPS and use gamepads
 	Show FPS - debug!
 	TEST HOME Try dividing by tpf?
 	TEST HOME Use avg turn value?
