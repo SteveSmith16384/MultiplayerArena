@@ -1,9 +1,5 @@
 MULTIPLAYER ARENA
 
-GAMEPADS
-SimpleFPS works fine!?
-
-
 PUBLICITY
 	Opengameart
 JME forums
@@ -11,15 +7,15 @@ Java-gaming
 
 
 URGENT
-Why does SImpleFPS work?
-Create new simplemap for debugging
+	Try and get it to use as much std code as possible
 Gamepads too sensitive when running full-screen
-bool useMouse
-Mouse slow to turn?
+	Try using NOTMY Simple Application, NOTMyFlyByCam
+	Why does SImpleFPS work?
 Search for todos
 
 
 TODO
+Delete MySimpleApp and MyFlybyCam
 Why does jetpac only work when moving fwd?
 Make base higher, with walls?
 Move wall to middle

@@ -42,6 +42,7 @@ import com.scs.overwatch.hud.HUD;
 import com.scs.overwatch.input.IInputDevice;
 import com.scs.overwatch.input.JoystickCamera2;
 import com.scs.overwatch.input.MouseAndKeyboardCamera;
+import com.scs.overwatch.map.FlatWorld;
 import com.scs.overwatch.map.IPertinentMapData;
 import com.scs.overwatch.map.SimpleCity;
 
@@ -91,39 +92,49 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 		setUpLight();
 
+		if (Settings.DEBUG_SIMPLE_MAP) {
+			mapData = new FlatWorld(game, this);
+		} else {
 		mapData = new SimpleCity(game, this); //  OverworldMap(game, this);
+		}
 		mapData.setup();
 
 		Joystick[] joysticks = game.getInputManager().getJoysticks();
 		int numPlayers = 1+joysticks.length;
 
-		// Auto-Create player 0 - keyboard and mouse
+		// Auto-Create player 0
 		{
 			Camera newCam = this.createCamera(0, numPlayers);
 			HUD hud = this.createHUD(newCam, 0);
-			//MouseAndKeyboardCamera keyboard = new MouseAndKeyboardCamera(newCam, game.getInputManager());
-			//this.addPlayersAvatar(0, newCam, keyboard, hud); // Keyboard player
-			int id=0;
-			JoystickCamera2 joyCam = new JoystickCamera2(newCam, joysticks[0], game.getInputManager());
-			PlayersAvatar avatar = this.addPlayersAvatar(id, newCam, joyCam, hud);
-			joyCam.avatar = avatar;
+			IInputDevice input = null;
+			if (Settings.PLAYER1_IS_MOUSE) {
+				input = new MouseAndKeyboardCamera(newCam, game.getInputManager());
+			} else {
+				if (joysticks.length > 0) {
+					input = new JoystickCamera2(newCam, joysticks[0], game.getInputManager());
+				} else {
+					throw new RuntimeException("No gamepads found");
+				}
+			}
+			this.addPlayersAvatar(0, newCam, input, hud);
 		}
 
 		// Create players for each joystick
-		int nextid=1;
-		/*if (joysticks == null || joysticks.length == 0) {
-			//Settings.p("NO JOYSTICKS/GAMEPADS");
-		} else {
-			for (Joystick j : joysticks) {
-				int id = nextid++;
-				Camera newCam = this.createCamera(id, numPlayers);
-				HUD hud = this.createHUD(newCam, id);
+		int nextid = Settings.PLAYER1_IS_MOUSE ? 0 : 1;
+		if (joysticks != null && joysticks.length > 0) {
+			//for (int id=nextid ; id<joysticks.length ; id++) {
+			while (nextid < joysticks.length) {
+				//for (Joystick j : joysticks) {
+				Camera newCam = this.createCamera(nextid, numPlayers);
+				HUD hud = this.createHUD(newCam, nextid);
 				//JoystickCamera_ORIG joyCam = new JoystickCamera_ORIG(newCam, j, game.getInputManager());
-				JoystickCamera2 joyCam = new JoystickCamera2(newCam, j, game.getInputManager());
-				PlayersAvatar avatar = this.addPlayersAvatar(id, newCam, joyCam, hud);
-				joyCam.avatar = avatar;
+				JoystickCamera2 joyCam = new JoystickCamera2(newCam, joysticks[nextid], game.getInputManager());
+				this.addPlayersAvatar(nextid, newCam, joyCam, hud);
+				//}
+				nextid++;
 			}
-		}*/
+		}
+
 		if (Settings.ALWAYS_SHOW_4_CAMS) {
 			// Create extra cameras
 			for (int id=nextid ; id<=3 ; id++) {
@@ -143,8 +154,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				c.lookAt(new Vector3f(mapData.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, mapData.getDepth()/2), Vector3f.UNIT_Y);
 			}
 		}
-
-		//stateManager.getState(StatsAppState.class).toggleStats(); // Turn off stats
 
 		audioExplode = new AudioNode(game.getAssetManager(), "Sound/explode.wav", false);
 		audioExplode.setPositional(false);
@@ -291,7 +300,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	}
 
 
-	private PlayersAvatar addPlayersAvatar(int id, Camera cam, IInputDevice input, HUD hud) {
+	private void addPlayersAvatar(int id, Camera cam, IInputDevice input, HUD hud) {
 		PlayersAvatar player = new PlayersAvatar(game, this, id, cam, input, hud);
 		game.getRootNode().attachChild(player.getMainNode());
 		this.entities.add(player);
@@ -301,7 +310,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		// Look towards centre
 		player.getMainNode().lookAt(new Vector3f(mapData.getWidth()/2, PlayersAvatar.PLAYER_HEIGHT, mapData.getDepth()/2), Vector3f.UNIT_Y);
 
-		return player;
+		//return player;
 	}
 
 

@@ -1,5 +1,6 @@
 package com.scs.overwatch.input;
 
+import com.jme3.input.FlyByCamera;
 import com.jme3.input.InputManager;
 import com.jme3.input.Joystick;
 import com.jme3.input.JoystickAxis;
@@ -13,21 +14,18 @@ import com.jme3.input.event.MouseMotionEvent;
 import com.jme3.input.event.TouchEvent;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
-import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
-import com.scs.overwatch.MyFlyByCamera;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
-import com.scs.overwatch.entities.PlayersAvatar;
 
-public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawInputListener {
+public class JoystickCamera2 extends FlyByCamera implements IInputDevice, RawInputListener { // scs MyFlyByCamera
 
 	private static final float LOOK_UD_ADJ = Overwatch.properties.GetGamepadUpDownAdjust();// .4f;//.75f;//.5f;
 	private static final float MOVE_SPEED = Overwatch.properties.GetGamepadMoveSpeed();// 5;
 	private static final float DEADZONE = Overwatch.properties.GetGamepadDeadZone();// 0.0015f;
 	private static final float TURN_SPEED = Overwatch.properties.GetGamepadTurnSpeed();// 100f;//150f;
 	
-	public PlayersAvatar avatar;
+	//public PlayersAvatar avatar;
 	protected Joystick joystick;
 	private float fwdVal, backVal, leftVal, rightVal;
 	private Vector2f joyPos = new Vector2f();

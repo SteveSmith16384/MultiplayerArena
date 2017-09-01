@@ -3,17 +3,18 @@ package com.scs.overwatch;
 import java.util.Random;
 import java.util.prefs.BackingStoreException;
 
-import com.jme3.app.StatsAppState;
+import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.VideoRecorderAppState;
 import com.jme3.asset.plugins.ClasspathLocator;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.font.BitmapFont;
+import com.jme3.input.Joystick;
 import com.jme3.system.AppSettings;
 import com.scs.overwatch.Settings.GameMode;
 import com.scs.overwatch.modules.IModule;
 import com.scs.overwatch.modules.StartModule;
 
-public class Overwatch extends MySimpleApplication { 
+public class Overwatch extends SimpleApplication { // scs  MySimpleApplication
 
 	private static final String PROPS_FILE = Settings.NAME.replaceAll(" ", "") + "_settings.txt";
 	public static float MAX_TURN_SPEED = -1; // Overwatch.properties.GetMaxTurnSpeed();
@@ -82,6 +83,13 @@ public class Overwatch extends MySimpleApplication {
 	}
 
 
+	public int getNumPlayers() {
+		Joystick[] joysticks = getInputManager().getJoysticks();
+		int numPlayers = (Settings.PLAYER1_IS_MOUSE ? 1 : 0) +joysticks.length;
+		return numPlayers;
+	}
+	
+	
 	@Override
 	public void simpleInitApp() {
 		assetManager.registerLocator("assets/", FileLocator.class); // default

@@ -1,5 +1,6 @@
 package com.scs.overwatch.input;
 
+import com.jme3.input.FlyByCamera;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.MouseInput;
@@ -8,10 +9,8 @@ import com.jme3.input.controls.KeyTrigger;
 import com.jme3.input.controls.MouseAxisTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.renderer.Camera;
-import com.scs.overwatch.MyFlyByCamera;
-import com.scs.overwatch.Settings;
 
-public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListener, IInputDevice { 
+public class MouseAndKeyboardCamera extends FlyByCamera implements ActionListener, IInputDevice { 
 
 	private boolean left = false, right = false, up = false, down = false, jump = false, shoot = false, ability1 = false, cycleAbility = false;
 

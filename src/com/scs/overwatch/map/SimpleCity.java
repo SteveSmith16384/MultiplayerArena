@@ -47,10 +47,6 @@ public class SimpleCity implements IPertinentMapData {
 			}			
 		}
 
-		if (Settings.DEBUG_SIMPLE_MAP) {
-			return;
-		}
-		
 		// Add outer walls
 		for (int j=0 ; j<numSectors ; j++) {
 			// Back
@@ -130,7 +126,7 @@ public class SimpleCity implements IPertinentMapData {
 		}
 
 		if (Settings.GAME_MODE == GameMode.Dodgeball) {
-			for (int i=0 ; i<game.getInputManager().getJoysticks().length+1 ; i++) { // one for each player
+			for (int i=0 ; i<game.getNumPlayers() ; i++) { // one for each player
 				// Add the ball
 				module.createDodgeballBall();
 			}
@@ -179,10 +175,6 @@ public class SimpleCity implements IPertinentMapData {
 		CreateFloor(x+2, -FLOOR_THICKNESS+PATH_THICKNESS, z+SKYSCRAPER_WIDTH+3, SKYSCRAPER_WIDTH+1, FLOOR_THICKNESS, 1, sidewalktex, null); // bottom x
 		CreateFloor(x+2, -FLOOR_THICKNESS+PATH_THICKNESS, z+3, 1, FLOOR_THICKNESS, SKYSCRAPER_WIDTH, sidewalktex, null); // Left x
 
-		if (Settings.DEBUG_SIMPLE_MAP) {
-			return;
-		}
-		
 		if (createBase) {//x == 1 && y == 1 && Settings.HAVE_BASE) {
 			Base base = new Base(game, module, x+3, 0f, z+3, SKYSCRAPER_WIDTH, 0.1f, SKYSCRAPER_WIDTH, "Textures/tron_red.jpg", null);
 			game.getRootNode().attachChild(base.getMainNode());

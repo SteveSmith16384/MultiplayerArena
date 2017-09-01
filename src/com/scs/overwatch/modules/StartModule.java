@@ -39,8 +39,8 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 	private static final String QUIT = "Quit";
 
 	protected Overwatch game;
-	private BitmapText numPlayerText;
-	private int numPlayers;
+	//private BitmapText numPlayerText;
+	//private int numPlayers;
 	private Spatial robot;
 	private AudioNode audioMusic;
 	private GameMode gameMode;
@@ -172,10 +172,8 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		game.getRootNode().attachChild(robot);
 		gameModeSpecificText.setText(gameMode.toString() + ": " + gameModeSpecificText.getText() + "\n\nThe winner is the first player to 100 points.");
 
-		numPlayerText = new BitmapText(Overwatch.guiFont_small, false);
-		Joystick[] joysticks = game.getInputManager().getJoysticks();
-		numPlayers = (1+joysticks.length);
-		numPlayerText.setText(numPlayers + " player(s) found.");
+		BitmapText numPlayerText = new BitmapText(Overwatch.guiFont_small, false);
+		numPlayerText.setText(game.getNumPlayers() + " player(s) found.");
 		numPlayerText.setLocalTranslation(20, game.getCamera().getHeight()-280, 0);
 		game.getGuiNode().attachChild(numPlayerText);
 
@@ -249,6 +247,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 				
 			case Bladerunner:
 				// Bladerunner
+				int numPlayers = game.getNumPlayers();
 				Settings.NUM_SECTORS = 2+numPlayers;
 				//Settings.HAVE_BASE = false;
 				Settings.PVP = false;
