@@ -44,7 +44,7 @@ public class Settings {
 	public static final int FLOOR_SECTION_SIZE = 12;
 	public static final boolean LIGHTING = true;
 	public static final String NAME = "Multiplayer Arena";
-	public static final int CLONE_ID = 2;
+	public static final int CLONE_ID = 2; // Which model to use for clones
 	
 	// User Data
 	public static final String ENTITY = "Entity";

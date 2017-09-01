@@ -14,6 +14,7 @@ import com.jme3.input.event.MouseMotionEvent;
 import com.jme3.input.event.TouchEvent;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
@@ -25,7 +26,6 @@ public class JoystickCamera2 extends FlyByCamera implements IInputDevice, RawInp
 	private static final float DEADZONE = Overwatch.properties.GetGamepadDeadZone();// 0.0015f;
 	private static final float TURN_SPEED = Overwatch.properties.GetGamepadTurnSpeed();// 100f;//150f;
 	
-	//public PlayersAvatar avatar;
 	protected Joystick joystick;
 	private float fwdVal, backVal, leftVal, rightVal;
 	private Vector2f joyPos = new Vector2f();
@@ -36,6 +36,8 @@ public class JoystickCamera2 extends FlyByCamera implements IInputDevice, RawInp
 
 	public JoystickCamera2(Camera _cam, Joystick _joystick, InputManager _inputManager) {
 		super(_cam);
+		
+		super.initialUpVec = Vector3f.UNIT_Y;
 
 		this.inputManager = _inputManager;
 		this.joystick = _joystick;
