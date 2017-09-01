@@ -1,5 +1,9 @@
 MULTIPLAYER ARENA
 
+GAMEPADS
+SimpleFPS works fine!?
+
+
 PUBLICITY
 	Opengameart
 JME forums
@@ -7,12 +11,11 @@ Java-gaming
 
 
 URGENT
+Why does SImpleFPS work?
+Create new simplemap for debugging
 Gamepads too sensitive when running full-screen
-Try running SimpleFPS and use gamepads
-	TEST HOME Try dividing by tpf?
-	TEST HOME Use avg turn value?
-	Make skyscraper texture less condensed
-	Why is mouse slow to turn?
+bool useMouse
+Mouse slow to turn?
 Search for todos
 
 
