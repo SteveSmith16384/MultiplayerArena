@@ -1,7 +1,6 @@
 package com.scs.overwatch.modules;
 
-
-public interface IModule {//extends ActionListener {
+public interface IModule {
 
 	void init();
 	

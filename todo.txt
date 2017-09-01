@@ -1,24 +1,23 @@
 MULTIPLAYER ARENA
 
 PUBLICITY
-Opengameart
-Post to JME when released
+	Opengameart
+JME forums
+Java-gaming
 
 
 URGENT
+Gamepads too sensitive when running full-screen
 Try running SimpleFPS and use gamepads
-	Show FPS - debug!
 	TEST HOME Try dividing by tpf?
 	TEST HOME Use avg turn value?
 	Make skyscraper texture less condensed
-	Change colour of collectables - greensun.jpg
 	Why is mouse slow to turn?
-	Clone wars - player jumps if inactive for too long
 Search for todos
-Why does jetpac only work when moving fwd?
 
 
 TODO
+Why does jetpac only work when moving fwd?
 Make base higher, with walls?
 Move wall to middle
 How to cycle through spells - isSelectNextAbilityPressed()

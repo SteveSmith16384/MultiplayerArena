@@ -1,4 +1,4 @@
-package com.scs.overwatch.abilitiess.spells;
+package com.scs.overwatch.abilities.spells;
 
 import com.jme3.math.Vector3f;
 import com.scs.overwatch.Overwatch;

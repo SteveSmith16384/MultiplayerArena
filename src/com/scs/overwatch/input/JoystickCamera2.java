@@ -132,7 +132,7 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 		}
 		
 		if (Settings.DEBUG_GAMEPAD_DIV_TPF) {
-			value = value / tpf;
+			value /= tpf;
 		}
 
 		//----------- CAMERA DIRECTION
@@ -146,7 +146,7 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 				//Settings.p("X=" + newX);
 				this.avatar.gamepadTest.setPosition(200f - newX, pos.y);
 			}*/
-			if (Settings.DEBUG_GAMEPAD_USE_AVG) {
+			if (Settings.GAMEPAD_USE_AVG) {
 				value = (value + prevLeft) / 2;
 				prevLeft = value; //tmp;
 			}
@@ -158,19 +158,19 @@ public class JoystickCamera2 extends MyFlyByCamera implements IInputDevice, RawI
 				//Settings.p("X=" + newX);
 				this.avatar.gamepadTest.setPosition(200f + newX, pos.y);
 			}*/
-			if (Settings.DEBUG_GAMEPAD_USE_AVG) {
+			if (Settings.GAMEPAD_USE_AVG) {
 				value = (value + prevRight) / 2;
 				prevRight = value; //tmp;
 			}
 			rotateCamera(-value * value * TURN_SPEED, initialUpVec);
 		} else if (name.equals("jFLYCAM_Up" + id)) {
-			if (Settings.DEBUG_GAMEPAD_USE_AVG) {
+			if (Settings.GAMEPAD_USE_AVG) {
 				value = (value + prevUp) / 2;
 				prevUp = value; //tmp;
 			}
 			rotateCamera(-value*value * LOOK_UD_ADJ * TURN_SPEED * (invertY ? -1 : 1), cam.getLeft());
 		} else if (name.equals("jFLYCAM_Down" + id)) {
-			if (Settings.DEBUG_GAMEPAD_USE_AVG) {
+			if (Settings.GAMEPAD_USE_AVG) {
 				value = (value + prevDown) / 2;
 				prevDown = value; //tmp;
 			}

@@ -12,10 +12,10 @@ public class Settings {
 	public static final boolean RECORD_VID = false;
 	public static final boolean USE_MODEL_FOR_PLAYERS = true;
 	public static final boolean SHOW_FLASH_EXPLOSIONS = false;
-	public static final boolean DEBUG_GAMEPAD_USE_AVG = true;
+	public static final boolean GAMEPAD_USE_AVG = true;
 
 	// DEBUG
-	public static final boolean DEBUG_GAMEPAD_DIV_TPF = false;
+	public static final boolean DEBUG_GAMEPAD_DIV_TPF = true;
 	public static final boolean DEBUG_GAMEPAD_TURNING = false;
 	public static final boolean DEBUG_PYRAMID = false;
 	public static final boolean DEBUG_SPELLS = false;

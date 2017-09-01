@@ -244,7 +244,7 @@ public abstract class MyFlyByCamera implements AnalogListener, ActionListener {
 		if (joysticks != null && joysticks.length > 0){
 			Joystick joystick = joysticks[0];
 
-			// No way to unassing axis
+			// No way to unassign axis
 		}*/
 	}
 

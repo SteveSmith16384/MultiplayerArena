@@ -9,6 +9,7 @@ import com.jme3.input.controls.MouseAxisTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.renderer.Camera;
 import com.scs.overwatch.MyFlyByCamera;
+import com.scs.overwatch.Settings;
 
 public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListener, IInputDevice { 
 
@@ -76,8 +77,13 @@ public class MouseAndKeyboardCamera extends MyFlyByCamera implements ActionListe
 
 	@Override
 	public void onAnalog(String name, float value, float tpf) {
-		if (!enabled)
+		if (!enabled) {
 			return;
+		}
+		
+		/*if (Settings.DEBUG_GAMEPAD_DIV_TPF) {
+			value /= tpf; // SCS
+		}*/
 
 		//Settings.p("name=" + name);
 		//Settings.p("CAM=" +this.cam.getName());

@@ -1,4 +1,4 @@
-package com.scs.overwatch.abilitiess.spells;
+package com.scs.overwatch.abilities.spells;
 
 import com.scs.overwatch.abilities.IAbility;
 import com.scs.overwatch.entities.PlayersAvatar;

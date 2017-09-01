@@ -1,4 +1,4 @@
-package com.scs.overwatch.abilitiess.spells;
+package com.scs.overwatch.abilities.spells;
 
 public class PlagueOfLocustSpell {
 

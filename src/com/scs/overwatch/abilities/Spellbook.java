@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.scs.overwatch.Settings;
-import com.scs.overwatch.abilitiess.spells.AbstractSpell;
-import com.scs.overwatch.abilitiess.spells.WallSpell;
+import com.scs.overwatch.abilities.spells.AbstractSpell;
+import com.scs.overwatch.abilities.spells.WallSpell;
 import com.scs.overwatch.entities.PlayersAvatar;
 import com.scs.overwatch.modules.GameModule;
 
