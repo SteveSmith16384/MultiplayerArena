@@ -101,13 +101,17 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		{
 			Camera newCam = this.createCamera(0, numPlayers);
 			HUD hud = this.createHUD(newCam, 0);
-			MouseAndKeyboardCamera keyboard = new MouseAndKeyboardCamera(newCam, game.getInputManager());
-			this.addPlayersAvatar(0, newCam, keyboard, hud); // Keyboard player
+			//MouseAndKeyboardCamera keyboard = new MouseAndKeyboardCamera(newCam, game.getInputManager());
+			//this.addPlayersAvatar(0, newCam, keyboard, hud); // Keyboard player
+			int id=0;
+			JoystickCamera2 joyCam = new JoystickCamera2(newCam, joysticks[0], game.getInputManager());
+			PlayersAvatar avatar = this.addPlayersAvatar(id, newCam, joyCam, hud);
+			joyCam.avatar = avatar;
 		}
 
 		// Create players for each joystick
 		int nextid=1;
-		if (joysticks == null || joysticks.length == 0) {
+		/*if (joysticks == null || joysticks.length == 0) {
 			//Settings.p("NO JOYSTICKS/GAMEPADS");
 		} else {
 			for (Joystick j : joysticks) {
@@ -119,7 +123,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 				PlayersAvatar avatar = this.addPlayersAvatar(id, newCam, joyCam, hud);
 				joyCam.avatar = avatar;
 			}
-		}
+		}*/
 		if (Settings.ALWAYS_SHOW_4_CAMS) {
 			// Create extra cameras
 			for (int id=nextid ; id<=3 ; id++) {

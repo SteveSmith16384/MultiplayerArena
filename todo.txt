@@ -10,6 +10,7 @@ Post to JME when released
 
 
 URGENT
+bool useMouse
 	Try running SimpleFPS and use gamepads
 	Show FPS - debug!
 	TEST HOME Try dividing by tpf?
