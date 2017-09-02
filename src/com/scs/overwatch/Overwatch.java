@@ -11,6 +11,7 @@ import com.jme3.font.BitmapFont;
 import com.jme3.input.Joystick;
 import com.jme3.system.AppSettings;
 import com.scs.overwatch.Settings.GameMode;
+import com.scs.overwatch.modules.GamepadModule;
 import com.scs.overwatch.modules.IModule;
 import com.scs.overwatch.modules.StartModule;
 
@@ -99,9 +100,13 @@ public class Overwatch extends SimpleApplication { // scs  MySimpleApplication
 		guiFont_small = getAssetManager().loadFont("Interface/Fonts/Console.fnt");
 		
 		cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
-		cam.setViewPort(0f, 0.5f, 0f, 0.5f); // BL
+		//scs cam.setViewPort(0f, 0.5f, 0f, 0.5f); // BL
 
+		if (Settings.REMOVE_STUFF) {
+			currentModule = new GamepadModule(this);//GameModule(this);
+		} else {
 		currentModule = new StartModule(this, GameMode.Skirmish);//GameModule(this);
+		}
 		currentModule.init();
 		
 		if (Settings.RECORD_VID) {

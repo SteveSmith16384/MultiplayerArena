@@ -43,9 +43,11 @@ public class JoystickCamera2 extends FlyByCamera implements IInputDevice, RawInp
 		this.joystick = _joystick;
 		id = joystick.getJoyId();
 
+		if (!Settings.REMOVE_STUFF) {
 		this.inputManager.addRawInputListener(this);
-
-		inputManager.addListener(this, "jFLYCAM_Left"+id);
+		}
+		
+		/*scs inputManager.addListener(this, "jFLYCAM_Left"+id);
 		inputManager.addListener(this, "jFLYCAM_Right"+id);
 		inputManager.addListener(this, "jFLYCAM_Up"+id);
 		inputManager.addListener(this, "jFLYCAM_Down"+id);
@@ -55,10 +57,12 @@ public class JoystickCamera2 extends FlyByCamera implements IInputDevice, RawInp
 		inputManager.addListener(this, "jFLYCAM_Forward" + id);
 		inputManager.addListener(this, "jFLYCAM_Backward" + id);
 
-		mapJoystick(joystick, id);
+		mapJoystick(joystick, id);*/
+		this.registerWithInput(this.inputManager);
+		super.setEnabled(true);
 	}
 
-
+/*
 	protected void mapJoystick( Joystick joystick, int id ) {
 		// Map it differently if there are Z axis
 		if( joystick.getAxis( JoystickAxis.Z_ROTATION ) != null && joystick.getAxis( JoystickAxis.Z_AXIS ) != null ) {
@@ -76,7 +80,7 @@ public class JoystickCamera2 extends FlyByCamera implements IInputDevice, RawInp
 			joystick.getYAxis().assignAxis("jFLYCAM_Down"+id, "jFLYCAM_Up"+id);
 		}
 	}
-
+*/
 
 	@Override
 	public float getFwdValue() {
@@ -125,8 +129,8 @@ public class JoystickCamera2 extends FlyByCamera implements IInputDevice, RawInp
 		return this.cycleAbility;
 	}
 
-	@Override
-	public void onAnalog(String name, float value, float tpf) {
+	//SCS@Override
+	public void onAnalog_SCS(String name, float value, float tpf) {
 		if (!enabled) {			
 			return;
 		}

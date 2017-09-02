@@ -95,12 +95,12 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		if (Settings.DEBUG_SIMPLE_MAP) {
 			mapData = new FlatWorld(game, this);
 		} else {
-		mapData = new SimpleCity(game, this); //  OverworldMap(game, this);
+			mapData = new SimpleCity(game, this); //  OverworldMap(game, this);
 		}
 		mapData.setup();
 
 		Joystick[] joysticks = game.getInputManager().getJoysticks();
-		int numPlayers = 1+joysticks.length;
+		int numPlayers = game.getNumPlayers();
 
 		// Auto-Create player 0
 		{
@@ -120,24 +120,27 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		}
 
 		// Create players for each joystick
-		int nextid = Settings.PLAYER1_IS_MOUSE ? 0 : 1;
+		int joyid = Settings.PLAYER1_IS_MOUSE ? 0 : 1;
+		int playerid = Settings.PLAYER1_IS_MOUSE ? 1 : 0;
 		if (joysticks != null && joysticks.length > 0) {
 			//for (int id=nextid ; id<joysticks.length ; id++) {
-			while (nextid < joysticks.length) {
+			while (joyid < joysticks.length) {
 				//for (Joystick j : joysticks) {
-				Camera newCam = this.createCamera(nextid, numPlayers);
-				HUD hud = this.createHUD(newCam, nextid);
+				Camera newCam = this.createCamera(playerid, numPlayers);
+				HUD hud = this.createHUD(newCam, playerid);
 				//JoystickCamera_ORIG joyCam = new JoystickCamera_ORIG(newCam, j, game.getInputManager());
-				JoystickCamera2 joyCam = new JoystickCamera2(newCam, joysticks[nextid], game.getInputManager());
-				this.addPlayersAvatar(nextid, newCam, joyCam, hud);
+				JoystickCamera2 joyCam = new JoystickCamera2(newCam, joysticks[joyid], game.getInputManager());
+				this.addPlayersAvatar(playerid, newCam, joyCam, hud);
 				//}
-				nextid++;
+				joyid++;
+				playerid++;
 			}
 		}
+		playerid++;
 
 		if (Settings.ALWAYS_SHOW_4_CAMS) {
 			// Create extra cameras
-			for (int id=nextid ; id<=3 ; id++) {
+			for (int id=playerid ; id<=3 ; id++) {
 				Camera c = this.createCamera(id, numPlayers);
 				this.createHUD(c, id);
 				switch (id) {
@@ -175,10 +178,10 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		game.getRootNode().attachChild(audioMusic);
 		audioMusic.play(); // play continuously!
 
-		if (Settings.SHOW_FPS) {
+		/*if (Settings.SHOW_FPS) {
 			BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
 			game.getStateManager().attach(new StatsAppState(game.getGuiNode(), guiFont_small));
-		}
+		}*/
 	}
 
 
@@ -246,6 +249,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		view2.setClearFlags(true, true, true);
 		view2.attachScene(game.getRootNode());
 
+		if (!Settings.REMOVE_STUFF) {
 		FilterPostProcessor fpp = new FilterPostProcessor(game.getAssetManager());
 		if (Settings.NEON) {
 			BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Scene);
@@ -259,7 +263,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			//fpp.addFilter(blur);
 		}
 		view2.addProcessor(fpp);
-
+		}
 		return newCam;
 	}
 
@@ -323,10 +327,10 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	@Override
 	public void update(float tpf) {
-		if (tpf > 1) {
+		/*if (tpf > 1) {
 			Settings.p("TPF is " + tpf);
 			tpf = 1;
-		}
+		}*/
 		this.entities.refresh();
 		//this.avatars.refresh();
 
