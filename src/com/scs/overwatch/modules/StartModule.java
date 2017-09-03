@@ -87,7 +87,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 			//RadialBlurFilter blur = new RadialBlurFilter();
 			//fpp.addFilter(blur);
 		}
-		view2.addProcessor(fpp);
+		//view2.addProcessor(fpp);
 
 		game.getInputManager().addMapping(QUIT, new KeyTrigger(KeyInput.KEY_ESCAPE));
 		game.getInputManager().addListener(this, QUIT);

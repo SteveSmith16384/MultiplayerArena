@@ -20,6 +20,7 @@ import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
+import com.scs.overwatch.models.RobotModel;
 
 public class GamepadModule implements IModule, ActionListener {
 
@@ -70,6 +71,11 @@ public class GamepadModule implements IModule, ActionListener {
 
 		//game.getInputManager().addRawInputListener(this);
 		initFloor();
+		
+		RobotModel robot = new RobotModel(game.getAssetManager(), 1);
+		robot.setLocalTranslation(0, -1.5f, 2f);
+		robot.scale(4);
+		game.getRootNode().attachChild(robot);
 	}
 
 
@@ -99,6 +105,12 @@ public class GamepadModule implements IModule, ActionListener {
 
 	@Override
 	public void update(float tpf) {
+		try {
+			Thread.sleep(40);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 

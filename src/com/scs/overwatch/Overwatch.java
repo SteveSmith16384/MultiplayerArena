@@ -102,11 +102,11 @@ public class Overwatch extends SimpleApplication { // scs  MySimpleApplication
 		cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
 		//scs cam.setViewPort(0f, 0.5f, 0f, 0.5f); // BL
 
-		if (Settings.REMOVE_STUFF) {
+		/*if (Settings.REMOVE_STUFF) {
 			currentModule = new GamepadModule(this);//GameModule(this);
-		} else {
+		} else {*/
 		currentModule = new StartModule(this, GameMode.Skirmish);//GameModule(this);
-		}
+		//}
 		currentModule.init();
 		
 		if (Settings.RECORD_VID) {

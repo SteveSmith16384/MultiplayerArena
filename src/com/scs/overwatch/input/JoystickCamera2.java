@@ -25,7 +25,7 @@ public class JoystickCamera2 extends FlyByCamera implements IInputDevice, RawInp
 	private static final float MOVE_SPEED = Overwatch.properties.GetGamepadMoveSpeed();// 5;
 	private static final float DEADZONE = Overwatch.properties.GetGamepadDeadZone();// 0.0015f;
 	private static final float TURN_SPEED = Overwatch.properties.GetGamepadTurnSpeed();// 100f;//150f;
-	
+
 	protected Joystick joystick;
 	private float fwdVal, backVal, leftVal, rightVal;
 	private Vector2f joyPos = new Vector2f();
@@ -36,18 +36,16 @@ public class JoystickCamera2 extends FlyByCamera implements IInputDevice, RawInp
 
 	public JoystickCamera2(Camera _cam, Joystick _joystick, InputManager _inputManager) {
 		super(_cam);
-		
+
 		super.initialUpVec = Vector3f.UNIT_Y;
 
 		this.inputManager = _inputManager;
 		this.joystick = _joystick;
 		id = joystick.getJoyId();
 
-		if (!Settings.REMOVE_STUFF) {
 		this.inputManager.addRawInputListener(this);
-		}
-		
-		/*scs inputManager.addListener(this, "jFLYCAM_Left"+id);
+
+		inputManager.addListener(this, "jFLYCAM_Left"+id);
 		inputManager.addListener(this, "jFLYCAM_Right"+id);
 		inputManager.addListener(this, "jFLYCAM_Up"+id);
 		inputManager.addListener(this, "jFLYCAM_Down"+id);
@@ -57,12 +55,13 @@ public class JoystickCamera2 extends FlyByCamera implements IInputDevice, RawInp
 		inputManager.addListener(this, "jFLYCAM_Forward" + id);
 		inputManager.addListener(this, "jFLYCAM_Backward" + id);
 
-		mapJoystick(joystick, id);*/
+		mapJoystick(joystick, id);
+
 		this.registerWithInput(this.inputManager);
 		super.setEnabled(true);
 	}
 
-/*
+
 	protected void mapJoystick( Joystick joystick, int id ) {
 		// Map it differently if there are Z axis
 		if( joystick.getAxis( JoystickAxis.Z_ROTATION ) != null && joystick.getAxis( JoystickAxis.Z_AXIS ) != null ) {
@@ -80,7 +79,7 @@ public class JoystickCamera2 extends FlyByCamera implements IInputDevice, RawInp
 			joystick.getYAxis().assignAxis("jFLYCAM_Down"+id, "jFLYCAM_Up"+id);
 		}
 	}
-*/
+
 
 	@Override
 	public float getFwdValue() {
@@ -129,21 +128,21 @@ public class JoystickCamera2 extends FlyByCamera implements IInputDevice, RawInp
 		return this.cycleAbility;
 	}
 
-	//SCS@Override
-	public void onAnalog_SCS(String name, float value, float tpf) {
+	@Override
+	public void onAnalog(String name, float value, float tpf) {
 		if (!enabled) {			
 			return;
 		}
-		
-		if (Settings.DEBUG_GAMEPAD_DIV_TPF) {
-			value /= tpf;
-		}
 
 		//----------- CAMERA DIRECTION
-		
+
 		float tmp = value;
 
 		if (name.equals("jFLYCAM_Left" + id)) {
+			if (Settings.DEBUG_GAMEPAD_DIV_TPF) {
+				value /= tpf;
+			}
+
 			/*if (Settings.DEBUG_GAMEPAD_TURNING) {
 				Vector3f pos = this.avatar.gamepadTest.getLocalTranslation();
 				float newX = value * 10000;
@@ -154,8 +153,16 @@ public class JoystickCamera2 extends FlyByCamera implements IInputDevice, RawInp
 				value = (value + prevLeft) / 2;
 				prevLeft = value; //tmp;
 			}
-			rotateCamera(value * value * TURN_SPEED, initialUpVec);
+			if (Settings.DEBUG_GAMEPAD_MULT_VALUE) {
+				rotateCamera(value * value * TURN_SPEED, initialUpVec);
+			} else {
+				rotateCamera(value * TURN_SPEED, initialUpVec);
+			}
 		} else if (name.equals("jFLYCAM_Right" + id)) {
+			if (Settings.DEBUG_GAMEPAD_DIV_TPF) {
+				value /= tpf;
+			}
+
 			/*if (Settings.DEBUG_GAMEPAD_TURNING) {
 				Vector3f pos = this.avatar.gamepadTest.getLocalTranslation();
 				float newX = value * 10000;
@@ -166,22 +173,41 @@ public class JoystickCamera2 extends FlyByCamera implements IInputDevice, RawInp
 				value = (value + prevRight) / 2;
 				prevRight = value; //tmp;
 			}
-			rotateCamera(-value * value * TURN_SPEED, initialUpVec);
+			if (Settings.DEBUG_GAMEPAD_MULT_VALUE) {
+				rotateCamera(-value * value * TURN_SPEED, initialUpVec);
+			} else {
+				rotateCamera(-value * TURN_SPEED, initialUpVec);
+			}
 		} else if (name.equals("jFLYCAM_Up" + id)) {
+			if (Settings.DEBUG_GAMEPAD_DIV_TPF) {
+				value /= tpf;
+			}
+
 			if (Settings.GAMEPAD_USE_AVG) {
 				value = (value + prevUp) / 2;
 				prevUp = value; //tmp;
 			}
-			rotateCamera(-value*value * LOOK_UD_ADJ * TURN_SPEED * (invertY ? -1 : 1), cam.getLeft());
+			if (Settings.DEBUG_GAMEPAD_MULT_VALUE) {
+				rotateCamera(-value*value * LOOK_UD_ADJ * TURN_SPEED * (invertY ? -1 : 1), cam.getLeft());
+			} else {
+				rotateCamera(-value * LOOK_UD_ADJ * TURN_SPEED * (invertY ? -1 : 1), cam.getLeft());
+			}
 		} else if (name.equals("jFLYCAM_Down" + id)) {
+			if (Settings.DEBUG_GAMEPAD_DIV_TPF) {
+				value /= tpf;
+			}
+
 			if (Settings.GAMEPAD_USE_AVG) {
 				value = (value + prevDown) / 2;
 				prevDown = value; //tmp;
 			}
-			rotateCamera(value*value * LOOK_UD_ADJ * TURN_SPEED * (invertY ? -1 : 1), cam.getLeft());
-			
+			if (Settings.DEBUG_GAMEPAD_MULT_VALUE) {
+				rotateCamera(value*value * LOOK_UD_ADJ * TURN_SPEED * (invertY ? -1 : 1), cam.getLeft());
+			} else {
+				rotateCamera(value * LOOK_UD_ADJ * TURN_SPEED * (invertY ? -1 : 1), cam.getLeft());
+			}
 			//----------- MOVEMENT
-			
+
 		} else if (name.equals("jFLYCAM_Forward" + id)) {
 			value -= DEADZONE;
 			if (value > 0) {

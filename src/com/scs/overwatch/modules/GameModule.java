@@ -73,7 +73,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 	public void init() {
 		game.getCamera().setLocation(new Vector3f(0f, 0f, 10f));
 		game.getCamera().lookAt(new Vector3f(0f, 0f, 0f), Vector3f.UNIT_Y);
-
+		// todo - clear mappings?
 		game.getInputManager().addMapping(QUIT, new KeyTrigger(KeyInput.KEY_ESCAPE));
 		game.getInputManager().addListener(this, QUIT);            
 
@@ -178,10 +178,10 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		game.getRootNode().attachChild(audioMusic);
 		audioMusic.play(); // play continuously!
 
-		/*if (Settings.SHOW_FPS) {
+		if (Settings.SHOW_FPS) {
 			BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
 			game.getStateManager().attach(new StatsAppState(game.getGuiNode(), guiFont_small));
-		}*/
+		}
 	}
 
 
@@ -249,7 +249,6 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		view2.setClearFlags(true, true, true);
 		view2.attachScene(game.getRootNode());
 
-		if (!Settings.REMOVE_STUFF) {
 		FilterPostProcessor fpp = new FilterPostProcessor(game.getAssetManager());
 		if (Settings.NEON) {
 			BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Scene);
@@ -262,8 +261,8 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 			//RadialBlurFilter blur = new RadialBlurFilter();
 			//fpp.addFilter(blur);
 		}
-		view2.addProcessor(fpp);
-		}
+		//view2.addProcessor(fpp);
+
 		return newCam;
 	}
 

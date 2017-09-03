@@ -232,5 +232,6 @@ public class SimpleFirstPerson extends SimpleApplication implements ActionListen
 		 * we make a slight offset to adjust for head height.
 		 */
 		cam.setLocation(new Vector3f(playerModel.getLocalTranslation().x,playerModel.getLocalTranslation().y + headHeight,playerModel.getLocalTranslation().z));
+
 	}
 }
