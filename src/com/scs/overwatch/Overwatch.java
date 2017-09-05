@@ -15,7 +15,7 @@ import com.scs.overwatch.modules.GamepadModule;
 import com.scs.overwatch.modules.IModule;
 import com.scs.overwatch.modules.StartModule;
 
-public class Overwatch extends SimpleApplication { // scs  MySimpleApplication
+public class Overwatch extends SimpleApplication {
 
 	private static final String PROPS_FILE = Settings.NAME.replaceAll(" ", "") + "_settings.txt";
 	public static float MAX_TURN_SPEED = -1; // Overwatch.properties.GetMaxTurnSpeed();
@@ -93,6 +93,10 @@ public class Overwatch extends SimpleApplication { // scs  MySimpleApplication
 	
 	@Override
 	public void simpleInitApp() {
+		// scs Clear existing mappings
+		getInputManager().clearMappings();
+		getInputManager().clearRawInputListeners();
+		
 		assetManager.registerLocator("assets/", FileLocator.class); // default
 		assetManager.registerLocator("assets/", ClasspathLocator.class);
 
@@ -102,11 +106,9 @@ public class Overwatch extends SimpleApplication { // scs  MySimpleApplication
 		cam.setFrustumPerspective(45f, (float) cam.getWidth() / cam.getHeight(), 0.01f, Settings.CAM_DIST);
 		//scs cam.setViewPort(0f, 0.5f, 0f, 0.5f); // BL
 
-		/*if (Settings.REMOVE_STUFF) {
-			currentModule = new GamepadModule(this);//GameModule(this);
-		} else {*/
+		//currentModule = new GamepadModule(this);
 		currentModule = new StartModule(this, GameMode.Skirmish);//GameModule(this);
-		//}
+
 		currentModule.init();
 		
 		if (Settings.RECORD_VID) {
@@ -130,7 +132,6 @@ public class Overwatch extends SimpleApplication { // scs  MySimpleApplication
 			getRootNode().getLocalLightList().clear();
 
 			this.currentModule = pendingModule;
-			//initialize();		
 			this.currentModule.init();
 			pendingModule = null;
 		}

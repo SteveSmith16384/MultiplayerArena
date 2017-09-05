@@ -7,15 +7,15 @@ public class Settings {
 	public static final boolean NEON = true;
 	public static final String VERSION = "0.01";
 	public static final boolean SHOW_LOGO = false;
-	public static final boolean SHOW_FPS = true;
+	//public static final boolean SHOW_FPS = true;
 	public static final boolean ALWAYS_SHOW_4_CAMS = false;
 	public static final boolean RECORD_VID = false;
 	public static final boolean USE_MODEL_FOR_PLAYERS = false;
 	public static final boolean SHOW_FLASH_EXPLOSIONS = false;
+	public static final boolean PLAYER1_IS_MOUSE = true;
 
 	// DEBUG
-	public static final boolean DEBUG_SIMPLE_MAP = true;
-	public static final boolean PLAYER1_IS_MOUSE = false;
+	public static final boolean DEBUG_SIMPLE_MAP = false;
 	public static final boolean DEBUG_GAMEPAD_DIV_TPF = false;
 	public static final boolean DEBUG_GAMEPAD_MULT_VALUE = false;
 	

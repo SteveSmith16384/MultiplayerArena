@@ -7,16 +7,16 @@ Java-gaming
 
 
 URGENT
-Is it because of low fps?
-Increase fps
-	Try and get it to use as much std code as possible
-Gamepads too sensitive when running full-screen
-	Try using NOTMY Simple Application, NOTMyFlyByCam
-	Why does SImpleFPS work?
+Just play it with a high FPS!
+WHy is tpf value different? - trace functions call all the way to onAnalog
+	Are the inputs mapped twice?
+	Gamepads too sensitive when FPS is low
 Search for todos
 
 
 TODO
+Implement Lemur gem?
+Increase FPS
 Delete MySimpleApp and MyFlybyCam
 Why does jetpac only work when moving fwd?
 Make base higher, with walls?
@@ -51,7 +51,6 @@ Better font - use SF font?
 Do explosion by throwing invis balls
 Players get harmed by explosion
 zoom-in ability
-Cylinder not working
 Use ICanCollect
 Change avatar - rotating cylinder?
 Crosshairs

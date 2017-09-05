@@ -39,7 +39,6 @@ public class Pyramid extends PhysicalEntity implements ICollideable {
 				w, 0, w, d, 0, d, 0, 0  // bottom
 		}));*/
 
-		//box1.scaleTextureCoordinates(new Vector2f(w, d)); // scs check this
 		Geometry geometry = new Geometry("Crate", dome);
 		TextureKey key3 = new TextureKey(tex);
 		key3.setGenerateMips(true);

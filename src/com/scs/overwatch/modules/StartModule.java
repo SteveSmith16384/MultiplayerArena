@@ -39,8 +39,6 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 	private static final String QUIT = "Quit";
 
 	protected Overwatch game;
-	//private BitmapText numPlayerText;
-	//private int numPlayers;
 	private Spatial robot;
 	private AudioNode audioMusic;
 	private GameMode gameMode;
@@ -75,7 +73,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 		view2.setClearFlags(true, true, true);
 		view2.attachScene(game.getRootNode());
 
-		FilterPostProcessor fpp = new FilterPostProcessor(game.getAssetManager());
+		/*FilterPostProcessor fpp = new FilterPostProcessor(game.getAssetManager());
 		if (Settings.NEON) {
 			BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Scene);
 			bloom.setEnabled(true);
@@ -87,7 +85,7 @@ public class StartModule implements IModule, ActionListener, RawInputListener {
 			//RadialBlurFilter blur = new RadialBlurFilter();
 			//fpp.addFilter(blur);
 		}
-		//view2.addProcessor(fpp);
+		view2.addProcessor(fpp);*/
 
 		game.getInputManager().addMapping(QUIT, new KeyTrigger(KeyInput.KEY_ESCAPE));
 		game.getInputManager().addListener(this, QUIT);

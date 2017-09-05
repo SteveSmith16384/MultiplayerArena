@@ -108,7 +108,6 @@ public class GamepadModule implements IModule, ActionListener {
 		try {
 			Thread.sleep(40);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -126,7 +125,6 @@ public class GamepadModule implements IModule, ActionListener {
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
 		
 	}
 

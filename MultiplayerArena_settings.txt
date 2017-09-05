@@ -1,6 +1,6 @@
 #Multiplayer Arena settings file
 #Tue Aug 29 18:46:45 BST 2017
-GamepadUpDownAdjust=0.4
+GamepadUpDownAdjust=0.7
 BaseScoreInc=0.005
 GamepadTurnSpeed=2
 InvulnerableTimeSecs=3.0

@@ -19,7 +19,7 @@ import com.jme3.renderer.Camera;
 import com.scs.overwatch.Overwatch;
 import com.scs.overwatch.Settings;
 
-public class JoystickCamera2 extends FlyByCamera implements IInputDevice, RawInputListener { // scs MyFlyByCamera
+public class JoystickCamera2 extends FlyByCamera implements IInputDevice, RawInputListener {
 
 	private static final float LOOK_UD_ADJ = Overwatch.properties.GetGamepadUpDownAdjust();// .4f;//.75f;//.5f;
 	private static final float MOVE_SPEED = Overwatch.properties.GetGamepadMoveSpeed();// 5;
@@ -248,8 +248,8 @@ public class JoystickCamera2 extends FlyByCamera implements IInputDevice, RawInp
 		joyPosDir.normalizeLocal();
 
 		float angle = joyPosDir.getAngle();
-		float x = FastMath.cos(angle) * length;// * 10; // scs todo - why 10?
-		float y = FastMath.sin(angle) * length;// * 10;  
+		float x = FastMath.cos(angle) * length;
+		float y = FastMath.sin(angle) * length;  
 
 		fwdVal = 0;
 		backVal = 0;

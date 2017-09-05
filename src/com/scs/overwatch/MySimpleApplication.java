@@ -2,7 +2,6 @@ package com.scs.overwatch;
 
 import com.jme3.app.Application;
 import com.jme3.app.DebugKeysAppState;
-import com.jme3.app.FlyCamAppState;
 import com.jme3.app.StatsAppState;
 import com.jme3.app.state.AppState;
 import com.jme3.font.BitmapFont;
