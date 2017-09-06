@@ -93,9 +93,10 @@ public class Overwatch extends SimpleApplication {
 	
 	@Override
 	public void simpleInitApp() {
-		// scs Clear existing mappings
+		// Clear existing mappings
 		getInputManager().clearMappings();
 		getInputManager().clearRawInputListeners();
+		//getInputManager().deleteMapping(arg0);
 		
 		assetManager.registerLocator("assets/", FileLocator.class); // default
 		assetManager.registerLocator("assets/", ClasspathLocator.class);

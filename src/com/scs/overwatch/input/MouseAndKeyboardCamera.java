@@ -37,17 +37,17 @@ public class MouseAndKeyboardCamera extends FlyByCamera implements ActionListene
 		inputManager.addListener(this, "CycleAbility");
 
 		// both mouse and button - rotation of cam
-		inputManager.addMapping("FLYCAM_Left", new MouseAxisTrigger(MouseInput.AXIS_X, true), new KeyTrigger(KeyInput.KEY_LEFT));
-		inputManager.addListener(this, "FLYCAM_Left");
+		inputManager.addMapping("mFLYCAM_Left", new MouseAxisTrigger(MouseInput.AXIS_X, true), new KeyTrigger(KeyInput.KEY_LEFT));
+		inputManager.addListener(this, "mFLYCAM_Left");
 
-		inputManager.addMapping("FLYCAM_Right", new MouseAxisTrigger(MouseInput.AXIS_X, false), new KeyTrigger(KeyInput.KEY_RIGHT));
-		inputManager.addListener(this, "FLYCAM_Right");
+		inputManager.addMapping("mFLYCAM_Right", new MouseAxisTrigger(MouseInput.AXIS_X, false), new KeyTrigger(KeyInput.KEY_RIGHT));
+		inputManager.addListener(this, "mFLYCAM_Right");
 
-		inputManager.addMapping("FLYCAM_Up", new MouseAxisTrigger(MouseInput.AXIS_Y, false), new KeyTrigger(KeyInput.KEY_UP));
-		inputManager.addListener(this, "FLYCAM_Up");
+		inputManager.addMapping("mFLYCAM_Up", new MouseAxisTrigger(MouseInput.AXIS_Y, false), new KeyTrigger(KeyInput.KEY_UP));
+		inputManager.addListener(this, "mFLYCAM_Up");
 
-		inputManager.addMapping("FLYCAM_Down", new MouseAxisTrigger(MouseInput.AXIS_Y, true), new KeyTrigger(KeyInput.KEY_DOWN));
-		inputManager.addListener(this, "FLYCAM_Down");
+		inputManager.addMapping("mFLYCAM_Down", new MouseAxisTrigger(MouseInput.AXIS_Y, true), new KeyTrigger(KeyInput.KEY_DOWN));
+		inputManager.addListener(this, "mFLYCAM_Down");
 
 		// mouse only - zoom in/out with wheel, and rotate drag
 		/*inputManager.addMapping("FLYCAM_ZoomIn", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false));
@@ -87,14 +87,14 @@ public class MouseAndKeyboardCamera extends FlyByCamera implements ActionListene
 		//Settings.p("name=" + name);
 		//Settings.p("CAM=" +this.cam.getName());
 
-		if (name.equals("FLYCAM_Left")){
+		if (name.equals("mFLYCAM_Left")){
 			//Settings.p("name=" + name);
 			rotateCamera(value, initialUpVec);
-		}else if (name.equals("FLYCAM_Right")){
+		}else if (name.equals("mFLYCAM_Right")){
 			rotateCamera(-value, initialUpVec);
-		}else if (name.equals("FLYCAM_Up")){
+		}else if (name.equals("mFLYCAM_Up")){
 			rotateCamera(-value * (invertY ? -1 : 1), cam.getLeft());
-		}else if (name.equals("FLYCAM_Down")){
+		}else if (name.equals("mFLYCAM_Down")){
 			rotateCamera(value * (invertY ? -1 : 1), cam.getLeft());
 		}/*else if (name.equals("FLYCAM_Forward")){
 			moveCamera(value, false);

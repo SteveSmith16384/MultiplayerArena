@@ -102,6 +102,10 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		Joystick[] joysticks = game.getInputManager().getJoysticks();
 		int numPlayers = game.getNumPlayers();
 
+		// Clear existing mappings
+		//game.getInputManager().clearMappings();
+		//game.getInputManager().clearRawInputListeners();
+
 		// Auto-Create player 0
 		{
 			Camera newCam = this.createCamera(0, numPlayers);
