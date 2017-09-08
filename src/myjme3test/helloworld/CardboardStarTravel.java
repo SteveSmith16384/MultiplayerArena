@@ -26,19 +26,17 @@ public class CardboardStarTravel extends SimpleApplication {
     private SpotLight light;
 
     private float ydeg;
-    private Geometry geom;
+    Geometry geom;
 
     public CardboardStarTravel() {
         super();
         this.setShowSettings(false);
     }
-    
-    
 
     @Override
     public void simpleInitApp() {
-    	cam.setLocation(new Vector3f(0, 0, -10));
-    	
+        cam.setLocation(new Vector3f(0, 0, -10));
+
         mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
         mat.setColor("Diffuse", ColorRGBA.Cyan);
 
@@ -67,9 +65,10 @@ public class CardboardStarTravel extends SimpleApplication {
     public void simpleUpdate(float tpf) {
         super.simpleUpdate(tpf);
 
-        /*List<Spatial> starList = stars.getChildren();        
+        /*List<Spatial> starList = stars.getChildren();
+        
         for(Spatial s: starList){
-            s.move(0, 0, -8f*tpf);
+            s.move(0, 0, -.4f);
             if (s.getWorldTranslation().z  < -maxDistance){
                 s.setLocalTranslation(FastMath.nextRandomFloat() * 100 - 50, FastMath.nextRandomFloat() * 100 - 50, maxDistance);
             }
@@ -78,8 +77,8 @@ public class CardboardStarTravel extends SimpleApplication {
         /*ydeg += (tpf * 5);
         if (ydeg > 180) {
             ydeg -= 180;
-        }
-        setCameraDirection(90, ydeg, 0);*/
+        }*/
+        //setCameraDirection(90, ydeg, 0);
 
         cam.lookAt(geom.getLocalTranslation(), Vector3f.UNIT_Y);
 
@@ -113,6 +112,7 @@ public class CardboardStarTravel extends SimpleApplication {
             stars.attachChild(star);
         }
     }
+
 
     //----------------------------------------------------------------------
 

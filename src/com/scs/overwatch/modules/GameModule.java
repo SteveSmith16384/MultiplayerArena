@@ -323,7 +323,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 
 	private void setUpLight() {
 		AmbientLight al = new AmbientLight();
-		al.setColor(ColorRGBA.White.mult(3));
+		al.setColor(ColorRGBA.White.mult(2));
 		game.getRootNode().addLight(al);
 	}
 
