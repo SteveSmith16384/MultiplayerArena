@@ -7,9 +7,8 @@ Java-gaming
 
 
 URGENT
-Just play it with a high FPS!
+Create "detail level" config
 WHy is tpf value different? - trace functions call all the way to onAnalog
-	Are the inputs mapped twice?
 	Gamepads too sensitive when FPS is low
 Search for todos
 
