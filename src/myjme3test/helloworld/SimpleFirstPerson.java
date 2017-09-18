@@ -110,7 +110,7 @@ public class SimpleFirstPerson extends SimpleApplication implements ActionListen
 		floor.scaleTextureCoordinates(new Vector2f(3, 6));
 
 		Material floor_mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-		TextureKey key3 = new TextureKey("Textures/Terrain/Pond/Pond.jpg");
+		TextureKey key3 = new TextureKey("Textures/beach.png");
 		key3.setGenerateMips(true);
 		Texture tex3 = assetManager.loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);
@@ -133,7 +133,8 @@ public class SimpleFirstPerson extends SimpleApplication implements ActionListen
 		floor.scaleTextureCoordinates(new Vector2f(3, 6));
 
 		Material floor_mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-		TextureKey key3 = new TextureKey("Textures/Terrain/Pond/Pond.jpg");
+		//TextureKey key3 = new TextureKey("Textures/Terrain/Pond/Pond.jpg");
+		TextureKey key3 = new TextureKey("Textures/floor015.png");
 		key3.setGenerateMips(true);
 		Texture tex3 = assetManager.loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);
