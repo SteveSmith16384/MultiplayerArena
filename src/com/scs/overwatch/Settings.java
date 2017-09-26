@@ -28,7 +28,7 @@ public class Settings {
 	public static final boolean DEBUG_HUD = false;
 	public static final boolean DEBUG_TARGETTER = false;
 
-	public enum GameMode {Skirmish, KingOfTheHill, Dodgeball, Bladerunner, CloneWars, Evolve, Sorcerers }
+	public enum GameMode {Skirmish, KingOfTheHill, Dodgeball, Bladerunner, CloneWars, Evolve, Sorcerers } // Evolve & Sorcerers not finished (hardly started...)
 	
 	// Game settings
 	public static GameMode GAME_MODE;

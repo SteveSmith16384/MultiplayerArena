@@ -1,11 +1,5 @@
 MULTIPLAYER ARENA
 
-PUBLICITY
-	Opengameart
-JME forums
-Java-gaming
-
-
 URGENT
 Create "detail level" config
 WHy is tpf value different? - trace functions call all the way to onAnalog
@@ -127,44 +121,6 @@ Goldeneye N64
 Quazatron
 
 
-
-
-OTHER GAMES
-Split-screen space combat
-Half-Life 3
-
-
-Sorcerers2 spells
-https://opengameart.org/content/wizard-4
-	Wall
-Fire
-Shrink
-Tornado
-Invisible
-Heal
-Creatures
-Lightening bolt
-Fireball
-Turmoil
-Resurrect
-Subversion
-Gooey Blob - use domes?
-Magic Castle
-Enhance creature - make it bigger
-Teleport
-Vortex
-Plague of Locusts
-Swap Positions
-Heal
-Shrink creature
-Magic Carpet
-Temporary Blindness
-Hailstorm
-Remove gravity
-
-
-Sorcerers Mode:
-Leave gravestones
 
 
 LOGOS

@@ -28,3 +28,5 @@ CREDITS
 Design and programming by Steve Smith - https://twitter.com/stephencsmith/ 
 Robot models by Nikke (https://opengameart.org/content/abstract-rts-model-pack / http://www.ironbane.com/).
 Music by Matthew Pablo (https://opengameart.org/content/space-dimensions-8bitretro-version / http://www.matthewpablo.com).
+
+Source code licensed under MIT Licence.
