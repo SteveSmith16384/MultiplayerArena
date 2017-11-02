@@ -60,7 +60,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	public HUD hud;
 	public MyBetterCharacterControl playerControl;
-	public final int id;
+	public final int playerID;
 	private IAbility abilityGun, abilityOther;
 	public Spatial playerGeometry;
 	private float score = 0;
@@ -76,17 +76,17 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 	public AbstractHUDImage gamepadTest;
 
-	public PlayersAvatar(Overwatch _game, GameModule _module, int _id, Camera _cam, IInputDevice _input, HUD _hud) {
+	public PlayersAvatar(Overwatch _game, GameModule _module, int _playerID, Camera _cam, IInputDevice _input, HUD _hud) {
 		super(_game, _module, "Player");
 
-		id = _id;
+		playerID = _playerID;
 		cam = _cam;
 		input = _input;
 		hud = _hud;
-		health = module.getPlayersHealth(id);
+		health = module.getPlayersHealth(playerID);
 
 		{
-			int pid = Settings.GAME_MODE != GameMode.CloneWars ? id : Settings.CLONE_ID;
+			int pid = Settings.GAME_MODE != GameMode.CloneWars ? playerID : Settings.CLONE_ID;
 			playerGeometry = getPlayersModel(game, pid);
 			this.getMainNode().attachChild(playerGeometry);
 		}
@@ -169,7 +169,7 @@ public class PlayersAvatar extends PhysicalEntity implements IProcessable, IColl
 
 
 	public void moveToStartPostion(boolean invuln) {
-		Point p = module.mapData.getPlayerStartPos(id);
+		Point p = module.mapData.getPlayerStartPos(playerID);
 		Vector3f warpPos = new Vector3f(p.x, module.mapData.getRespawnHeight(), p.y);
 		Settings.p("Scheduling player to start position: " + warpPos);
 		this.playerControl.warp(warpPos);

@@ -44,14 +44,14 @@ public class Rocket extends PhysicalEntity implements IBullet {
 		this.main_node.attachChild(ball_geo);
 		game.getRootNode().attachChild(this.main_node);
 		ball_geo.setLocalTranslation(shooter.getLocation().add(shooter.getShootDir().multLocal(PlayersAvatar.PLAYER_RAD*2)));
-		floor_phy = new RigidBodyControl(1f);
-		ball_geo.addControl(floor_phy);
-		module.bulletAppState.getPhysicsSpace().add(floor_phy);
-		floor_phy.setLinearVelocity(shooter.getShootDir().mult(25));
-		floor_phy.setGravity(Vector3f.ZERO);
+		rigidBodyControl = new RigidBodyControl(1f);
+		ball_geo.addControl(rigidBodyControl);
+		module.bulletAppState.getPhysicsSpace().add(rigidBodyControl);
+		rigidBodyControl.setLinearVelocity(shooter.getShootDir().mult(25));
+		rigidBodyControl.setGravity(Vector3f.ZERO);
 
 		this.getMainNode().setUserData(Settings.ENTITY, this);
-		floor_phy.setUserObject(this);
+		rigidBodyControl.setUserObject(this);
 		module.addEntity(this);
 
 	}

@@ -46,13 +46,13 @@ public class SimplePillar extends PhysicalEntity {
 		
 		main_node.setLocalTranslation(x+(THICKNESS/2), HEIGHT/2, z+(THICKNESS/2));
 
-		floor_phy = new RigidBodyControl(0);
-		main_node.addControl(floor_phy);
+		rigidBodyControl = new RigidBodyControl(0);
+		main_node.addControl(rigidBodyControl);
 
-		module.bulletAppState.getPhysicsSpace().add(floor_phy);
+		module.bulletAppState.getPhysicsSpace().add(rigidBodyControl);
 		
 		geometry.setUserData(Settings.ENTITY, this);
-		floor_phy.setUserObject(this);
+		rigidBodyControl.setUserObject(this);
 
 	}
 

@@ -20,13 +20,13 @@ public class PlayersClone extends PhysicalEntity implements IAffectedByPhysics {
 		//main_node.setLocalTranslation(x+(w/2), y+(h/2), z+(d/2));
 		main_node.setLocalTranslation(x, y, z);
 
-		floor_phy = new RigidBodyControl(1f);
-		main_node.addControl(floor_phy);
-		module.bulletAppState.getPhysicsSpace().add(floor_phy);
+		rigidBodyControl = new RigidBodyControl(1f);
+		main_node.addControl(rigidBodyControl);
+		module.bulletAppState.getPhysicsSpace().add(rigidBodyControl);
 
 		geometry.setUserData(Settings.ENTITY, this);
 		main_node.setUserData(Settings.ENTITY, this);
-		floor_phy.setUserObject(this);
+		rigidBodyControl.setUserObject(this);
 		
 		module.addEntity(this);
 

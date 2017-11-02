@@ -51,13 +51,13 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 		this.main_node.attachChild(geometry);
 		main_node.setLocalTranslation(x+(w/2), 10, z+(d/2));
 
-		floor_phy = new RigidBodyControl(1f);
-		main_node.addControl(floor_phy);
-		module.bulletAppState.getPhysicsSpace().add(floor_phy);
+		rigidBodyControl = new RigidBodyControl(1f);
+		main_node.addControl(rigidBodyControl);
+		module.bulletAppState.getPhysicsSpace().add(rigidBodyControl);
 
 		geometry.setUserData(Settings.ENTITY, this);
-		floor_phy.setUserObject(this);
-		floor_phy.setCcdMotionThreshold(1);
+		rigidBodyControl.setUserObject(this);
+		rigidBodyControl.setCcdMotionThreshold(1);
 		module.addEntity(this);
 
 		weapon = new LaserRifle(_game, _module, this);
@@ -95,7 +95,7 @@ public class RoamingAI extends PhysicalEntity implements IProcessable, ICanShoot
 	@Override
 	public void process(float tpf) {
 		weapon.process(tpf);
-		this.floor_phy.applyCentralForce(currDir.mult(SPEED));
+		this.rigidBodyControl.applyCentralForce(currDir.mult(SPEED));
 
 		if (targetCheck.hitInterval()) {
 			// Check position

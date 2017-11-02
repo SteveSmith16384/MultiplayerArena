@@ -34,17 +34,17 @@ public class LaserBullet extends PhysicalEntity implements IBullet {
 		ball_geo.setLocalTranslation(shooter.getLocation().add(shooter.getShootDir().multLocal(PlayersAvatar.PLAYER_RAD*3)));
 		ball_geo.getLocalTranslation().y -= 0.1f; // Drop bullets slightly
 		/** Make the ball physical with a mass > 0.0f */
-		floor_phy = new RigidBodyControl(.1f);
+		rigidBodyControl = new RigidBodyControl(.1f);
 		/** Add physical ball to physics space. */
-		ball_geo.addControl(floor_phy);
-		module.bulletAppState.getPhysicsSpace().add(floor_phy);
+		ball_geo.addControl(rigidBodyControl);
+		module.bulletAppState.getPhysicsSpace().add(rigidBodyControl);
 		/** Accelerate the physical ball to shoot it. */
-		floor_phy.setLinearVelocity(shooter.getShootDir().mult(40));
-		floor_phy.setGravity(Vector3f.ZERO);
+		rigidBodyControl.setLinearVelocity(shooter.getShootDir().mult(40));
+		rigidBodyControl.setGravity(Vector3f.ZERO);
 
 		this.getMainNode().setUserData(Settings.ENTITY, this);
 		ball_geo.setUserData(Settings.ENTITY, this);
-		floor_phy.setUserObject(this);
+		rigidBodyControl.setUserObject(this);
 		module.addEntity(this);
 
 		AudioNode audio_gun = new AudioNode(game.getAssetManager(), "Sound/laser3.wav", false);

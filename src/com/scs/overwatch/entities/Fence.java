@@ -61,13 +61,13 @@ public class Fence extends PhysicalEntity {
 		main_node.rotate(0, rads, 0);
 		main_node.setLocalTranslation(x+(WIDTH/2), height/2, z+0.5f);
 
-		floor_phy = new RigidBodyControl(0);
-		main_node.addControl(floor_phy);
+		rigidBodyControl = new RigidBodyControl(0);
+		main_node.addControl(rigidBodyControl);
 
-		module.getBulletAppState().getPhysicsSpace().add(floor_phy);
+		module.getBulletAppState().getPhysicsSpace().add(rigidBodyControl);
 
 		geometry.setUserData(Settings.ENTITY, this);
-		floor_phy.setUserObject(this);
+		rigidBodyControl.setUserObject(this);
 
 	}
 

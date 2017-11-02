@@ -43,15 +43,15 @@ public class Collectable extends PhysicalEntity implements ICollideable, IShowOn
 		this.main_node.attachChild(geometry);
 		main_node.setLocalTranslation(x, y, z); // Drop from sky
 
-		floor_phy = new RigidBodyControl(0.1f);
-		main_node.addControl(floor_phy);
+		rigidBodyControl = new RigidBodyControl(0.1f);
+		main_node.addControl(rigidBodyControl);
 
-		module.bulletAppState.getPhysicsSpace().add(floor_phy);
+		module.bulletAppState.getPhysicsSpace().add(rigidBodyControl);
 		
 		geometry.setUserData(Settings.ENTITY, this);
-		floor_phy.setUserObject(this);
+		rigidBodyControl.setUserObject(this);
 
-		floor_phy.setRestitution(.5f);
+		rigidBodyControl.setRestitution(.5f);
 
 		module.addEntity(this); // need this to target it
 		

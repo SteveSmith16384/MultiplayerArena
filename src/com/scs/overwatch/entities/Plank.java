@@ -45,12 +45,12 @@ public class Plank extends PhysicalEntity {
 		main_node.rotate(0, rads, 0);
 		main_node.setLocalTranslation(x+(w/2), h/2, z+0.5f);
 
-		floor_phy = new RigidBodyControl(1f);
-		main_node.addControl(floor_phy);
-		module.bulletAppState.getPhysicsSpace().add(floor_phy);
+		rigidBodyControl = new RigidBodyControl(1f);
+		main_node.addControl(rigidBodyControl);
+		module.bulletAppState.getPhysicsSpace().add(rigidBodyControl);
 		
 		this.geometry.setUserData(Settings.ENTITY, this);
-		floor_phy.setUserObject(this);
+		rigidBodyControl.setUserObject(this);
 
 	}
 

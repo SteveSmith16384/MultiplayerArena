@@ -49,13 +49,13 @@ public class RotatingTurret extends PhysicalEntity implements ICollideable {
 		//main_node.setLocalTranslation(x+(w/2), h/2, z+0.5f);
 		main_node.setLocalTranslation(x+(w/2), y+(h/2), z+(w/2));
 
-		floor_phy = new RigidBodyControl(0f); // Kinematic
-		main_node.addControl(floor_phy);
-		module.getBulletAppState().getPhysicsSpace().add(floor_phy);
+		rigidBodyControl = new RigidBodyControl(0f); // Kinematic
+		main_node.addControl(rigidBodyControl);
+		module.getBulletAppState().getPhysicsSpace().add(rigidBodyControl);
 
 		geometry.setUserData(Settings.ENTITY, this);
 		main_node.setUserData(Settings.ENTITY, this);
-		floor_phy.setUserObject(this);
+		rigidBodyControl.setUserObject(this);
 		
 		module.addEntity(this);
 

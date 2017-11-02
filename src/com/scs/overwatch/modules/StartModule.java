@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.jme3.audio.AudioNode;
 import com.jme3.font.BitmapText;
-import com.jme3.input.Joystick;
 import com.jme3.input.JoystickButton;
 import com.jme3.input.KeyInput;
 import com.jme3.input.RawInputListener;
@@ -19,8 +18,6 @@ import com.jme3.input.event.TouchEvent;
 import com.jme3.light.AmbientLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
-import com.jme3.post.FilterPostProcessor;
-import com.jme3.post.filters.BloomFilter;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;

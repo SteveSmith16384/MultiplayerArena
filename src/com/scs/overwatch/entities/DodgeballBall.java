@@ -40,19 +40,19 @@ public class DodgeballBall extends PhysicalEntity implements IBullet, IMustRemai
 		if (shooter != null) {
 			ball_geo.setLocalTranslation(shooter.getLocation().add(shooter.getShootDir().multLocal(PlayersAvatar.PLAYER_RAD*2)));
 		}
-		floor_phy = new RigidBodyControl(.3f);
-		ball_geo.addControl(floor_phy);
-		module.getBulletAppState().getPhysicsSpace().add(floor_phy);
+		rigidBodyControl = new RigidBodyControl(.3f);
+		ball_geo.addControl(rigidBodyControl);
+		module.getBulletAppState().getPhysicsSpace().add(rigidBodyControl);
 		/** Accelerate the physical ball to shoot it. */
 		if (shooter != null) {
-			floor_phy.setLinearVelocity(shooter.getShootDir().mult(25));
+			rigidBodyControl.setLinearVelocity(shooter.getShootDir().mult(25));
 		}
 		this.getMainNode().setUserData(Settings.ENTITY, this);
-		floor_phy.setUserObject(this);
+		rigidBodyControl.setUserObject(this);
 		module.addEntity(this);
 
-		floor_phy.setRestitution(.9f); // Bouncy
-		floor_phy.setCcdMotionThreshold(RAD*2);
+		rigidBodyControl.setRestitution(.9f); // Bouncy
+		rigidBodyControl.setCcdMotionThreshold(RAD*2);
 
 	}
 
@@ -90,8 +90,8 @@ public class DodgeballBall extends PhysicalEntity implements IBullet, IMustRemai
 
 		//Settings.p("Dodgeball pos=" + this.floor_phy.getPhysicsLocation());
 		// Check if fallen off edge
-		if (this.floor_phy.getPhysicsLocation().y < -5f) {
-			Settings.p("Dodgeball has fallen off the edge" + this.floor_phy.getPhysicsLocation());
+		if (this.rigidBodyControl.getPhysicsLocation().y < -5f) {
+			Settings.p("Dodgeball has fallen off the edge" + this.rigidBodyControl.getPhysicsLocation());
 			
 			// Relaunch
 			this.remove();

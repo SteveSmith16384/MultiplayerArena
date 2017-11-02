@@ -55,16 +55,16 @@ public abstract class AbstractPlatform extends PhysicalEntity implements IProces
 		}
 		main_node.setLocalTranslation(x+(w/2), y+(HEIGHT/2), z+0.5f);
 
-		floor_phy = new RigidBodyControl(1);
-		main_node.addControl(floor_phy);
-		module.getBulletAppState().getPhysicsSpace().add(floor_phy);
+		rigidBodyControl = new RigidBodyControl(1);
+		main_node.addControl(rigidBodyControl);
+		module.getBulletAppState().getPhysicsSpace().add(rigidBodyControl);
 
 		geometry.setUserData(Settings.ENTITY, this);
-		floor_phy.setUserObject(this);
+		rigidBodyControl.setUserObject(this);
 
 		module.addEntity(this);
 
-		floor_phy.setKinematic(true);
+		rigidBodyControl.setKinematic(true);
 		//floor_phy.setKinematicSpatial(geometry);
 
 	}

@@ -14,7 +14,7 @@ public class LaserRifle extends AbstractMagazineGun implements IAbility {
 
 	
 	@Override
-	public void launchBullet(Overwatch _game, GameModule _module, ICanShoot _shooter) {
+	public void launchBullet(Overwatch game, GameModule module, ICanShoot _shooter) {
 		new LaserBullet(game, module, shooter);
 		
 	}

@@ -64,12 +64,12 @@ public class SkyScraper extends PhysicalEntity implements IProcessable, ICollide
 		this.main_node.attachChild(geometry);
 		main_node.setLocalTranslation(leftX+(w/2), h/2, backZ+(d/2));
 
-		floor_phy = new RigidBodyControl(0);
-		main_node.addControl(floor_phy);
-		module.bulletAppState.getPhysicsSpace().add(floor_phy);
+		rigidBodyControl = new RigidBodyControl(0);
+		main_node.addControl(rigidBodyControl);
+		module.bulletAppState.getPhysicsSpace().add(rigidBodyControl);
 
 		geometry.setUserData(Settings.ENTITY, this);
-		floor_phy.setUserObject(this);
+		rigidBodyControl.setUserObject(this);
 
 	}
 

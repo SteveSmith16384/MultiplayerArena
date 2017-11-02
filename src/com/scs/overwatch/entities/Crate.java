@@ -48,13 +48,13 @@ public class Crate extends PhysicalEntity implements IAffectedByPhysics, ICollid
 		//main_node.setLocalTranslation(x+(w/2), h/2, z+0.5f);
 		main_node.setLocalTranslation(x+(w/2), y+(h/2), z+(d/2));
 
-		floor_phy = new RigidBodyControl(1f);
-		main_node.addControl(floor_phy);
-		module.getBulletAppState().getPhysicsSpace().add(floor_phy);
+		rigidBodyControl = new RigidBodyControl(1f);
+		main_node.addControl(rigidBodyControl);
+		module.getBulletAppState().getPhysicsSpace().add(rigidBodyControl);
 
 		geometry.setUserData(Settings.ENTITY, this);
 		main_node.setUserData(Settings.ENTITY, this);
-		floor_phy.setUserObject(this);
+		rigidBodyControl.setUserObject(this);
 		
 		module.addEntity(this);
 

@@ -49,13 +49,13 @@ public class Wall extends PhysicalEntity implements IAffectedByPhysics, ICollide
 		}
 		main_node.setLocalTranslation(x+(w/2), yBottom+(h/2), z+(d/2));
 
-		floor_phy = new RigidBodyControl(0f);
-		main_node.addControl(floor_phy);
-		module.getBulletAppState().getPhysicsSpace().add(floor_phy);
+		rigidBodyControl = new RigidBodyControl(0f);
+		main_node.addControl(rigidBodyControl);
+		module.getBulletAppState().getPhysicsSpace().add(rigidBodyControl);
 
 		geometry.setUserData(Settings.ENTITY, this);
 		main_node.setUserData(Settings.ENTITY, this);
-		floor_phy.setUserObject(this);
+		rigidBodyControl.setUserObject(this);
 
 		module.addEntity(this);
 

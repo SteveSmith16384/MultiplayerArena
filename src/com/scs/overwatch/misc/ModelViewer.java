@@ -26,19 +26,20 @@ public class ModelViewer extends SimpleApplication {
 		assetManager.registerLocator("assets/", FileLocator.class); // default
 		//assetManager.registerLocator("assets/Textures/", FileLocator.class);
 
-		cam.setFrustumPerspective(60, settings.getWidth() / settings.getHeight(), .1f, 100);
+		super.getViewPort().setBackgroundColor(ColorRGBA.White);
 
+		cam.setFrustumPerspective(60, settings.getWidth() / settings.getHeight(), .1f, 100);
+		
 		setupLight();
 
-		Spatial model = assetManager.loadModel("Models/AbstractRTSModels/Player.obj");
-		/*Node n = (Node)model;
-		n.getChild(5).removeFromParent();
-		n.getChild(5).removeFromParent();
-		model.scale(0.1f);*/
+		//Spatial model = assetManager.loadModel("Models/AbstractRTSModels/Player.obj");
+		Spatial model = assetManager.loadModel("Models/elvis/tinker.obj");
+		//model.updateModelBound();
+		model.scale(.1f);
 		
 		//JMEFunctions.SetTextureOnSpatial(assetManager, model, "Textures/sun.jpg");
 		//JMEFunctions.SetTextureOnSpatial(assetManager, model, "Textures/cells3.png");
-		JMEFunctions.SetTextureOnSpatial(assetManager, model, "Textures/computerconsole2.jpg");
+		//JMEFunctions.SetTextureOnSpatial(assetManager, model, "Textures/computerconsole2.jpg");
 
 		
 		model.setModelBound(new BoundingBox());

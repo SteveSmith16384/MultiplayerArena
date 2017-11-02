@@ -18,8 +18,6 @@ import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
-import com.jme3.post.FilterPostProcessor;
-import com.jme3.post.filters.BloomFilter;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
@@ -516,7 +514,7 @@ public class GameModule implements IModule, PhysicsCollisionListener, ActionList
 		DodgeballBall c = new DodgeballBall(game, this, null);
 		c.setUnlive();//.live = false; // Prevent player being killed immed
 		c.getMainNode().setLocalTranslation(p.x,  10f,  p.y);
-		c.floor_phy.setPhysicsLocation(new Vector3f(p.x,  mapData.getRespawnHeight(),  p.y));
+		c.rigidBodyControl.setPhysicsLocation(new Vector3f(p.x,  mapData.getRespawnHeight(),  p.y));
 		Overwatch.instance.getRootNode().attachChild(c.getMainNode());
 
 	}
