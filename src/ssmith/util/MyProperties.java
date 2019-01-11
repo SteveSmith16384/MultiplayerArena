@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import com.scs.overwatch.Settings;
+import com.scs.multiplayerarena.Settings;
 
 public class MyProperties {
 

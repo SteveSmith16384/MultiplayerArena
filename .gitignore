@@ -9,3 +9,5 @@ lwjgl.dll
 .svn
 #MultiplayerArena_settings.txt
 
+/target/
+/.settings/

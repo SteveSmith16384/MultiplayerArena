@@ -14,7 +14,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
 import com.jme3.scene.VertexBuffer.Type;
 import com.jme3.util.BufferUtils;
-import com.scs.overwatch.JMEFunctions;
+import com.scs.multiplayerarena.JMEFunctions;
 
 public class CustomMeshViewer extends SimpleApplication {
 
