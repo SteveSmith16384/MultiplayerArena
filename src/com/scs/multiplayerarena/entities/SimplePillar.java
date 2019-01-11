@@ -18,9 +18,6 @@ public class SimplePillar extends PhysicalEntity {
 	private static final float HEIGHT = 4f;
 	private static final String TEX = "Textures/OldRedBricks_T.jpg";
 
-	//private Geometry geometry;
-	//private RigidBodyControl floor_phy;
-	
 	public SimplePillar(MultiplayerArenaMain _game, GameModule _module, float x, float z) {
 		super(_game, _module, "SimplePillar");
 

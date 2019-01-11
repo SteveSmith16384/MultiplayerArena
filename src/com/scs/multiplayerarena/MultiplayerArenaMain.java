@@ -98,9 +98,6 @@ public class MultiplayerArenaMain extends SimpleApplication {
 		getInputManager().clearRawInputListeners();
 		//getInputManager().deleteMapping(arg0);
 		
-		assetManager.registerLocator("assets/", FileLocator.class); // default
-		assetManager.registerLocator("assets/", ClasspathLocator.class);
-
 		//guiFont_small = getAssetManager().loadFont("Interface/Fonts/Console.fnt");
 		guiFont_small = getAssetManager().loadFont("Interface/Fonts/Console.fnt");
 		
