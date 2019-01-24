@@ -6,6 +6,7 @@ lwjgl64.dll
 OpenAL32.dll
 bulletjme.dll
 lwjgl.dll
+jinput*.dll
 .svn
 #MultiplayerArena_settings.txt
 
