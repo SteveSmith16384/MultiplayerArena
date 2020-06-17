@@ -2,10 +2,13 @@
 
 A split-screen multiplayer game with multiple game modes for up to 4 people.
 
-![ss1.png](https://i.imgur.com/ntPP0nh.png)
-
 By Steve Smith - https://twitter.com/stephencsmith
 
+![ss1.png](https://i.imgur.com/ntPP0nh.png)
+
+Gameplay video: https://youtu.be/LypENdUW9yA
+
+Download release: https://gamejolt.com/games/multiplayerarena/283164
 
 ## STARTING A GAME
 Select a game mode with the numbers 1-5.  Start a game by pressing 0.
@@ -17,11 +20,11 @@ Select a game mode with the numbers 1-5.  Start a game by pressing 0.
 
 
 ## GAME MODES
-Skirmish - Every player against every other player.
-King of the Hill - Gain points by occupying the base.
-Dodgeball - You must hit other players with a ball.
-Bladerunner - Destroy the rogue AIs.
-Clone Wars - Every player against every other player, but identifying them could prove difficult!
+* Skirmish - Every player against every other player.
+* King of the Hill - Gain points by occupying the base.
+* Dodgeball - You must hit other players with a ball.
+* Bladerunner - Destroy the rogue AIs.
+* Clone Wars - Every player against every other player, but identifying them could prove difficult!
 
 * The aim of every game mode is to be the first player to 100 points.
 
